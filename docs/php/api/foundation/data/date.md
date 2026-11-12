@@ -1,202 +1,200 @@
-# Date — 日期工具
+# Date
 
-- **文件位置**: `kernel/Foundation/Data/Date.php`
-- **命名空间**: `kernel\Foundation\Data`
-- **类型**: 纯静态工具类
+`kernel\Foundation\Data\Date`  ·  class
 
-日期/时间处理静态工具类：毫秒/微秒时间戳、耗时、差异、人类可读时长、解析、格式化。全部通过 `Date::方法名(...)` 调用。
+源码：`gstudio_kernel/Foundation/Data/Date.php`
 
-## 方法速查表
+> 时间工具类
 
-| 类别 | 方法 |
-|------|------|
-| 时间戳 | `microseconds`、`milliseconds`、`secondsToMilliseconds`、`millisecondsToSeconds` |
-| 耗时/差异 | `elapsed`、`diff` |
-| 人类可读 | `humanize` |
-| 解析/格式化 | `parse`、`format` |
-
-## 方法
-
-### `microseconds()` — 当前微秒级时间戳
-
-获取当前时间的微秒级时间戳（浮点数，秒 + 微秒小数部分）。
-
-**参数**
-
-- 无。
-
-**返回值**
-
-- `float`：微秒级时间戳。
-
-**示例**
+## 声明
 
 ```php
-Date::microseconds();   // 例如 1729212345.678901
+class Date
 ```
 
-### `milliseconds()` — 当前毫秒级时间戳
+## 概述
 
-获取当前时间的毫秒级时间戳（整数）。
+提供高精度时间戳获取（微秒/毫秒）、单位转换、时间差与耗时、
+字符串解析与格式化等静态工具方法。全部方法无需实例化即可调用。
 
-**参数**
+方法分为以下几组：
+- 时间戳获取： microseconds、milliseconds
+- 单位转换：   secondsToMilliseconds、millisecondsToSeconds
+- 时间差耗时： elapsed、diff、humanize
+- 解析格式化： parse、format
 
-- 无。
+## 方法一览
 
-**返回值**
+| 方法 | 说明 |
+|---|---|
+| [`microseconds()`](#microseconds) | 获取当前时间戳（秒，微秒精度） |
+| [`milliseconds()`](#milliseconds) | 获取当前时间戳（毫秒，整数） |
+| [`secondsToMilliseconds()`](#secondstomilliseconds) | 秒级时间戳转毫秒级 |
+| [`millisecondsToSeconds()`](#millisecondstoseconds) | 毫秒级时间戳转秒级 |
+| [`elapsed()`](#elapsed) | 获取自某个时间点（毫秒）以来的耗时 |
+| [`diff()`](#diff) | 计算两个毫秒时间戳之间的差值 |
+| [`humanize()`](#humanize) | 将毫秒耗时格式化为人类可读字符串 |
+| [`parse()`](#parse) | 将字符串时间解析为秒级时间戳 |
+| [`format()`](#format) | 格式化时间戳为时间字符串 |
+| [`now()`](#now) | 当前日期时间 |
+| [`today()`](#today) | 当前日期（`Y-m-d`） |
 
-- `int`：毫秒级时间戳。
-
-**示例**
+### microseconds()
 
 ```php
-Date::milliseconds();   // 例如 1729212345678
+public static function microseconds(): float
 ```
 
-### `secondsToMilliseconds($seconds)` — 秒转毫秒
+获取当前时间戳（秒，微秒精度）
 
-将秒数值乘以 1000 转为毫秒。
+返回：`float` —— float 当前时间戳，例如 1786635816.234411
 
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$seconds` | `int\|float` | 无 | 秒数值 |
-
-**返回值**
-
-- `int|float`：毫秒数值。
-
-**示例**
+### milliseconds()
 
 ```php
-Date::secondsToMilliseconds(2);   // 2000
+public static function milliseconds(): int
 ```
 
-### `millisecondsToSeconds($milliseconds)` — 毫秒转秒
+获取当前时间戳（毫秒，整数）
 
-将毫秒数值除以 1000 转为秒。
+返回：`int` —— int 当前时间戳，例如 1786635816234
 
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$milliseconds` | `int\|float` | 无 | 毫秒数值 |
-
-**返回值**
-
-- `int|float`：秒数值。
-
-**示例**
+### secondsToMilliseconds()
 
 ```php
-Date::millisecondsToSeconds(2000);   // 2
+public static function secondsToMilliseconds($seconds): int
 ```
 
-### `elapsed(int $startMs)` — 自开始起的经过时间
+秒级时间戳转毫秒级
 
-计算自 `$startMs` 毫秒时刻起已经过的毫秒数（即「当前毫秒 − 开始毫秒」）。用于测量某段逻辑耗时。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$seconds` | `int|float` | — | 秒级时间戳 |
 
-**参数**
+返回：`int` —— int 毫秒级时间戳
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$startMs` | `int` | 无 | 开始时刻的毫秒时间戳 |
-
-**返回值**
-
-- `int`：经过的毫秒数。
-
-**示例**
+### millisecondsToSeconds()
 
 ```php
-$start = Date::milliseconds();
-// ... 业务逻辑
-echo Date::elapsed($start) . "ms";   // 例如 "12ms"
+public static function millisecondsToSeconds($milliseconds): float
 ```
 
-### `diff(int $startMs, ?int $endMs = null)` — 时间戳差值
+毫秒级时间戳转秒级
 
-计算 `$endMs` 与 `$startMs` 的差值（毫秒）。`$endMs` 为 `null` 时使用当前毫秒时间戳。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$milliseconds` | `int|float` | — | 毫秒级时间戳 |
 
-**参数**
+返回：`float` —— float 秒级时间戳（毫秒精度）
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$startMs` | `int` | 无 | 开始毫秒时间戳 |
-| `$endMs` | `?int` | `null` | 结束毫秒时间戳，缺省取当前时刻 |
-
-**返回值**
-
-- `int`：两个时间戳的毫秒差值。
-
-**示例**
+### elapsed()
 
 ```php
-$diff = Date::diff($start);       // 到当前时刻
-$diff = Date::diff($start, $end); // 指定结束时刻
+public static function elapsed(int $startMs): int
 ```
 
-### `humanize($ms)` — 毫秒转人类可读时长
+获取自某个时间点（毫秒）以来的耗时
 
-将毫秒数转换为人类可读的中文时长（如 `"2天3小时"`、`"5分10秒"`）。自动省略为 0 的层级。大于 1 天用「天」+「小时」，否则用「分」+「秒」。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$startMs` | `int` | — | 起点毫秒时间戳（通常由 Date::milliseconds() 记录） |
 
-**参数**
+返回：`int` —— int 距当前毫秒差
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$ms` | `int\|float` | 无 | 毫秒数 |
-
-**返回值**
-
-- `string`：人类可读时长字符串。
-
-**示例**
+### diff()
 
 ```php
-Date::humanize(183000000);   // "2天3小时"
-Date::humanize(310000);      // "5分10秒"
+public static function diff(int $startMs,$endMs = null): int
 ```
 
-### `parse($str)` — 解析时间字符串
+计算两个毫秒时间戳之间的差值
 
-将时间字符串解析为秒级时间戳。使用 `strtotime` 解析，支持常见时间格式。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$startMs` | `int` | — | 起点毫秒时间戳 |
+| `$endMs` | `int|null` | `null` | 终点毫秒时间戳，默认当前毫秒时间戳 |
 
-**参数**
+返回：`int` —— int 毫秒差（负数表示 $endMs 早于 $startMs）
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$str` | `string` | 无 | 时间字符串（如 `"2026-08-21 10:00:00"`） |
-
-**返回值**
-
-- `?int`：秒级时间戳；解析失败返回 `null`。
-
-**示例**
+### humanize()
 
 ```php
-Date::parse("2026-08-21 10:00:00");   // 秒级时间戳
-Date::parse("invalid");               // null
+public static function humanize($ms): string
 ```
 
-### `format($timestamp = null, $format = "Y-m-d H:i:s")` — 格式化时间戳
+将毫秒耗时格式化为人类可读字符串
 
-按格式格式化时间戳。`$timestamp` 缺省时使用当前时间。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$ms` | `int|float` | — | 毫秒数 |
 
-**参数**
+返回：`string` —— string 可读耗时，如 "832ms"、"1.3s"、"2m 5s"、"1h 30m"、"2d 5h"
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$timestamp` | `int\|null` | `null` | 秒级时间戳，缺省为当前时刻 |
-| `$format` | `string` | `"Y-m-d H:i:s"` | PHP `date()` 格式字符串 |
-
-**返回值**
-
-- `string`：格式化后的日期字符串。
-
-**示例**
+### parse()
 
 ```php
-Date::format(time(), "Y-m-d");           // "2026-08-21"
-Date::format();                          // "2026-08-21 10:30:45"（当前时间）
+public static function parse($str)
 ```
+
+将字符串时间解析为秒级时间戳
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$str` | `string` | — | 可被 strtotime 解析的时间字符串，如 "2026-08-13 10:00:00" |
+
+### format()
+
+```php
+public static function format($timestamp = null, $format = "Y-m-d H:i:s"): string
+```
+
+格式化时间戳为时间字符串
+
+自动识别秒级与毫秒级时间戳（毫秒级约 1e12，秒级约 1e9）。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$timestamp` | `int|float|null` | `null` | 时间戳（秒级或毫秒级），默认当前时间 |
+| `$format` | `string` | `"Y-m-d H:i:s"` | date() 格式化字符串 |
+
+返回：`string` —— string 格式化后的时间字符串
+
+### now()
+
+```php
+public static function now($format = "Y-m-d H:i:s"): string
+```
+
+当前日期时间
+
+等价于 `date($format)`——把「当前时间格式化」收进本类，取代原来的全局函数 `now()`。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$format` | `string` | `"Y-m-d H:i:s"` | date() 格式化字符串 |
+
+返回：`string` —— string
+
+### today()
+
+```php
+public static function today(): string
+```
+
+当前日期（`Y-m-d`）
+
+取代原来的全局函数 `today()`。
+
+返回：`string` —— string
+
+## 同目录
+
+- [Arr](/php/api/foundation/data/arr)
+- [Func](/php/api/foundation/data/func)
+- [Money](/php/api/foundation/data/money)
+- [Mutator](/php/api/foundation/data/mutator)
+- [Numeric](/php/api/foundation/data/numeric)
+- [Serializer](/php/api/foundation/data/serializer)
+- [Str](/php/api/foundation/data/str)
+- [Transform](/php/api/foundation/data/transform)
+

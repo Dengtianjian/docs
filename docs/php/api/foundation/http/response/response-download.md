@@ -1,72 +1,69 @@
-# ResponseDownload — 文件下载响应
+# ResponseDownload
 
-- **文件位置**: `kernel/Foundation/HTTP/Response/ResponseDownload.php`
-- **命名空间**: `kernel\Foundation\HTTP\Response`
-- **继承**: 继承 `kernel\Foundation\HTTP\Response`
-- **是否可继承**: 是
+`kernel\Foundation\HTTP\Response\ResponseDownload`  ·  class
 
-将本地文件以**附件下载**形式输出的响应。构造后由框架 `output()` 输出 HTTP 头（`Content-Disposition: attachment`）与文件内容。支持 **Range 断点续传**与**下载速率限制**。
+源码：`gstudio_kernel/Foundation/HTTP/Response/ResponseDownload.php`
 
-## 属性
+## 声明
 
-| 属性 | 类型 | 默认 | 可见性 | 说明 |
-|------|------|------|--------|------|
-| `$filePath` | `string\|null` | `null` | protected | 下载的文件绝对路径 |
-| `$fileName` | `string\|null` | `null` | protected | 下载后保存到客户端的文件名（含扩展名） |
-| `$fileSize` | `int\|null` | `null` | protected | 文件大小（字节） |
-| `$fileExtension` | `string\|null` | `null` | protected | 文件扩展名 |
-| `$DownloadRateLimit` | `bool\|int` | `false` | protected | 下载速率限制（千字节/秒）；`false` 不限制 |
-| `$request` | `Request\|null` | `null` | protected | 请求对象 |
+```php
+class ResponseDownload extends Response
+```
 
-## 方法速查表
+父类：[Response](/php/api/foundation/http/response)
 
-| 方法 | 作用 |
-|------|------|
-| `__construct(Request $R, $filePath, $downloadFileName, $rateLimit)` | 构造：解析文件信息 |
-| `printContent($readFile)` | 输出文件内容（protected） |
-| `output()` | 输出下载响应（HTTP 头 + 内容） |
+## 受保护 / 私有属性
 
-## 方法
+| 属性 | 类型 | 可见性 | 说明 |
+|---|---|---|---|
+| `$filePath` | `string` | protected | 下载的文件绝对路径 |
+| `$fileName` | `string` | protected | 下载的文件名称，也就是保存到下载者电脑的文件名称，需要包含文件扩展名 |
+| `$fileSize` | `int` | protected | 文件大小，字节 |
+| `$fileExtension` | `string` | protected | 文件扩展名 |
+| `$DownloadRateLimit` | `boolean|int` | protected | 下载速率限制。如果值不为false，即开启了文件下载速率限制，单位是：千字节 |
+| `$request` | `Request` | protected | 请求体 |
 
-### `__construct(Request $R, $filePath, $downloadFileName = null, $rateLimit = false)` — 构造
+## 方法一览
 
-解析文件路径信息，设置下载文件名（未指定时用源文件 `basename`）、扩展名、大小与速率限制。
+| 方法 | 说明 |
+|---|---|
+| [`__construct()`](#__construct) | 下载文件响应 |
+| [`output()`](#output) | — |
 
-**参数**
+### __construct()
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$R` | `Request` | 无 | 请求实例 |
-| `$filePath` | `string` | 无 | 下载的文件绝对路径 |
-| `$downloadFileName` | `string\|null` | `null` | 下载后保存到客户端设备的文件名（含扩展名）；为空用源文件名 |
-| `$rateLimit` | `bool\|int` | `false` | 下载速率限制（千字节/秒）；`false` 不限制 |
+```php
+public function __construct(Request $R, $filePath, $downloadFileName = null, $rateLimit = false)
+```
 
-**返回值**
+下载文件响应
 
-- 无。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$R` | `Request` | — | 请求体 |
+| `$filePath` | `string` | — | 下载的文件绝对路径 |
+| `$downloadFileName` | `mixed` | `null` | — |
+| `$rateLimit` | `boolean|int` | `false` | 下载速率限制，如果值不为false，即开启了下载速率，kb/秒，单位是：千字节 |
 
-### `printContent($readFile = false)` — 输出文件内容
+### output()
 
-> protected。开启速率限制时用 `fread` 分块输出并 `sleep(1)` 限速；否则按 `$readFile` 决定用 `readfile` 或 `file_get_contents` + `echo`。
+```php
+public function output()
+```
 
-**参数**
+## 非公开方法
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$readFile` | `bool` | `false` | 未限速时 `true` 用 `readfile`，`false` 用 `file_get_contents` + `echo` |
+**protected**
 
-**返回值**
+- `protected function printContent($readFile = false)` —— 输出文件内容
 
-- 无（`void`）。
+## 同目录
 
-### `output()` — 输出下载响应
+- [ResponseError](/php/api/foundation/http/response/response-error)
+- [ResponseFile](/php/api/foundation/http/response/response-file)
+- [ResponsePagination](/php/api/foundation/http/response/response-pagination)
+- [ResponseProxy](/php/api/foundation/http/response/response-proxy)
+- [ResponseRedirect](/php/api/foundation/http/response/response-redirect)
+- [ResponseView](/php/api/foundation/http/response/response-view)
+- [ServerSentEvent](/php/api/foundation/http/response/server-sent-event)
 
-输出 `Accept-Ranges` / `Content-Length` / `Content-type`（`application/x-扩展名`）/ `Content-Disposition: attachment` 头。支持 `Range` 断点续传（返回 `206 Partial Content`）；文件不存在输出空内容。
-
-**参数**
-
-- 无。
-
-**返回值**
-
-- 无（`void`）。

@@ -1,135 +1,147 @@
-# ServerSentEvent — 服务端推送事件（SSE）
+# ServerSentEvent
 
-- **文件位置**: `kernel/Foundation/HTTP/Response/ServerSentEvent.php`
-- **命名空间**: `kernel\Foundation\HTTP\Response`
-- **继承**: 继承 `kernel\Foundation\HTTP\Response`
-- **是否可继承**: 是
+`kernel\Foundation\HTTP\Response\ServerSentEvent`  ·  class
 
-**SSE（Server-Sent Events）** 响应，服务端持续向浏览器推送事件。构造后进入循环，反复调用回调向客户端推送数据，直到连接断开或调用 `close()`。
+源码：`gstudio_kernel/Foundation/HTTP/Response/ServerSentEvent.php`
 
-**协议输出**（每帧）：
-```
-id: <uniqid>
-event: <事件名>
-data: <JSON/XML/文本>
+## 声明
 
+```php
+class ServerSentEvent extends Response
 ```
 
-## 属性
+父类：[Response](/php/api/foundation/http/response)
 
-| 属性 | 类型 | 默认 | 可见性 | 说明 |
-|------|------|------|--------|------|
-| `$responseEventName` | `string` | `"message"` | protected | 事件名称（输出到 `event:` 行） |
-| `$closed` | `bool` | `false` | protected | 是否已关闭（退出循环） |
+## 受保护 / 私有属性
 
-## 方法速查表
+| 属性 | 类型 | 可见性 | 说明 |
+|---|---|---|---|
+| `$responseEventName` | `string` | protected | 事件名称 |
+| `$closed` | `mixed` | protected | — |
+| `$headersSent` | `boolean` | protected | 响应头是否已发送 |
+| `$callback` | `callable` | protected | 推流回调 |
+| `$intervalTime` | `int` | protected | 推送间隔（秒） |
 
-| 方法 | 作用 |
-|------|------|
-| `__construct($callback, $intervalTime, $outputType)` | 构造：进入 SSE 推送循环 |
-| `success($data, $event, $statusCode, $code, $message)` | 推送成功事件 |
-| `error($statusCode, $code, $message, $details, $data)` | 推送错误事件 |
-| `ping()` | 推送 ping 心跳事件 |
-| `output()` | 输出一帧 SSE 数据 |
-| `close()` | 关闭 SSE 连接 |
+## 方法一览
 
-## 方法
+| 方法 | 说明 |
+|---|---|
+| [`__construct()`](#__construct) | 构建SSE响应 |
+| [`run()`](#run) | 启动 SSE 推送循环 |
+| [`success()`](#success) | 成功响应 |
+| [`error()`](#error) | 错误响应 |
+| [`ping()`](#ping) | 发送ping事件 自动向前端发送ping名称事件 |
+| [`output()`](#output) | 输出一帧事件（不结束连接） |
+| [`close()`](#close) | — |
 
-### `__construct($callback, $intervalTime = 1, $outputType = "json")` — 构造并进入 SSE 循环
+### __construct()
 
-设置响应头（`X-Accel-Buffering: no` / `Content-Type: text/event-stream` / `Cache-Control: no-cache`），随后进入循环：调用回调 → 清空输出缓冲并 `flush` → 连接断开则跳出 → `sleep($intervalTime)`。需在回调内调用 `success()` / `error()` 等输出方法。
+```php
+public function __construct($callback, $intervalTime = 1, $outputType = "json")
+```
 
-**参数**
+构建SSE响应
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$callback` | `callable` | 无 | 推送回调，第一参数为当前响应实例 |
-| `$intervalTime` | `int` | `1` | 推送间隔（秒） |
-| `$outputType` | `string` | `"json"` | 输出数据类型：`json` / `text` / `xml` |
-
-**返回值**
-
-- 无。
-
-**示例**
+构造仅做配置（设置响应头、输出类型与推流回调/间隔），**不会立即推流**；
+需显式调用 `run` 才开始循环推送。这样可在启动前链式追加配置，也便于单元测试。
 
 ```php
 use kernel\Foundation\HTTP\Response\ServerSentEvent;
 
-new ServerSentEvent(function (ServerSentEvent $Response) {
-    $Response->success(["time" => time()]);
-    $Response->ping();
-});
+(new ServerSentEvent(function (ServerSentEvent $Response) {
+$Response->success([
+"time" => time()
+]);
+$Response->ping();
+}))->run();
 ```
 
-### `success($data, $event = "message", $statusCode = 200, $code = 200000, $message = "ok")` — 推送成功事件
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$callback` | `callable` | — | 回调函数，只有在该回调函数里面调用输出方法前端才可接收到数据。该回调函数第一个参数接收的是当前响应实例。 |
+| `$intervalTime` | `int` | `1` | 间隔时间，单位：秒 |
+| `$outputType` | `string` | `"json"` | 输出数据类型，可传入json、text、xml |
 
-构造成功响应并输出一帧。
+### run()
 
-**参数**
+```php
+public function run()
+```
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$data` | `mixed` | 无 | 主体数据 |
+启动 SSE 推送循环
+
+每轮调用回调产出一帧，直到 `close` 被调用、客户端断开或回调主动中断。
+
+### success()
+
+```php
+public function success($data, $event = "message", $statusCode = 200, $code = 200000, $message = "ok")
+```
+
+成功响应
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$data` | `mixed` | — | 主体数据 |
 | `$event` | `string` | `"message"` | 事件名称 |
-| `$statusCode` | `int` | `200` | HTTP 状态码 |
-| `$code` | `int\|string` | `200000` | 响应码 |
+| `$statusCode` | `integer` | `200` | HTTP状态码 |
+| `$code` | `integer|string` | `200000` | 响应码 |
 | `$message` | `string` | `"ok"` | 响应信息 |
 
-**返回值**
+### error()
 
-- `$this`：支持链式调用。
+```php
+public function error($statusCode, $code = 500, $message = "error", $details = [], $data = [])
+```
 
-### `error($statusCode, $code = 500, $message = "error", $details = [], $data = [])` — 推送错误事件
+错误响应
 
-构造错误响应（事件名 `error`）并输出一帧。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$statusCode` | `int` | 无 | HTTP 状态码 |
-| `$code` | `int\|string` | `500` | 响应码 |
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$statusCode` | `integer` | — | HTTP状态码 |
+| `$code` | `integer|string` | `500` | 响应码 |
 | `$message` | `string` | `"error"` | 响应信息 |
 | `$details` | `mixed` | `[]` | 错误详情 |
 | `$data` | `mixed` | `[]` | 主体数据 |
 
-**返回值**
+### ping()
 
-- `$this`：支持链式调用。
+```php
+public function ping()
+```
 
-### `ping()` — 推送 ping 心跳事件
+发送ping事件 自动向前端发送ping名称事件
 
-推送 `event: ping`、`data: <时间戳>`，用于保持连接活跃。
+### output()
 
-**参数**
+```php
+public function output()
+```
 
-- 无。
+输出一帧事件（不结束连接）
 
-**返回值**
+由 `run` 的循环调用（`success` / `error` / `ping` 内部会触发），
+只负责写这一帧的 body；连接的生命周期由 `run` 控制。
 
-- `$this`：支持链式调用。
+### close()
 
-### `output()` — 输出一帧 SSE 数据
+```php
+public function close()
+```
 
-输出响应头，按 `outputType` 编码数据（`json` 用 `json_encode`、`xml` 用 `Arr::toXML`、其余原样），拼装 `id` / `event` / `data` 三行并输出。
+## 非公开方法
 
-**参数**
+**protected**
 
-- 无。
+- `protected function sendHeaders()` —— 发送 SSE 响应头（仅发送一次）
 
-**返回值**
+## 同目录
 
-- 无（`void`）。
+- [ResponseDownload](/php/api/foundation/http/response/response-download)
+- [ResponseError](/php/api/foundation/http/response/response-error)
+- [ResponseFile](/php/api/foundation/http/response/response-file)
+- [ResponsePagination](/php/api/foundation/http/response/response-pagination)
+- [ResponseProxy](/php/api/foundation/http/response/response-proxy)
+- [ResponseRedirect](/php/api/foundation/http/response/response-redirect)
+- [ResponseView](/php/api/foundation/http/response/response-view)
 
-### `close()` — 关闭 SSE 连接
-
-置 `closed = true`，让构造循环退出。
-
-**参数**
-
-- 无。
-
-**返回值**
-
-- `$this`：支持链式调用。

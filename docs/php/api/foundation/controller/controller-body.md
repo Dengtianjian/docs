@@ -1,30 +1,54 @@
-# ControllerBody — Body 参数处理器
+# ControllerBody
 
-- **文件位置**: `kernel/Foundation/Controller/ControllerBody.php`
-- **命名空间**: `kernel\Foundation\Controller`
-- **继承自**: `RequestBody`
-- **是否可继承**: 是
+`kernel\Foundation\Controller\ControllerBody`  ·  class
 
-HTTP 请求体（POST/PUT/PATCH body）的封装对象，继承 `RequestBody`。作为控制器上下文中处理请求体参数的专用载体。
+源码：`gstudio_kernel/Foundation/Controller/ControllerBody.php`
 
-**与 `ControllerQuery` 的取舍不同**：本类先调用父类 `RequestBody::__construct` 完成 mutator/validator 初始化，再以 `$request->body`（框架封装后的请求体组件）覆盖 `data`，确保数据类型转换与 `Controller::body()` 读取到的内容一致。
+> 控制器 Body 参数处理器
 
-构造时应用传入的 `$bodyMutator`（类型转换）与 `$bodyValidator`（校验规则），校验结果写入 `validatedResult`，供 `Controller::before()` 拦截使用。
+## 声明
 
-## 构造
+```php
+class ControllerBody extends RequestBody
+```
 
-### `__construct(Request $request, $bodyMutator = null, $bodyValidator = null)` — 构建 Body 参数处理器
+父类：[RequestBody](/php/api/foundation/http/request/request-body)
 
-**参数**
+## 概述
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$request` | `Request` | 无 | 当前请求对象 |
-| `$bodyMutator` | `array\|Mutator\|null` | `null` | Body 参数序列化规则（`["name" => "string"]` 形式）。`null` 不做类型转换 |
-| `$bodyValidator` | `array\|Validator\|null` | `null` | Body 参数校验规则（`["name" => Rule::required()]` 形式）。`null` 不校验 |
+继承 [RequestBody](/php/api/foundation/http/request/request-body)，作为框架在控制器上下文中处理请求体（POST/PUT/PATCH）参数的专用载体。
 
-**返回值**
+与 `ControllerQuery` 的取舍不同：本类先调用父类 `RequestBody::__construct` 完成 mutator/validator
+的初始化，再以 `$request->body`（框架封装后的请求体组件）覆盖 `data`，确保数据类型转换与
+`Controller::body()` 读取到的内容一致。
 
-- 无。
+构造时应用子类声明的 `$bodyMutator`（类型转换）与 `$bodyValidator`（校验规则），
+校验结果写入 `validatedResult`，供 `Controller::before()` 拦截使用。
 
-继承自 `RequestBody`，具备 `data()`/`some()`/`get()`/`addData()`/`validatedResult` 等方法（参见 `RequestBody` 文档）。
+## 方法一览
+
+| 方法 | 说明 |
+|---|---|
+| [`__construct()`](#__construct) | 构造 Body 参数处理器 |
+
+### __construct()
+
+```php
+public function __construct(Request $request, $bodyMutator = null, $bodyValidator = null)
+```
+
+构造 Body 参数处理器
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$request` | `Request` | — | 当前请求对象（从中提取封装后的 body 数据） |
+| `$bodyMutator` | `mixed` | `null` | 请求体类型转换规则（同 RequestData 的 mutator） |
+| `$bodyValidator` | `mixed` | `null` | 请求体校验规则（同 RequestData 的 validator） |
+
+## 同目录
+
+- [AuthController](/php/api/foundation/controller/auth-controller)
+- [Controller](/php/api/foundation/controller/controller)
+- [ControllerQuery](/php/api/foundation/controller/controller-query)
+- [ControllerResponse](/php/api/foundation/controller/controller-response)
+

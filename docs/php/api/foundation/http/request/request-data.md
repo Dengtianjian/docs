@@ -1,152 +1,183 @@
-# RequestData — 请求数据基类
+# RequestData
 
-- **文件位置**: `kernel/Foundation/HTTP/Request/RequestData.php`
-- **命名空间**: `kernel\Foundation\HTTP\Request`
-- **是否可继承**: 是（抽象基类）
+`kernel\Foundation\HTTP\Request\RequestData`  ·  class
 
-请求数据容器基类。`Request` 下的各个数据子对象（`RequestQuery` / `RequestBody` / `RequestHeader` / `RequestParams`）均继承本类，获得统一的**取值（get/some/has）、转换（mutator）与校验（validator）**能力。
+源码：`gstudio_kernel/Foundation/HTTP/Request/RequestData.php`
 
-> 注：`Request` 下的参数提取类 `RequestPagination` / `RequestSorting` / `RequestFiltering` 位于 `Request/Extract/` 子目录，继承自 `DataObject`（而非本类），用于从 query 中提取分页/排序/筛选参数。
+> 请求数据包
 
-**核心流程** `handle()`：先执行校验器（validator）校验，再用数据转换器（mutator）转换数据，转换结果回写 `$data`，校验结果存入 `$validatedResult`。
+## 声明
 
-**mutator / validator 支持两种形态**：
-- 实例：`Mutator` / `Validator` 实例
-- 数组规则：`handle()` 会自动包装成 `Rules` / `Mutator` 处理
+```php
+class RequestData
+```
+
+## 概述
+
+承载单一请求来源（如路由参数、查询串、请求体、请求头）的原始数据，
+并提供「校验 → 转换 → 读取/写入/合并/删除」能力：
+- 校验：通过 $validator 约束字段（Rule 实例 / Rules 关联数组 / Validator 实例）；
+- 转换：通过 $mutator 对数据做映射、类型转换、字段裁剪；
+- 读写：get()/some()/has() 支持点号路径与通配符，set()/fill()/remove() 支持写入与合并。
+
+典型流程：fill() 注入数据 → prepare() 先校验再转换（转换结果原地写回 $data）→ 业务侧 get()/some() 取值。
 
 ## 属性
 
-| 属性 | 类型 | 默认 | 可见性 | 说明 |
-|------|------|------|--------|------|
-| `$data` | `array` | `[]` | protected | 数据（各子类构造时从对应来源填充） |
-| `$mutator` | `Mutator\|array\|null` | `null` | protected | 数据转换规则 |
-| `$validator` | `Validator\|array\|null` | `null` | protected | 数据校验规则或校验器 |
-| `$validatedResult` | `Result\|null` | `null` | public | 校验结果 |
+| 属性 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$validatedResult` | `Result|null` | `null` | 最近一次 prepare() 的校验结果 |
 
-## 方法速查表
+## 受保护 / 私有属性
 
-| 方法 | 作用 |
-|------|------|
-| `__construct($mutator, $validator)` | 构造：设置转换与校验规则 |
-| `has($key)` | 是否存在某个键 |
-| `get($key)` | 获取某个键的值 |
-| `some($keys, $completion)` | 批量获取某些键的值 |
-| `handle()` | 执行校验并转换数据 |
-| `fill($data)` | 注入数据并合并（`RequestParams` 路由匹配后经此注入参数） |
-| `remove($key)` | 移除指定键（支持点号路径） |
+| 属性 | 类型 | 可见性 | 说明 |
+|---|---|---|---|
+| `$data` | `array` | protected | 原始数据 / 当前数据 |
+| `$mutator` | `Mutator|array|null` | protected | 数据转换规则 |
+| `$validator` | `Validator|Rule|array|null` | protected | 数据校验规则 / 校验器 |
 
-## 方法
+## 方法一览
 
-### `__construct($mutator = null, $validator = null)` — 构造
+| 方法 | 说明 |
+|---|---|
+| [`__construct()`](#__construct) | 实例化请求数据类 |
+| [`has()`](#has) | 是否存在某个键 |
+| [`get()`](#get) | 获取某个键的值 |
+| [`set()`](#set) | 写入单个键值（覆盖式） |
+| [`some()`](#some) | 获取数据 |
+| [`prepare()`](#prepare) | 准备数据：先校验，再转换，最后把转换结果写回 $data |
+| [`fill()`](#fill) | 注入数据，与既有数据合并 |
+| [`remove()`](#remove) | 移除指定键 |
 
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$mutator` | `Mutator\|array\|null` | `null` | 数据转换规则 |
-| `$validator` | `Validator\|array\|null` | `null` | 数据校验规则或校验器 |
-
-**返回值**
-
-- 无。
-
-### `has($key)` — 是否存在某个键
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$key` | `string` | 无 | 键名 |
-
-**返回值**
-
-- `bool`：存在返回 `true`，否则 `false`。
-
-### `get($key)` — 获取某个键的值
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$key` | `string` | 无 | 键名 |
-
-**返回值**
-
-- `mixed`：键值；键不存在返回 `null`。
-
-### `some($keys = null, $completion = false)` — 批量获取某些键的值
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$keys` | `string[]\|null` | `null` | 要获取的键名索引数组；`null` 返回全部数据 |
-| `$completion` | `bool` | `false` | `true` 时，键缺失补 `null`（全量时对数据执行转换器） |
-
-**返回值**
-
-- `array|null`：对应键值组成的数组；无数据返回 `null`。
-
-**示例**
+### __construct()
 
 ```php
-$request->body->some(["name", "email"]);          // 取这两个键
-$request->body->some();                            // 全部数据
-$request->body->some(["a"], true);                 // 缺失键补 null
+public function __construct($mutator = null, $validator = null)
 ```
 
-### `handle()` — 执行校验并转换数据
+实例化请求数据类
 
-流程：校验器校验（结果存入 `$validatedResult`）→ 转换器转换 → 转换结果回写 `$data`。校验失败或 `$validatedResult->error` 为真时跳过转换直接返回。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$mutator` | `Mutator|array|null` | `null` | 数据转换规则（null/Mutator 实例/字段映射数组） |
+| `$validator` | `Validator|Rule|array|null` | `null` | 数据校验规则或校验器（null/Rule 实例/关联数组/Validator 实例） |
 
-**参数**
-
-- 无。
-
-**返回值**
-
-- 无（`void`）。
-
-**异常**
-
-- 校验器字段既非 `Validator` 实例也非 `Rule` 实例时，`$validatedResult` 会记录 500 错误（不抛异常）。
-
-### `fill($data)` — 注入数据并合并
-
-将传入数据与既有数据合并，用于在构造之后补充数据。`RequestParams` 由 `App::run()`/`Console` 路由匹配完成后经此注入路由参数。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$data` | `array` | 无 | 待合并的数据映射 |
-
-**返回值**
-
-- 无（`void`）。
-
-**示例**
+### has()
 
 ```php
-$request->params->fill(["id" => "42"]); // 注入路由参数
+public function has($key)
 ```
 
-### `remove($key)` — 移除指定键
+是否存在某个键
 
-与 `fill()` 对应的移除操作，支持点号路径（如 `user.profile.name`）。键不存在时静默忽略，不报错。
+支持点号路径（如 user.profile.name），严格区分「键存在值为 null」与「键不存在」。
 
-**参数**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$key` | `string` | — | 键名，支持点号语法 |
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$key` | `string` | 无 | 键名，支持点号语法 |
-
-**返回值**
-
-- 无（`void`）。
-
-**示例**
+### get()
 
 ```php
-$request->params->remove("user.profile.name"); // 移除该键
+public function get($key, $default = null)
 ```
+
+获取某个键的值
+
+支持点号路径（如 user.profile.name）与 * 通配符（如 photos.*.url，
+命中时返回平铺结果数组）。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$key` | `string` | — | 键名，支持点号语法与通配符 |
+| `$default` | `mixed` | `null` | 键不存在时的默认值 |
+
+### set()
+
+```php
+public function set($key, $value)
+```
+
+写入单个键值（覆盖式）
+
+不做点号路径展开：键名整体作为一级键写入（即 $key 含 "." 时按字面量存储，不会被拆成嵌套）。
+返回当前实例以支持链式调用。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$key` | `string` | — | 键名（按字面量存储，不解析点号路径） |
+| `$value` | `mixed` | — | 值 |
+
+### some()
+
+```php
+public function some($keys = null, $completion = false)
+```
+
+获取数据
+
+无参调用（$keys === null）即获取全部数据（不经转换）；
+传入键名则批量取部分，键名支持点号路径（如 user.profile.name，
+结果以路径本身为键）。「获取全部」统一走本方法无参形态，勿再新增 all()。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$keys` | `string|string[]|null` | `null` | 键名索引数组（传标量会被视作单个键） |
+| `$completion` | `boolean` | `false` | 是否补齐缺失键为 null |
+
+### prepare()
+
+```php
+public function prepare()
+```
+
+准备数据：先校验，再转换，最后把转换结果写回 $data
+
+执行顺序：
+1. 初始化 validatedResult 为「通过」；
+2. 若设置了 $validator，按类型（关联数组 / Validator 实例 / 单个 Rule 实例）执行校验，
+未通过则把错误写入 validatedResult 并返回 false；
+3. 通过后用 $mutator 转换数据（无转换规则则跳过），转换成功写回 $data。
+
+### fill()
+
+```php
+public function fill(array $data)
+```
+
+注入数据，与既有数据合并
+
+通用能力：RequestParams 由 App::run()/Console 路由匹配完成后经 fill()
+注入路由参数；其它子类（query/body/header）也可按需调用。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$data` | `array` | — | 待合并的数据映射 |
+
+### remove()
+
+```php
+public function remove($key)
+```
+
+移除指定键
+
+与 fill() 对应，支持点号路径（如 user.profile.name）。键不存在时忽略，不报错。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$key` | `string` | — | 键名，支持点号语法 |
+
+## 非公开方法
+
+**protected**
+
+- `protected function convert($data)` —— 应用数据转换规则
+
+## 同目录
+
+- [RequestBody](/php/api/foundation/http/request/request-body)
+- [RequestHeader](/php/api/foundation/http/request/request-header)
+- [RequestParams](/php/api/foundation/http/request/request-params)
+- [RequestQuery](/php/api/foundation/http/request/request-query)
+

@@ -1,168 +1,164 @@
-# ResponseView — 视图响应
+# ResponseView
 
-- **文件位置**: `kernel/Foundation/HTTP/Response/ResponseView.php`
-- **命名空间**: `kernel\Foundation\HTTP\Response`
-- **继承**: 继承 `kernel\Foundation\HTTP\Response`
-- **是否可继承**: 是
+`kernel\Foundation\HTTP\Response\ResponseView`  ·  class
 
-页面视图响应。渲染指定模板文件（PHP 模板）并输出。支持**页面 + 布局**组合渲染：先渲染页面，再渲染布局，布局内用 `inject()` 注入页面内容。模板文件以 `include` 方式执行，通过 `extract($viewData)` 将 `$viewData` 的键暴露为模板内可直接访问的局部变量（如 `$name`、`$age`）。
+源码：`gstudio_kernel/Foundation/HTTP/Response/ResponseView.php`
 
-**模板约定**：
-- 默认视图根目录：应用根目录 `Path::root()`
-- 默认视图基目录：`Views`
-- 页面默认模板 ID：`page`；布局默认 `layout`
+## 声明
+
+```php
+class ResponseView extends Response
+```
+
+父类：[Response](/php/api/foundation/http/response)
 
 ## 属性
 
-| 属性 | 类型 | 默认 | 可见性 | 说明 |
-|------|------|------|--------|------|
-| `$viewFilePath` | `string` | `""` | protected | 视图文件绝对路径 |
-| `$viewFileBaseDir` | `string` | `""` | protected | 视图文件所在基目录 |
-| `$templateId` | `string` | `""` | protected | 模板 ID（用于缓存模板） |
-| `$layoutContext` | `array\|null` | `null` | protected static | 布局渲染上下文（页面文件与数据），用于 `inject()` 取回，替代全局变量传递 |
+| 属性 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `static $layoutContext` | `array|null` | `null` | 布局渲染上下文（layout 包裹的页面文件与数据），用于 inject() 取回 |
 
-## 方法速查表
+## 受保护 / 私有属性
 
-| 方法 | 作用 |
-|------|------|
-| `__construct($viewFile, $viewData, $viewFileBaseDir, $templateId, $viewFileDir)` | 构造：渲染页面 |
-| `page(...)` | 渲染页面 |
-| `layout($layout, $viewData, $fileBaseDir, $templateId)` | 布局渲染 |
-| `getBody()` | 获取渲染配置信息 |
-| `output()` | 输出页面（渲染模板） |
-| `render($viewFiles, $viewData)` | 渲染模板文件（静态） |
-| `renderAppPage($viewFiles, $viewFileBaseDir, $viewData, $templateId)` | 渲染应用内模板（静态） |
-| `inject()` | 布局内注入页面内容（静态） |
-| `section($viewFiles, $viewData, $viewFileBaseDir, $templateId)` | 渲染模板组件（静态） |
+| 属性 | 类型 | 可见性 | 说明 |
+|---|---|---|---|
+| `$viewFilePath` | `mixed` | protected | — |
+| `$viewFileBaseDir` | `mixed` | protected | — |
+| `$templateId` | `mixed` | protected | — |
 
-## 方法
+## 方法一览
 
-### `__construct($viewFile, $viewData = [], $viewFileBaseDir = "Views", $templateId = "page", $viewFileDir = null)` — 构造并渲染页面
+| 方法 | 说明 |
+|---|---|
+| [`__construct()`](#__construct) | 响应视图类，构建函数渲染的是页面，相当于调用了page函数 |
+| [`page()`](#page) | 渲染页面 |
+| [`layout()`](#layout) | 布局渲染 |
+| [`getBody()`](#getbody) | 获取渲染的配置信息 |
+| [`output()`](#output) | — |
+| [`render()`](#render) | 渲染模板 |
+| [`renderAppPage()`](#renderapppage) | 渲染App的模板，模板文件相对于当前运行的应用根目录 |
+| [`inject()`](#inject) | 注入到布局模板内 用于layout方法使用的模板文件内，用layout方法使用的模板内直接调用该方法即可 |
+| [`section()`](#section) | 渲染模板组件 |
 
-等价于调用 `page()`。
+### __construct()
 
-**参数**：同 `page()`。
+```php
+public function __construct($viewFile, $viewData = [], $viewFileBaseDir = "Views", $templateId = "page", $viewFileDir = null)
+```
 
-### `page($viewFile, $viewData, $viewFileDirBaseProject = "Views", $templateId = "page", $viewFileDir = null)` — 渲染页面
+响应视图类，构建函数渲染的是页面，相当于调用了page函数
 
-**参数**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$viewFile` | `string` | — | 渲染的视图文件，相对于$viewFileBaseDir目录 |
+| `$viewData` | `array` | `[]` | 渲染的数据 |
+| `$viewFileBaseDir` | `string|array` | `"Views"` | 视图文件所在的目录，相对于根目录 |
+| `$templateId` | `string` | `"page"` | 模板ID，用于缓存模板 |
+| `$viewFileDir` | `string|array` | `null` | 视图文件根目录，默认是基于Path::root()的，也就是当前项目的根目录，但是有时候可能需要渲染别的项目的视图文件，可通过该参数来修改 |
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$viewFile` | `string` | 无 | 渲染的视图文件（相对 `$viewFileDirBaseProject`）；无扩展名自动补 `.php` |
-| `$viewData` | `array` | `[]` | 渲染的数据（注入模板的变量） |
-| `$viewFileDirBaseProject` | `string` | `"Views"` | 视图文件所在目录（相对视图根目录） |
-| `$templateId` | `string` | `"page"` | 模板 ID（用于缓存模板） |
-| `$viewFileDir` | `string\|null` | `null` | 视图文件根目录；为空默认 `Path::root()`（当前应用根目录） |
+### page()
 
-**返回值**
+```php
+public function page($viewFile, $viewData, $viewFileDirBaseProject = "Views", $templateId = "page", $viewFileDir = null)
+```
 
-- `$this`：支持链式调用。
+渲染页面
 
-**异常**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$viewFile` | `string` | — | 渲染的视图文件，相对于$viewFileBaseDir目录 |
+| `$viewData` | `array` | — | 渲染的数据 |
+| `$viewFileDirBaseProject` | `mixed` | `"Views"` | — |
+| `$templateId` | `string` | `"page"` | 模板ID，用于缓存模板 |
+| `$viewFileDir` | `string` | `null` | 视图文件根目录，默认是基于Path::root()的，也就是当前项目的根目录，但是有时候可能需要渲染别的项目的视图文件，可通过该参数来修改 |
 
-- `\kernel\Foundation\Exception\Error`：模板文件不存在时抛出（500）。
+### layout()
 
-### `layout($layout = null, $viewData = [], $fileBaseDir = "Views/Layout", $templateId = "layout")` — 布局渲染
+```php
+public function layout($layout = null, $viewData = [], $fileBaseDir = "Views/Layout", $templateId = "layout")
+```
 
-先用 `inject()` 约定存储当前页面的文件路径与数据，再把布局文件设为待渲染文件。布局模板内调用 `ResponseView::inject()` 渲染被布局包裹的页面内容。
+布局渲染
 
-**参数**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$layout` | `string` | `null` | 渲染的布局文件，相对于$viewFileBaseDir目录 |
+| `$viewData` | `array` | `[]` | 渲染的数据 |
+| `$fileBaseDir` | `string` | `"Views/Layout"` | 布局文件所在的目录，相对于根目录 |
+| `$templateId` | `string` | `"layout"` | 模板ID，用于缓存模板 |
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$layout` | `string\|null` | `null` | 布局文件（相对 `$fileBaseDir`），自动补 `.php` |
-| `$viewData` | `array` | `[]` | 布局渲染的数据 |
-| `$fileBaseDir` | `string` | `"Views/Layout"` | 布局文件所在目录（相对根目录） |
-| `$templateId` | `string` | `"layout"` | 模板 ID |
+### getBody()
 
-**返回值**
+```php
+public function getBody()
+```
 
-- `$this`：支持链式调用。
+获取渲染的配置信息
 
-### `getBody()` — 获取渲染配置信息
+### output()
 
-**参数**
+```php
+public function output()
+```
 
-- 无。
+### render()
 
-**返回值**
+```php
+public static function render($viewFiles, $viewData = [])
+```
 
-- `array`：`{ filePath, baseDir, templateId, data }`。
+渲染模板
 
-### `output()` — 输出页面
-
-输出响应头与状态码后，调用 `render($viewFilePath, $responseData, $templateId)` 渲染模板，并 `echo` 捕获到的 HTML 内容到响应体。
-
-**参数**
-
-- 无。
-
-**返回值**
-
-- `void`：直接输出到响应体。
-
-### `render($viewFiles, $viewData = [])` — 渲染模板文件
-
-> 静态。文件必须存在（否则 500 异常）。`$viewData` 非关联数组则置空；通过 `extract($viewData, EXTR_SKIP)` 将数据键抽取为模板局部变量，再用 `ob_start()` 捕获 `include` 的模板输出，最终 `ob_get_clean()` 返回渲染后的 HTML 字符串。内部不再使用 `eval`，亦不依赖全局变量。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$viewFiles` | `string\|string[]` | 无 | 模板文件绝对路径，或路径数组 |
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$viewFiles` | `string|string[]` | — | 渲染的模板文件绝对路径，或者字符串数组，里面存在渲染的模板文件绝对路径 |
 | `$viewData` | `array` | `[]` | 渲染的数据 |
 
-**返回值**
+### renderAppPage()
 
-- `string\|false`：渲染成功返回捕获的 HTML 字符串；无模板文件返回 `false`。
+```php
+public static function renderAppPage($viewFiles, $viewFileBaseDir = "", $viewData = [], $templateId = "page")
+```
 
-**异常**
+渲染App的模板，模板文件相对于当前运行的应用根目录
 
-- `\kernel\Foundation\Exception\Error`：模板文件不存在时抛出。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$viewFiles` | `string|string[]` | — | 渲染的模板文件名称（相对于$viewFileBaseDir），或者字符串数组，里面存在渲染的模板文件文件名称，都相对于$viewFileBaseDir值 |
+| `$viewFileBaseDir` | `string` | `""` | 文件所在的文件夹，相对于当前运行的应用根目录 |
+| `$viewData` | `array` | `[]` | 渲染的数据 |
+| `$templateId` | `string` | `"page"` | 模板ID |
 
-### `renderAppPage($viewFiles, $viewFileBaseDir = "", $viewData = [], $templateId = "page")` — 渲染应用内模板
+### inject()
 
-> 静态。模板文件相对**当前应用根目录**，自动补 `.php`，组合绝对路径后调用 `render()`。
+```php
+public static function inject()
+```
 
-**参数**
+注入到布局模板内 用于layout方法使用的模板文件内，用layout方法使用的模板内直接调用该方法即可
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$viewFiles` | `string\|string[]` | 无 | 模板文件名或数组（相对 `$viewFileBaseDir`） |
-| `$viewFileBaseDir` | `string` | `""` | 文件所在目录（相对应用根目录） |
-| `$viewData` | `array` | `[]` | 渲染数据 |
-| `$templateId` | `string` | `"page"` | 模板 ID |
+### section()
 
-**返回值**
+```php
+public static function section($viewFiles, $viewData = [], $viewFileBaseDir = "Views", $templateId = "section")
+```
 
-- `bool`：渲染结果。
+渲染模板组件
 
-### `inject()` — 布局内注入页面内容
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$viewFiles` | `string|string[]` | — | 组件文件名（相对于$viewFileBaseDir值）或者组件文件名数组，也是相对于$viewFileBaseDir |
+| `$viewData` | `array` | `[]` | 渲染组件所需数据 |
+| `$viewFileBaseDir` | `string` | `"Views"` | 组件所在的文件夹，相对于项目根目录 |
+| `$templateId` | `string` | `"section"` | 模板ID |
 
-> 静态。在布局模板内调用，渲染之前 `layout()` 存入 `$layoutContext` 的页面文件与数据，实现"布局包裹页面"。取回后自动清空上下文。不再使用全局变量传递。
+## 同目录
 
-**参数**
+- [ResponseDownload](/php/api/foundation/http/response/response-download)
+- [ResponseError](/php/api/foundation/http/response/response-error)
+- [ResponseFile](/php/api/foundation/http/response/response-file)
+- [ResponsePagination](/php/api/foundation/http/response/response-pagination)
+- [ResponseProxy](/php/api/foundation/http/response/response-proxy)
+- [ResponseRedirect](/php/api/foundation/http/response/response-redirect)
+- [ServerSentEvent](/php/api/foundation/http/response/server-sent-event)
 
-- 无。
-
-**返回值**
-
-- `string\|false`：渲染后的 HTML 字符串。
-
-### `section($viewFiles, $viewData = [], $viewFileBaseDir = "Views", $templateId = "section")` — 渲染模板组件
-
-> 静态。渲染可复用的视图片段（组件）。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$viewFiles` | `string\|string[]` | 无 | 组件文件名或数组（相对 `$viewFileBaseDir`） |
-| `$viewData` | `array` | `[]` | 渲染数据 |
-| `$viewFileBaseDir` | `string` | `"Views"` | 组件所在目录（相对项目根目录） |
-| `$templateId` | `string` | `"section"` | 模板 ID |
-
-**返回值**
-
-- `bool`：渲染结果。

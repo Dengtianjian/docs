@@ -1,464 +1,411 @@
-# Str — 字符串工具
+# Str
 
-- **文件位置**: `kernel/Foundation/Data/Str.php`
-- **命名空间**: `kernel\Foundation\Data`
-- **类型**: 纯静态工具类
+`kernel\Foundation\Data\Str`  ·  class
 
-字符串处理静态工具类：编解码、模板替换、随机生成、判断、截取、大小写转换、URL/Slug。全部通过 `Str::方法名(...)` 调用。
+源码：`gstudio_kernel/Foundation/Data/Str.php`
 
-## 方法速查表
+> 字符串工具类
 
-| 类别 | 方法 |
-|------|------|
-| 编解码 | `fromJsEscape`、`ucs2ToUtf8`、`fromXml` |
-| 模板 | `replace` |
-| 随机 | `random`、`randomInt`、`serialNo`、`uuid` |
-| 判断 | `startsWith`、`endsWith`、`contains` |
-| 截取/分割 | `before`、`after`、`limit`、`mask`、`length` |
-| 转换 | `studly`、`camel`、`snake`、`slug` |
-
-## 方法
-
-### `fromJsEscape($str)` — 解码前端 `escape()` 编码
-
-解码浏览器 `escape()`/`unescape()` 产生的编码。兼容 `%uXXXX`（UTF-16 编码）、`%XX`（单字节）、以及 HTML 实体（如 `&#20013;`）。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$str` | `string` | 无 | 前端传来的已编码字符串 |
-
-**返回值**
-
-- `string`：解码后的原始字符串。
-
-**示例**
+## 声明
 
 ```php
-Str::fromJsEscape("%u4E2D%u6587");   // "中文"
-Str::fromJsEscape("%E4%B8%AD");      // "中"（UTF-8 十六进制）
-Str::fromJsEscape("&#20013;&#25991;"); // "中文"
+class Str
 ```
 
-### `ucs2ToUtf8($data)` — UCS-2 转 UTF-8
-
-把 UCS-2（UTF-16 宽字符）编码的字符串转换为 UTF-8。常用于处理 `\uXXXX` 形式的 Unicode 数据。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$data` | `string` | 无 | UCS-2 编码字符串 |
-
-**返回值**
-
-- `string`：转换后的 UTF-8 字符串。
-
-**示例**
-
-```php
-Str::ucs2ToUtf8("\x4E\x2D\x65\x87");   // "中文"
-```
-
-### `fromXml($XMLString)` — 解析 XML 为数组
-
-将 XML 字符串解析为数组结构。调用 PHP 内置 `simplexml_load_string`，将 `SimpleXMLElement` 递归转为数组。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$XMLString` | `string` | 无 | XML 字符串 |
-
-**返回值**
-
-- `array|false`：解析成功返回数组，解析失败返回 `false`。
-
-**示例**
-
-```php
-$xml = "<root><name>张三</name><age>20</age></root>";
-$arr = Str::fromXml($xml);
-// ["name" => "张三", "age" => "20"]
-```
-
-### `replace($string, $params = [])` — 模板占位符替换
-
-将字符串中的模板占位符替换为实际值。支持 `{key}` 与 `:key` 两种占位符形式，未匹配的占位符保持原样。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$string` | `string` | 无 | 含占位符的模板字符串 |
-| `$params` | `array` | `[]` | 键 → 值的映射数组 |
-
-**返回值**
-
-- `string`：替换后的字符串。
-
-**示例**
-
-```php
-Str::replace("您好，{name}，欢迎 {site}", ["name" => "张三", "site" => "本站"]);
-// "您好，张三，欢迎 本站"
-Str::replace("编号 :id", ["id" => 100]);
-// "编号 100"
-```
-
-### `random($stringLength = 5, $chars = null, $secure = false)` — 生成随机字符串
-
-从指定字符集（或默认字符集 `a-z0-9`）中随机取出指定数量的字符组成字符串。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$stringLength` | `int` | `5` | 生成的字符串长度 |
-| `$chars` | `string\|null` | `null` | 候选字符集；为 `null` 时使用默认 `a-z0-9` |
-| `$secure` | `bool` | `false` | 是否使用安全随机（`random_int`），为 `true` 时使用更安全的随机源 |
-
-**返回值**
-
-- `string`：随机字符串。
-
-**示例**
-
-```php
-Str::random();                    // 例如 "a3x7k"
-Str::random(16, "abcdef", true);  // 16 位，来自 "abcdef"，安全随机
-```
-
-### `randomInt($min = 0, $max = 100)` — 生成随机整数
-
-在 `[$min, $max]` 闭区间内生成随机整数。使用 `random_int` 安全随机。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$min` | `int` | `0` | 区间下界（含） |
-| `$max` | `int` | `100` | 区间上界（含） |
-
-**返回值**
-
-- `int`：随机整数。
-
-**示例**
-
-```php
-Str::randomInt(10, 20);   // 10 到 20 之间的随机整数
-```
-
-### `serialNo($ExpectLength = 32, $Prefix = null, $Suffix = null, $dateFormat = 'YmdHis')` — 生成序列号
-
-生成带时间前缀的序列号。由时间戳格式化 + 随机字符组成，可指定期望总长度、前缀、后缀与时间格式。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$ExpectLength` | `int` | `32` | 序列号期望总长度（时间前缀 + 随机字符） |
-| `$Prefix` | `string\|null` | `null` | 可选前缀，拼在开头 |
-| `$Suffix` | `string\|null` | `null` | 可选后缀，拼在结尾 |
-| `$dateFormat` | `string` | `'YmdHis'` | 时间戳格式化格式（PHP `date()` 格式） |
-
-**返回值**
-
-- `string`：生成的序列号。
-
-**示例**
-
-```php
-Str::serialNo();                       // 例如 "20260821103045aB3xK9zQ7vF1mT2w"
-Str::serialNo(20, "SN-", "-X");        // 带前缀后缀
-```
-
-### `uuid()` — 生成 UUID
-
-生成符合 RFC 4122 的 UUID v4（随机版本）。
-
-**参数**
-
-- 无。
-
-**返回值**
-
-- `string`：形如 `xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx` 的 UUID。
-
-**示例**
-
-```php
-Str::uuid();
-// 例如 "8f14e45f-ceea-4a38-9b1a-9d2f3c4a5b6c"
-```
-
-### `startsWith($haystack, $needle)` — 是否以指定串开头
-
-判断字符串 `$haystack` 是否以 `$needle` 开头。`$needle` 为空字符串时返回 `true`。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$haystack` | `string` | 无 | 被检查字符串 |
-| `$needle` | `string` | 无 | 需要匹配的前缀 |
-
-**返回值**
-
-- `bool`：以 `$needle` 开头返回 `true`。
-
-**示例**
-
-```php
-Str::startsWith("hello world", "hello");   // true
-Str::startsWith("hello world", "world");   // false
-```
-
-### `endsWith($haystack, $needle)` — 是否以指定串结尾
-
-判断字符串 `$haystack` 是否以 `$needle` 结尾。`$needle` 为空字符串时返回 `true`。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$haystack` | `string` | 无 | 被检查字符串 |
-| `$needle` | `string` | 无 | 需要匹配的后缀 |
-
-**返回值**
-
-- `bool`：以 `$needle` 结尾返回 `true`。
-
-**示例**
-
-```php
-Str::endsWith("hello world", "world");   // true
-Str::endsWith("hello world", "hello");   // false
-```
-
-### `contains($haystack, $needle)` — 是否包含指定串
-
-判断字符串 `$haystack` 是否包含 `$needle`。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$haystack` | `string` | 无 | 被检查字符串 |
-| `$needle` | `string` | 无 | 需要查找的子串 |
-
-**返回值**
-
-- `bool`：包含返回 `true`。
-
-**示例**
-
-```php
-Str::contains("hello world", "lo wo");   // true
-Str::contains("hello world", "xyz");     // false
-```
-
-### `before($subject, $search)` — 取分隔符之前部分
-
-返回 `$search` 第一次出现位置之前的部分。若 `$search` 未找到，返回完整字符串。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$subject` | `string` | 无 | 源字符串 |
-| `$search` | `string` | 无 | 分隔符 |
-
-**返回值**
-
-- `string`：分隔符之前的部分。
-
-**示例**
-
-```php
-Str::before("hello@world", "@");   // "hello"
-Str::before("hello", "@");         // "hello"
-```
-
-### `after($subject, $search)` — 取分隔符之后部分
-
-返回 `$search` 第一次出现位置之后的部分。若 `$search` 未找到，返回空字符串。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$subject` | `string` | 无 | 源字符串 |
-| `$search` | `string` | 无 | 分隔符 |
-
-**返回值**
-
-- `string`：分隔符之后的部分。
-
-**示例**
-
-```php
-Str::after("hello@world", "@");   // "world"
-Str::after("hello", "@");         // ""
-```
-
-### `limit($value, $limit = 100, $end = '...')` — 按字符数截断
-
-若字符串长度超过 `$limit`，截取前 `$limit` 个字符并追加 `$end`；否则原样返回。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$value` | `string` | 无 | 源字符串 |
-| `$limit` | `int` | `100` | 最大保留字符数 |
-| `$end` | `string` | `'...'` | 截断后追加的省略标记 |
-
-**返回值**
-
-- `string`：截断后的字符串。
-
-**示例**
-
-```php
-Str::limit("这是一个很长的字符串内容", 6, "...");
-// "这是一个很长..."
-Str::limit("short", 100);   // "short"
-```
-
-### `mask($value, $character = '*', $start = 3, $length = 4)` — 字符串打码
-
-将字符串从 `$start`（从 0 起）位置开始，连续 `$length` 个字符替换为 `$character`。常用于隐藏手机号、身份证中间位。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$value` | `string` | 无 | 源字符串 |
-| `$character` | `string` | `'*'` | 打码字符 |
-| `$start` | `int` | `3` | 起始替换位置（从 0 起） |
-| `$length` | `int` | `4` | 连续替换的字符数 |
-
-**返回值**
-
-- `string`：打码后的字符串。
-
-**示例**
-
-```php
-Str::mask("13812345678", "*", 3, 4);   // "138****5678"
-```
-
-### `length($value)` — 获取字符串长度
-
-获取字符串的字符数（UTF-8 感知，中文按字符计数）。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$value` | `string` | 无 | 源字符串 |
-
-**返回值**
-
-- `int`：字符串字符长度。
-
-**示例**
-
-```php
-Str::length("hello");   // 5
-Str::length("中文");    // 2
-```
-
-### `studly($value)` — 转大驼峰
-
-将字符串转换为大驼峰（StudlyCase），单词首字母大写并去掉分隔符，如 `user_id` → `UserId`。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$value` | `string` | 无 | 源字符串 |
-
-**返回值**
-
-- `string`：大驼峰形式。
-
-**示例**
-
-```php
-Str::studly("user_id");   // "UserId"
-Str::studly("foo-bar");   // "FooBar"
-```
-
-### `camel($value)` — 转小驼峰
-
-将字符串转换为小驼峰（camelCase），首单词小写、后续单词首字母大写，如 `user_id` → `userId`。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$value` | `string` | 无 | 源字符串 |
-
-**返回值**
-
-- `string`：小驼峰形式。
-
-**示例**
-
-```php
-Str::camel("user_id");   // "userId"
-```
-
-### `snake($value, $delimiter = '_')` — 转蛇形
-
-将字符串转换为蛇形（snake_case），各单词间以 `$delimiter` 分隔，如 `UserId` → `user_id`。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$value` | `string` | 无 | 源字符串 |
-| `$delimiter` | `string` | `'_'` | 分隔符，可自定义为 `-` 等 |
-
-**返回值**
-
-- `string`：蛇形形式。
-
-**示例**
-
-```php
-Str::snake("UserId");              // "user_id"
-Str::snake("UserId", "-");         // "user-id"
-```
-
-### `slug($value, $separator = '-')` — 生成 URL Slug
-
-将字符串转换为 URL 友好的 slug：转为小写、去除非字母数字字符、单词间以 `$separator` 连接。适用于生成文章别名、URL 路径。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$value` | `string` | 无 | 源字符串 |
-| `$separator` | `string` | `'-'` | 单词分隔符 |
-
-**返回值**
-
-- `string`：slug 字符串。
-
-**示例**
-
-```php
-Str::slug("Hello World!");        // "hello-world"
-Str::slug("Laravel Framework", "_");  // "laravel_framework"
-```
-
-## 私有辅助方法
+## 概述
+
+提供字符串编解码、格式化、截取、大小写转换、随机生成、XML 解析等一系列
+静态工具方法。全部方法无需实例化即可调用。
+
+方法分为以下几组：
+- 编解码：    fromJsEscape、ucs2ToUtf8、fromXml
+- 模板替换：  replace
+- 随机生成：  random、randomInt、serialNo、uuid
+- 判断：      startsWith、endsWith、contains
+- 截取：      before、after、limit、mask
+- 长度：      length
+- 大小写转换：studly、camel、snake
+- URL/Slug：  slug
+
+## 方法一览
 
 | 方法 | 说明 |
-|------|------|
-| `_simpleXmlToArray($xml)` | 将 `SimpleXMLElement` 递归转为数组（`fromXml()` 内部调用） |
+|---|---|
+| [`fromJsEscape()`](#fromjsescape) | 可对前端通过escape()编码的字符进行解码 |
+| [`ucs2ToUtf8()`](#ucs2toutf8) | UCS-2 编码转换为 UTF-8 |
+| [`fromXml()`](#fromxml) | XML 字符串转数组，保留 XML 属性（以 @attr 键存储） |
+| [`replace()`](#replace) | 使用参数数组替换字符串中的 {key} 占位符 |
+| [`random()`](#random) | 生成随机字符串 |
+| [`randomInt()`](#randomint) | 生成随机整数 |
+| [`serialNo()`](#serialno) | 生成序列单号 |
+| [`uuid()`](#uuid) | 生成 UUID v4 |
+| [`startsWith()`](#startswith) | 检查字符串是否以指定子串开头 |
+| [`endsWith()`](#endswith) | 检查字符串是否以指定子串结尾 |
+| [`contains()`](#contains) | 检查字符串是否包含指定子串 |
+| [`before()`](#before) | 返回字符串中指定搜索值之前的部分 |
+| [`after()`](#after) | 返回字符串中指定搜索值之后的部分 |
+| [`limit()`](#limit) | 截取字符串到指定长度，超出部分以指定字符结尾 |
+| [`mask()`](#mask) | 用指定字符掩盖字符串中间部分 |
+| [`length()`](#length) | 获取字符串长度（多字节安全） |
+| [`studly()`](#studly) | 将字符串转换为 StudlyCase（大驼峰，首字母大写） |
+| [`camel()`](#camel) | 将字符串转换为 camelCase（小驼峰，首字母小写） |
+| [`snake()`](#snake) | 将字符串转换为 snake_case（下划线分隔，全小写） |
+| [`slug()`](#slug) | 生成 URL 友好的 slug |
+
+### fromJsEscape()
+
+```php
+public static function fromJsEscape($str): string
+```
+
+可对前端通过escape()编码的字符进行解码
+
+支持以下编码格式：
+- %uXXXX    — JavaScript escape() 的 Unicode 编码
+- %XX       — 标准 URL 编码（ASCII 字符）
+- &#xXXXX;  — HTML 十六进制字符实体
+- &#NNN;    — HTML 十进制字符实体
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$str` | `string` | — | 要解码的字符串 |
+
+返回：`string` —— string 解码后的 UTF-8 字符串
+
+### ucs2ToUtf8()
+
+```php
+public static function ucs2ToUtf8($data)
+```
+
+UCS-2 编码转换为 UTF-8
+
+优先使用 mb_convert_encoding，不可用时 fallback 到 iconv。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$data` | `string` | — | UCS-2 编码的原始字节 |
+
+### fromXml()
+
+```php
+public static function fromXml($XMLString)
+```
+
+XML 字符串转数组，保留 XML 属性（以 @attr 键存储）
+
+递归解析 XML 节点树，自动处理 CDATA、重复子元素（合并为数组）、
+以及混合内容节点（文本存储为 #text 键）。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$XMLString` | `string` | — | XML 字符串 |
+
+### replace()
+
+```php
+public static function replace($string, $params = []): string
+```
+
+使用参数数组替换字符串中的 {key} 占位符
+
+支持两种模式：
+- 关联数组：按 key 匹配替换，{"name" => "Alice"} 替换 {name}
+- 索引数组：按占位符出现顺序对应替换
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$string` | `string` | — | 包含 {key} 占位符的模板字符串 |
+| `$params` | `array` | `[]` | 参数数组，关联数组按 key 匹配，索引数组按顺序匹配 |
+
+返回：`string` —— string 替换后的字符串
+
+### random()
+
+```php
+public static function random($stringLength = 5, $chars = null, $secure = false): string
+```
+
+生成随机字符串
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$stringLength` | `integer` | `5` | 生成的字符串长度 |
+| `$chars` | `string|null` | `null` | 自定义字符集，默认为 [a-zA-Z0-9] |
+| `$secure` | `bool` | `false` | 是否使用密码学安全随机数（random_int），默认 false |
+
+返回：`string` —— string 随机字符串
+
+### randomInt()
+
+```php
+public static function randomInt($min = 0, $max = 100): int
+```
+
+生成随机整数
+
+PHP 7.0+ 优先使用密码学安全的 random_int，否则 fallback 到 mt_rand
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$min` | `integer` | `0` | 可选的、返回的最小值（默认：0） |
+| `$max` | `integer` | `100` | 可选的、返回的最大值（默认：100） |
+
+返回：`int` —— integer 随机整数
+
+### serialNo()
+
+```php
+public static function serialNo($ExpectLength = 32, $Prefix = null, $Suffix = null, $dateFormat = 'YmdHis'): string
+```
+
+生成序列单号
+
+格式：{前缀}{日期时间}{随机数字填充}{后缀}
+长度不足时用随机数字补全，超出时从尾部截断。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$ExpectLength` | `integer` | `32` | 期望的总长度（含前后缀） |
+| `$Prefix` | `string|int|float|null` | `null` | 前缀，null 表示无前缀 |
+| `$Suffix` | `string|int|float|null` | `null` | 后缀，null 表示无后缀 |
+| `$dateFormat` | `string` | `'YmdHis'` | 日期格式，默认 YmdHis |
+
+返回：`string` —— string 序列单号
+
+### uuid()
+
+```php
+public static function uuid(): string
+```
+
+生成 UUID v4
+
+符合 RFC 4122 标准的版本 4 UUID（随机生成）。
+
+返回：`string` —— string 格式为 xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx 的 UUID
+
+### startsWith()
+
+```php
+public static function startsWith($haystack, $needle): bool
+```
+
+检查字符串是否以指定子串开头
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$haystack` | `string` | — | 被检查的字符串 |
+| `$needle` | `string` | — | 要查找的子串 |
+
+返回：`bool` —— bool
+
+### endsWith()
+
+```php
+public static function endsWith($haystack, $needle): bool
+```
+
+检查字符串是否以指定子串结尾
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$haystack` | `string` | — | 被检查的字符串 |
+| `$needle` | `string` | — | 要查找的子串 |
+
+返回：`bool` —— bool
+
+### contains()
+
+```php
+public static function contains($haystack, $needle): bool
+```
+
+检查字符串是否包含指定子串
+
+为 PHP 7 项目提供 str_contains 兼容实现
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$haystack` | `string` | — | 被检查的字符串 |
+| `$needle` | `string` | — | 要查找的子串 |
+
+返回：`bool` —— bool
+
+### before()
+
+```php
+public static function before($subject, $search): string
+```
+
+返回字符串中指定搜索值之前的部分
+
+若搜索值不存在，返回原字符串。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$subject` | `string` | — | 源字符串 |
+| `$search` | `string` | — | 搜索值 |
+
+返回：`string` —— string
+
+### after()
+
+```php
+public static function after($subject, $search): string
+```
+
+返回字符串中指定搜索值之后的部分
+
+若搜索值不存在，返回原字符串。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$subject` | `string` | — | 源字符串 |
+| `$search` | `string` | — | 搜索值 |
+
+返回：`string` —— string
+
+### limit()
+
+```php
+public static function limit($value, $limit = 100, $end = '...'): string
+```
+
+截取字符串到指定长度，超出部分以指定字符结尾
+
+多字节安全：优先使用 mb_substr，fallback 到 substr。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$value` | `string` | — | 要截取的字符串 |
+| `$limit` | `int` | `100` | 最大长度 |
+| `$end` | `...string` | `'...'` | 超出时追加的结尾字符 |
+
+返回：`string` —— string
+
+### mask()
+
+```php
+public static function mask($value, $character = '*', $start = 3, $length = 4): string
+```
+
+用指定字符掩盖字符串中间部分
+
+适用于手机号、邮箱、身份证号等敏感数据的脱敏展示。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$value` | `string` | — | 原始字符串 |
+| `$character` | `string` | `'*'` | 掩盖字符，默认为 * |
+| `$start` | `int` | `3` | 从第几位开始掩盖（0-based） |
+| `$length` | `int` | `4` | 掩盖长度，null 表示从 start 掩盖到末尾 |
+
+返回：`string` —— string
+
+### length()
+
+```php
+public static function length($value): int
+```
+
+获取字符串长度（多字节安全）
+
+优先使用 mb_strlen 以正确处理中文等多字节字符，
+mbstring 不可用时 fallback 到 strlen。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$value` | `string` | — | 要计算长度的字符串 |
+
+返回：`int` —— int 字符数（非字节数）
+
+### studly()
+
+```php
+public static function studly($value): string
+```
+
+将字符串转换为 StudlyCase（大驼峰，首字母大写）
+
+"foo_bar_baz" → "FooBarBaz"
+"foo-bar-baz" → "FooBarBaz"
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$value` | `string` | — | 要转换的字符串 |
+
+返回：`string` —— string
+
+### camel()
+
+```php
+public static function camel($value): string
+```
+
+将字符串转换为 camelCase（小驼峰，首字母小写）
+
+"foo_bar_baz" → "fooBarBaz"
+"foo-bar-baz" → "fooBarBaz"
+"FooBar"      → "fooBar"
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$value` | `string` | — | 要转换的字符串 |
+
+返回：`string` —— string
+
+### snake()
+
+```php
+public static function snake($value, $delimiter = '_'): string
+```
+
+将字符串转换为 snake_case（下划线分隔，全小写）
+
+"FooBarBaz"  → "foo_bar_baz"
+"fooBarBaz"  → "foo_bar_baz"
+"foo-barBaz" → "foo_bar_baz"
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$value` | `string` | — | 要转换的字符串 |
+| `$delimiter` | `string` | `'_'` | 分隔符，默认为下划线 |
+
+返回：`string` —— string
+
+### slug()
+
+```php
+public static function slug($value, $separator = '-'): string
+```
+
+生成 URL 友好的 slug
+
+将字符串转换为仅包含小写字母、数字和指定分隔符的格式。
+适用于文章标题转 URL 路径、分类别名等场景。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$value` | `string` | — | 要转换的字符串 |
+| `$separator` | `string` | `'-'` | 分隔符，默认为中划线 |
+
+返回：`string` —— string
+
+## 非公开方法
+
+**private**
+
+- `private static function _simpleXmlToArray(\SimpleXMLElement $xml)` —— 递归将 SimpleXMLElement 转为数组，保留属性
+
+## 同目录
+
+- [Arr](/php/api/foundation/data/arr)
+- [Date](/php/api/foundation/data/date)
+- [Func](/php/api/foundation/data/func)
+- [Money](/php/api/foundation/data/money)
+- [Mutator](/php/api/foundation/data/mutator)
+- [Numeric](/php/api/foundation/data/numeric)
+- [Serializer](/php/api/foundation/data/serializer)
+- [Transform](/php/api/foundation/data/transform)
+

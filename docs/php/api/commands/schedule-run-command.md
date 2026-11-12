@@ -1,35 +1,57 @@
-# ScheduleRunCommand — 定时任务执行命令
+# ScheduleRunCommand
 
-- **文件位置**: `kernel/Commands/ScheduleRunCommand.php`
-- **命名空间**: `kernel\Commands`
-- **命令名**: `schedule:run`
+`kernel\Commands\ScheduleRunCommand`  ·  class
 
-执行定时任务的命令。
+源码：`gstudio_kernel/Commands/ScheduleRunCommand.php`
 
-## 用法
+> 定时任务执行命令
 
-```bash
-php kernel/console schedule:run
+## 声明
+
+```php
+class ScheduleRunCommand
 ```
 
-## 行为
+## 概述
 
-直接经 `Crons` 门面（`kernel\Facades\Crons`）执行：
+命令名 schedule:run 在 kernel/console 中注册（Console::addCommand）。
 
-- 业务应用若已通过门面登记任务（如 `Crons::registerClass(...)`），则复用同一单例实例；
-- 否则门面 `resolve()` 自动 `new` 一个 `Crontab\Crons` 管理器，并扫描当前应用 `Crons/` 目录（命名空间 `{AppId}\Crons`）登记所有继承 `kernel\Foundation\Crontab\Cron` 的任务类。
+用法：
+php isdtj/console schedule:run
 
-随后对 `due()` 为 `true` 的任务调用 `run()`，按 `plan()` 定义的计划执行到期任务，并对扫描时未找到的类名输出告警。
+直接经 Crons 门面执行：业务应用可先经门面登记定时器（如 Crons::registerClass(...)）；
+未登记时门面自动实例化并扫描当前应用 Crons/ 目录，
+对继承 kernel\Foundation\Crontab\Cron 且到期的任务调用 run()。
 
-## 参数
-
-| 参数 | 说明 |
-|------|------|
-| 位置参数 | 无 |
-| 选项参数 | 无 |
-
-## 方法
+## 方法一览
 
 | 方法 | 说明 |
-|------|------|
-| `handle($console, $args, $options): int` | 经门面执行到期任务 → 输出告警/结果 |
+|---|---|
+| [`handle()`](#handle) | 命令处理器 |
+
+### handle()
+
+```php
+public function handle($console, $args, $options): int
+```
+
+命令处理器
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$console` | `\kernel\Foundation\Console\Console` | — | 控制台实例 |
+| `$args` | `array` | — | 位置参数（无） |
+| `$options` | `array` | — | 选项参数（无） |
+
+返回：`int` —— integer 退出码，0 表示成功
+
+## 同目录
+
+- [MakeAppCommand](/php/api/commands/make-app-command)
+- [MakeCommand](/php/api/commands/make-command)
+- [MakeControllerCommand](/php/api/commands/make-controller-command)
+- [MakeMiddlewareCommand](/php/api/commands/make-middleware-command)
+- [MakeModelCommand](/php/api/commands/make-model-command)
+- [PackageCommand](/php/api/commands/package-command)
+- [UnpackCommand](/php/api/commands/unpack-command)
+

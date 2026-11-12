@@ -1,32 +1,46 @@
-# MakeCommand — 生成类命令基类
+# MakeCommand
 
-- **文件位置**: `kernel/Commands/MakeCommand.php`
-- **命名空间**: `kernel\Commands`
-- **是否可继承**: 是（抽象基类）
+`kernel\Commands\MakeCommand`  ·  class
 
-为 `make:model` / `make:controller` / `make:middleware` 提供公共能力：子目录解析、命名空间拼接、骨架文件写入。**不定义 `$name`，不会被注册为命令。**
+源码：`gstudio_kernel/Commands/MakeCommand.php`
+
+> 生成类命令的抽象基类
+
+## 声明
+
+```php
+class MakeCommand
+```
+
+## 概述
+
+为 make:model / make:controller / make:middleware 提供公共能力：
+- 参数解析：支持 "Admin/User" 形式的子目录/子命名空间
+- 命名空间拼接
+- 骨架文件写入（含已存在保护与 --force 覆盖）
+
+注意：本类为抽象基类，不定义 $name 属性，不会被注册为命令。
 
 ## 方法
 
-| 方法 | 说明 |
-|------|------|
-| `split(string $arg): array` | 解析 `"Admin/User"` 为 `[子目录, 类短名]` |
-| `joinNamespace(string $base, string $subDir): string` | 拼接命名空间 |
-| `write(string $targetDir, string $className, string $namespace, string $body, bool $force, $console): bool` | 写入骨架（已存在保护，`--force` 覆盖） |
-| `tableName(string $className): string` | `UserModel → user`、`OrderItemModel → order_item` |
+本类没有公开方法。
 
-## 使用
+## 非公开方法
 
-```php
-use kernel\Commands\MakeCommand;
+**protected**
 
-class MakeSomethingCommand extends MakeCommand
-{
-    public function handle($console, $args, $options): int
-    {
-        [$subDir, $shortName] = $this->split($args[0]);
-        $namespace = $this->joinNamespace("app\Xxx", $subDir);
-        return $this->write(Path::root() . "/Xxx", "$subDir/$shortName", $namespace, $body, !empty($options["force"]), $console) ? 0 : 1;
-    }
-}
-```
+- `protected function split(string $arg): array` —— 将输入参数解析为 [相对目录, 类短名]
+- `protected function joinNamespace(string $base, string $subDir): string` —— 拼接命名空间
+- `protected function write(string $targetDir, string $className, string $namespace, string $body, bool $force, $console): bool` —— 写入骨架文件
+- `protected function tableName(string $className): string` —— 由模型类名推断数据表名
+
+## 同目录
+
+- [MakeAppCommand](/php/api/commands/make-app-command)
+- [MakeControllerCommand](/php/api/commands/make-controller-command)
+- [MakeMiddlewareCommand](/php/api/commands/make-middleware-command)
+- [MakeModelCommand](/php/api/commands/make-model-command)
+- [PackageCommand](/php/api/commands/package-command)
+- [ScheduleRunCommand](/php/api/commands/schedule-run-command)
+- [UnpackCommand](/php/api/commands/unpack-command)
+

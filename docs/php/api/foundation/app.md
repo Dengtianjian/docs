@@ -1,297 +1,196 @@
-# App — 应用核心
+# App
 
-- **文件位置**: `kernel/Foundation/App.php`
-- **命名空间**: `kernel\Foundation`
-- **是否可继承**: 是
+`kernel\Foundation\App`  ·  class
 
-应用核心类，负责注册当前应用、定义常量、装配组件、运行生命周期。**构造时不实例化任何组件**（延迟实例化），组件在 `run()`/`handle()` 时由 `ensureInstances()` 兜底实例化，或由 `setup()` 手动注入自定义实例。
+源码：`gstudio_kernel/Foundation/App.php`
 
-## 属性
+> Web 应用：框架零件登记 + 装配 + 请求执行流程
 
-| 属性 | 类型 | 默认 | 可见性 | 说明 |
-|------|------|------|--------|------|
-| `$id` | `string\|null` | `null` | protected | 当前应用的 ID，也是项目文件夹名称。取自已实例化 App 的第一个构造参数，后实例化者覆盖 |
-| `$kernelId` | `string\|null` | `null` | protected | 内核的 ID，也是内核目录文件夹名称，默认 `"kernel"` |
-| `$middleware` | `Middleware` | `null` | protected | 中间件管理器 |
-| `$router` | `Router` | `null` | protected | 路由相关 |
-| `$request` | `Request` | `null` | protected | 请求相关 |
-| `$startTime` | `int\|float` | `null` | protected | 开始时间戳（构造时 `Date::milliseconds()`） |
-| `$lifeCycle` | `Lifecycle` | `null` | protected | 生命周期管理器，委托管理引导/结束/错误钩子 |
-| `$currentApp` | `App\|null` | `null` | protected static | 当前（最近实例化）的 App 实例；构造即自动注册 |
-| `$ensuringInstances` | `bool` | `false` | protected static | `ensureInstances()` 进行中标记，防止 Lifecycle 构造触发钩子回调时递归 |
-
-## 方法速查表
-
-| 方法 | 作用 |
-|------|------|
-| `__construct()` | 构造：注册当前 App、记录 startTime、定义常量、引入 Common、注册异常/错误处理器 |
-| `setup()` | 应用装配：手动实例化组件并注入（类名或闭包） |
-| `set()` | 批量注入自定义组件实例 |
-| `run()` | 运行应用：兜底实例化、启动钩子、路由匹配、中间件链、控制器分发、结束钩子 |
-| `executeController()` | 执行控制器目标方法，并包装异常 |
-| `request()` / `router()` / `lifeCycle()` / `middleware()` | 组件访问器（懒实例化） |
-| `getInstance()` / `id()` / `kernelId()` / `mode()` | 静态访问当前实例 / ID / 内核 ID / 运行模式 |
-| `ensureInstances()` | （protected）延迟实例化兜底 |
-| `defineConstants()` | （protected）定义常量（如 `F_BASE_URL`） |
-
----
-
-## `__construct($id, $kernelId = "kernel")` — 构造
-
-> 构造只做：注册当前 App、设置 `id`/`kernelId`/`startTime`、定义常量、`include Common.php`、注册全局异常与错误处理器。**不实例化任何组件**。
-
-**签名**
+## 声明
 
 ```php
-__construct($id, $kernelId = "kernel")
+class App extends Application
 ```
 
-**参数**
+父类：[Application](/php/api/foundation/application/application)
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$id` | `string` | —（必填） | 应用唯一 ID，**必须与项目目录同名**（`Path::root()` 由此推导） |
-| `$kernelId` | `string` | `"kernel"` | 内核 ID。内核也是 App 也有 ID，默认 `"kernel"`；仅自定义内核目录名时修改 |
+## 概述
 
-**返回值**
+身份（ID / kernelId）、容器、组件登记与取用全在基类 [Application](/php/api/foundation/application/application) 里，
+本类只负责 Web 这一层：装配（`assemble`）、执行（`run`）、
+控制器调用（`executeController`）与路由参数绑定。
 
-- `App`（实例）。构造即自动注册为当前 App，`getApp()`/`App::getInstance()` 可立即取到。
+组件一律由容器持有，App 不为组件保留属性；`$app->xxx()` 由基类
+`Application::__call` 按类短名解析到容器。新增组件只需在装配期绑定，
+不需要改这个类。
 
-**示例**
+## 相关
+
+- [Application](/php/api/foundation/application/application) 身份、容器与组件装配
+- `Application::__call` 短名到容器的解析规则
+
+## 转发方法
+
+门面通过 `__callStatic` 转发到实例，以下为可用的静态方法：
+
+| 签名 | 说明 |
+|---|---|
+| `request()` | 当前请求（请求级，跨应用共享同一份） |
+| `router()` | 路由表与路由匹配（请求级） |
+| `lifeCycle()` | 生命周期钩子（请求级） |
+| `middleware()` | 中间件链（应用级） |
+| `config()` | 本应用配置（应用级） |
+
+## 方法一览
+
+| 方法 | 说明 |
+|---|---|
+| [`__construct()`](#__construct) | 构造：基座 + 框架零件 + 装配 |
+| [`onBootUp()`](#onbootup) | 注册启动钩子或启动装配类 |
+| [`onShutdown()`](#onshutdown) | 注册结束钩子或结束装配类 |
+| [`onError()`](#onerror) | 注册错误钩子 |
+| [`run()`](#run) | 启动应用：提交组件 → 生命周期启动 → 路由匹配 → 中间件执行 → 响应输出 |
+| [`executeController()`](#executecontroller) | 执行控制器/闭包路由，并将返回值写入控制器响应 |
+
+### __construct()
 
 ```php
-use kernel\Foundation\App;
-
-$app = new App("demo");           // 应用 ID 与目录名一致
-$app = new App("demo", "kernel"); // 显式指定内核 ID
+public function __construct($setup = null, $id = null, $kernelId = "kernel")
 ```
 
----
+构造：基座 + 框架零件 + 装配
 
-## `setup($call)` — 应用装配
+三步，顺序不能换：
+1. 基座（身份、容器、启动时间、登记到应用管理器）由
+`Application::__construct` 准备；
+2. 登记框架零件：App 自身、ConfigProvider / LogProvider / Middleware，以及请求级三件套
+Request / Router / LifecycleProvider（只登记、不构造）；
+3. 执行装配（`assemble`）——Bootstrap 里第一句就要 `register()`，因此必须排在最后。
 
-> 必须在 `run()` 之前调用，调用时立即执行。用于手动实例化组件并注入 App。
+构造完成即「配置好的、可 run() 的应用」，不再有「new 完还得记得 setup」的半成品状态。
 
-**签名**
+构造期零副作用是懒装配的前提：`Application::of` 懒装配别的应用时传 `null`，
+不会顺带把对方的请求、路由表、钩子链拉起来。
+
+路由表由 Router 加载，匹配所需的当前请求经 `$app->request()` 获取。CLI 下 Request 的
+URI 由 Console::handle() 置为命中的命令名；DiscuzX 下由 `DiscuzXApp::run()` 在
+处理请求前写入。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$setup` | `string|callable|null` | `null` | 装配类名或装配闭包；null 表示只建骨架、不装配 |
+| `$id` | `string` | `null` | 应用唯一标识，跟项目目录同名 |
+| `$kernelId` | `string` | `"kernel"` | 内核 id，默认 kernel |
+
+### onBootUp()
 
 ```php
-setup($call)
+public function onBootUp($callback = null)
 ```
 
-**参数**
+注册启动钩子或启动装配类
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$call` | `string\|callable` | —（必填） | **类名**：立即 `new $call($this)`（构造即装配，Bootstrap 构造签名 `__construct($app)`）；若为无参构造（旧式 Bootstrap）则 `new $call()`。<br>**闭包**：立即执行 `$call($this)`，闭包内可调用 `$app->set([...])` 注入 |
+委托给请求级的 `LifecycleProvider`：状态（是否已触发、捕获的异常）跟着请求走，
+常驻进程下由容器 `flush()` 一并清掉，不会串到下一轮。
 
-**返回值**
-
-- `$this`（链式）。
-
-**示例**
-
+装配期（构造参数里的闭包 / Bootstrap）即可注册：
 ```php
-$app->setup(\App\Setup\Bootstrap::class);  // 类名装配（推荐）
-$app->setup(function ($app) {               // 闭包装配
-    $app->set(["middleware" => new Middleware]);
+new DiscuzXApp(function ($app) {
+$app->onBootUp(Bootup::class);
+$app->onShutdown(Shutdown::class);
 });
 ```
 
-> Bootstrap 内典型写法：手动 `new Config`/`new Cache`/`new FileSystem`；`new Middleware` 后 `->set(...)` 注册中间件；`new Lifecycle` 后 `->onBootUp(...)`/`->onShutdown(...)` 注册钩子；最后 `$app->set([...])` 批量注入。
-
----
-
-## `set(array $instances)` — 批量注入组件
-
-> 数组键为组件名，值为手动 new 出的实例，替换 App 对应组件。未注入的组件 `run()` 时自动兜底实例化。
-
-**签名**
-
 ```php
-set(array $instances)
+new DiscuzXApp(function ($app) {
+$app->onBootUp(Bootup::class);
+$app->onShutdown(Shutdown::class);
+});
 ```
 
-**参数**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$callback` | `string|callable|null` | `null` | 装配类名、启动回调；null 时用 {App}\Setup\Bootup |
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$instances` | `array` | —（必填） | 关联数组 `组件名 => 实例`。**支持键**：`router` / `request` / `lifeCycle` / `middleware`（其余键忽略） |
-
-**返回值**
-
-- `$this`（链式）。
-
-**示例**
+### onShutdown()
 
 ```php
-$app->set([
-    "router"     => $router,
-    "request"    => $request,
-    "lifeCycle"  => $lifeCycle,
-    "middleware" => $middleware,
-]);
+public function onShutdown($callback)
 ```
 
----
+注册结束钩子或结束装配类
 
-## `run()` — 运行应用
+正常结束与异常结束都会执行。回调签名 `function ($response, $context)`。
 
-> 首行 `ensureInstances()` 兜底实例化（Config→Router→Request→Middleware→Lifecycle），随后按序执行。OPTIONS 预检请求也执行结束钩子（`$context["preflight"] = true`）。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$callback` | `string|callable` | — | 装配类名或结束回调 |
 
-**执行流程**：
-
-1. `ensureInstances()` 兜底实例化未注入的组件
-2. OPTIONS 预检：`fireShutdown()` 后 `return`
-3. `fireBootUp()` 启动钩子
-4. 直接调用 App 持有的 Router 的 `match()` 路由匹配；未命中抛 404
-5. 命中参数经 `$request->params->fill()` 注入
-6. 控制器实例化 + `before()` + 目标方法（默认 `data`）
-7. `middleware->execute()` 中间件链（全局 + 路由级）
-8. `after()` + 输出响应 + `fireShutdown()`
-9. 异常路径：`fireError()` → `fireShutdown()` → 抛出交由全局异常处理器
-
-**签名**
+### onError()
 
 ```php
-run()
+public function onError($callback)
 ```
 
-**参数**
+注册错误钩子
 
-- 无。
+请求处理过程中捕获到异常时触发，回调签名 `function (\Throwable $e)`。
 
-**返回值**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$callback` | `callable` | — | 错误回调 |
 
-- `void`（正常结束内部 `exit`）。
-
----
-
-## `executeController($callTarget, $callParams, &$controller)` — 执行控制器目标
-
-> 用 `call_user_func_array` 调用目标，捕获异常并包装为 `Error`；处理控制器实例化与响应赋值。
-
-**签名**
+### run()
 
 ```php
-executeController($callTarget, $callParams, &$controller)
+public function run()
 ```
 
-**参数**
+启动应用：提交组件 → 生命周期启动 → 路由匹配 → 中间件执行 → 响应输出
 
-| 参数 | 类型 | 说明 |
-|------|------|------|
-| `$callTarget` | `callable\|array` | 可调用目标（闭包，或 `[控制器, 方法名]`） |
-| `$callParams` | `array` | 传给目标的参数数组（`array_values` 处理后按顺序传参） |
-| `$controller` | `Controller\|null` | 控制器实例（引用传递；为 `null` 或可调用时自动 `new Controller($request)`） |
+主流程四步，细节在下列私有方法里：
+1. 开发模式下把依赖图写进日志（此时装配已结束）；
+2. `LifecycleProvider::fireBootUp` 触发启动钩子，随后 `matchRoute` 匹配路由并注入参数
+（未命中抛 404）、`resolveController` 构建控制器 / 闭包与实参
+（构造期异常属代码/装配错误，交由全局异常处理器兜底）；
+3. `runMiddleware` 执行中间件链，内层依次 before() → `executeController` → after()；
+中间件短路未进入内层时兜底补一次 after()；
+4. `outputResponse` 触发结束钩子、输出响应并 exit。
 
-**返回值**
+异常路径：fireError() 触发错误钩子 → fireShutdown() 触发结束钩子 → 交由全局异常处理器输出。
 
-- `void`。异常统一包装：非 `Error` 抛 `new Error($msg, 500, "500:ServerError", $trace)`。
-
----
-
-## 组件访问器（懒实例化）
-
-> 对应组件为 `null` 时先 `new` 再返回。
-
-| 方法 | 返回类型 | 说明 |
-|------|----------|------|
-| `request()` | `Request` | 请求实例（CLI 下 URI 由 `Console::handle()` 置为命中的命令名；HTTP 下为请求 URI） |
-| `router()` | `Router` | 路由实例 |
-| `lifeCycle()` | `Lifecycle` | 生命周期管理器 |
-| `middleware()` | `Middleware` | 中间件管理器 |
-
-**示例**
+### executeController()
 
 ```php
-$app->request()->method;      // 请求方法
-$app->middleware()->set(...); // 注册中间件
+public function executeController($callTarget, $callParams, &$controller)
 ```
 
----
+执行控制器/闭包路由，并将返回值写入控制器响应
 
-## 静态方法
+由 run() 中的中间件链回调调用。核心逻辑：
+- 以 call_user_func_array 调用路由目标（闭包或控制器方法），捕获异常并包装为 Error；
+- $controller 为 null 或可调用时（闭包路由），补建默认 Controller 以承载响应；
+- 将返回的响应写入 $controller->response：Response 实例直接赋值，否则 setData()。
 
-### `App::getInstance()`
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$callTarget` | `callable|array` | — | 路由目标（闭包，或 [控制器, 方法名]） |
+| `$callParams` | `array` | — | 传给路由目标的参数 |
+| `$controller` | `object|null` | — | 控制器实例（按引用传入；闭包路由时为 null，此处补建） |
 
-> 返回当前（最近实例化）的 App 实例，等价全局函数 `getApp()`。
+## 非公开方法
 
-**签名**
+**protected**
 
-```php
-static getInstance(): App|null
-```
+- `protected function assemble($call)` —— 应用装配：执行装配类或装配闭包（构造末尾调用，不再对外暴露）
+- `protected function bindParamsByName($parameters, $routeParams)` —— 按参数名绑定路由参数（反射）
+- `protected function bindClosureParams($parameters, $routeParams, $instantiateParams, $request)` —— 按参数名绑定闭包路由参数（反射，保持声明顺序）
+- `protected function isRequestParameter($param, $request)` —— 判断闭包参数是否应注入当前请求实例（按类型声明）
 
-**参数**
+**private**
 
-- 无。
+- `private function matchRoute()` —— 匹配当前请求的路由，并把路由参数注入请求
+- `private function resolveController($route, $routeParams)` —— 构建调用目标：控制器实例 + [调用目标, 实参]
+- `private function runMiddleware($route, &$controller, $callTarget, $callParams)` —— 执行中间件链，并把链的返回值回填到控制器响应
+- `private function outputResponse($controller)` —— 结束钩子 + 响应输出（正常路径的终点，不返回）
 
-**返回值**
-
-- `App|null`：当前 App 实例；尚未实例化返回 `null`。
-
-### `App::id()`
-
-**签名**
-
-```php
-static id(): ?string
-```
-
-**参数**
-
-- 无。
-
-**返回值**
-
-- `string|null`：当前应用的 ID（项目文件夹名）；尚未实例化返回 `null`。
-
-### `App::kernelId()`
-
-**签名**
-
-```php
-static kernelId(): ?string
-```
-
-**参数**
-
-- 无。
-
-**返回值**
-
-- `string|null`：内核的 ID（默认 `"kernel"`）；尚未实例化返回 `null`。
-
-### `App::mode()`
-
-> 读取配置 `"mode"` 键，替代原 `F_APP_MODE` 常量。
-
-**签名**
-
-```php
-static mode(): string
-```
-
-**参数**
-
-- 无。
-
-**返回值**
-
-- `string`：运行模式（`production` / `development` / `local` / `release` 等）；未配置默认 `"production"`。
-
----
-
-## 受保护方法
-
-| 方法 | 说明 |
-|------|------|
-| `ensureInstances()` | 延迟实例化兜底：Router/Request/Middleware/Lifecycle 未实例化则构造默认实例，Config 未加载则加载。**Cache/FileSystem 不在此列**，需装配类手动 new。带 `$ensuringInstances` 防递归标记。返回 `void` |
-| `defineConstants()` | 定义常量（`F_BASE_URL`，按 `REQUEST_SCHEME`/`HTTPS`/`HTTP_HOST` 拼 URL）。返回 `void` |
-| `__clone()` | 禁止克隆（protected 空实现） |
-
----
-
-## 全局函数
-
-构造时会 `include Common.php`，提供全局 `getApp()`、`config()`、`path()`、`abort()` 等便捷函数（见 Common 文档）。

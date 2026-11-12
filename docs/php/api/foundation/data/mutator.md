@@ -1,440 +1,618 @@
-# Mutator — 数据转换器
+# Mutator
 
-- **文件位置**: `kernel/Foundation/Data/Mutator.php`
-- **命名空间**: `kernel\Foundation\Data`
-- **是否可继承**: 是
+`kernel\Foundation\Data\Mutator`  ·  class
 
-数据转换器，通过链式方法声明类型/管道规则，对数据执行类型转换与清洗。支持标量类型、嵌套结构、点号路径、通配符、多步管道。是 `Controller::$requestQuerySerializes` / `$requestBodySerializes` 的底层实现。
+源码：`gstudio_kernel/Foundation/Data/Mutator.php`
 
-## 属性
+> 数据突变器 —— 将输入数据按类型规则进行深度转换。
 
-| 属性 | 类型 | 默认 | 可见性 | 说明 |
-|------|------|------|--------|------|
-| `$data` | `mixed` | `null` | protected | 待转换的数据（通过 `data()` 绑定） |
-| `$rules` | `array` | `[]` | protected | 当前累积的转换规则（按点号路径） |
-| `$completion` | `bool` | `false` | protected | 是否自动补全缺失键 |
-| `$removeNotExistRuleKey` | `bool` | `false` | protected | 是否移除规则外多余键 |
-
-## 构造
-
-### `__construct($types = null, bool $completion = false, bool $removeNotExistRuleKey = false)` — 构建转换器
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$types` | `array\|string\|null` | `null` | 初始规则数组（键为点号路径，值为规则/类型字符串），或一个规则字符串 |
-| `$completion` | `bool` | `false` | 是否自动补全数据中缺失的规则键（为 `true` 时按规则补默认值） |
-| `$removeNotExistRuleKey` | `bool` | `false` | 是否移除数据中规则未声明的多余键 |
-
-**返回值**
-
-- 无。
-
-## 使用流程
-
-1. `new Mutator($rules)` 或 `new Mutator()` 后通过链式方法添加规则
-2. `->data($data)` 绑定待转换数据
-3. `->convert()` 执行转换并返回结果
-
-**示例**
+## 声明
 
 ```php
-use kernel\Foundation\Data\Mutator;
-
-// 规则数组方式
-$mutator = new Mutator(["name" => "string", "age" => "int"]);
-$data = $mutator->data(["name" => "张三", "age" => "25"])->convert();
-
-// 链式管道方式
-$data = (new Mutator())->data(["name" => "  ZHANG SAN  "])->trim()->lower()->convert();
-// "zhang san"
+class Mutator
 ```
 
-## 方法速查表
+## 概述
 
-| 类别 | 方法 |
-|------|------|
-| 绑定 | `data($data)` |
-| 标量类型 | `string()` / `int()` / `double()` / `bool()` |
-| 复合类型 | `array()` / `object()` |
-| 时间类型 | `timestamp()` / `timestamp_m()` / `date()` / `datetime()` |
-| 清洗 | `mask()` / `trim()` / `lower()` / `upper()` / `abs()` |
-| 编解码 | `number()` / `json()` / `json_decode()` / `urlencode()` / `urldecode()` |
-| 安全 | `strip_tags()` / `htmlspecialchars()` / `base64()` / `base64_decode()` |
-| 处理 | `implode()` / `pluck()` / `default()` / `round()` / `number_format()` / `truncate()` |
-| 终止 | `convert($types = null)` |
+核心能力：
+- 单一类型转换（如整份数据转为 int）
+- 管道链式转换（"string|int|mask:3" 或 ["string","int","mask:3"]），用 | 或数组分隔多步类型，按序处理
+- 时间戳转换（timestamp 秒级 / timestamp_m 毫秒级）
+- 日期转换（date 日期 / datetime 日期时间），支持 :format 自定义输出格式
+- 密文遮盖（mask / mask:4），将字符串中间部分替换为 *，默认遮盖 80%
+- 字符串清洗（trim / lower / upper / strip_tags / htmlspecialchars）
+- 数值处理（number 提取数字 / abs 绝对值 / round 四舍五入 / number_format 千分位）
+- 空值兜底（default:值），null / '' 时使用默认值（其余规则对 null 不做转换，保持原值）
+- JSON 编解码（json / json_decode）
+- 数组操作（pluck 提取 / implode 拼接）
+- 编码转换（urlencode / urldecode / base64 / base64_decode）
+- 字符串截断（truncate:n:suffix）
+- 关联数组逐键类型映射，支持点号路径（"user.profile.id"）和通配符（"items.*.price"）
+- 分隔符语法：将字符串按分隔符拆分后逐元素转换（如 "int/," 按逗号拆分转 int）
+- array＜type＞ 语法：对索引数组逐元素指定类型
+- 嵌套 Mutator 实例管道处理
+- callable 自定义转换
+- completion / removeNotExistRuleKey 控制数据结构的补全与裁剪
 
-## 方法
+使用示例：
+```php
+// 简单类型
+(new Mutator)->data('123')->int()->convert();                    // 123
 
-### `data($data)` — 绑定数据
+// 时间戳
+(new Mutator)->data('2024-01-01')->timestamp()->convert();      // 1704067200
+(new Mutator)->data('2024-01-01')->timestamp_m()->convert();    // 1704067200000
 
-绑定待转换的数据。之后可链式追加转换规则。
+// 日期 & 日期时间
+(new Mutator)->data(1704067200)->date()->convert();             // "2024-01-01"
+(new Mutator)->data('2024-01-01')->datetime()->convert();       // "2024-01-01 00:00:00"
+(new Mutator)->data('2024-01-01 12:30:00')->date()->convert();  // "2024-01-01"
 
-**参数**
+// 自定义格式
+(new Mutator)->data('2024-01-01')
+->convert('date:Y年m月d日');                                  // "2024年01月01日"
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$data` | `mixed` | 无 | 待转换数据 |
+// 密文遮盖
+(new Mutator)->data('13288364266')->mask()->convert();           // "1*********6"
+(new Mutator)->data('13288364266')
+->convert('mask:4');                                          // "132****4266"
 
-**返回值**
+// 管道链式转换（字符串形式和数组形式等价）
+(new Mutator)->data('13288364266')->convert('string|mask:3');     // "132****4266"
+(new Mutator)->data('13288364266')
+->convert(['string', 'mask:3']);                               // "132****4266"
+(new Mutator)->data('123.99')->convert('float|int|string');        // "123"
+(new Mutator)->data('123.99')->convert(['float', 'int', 'string']); // "123"
 
-- `$this`：支持链式调用。
+// 数组映射
+(new Mutator(['name' => 'string', 'age' => 'int']))
+->data(['name' => 'admin', 'age' => '18'])
+->convert();
+// => ['name' => 'admin', 'age' => 18]
 
-### `string()` / `int()` / `double()` / `bool()` / `array()` / `object()` — 类型转换
+// 点号路径
+(new Mutator(['user.profile.id' => 'int']))
+->data(['user' => ['profile' => ['id' => '9910']]])
+->convert();
+// => ['user' => ['profile' => ['id' => 9910]]]
 
-追加对应类型转换规则。`int` 走 `(int)` 强转；`double` 走 `(float)`；`bool` 兼容字符串 `"true"`/`"false"`；`array` 将字符串按 `,` 拆；`object` 走 `(object)` 强转。
+// 通配符
+(new Mutator(['items.*.price' => 'double']))
+->data(['items' => [['price' => '9.99'], ['price' => '12.50']]])
+->convert();
+// => ['items' => [['price' => 9.99], ['price' => 12.50]]]
+```
 
-**参数**
-
-- 无。
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-**示例**
+## 示例
 
 ```php
-(new Mutator())->data(123)->string()->convert();          // "123"
-(new Mutator())->data("42")->int()->convert();            // 42
-(new Mutator())->data("true")->bool()->convert();         // true
-(new Mutator())->data("a,b")->array()->convert();         // ["a", "b"]
-(new Mutator())->data(["a" => 1])->object()->convert();  // (object)["a" => 1]
+// 简单类型
+(new Mutator)->data('123')->int()->convert();                    // 123
+
+// 时间戳
+(new Mutator)->data('2024-01-01')->timestamp()->convert();      // 1704067200
+(new Mutator)->data('2024-01-01')->timestamp_m()->convert();    // 1704067200000
+
+// 日期 & 日期时间
+(new Mutator)->data(1704067200)->date()->convert();             // "2024-01-01"
+(new Mutator)->data('2024-01-01')->datetime()->convert();       // "2024-01-01 00:00:00"
+(new Mutator)->data('2024-01-01 12:30:00')->date()->convert();  // "2024-01-01"
+
+// 自定义格式
+(new Mutator)->data('2024-01-01')
+->convert('date:Y年m月d日');                                  // "2024年01月01日"
+
+// 密文遮盖
+(new Mutator)->data('13288364266')->mask()->convert();           // "1*********6"
+(new Mutator)->data('13288364266')
+->convert('mask:4');                                          // "132****4266"
+
+// 管道链式转换（字符串形式和数组形式等价）
+(new Mutator)->data('13288364266')->convert('string|mask:3');     // "132****4266"
+(new Mutator)->data('13288364266')
+->convert(['string', 'mask:3']);                               // "132****4266"
+(new Mutator)->data('123.99')->convert('float|int|string');        // "123"
+(new Mutator)->data('123.99')->convert(['float', 'int', 'string']); // "123"
+
+// 数组映射
+(new Mutator(['name' => 'string', 'age' => 'int']))
+->data(['name' => 'admin', 'age' => '18'])
+->convert();
+// => ['name' => 'admin', 'age' => 18]
+
+// 点号路径
+(new Mutator(['user.profile.id' => 'int']))
+->data(['user' => ['profile' => ['id' => '9910']]])
+->convert();
+// => ['user' => ['profile' => ['id' => 9910]]]
+
+// 通配符
+(new Mutator(['items.*.price' => 'double']))
+->data(['items' => [['price' => '9.99'], ['price' => '12.50']]])
+->convert();
+// => ['items' => [['price' => 9.99], ['price' => 12.50]]]
 ```
 
-### `timestamp()` / `timestamp_m()` / `date()` / `datetime()` — 时间类型
+## 常量
+
+| 常量 | 值 | 说明 |
+|---|---|---|
+| `ALLOWED_TYPES` | `[ 'boolean', 'bool', 'integer', 'int', 'float', 'double', 'string', 'array', 'object', 'null', 'any', ]` | settype() 允许的类型名白名单。 |
+| `WHOLE_VALUE_TYPES` | `[ 'json', 'json_decode', 'implode', 'pluck', ]` | 需整体消费的类型名——不做数组子元素遍历，而是把整个值传给处理器。 例如 json（编码整个数组）、implode（拼接整个数组）、pluck（从数组中提取键）。 |
+
+## 受保护 / 私有属性
+
+| 属性 | 类型 | 可见性 | 说明 |
+|---|---|---|---|
+| `$types` | `string|array|null` | private | 转换规则：字符串表示统一类型，数组表示逐键映射。 |
+| `$data` | `mixed` | private | 待转换的原始数据。 |
+| `$completion` | `bool` | private | 是否补全 data 中不存在但在 rules 中定义了类型的键（补为 null）。 |
+| `$removeNotExistRuleKey` | `bool` | private | 是否剔除 data 中存在但 rules 未定义的键。 与 completion 同时为 true 时：规则外多余键被剔除，规则内缺失键补全 null。 |
+
+## 方法一览
 
 | 方法 | 说明 |
-|------|------|
-| `timestamp()` | 将日期/时间字符串或值转为秒级时间戳 |
-| `timestamp_m()` | 将日期/时间字符串或值转为毫秒级时间戳 |
-| `date()` | 将时间戳/时间值转为日期字符串（`Y-m-d`） |
-| `datetime()` | 将时间戳/时间值转为日期时间字符串（`Y-m-d H:i:s`） |
+|---|---|
+| [`__construct()`](#__construct) | 构建数据突变器实例。 |
+| [`data()`](#data) | 传入待转换的原始数据。 |
+| [`string()`](#string) | 设定目标类型为 string。 |
+| [`int()`](#int) | 设定目标类型为 integer。 |
+| [`object()`](#object) | 设定目标类型为 object（建议传入数组数据）。 |
+| [`double()`](#double) | 设定目标类型为 double（浮点数）。 |
+| [`bool()`](#bool) | 设定目标类型为 bool。 |
+| [`timestamp()`](#timestamp) | 设定目标类型为 timestamp（Unix 时间戳，秒）。 |
+| [`timestamp_m()`](#timestamp_m) | 设定目标类型为 timestamp_m（Unix 时间戳，毫秒）。 |
+| [`date()`](#date) | 设定目标类型为 date（日期字符串，默认格式 Y-m-d）。 |
+| [`datetime()`](#datetime) | 设定目标类型为 datetime（日期时间字符串，默认格式 Y-m-d H:i:s）。 |
+| [`mask()`](#mask) | 设定目标类型为 mask（密文遮盖），将字符串中间部分替换为 *。 |
+| [`trim()`](#trim) | 设定目标类型为 trim（去除首尾空白字符）。 |
+| [`lower()`](#lower) | 设定目标类型为 lower（转为小写）。 |
+| [`upper()`](#upper) | 设定目标类型为 upper（转为大写）。 |
+| [`number()`](#number) | 设定目标类型为 number（提取数字字符，保留 0-9、.、-）。 |
+| [`json()`](#json) | 设定目标类型为 json（数组/对象 → JSON 字符串）。 |
+| [`json_decode()`](#json_decode) | 设定目标类型为 json_decode（JSON 字符串 → 关联数组）。 |
+| [`abs()`](#abs) | 设定目标类型为 abs（取绝对值）。 |
+| [`strip_tags()`](#strip_tags) | 设定目标类型为 strip_tags（去除 HTML/PHP 标签）。 |
+| [`implode()`](#implode) | 设定目标类型为 implode（数组拼接为字符串，默认逗号分隔）。 |
+| [`pluck()`](#pluck) | 设定目标类型为 pluck（提取数组列表中指定键的值）。 |
+| [`urlencode()`](#urlencode) | 设定目标类型为 urlencode（URL 编码）。 |
+| [`urldecode()`](#urldecode) | 设定目标类型为 urldecode（URL 解码）。 |
+| [`htmlspecialchars()`](#htmlspecialchars) | 设定目标类型为 htmlspecialchars（HTML 实体转义）。 |
+| [`round()`](#round) | 设定目标类型为 round（四舍五入）。 |
+| [`number_format()`](#number_format) | 设定目标类型为 number_format（千分位格式化）。 |
+| [`base64()`](#base64) | 设定目标类型为 base64（Base64 编码）。 |
+| [`base64_decode()`](#base64_decode) | 设定目标类型为 base64_decode（Base64 解码）。 |
+| [`truncate()`](#truncate) | 设定目标类型为 truncate（截断字符串）。 |
+| [`convert()`](#convert) | 执行数据转换，返回转换后的数据。 |
 
-**参数**
-
-- 无。
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-**示例**
-
-```php
-(new Mutator())->data("2026-08-21 10:00:00")->timestamp()->convert();   // 秒级时间戳
-(new Mutator())->data("2026-08-21 10:00:00")->timestamp_m()->convert(); // 毫秒级时间戳
-(new Mutator())->data(time())->date()->convert();         // "2026-08-21"
-(new Mutator())->data(time())->datetime()->convert();     // "2026-08-21 10:30:45"
-```
-
-### `mask()` — 打码
-
-对数据打码，隐藏中间部分（如手机号 `138****5678`）。
-
-**参数**
-
-- 无。
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-**示例**
+### __construct()
 
 ```php
-(new Mutator())->data("13812345678")->mask()->convert();   // "138****5678"
+public function __construct($types = null, bool $completion = false, bool $removeNotExistRuleKey = false)
 ```
 
-### `trim()` / `lower()` / `upper()` — 字符串清洗
+构建数据突变器实例。
 
-| 方法 | 说明 |
-|------|------|
-| `trim()` | 去除字符串首尾空白 |
-| `lower()` | 转小写 |
-| `upper()` | 转大写 |
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$types` | `array|string|null` | `null` | 转换规则。 |
+| `$completion` | `bool` | `false` | 是否补全 data 中不存在但规则中定义了类型的键（补为 null）。 |
+| `$removeNotExistRuleKey` | `bool` | `false` | 是否剔除 data 中存在但规则未定义的键。 |
 
-**参数**
-
-- 无。
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-**示例**
+### data()
 
 ```php
-(new Mutator())->data("  hi  ")->trim()->convert();    // "hi"
-(new Mutator())->data("HELLO")->lower()->convert();    // "hello"
-(new Mutator())->data("hello")->upper()->convert();    // "HELLO"
+public function data($data): self
 ```
 
-### `abs()` — 取绝对值
+传入待转换的原始数据。
 
-对数值取绝对值。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$data` | `mixed` | — | 任意类型的数据，通常为数组或标量。 |
 
-**参数**
+返回：`self` —— $this
 
-- 无。
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-**示例**
+### string()
 
 ```php
-(new Mutator())->data(-5)->abs()->convert();   // 5
+public function string(): self
 ```
 
-### `number()` — 转数字
+设定目标类型为 string。
 
-将字符串转为数字（去除千分位逗号等）。
+返回：`self` —— $this
 
-**参数**
-
-- 无。
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-**示例**
+### int()
 
 ```php
-(new Mutator())->data("1,234.56")->number()->convert();   // 1234.56
+public function int(): self
 ```
 
-### `json()` / `json_decode()` — JSON 编解码
+设定目标类型为 integer。
 
-| 方法 | 说明 |
-|------|------|
-| `json()` | 将数据编码为 JSON 字符串 |
-| `json_decode()` | 将 JSON 字符串解码为数组/对象 |
+返回：`self` —— $this
 
-**参数**
-
-- 无。
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-**示例**
+### object()
 
 ```php
-(new Mutator())->data(["a" => 1])->json()->convert();          // '{"a":1}'
-(new Mutator())->data('{"a":1}')->json_decode()->convert();    // ["a" => 1]
+public function object(): self
 ```
 
-### `urlencode()` / `urldecode()` — URL 编解码
+设定目标类型为 object（建议传入数组数据）。
 
-| 方法 | 说明 |
-|------|------|
-| `urlencode()` | 对字符串做 URL 编码 |
-| `urldecode()` | 对字符串做 URL 解码 |
+返回：`self` —— $this
 
-**参数**
-
-- 无。
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-**示例**
+### double()
 
 ```php
-(new Mutator())->data("a b&c")->urlencode()->convert();   // "a+b%26c"
-(new Mutator())->data("a+b%26c")->urldecode()->convert(); // "a b&c"
+public function double(): self
 ```
 
-### `strip_tags()` / `htmlspecialchars()` — 安全处理
+设定目标类型为 double（浮点数）。
 
-| 方法 | 说明 |
-|------|------|
-| `strip_tags()` | 去除字符串中的 HTML/PHP 标签 |
-| `htmlspecialchars()` | 对字符串做 HTML 实体转义（防 XSS） |
+返回：`self` —— $this
 
-**参数**
-
-- 无。
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-**示例**
+### bool()
 
 ```php
-(new Mutator())->data("<p>hi</p>")->strip_tags()->convert();          // "hi"
-(new Mutator())->data("<script>")->htmlspecialchars()->convert();     // "&lt;script&gt;"
+public function bool(): self
 ```
 
-### `base64()` / `base64_decode()` — Base64 编解码
+设定目标类型为 bool。
 
-| 方法 | 说明 |
-|------|------|
-| `base64()` | 对字符串做 Base64 编码 |
-| `base64_decode()` | 对字符串做 Base64 解码 |
+返回：`self` —— $this
 
-**参数**
-
-- 无。
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-**示例**
+### timestamp()
 
 ```php
-(new Mutator())->data("hello")->base64()->convert();         // "aGVsbG8="
-(new Mutator())->data("aGVsbG8=")->base64_decode()->convert(); // "hello"
+public function timestamp(): self
 ```
 
-### `implode()` — 数组拼接为字符串
+设定目标类型为 timestamp（Unix 时间戳，秒）。
 
-将数组拼接为字符串（用 `,` 分隔符连接各元素）。
+支持日期字符串、DateTime 对象、数值等输入。
 
-**参数**
+返回：`self` —— $this
 
-- 无。
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-**示例**
+### timestamp_m()
 
 ```php
-(new Mutator())->data(["a", "b", "c"])->implode()->convert();   // "a,b,c"
+public function timestamp_m(): self
 ```
 
-### `pluck()` — 提取字段
+设定目标类型为 timestamp_m（Unix 时间戳，毫秒）。
 
-从数组/对象集合中提取指定字段（支持点号路径）。
+返回：`self` —— $this
 
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$key` | `string` | 无 | 字段名（点号路径） |
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-**示例**
+### date()
 
 ```php
-$users = [["name" => "张三"], ["name" => "李四"]];
-(new Mutator())->data($users)->pluck("name")->convert();   // ["张三", "李四"]
+public function date(): self
 ```
 
-### `default()` — 默认值
+设定目标类型为 date（日期字符串，默认格式 Y-m-d）。
 
-数据为空/缺失时填充默认值。
+支持 DateTime、时间戳、日期字符串等输入。
+可通过 date:format 语法指定自定义格式，如 "date:Y年m月d日"。
 
-**参数**
+返回：`self` —— $this
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$value` | `mixed` | 无 | 兜底默认值 |
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-**示例**
+### datetime()
 
 ```php
-(new Mutator())->data("")->default("未知")->convert();   // "未知"
+public function datetime(): self
 ```
 
-### `round()` — 四舍五入
+设定目标类型为 datetime（日期时间字符串，默认格式 Y-m-d H:i:s）。
 
-对数值四舍五入到指定位数。
+支持 DateTime、时间戳、日期字符串等输入。
+可通过 datetime:format 语法指定自定义格式，如 "datetime:Y年m月d日 H:i"。
 
-**参数**
+返回：`self` —— $this
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$decimals` | `int` | 无 | 保留的小数位数 |
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-**示例**
+### mask()
 
 ```php
-(new Mutator())->data(3.14159)->round(2)->convert();   // 3.14
+public function mask(): self
 ```
 
-### `number_format()` — 数字格式化
+设定目标类型为 mask（密文遮盖），将字符串中间部分替换为 *。
 
-对数值做千分位/小数格式化（千分位 + 两位小数）。
+默认遮盖字符串整体长度的 80%（向上取整）。
+可通过 mask:count 语法指定精确遮盖位数，如 "mask:4"。
 
-**参数**
+返回：`self` —— $this
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$decimals` | `int` | 无 | 保留的小数位数 |
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-**示例**
+### trim()
 
 ```php
-(new Mutator())->data(12345.678)->number_format(2)->convert();   // "12,345.68"
+public function trim(): self
 ```
 
-### `truncate()` — 截断字符串
+设定目标类型为 trim（去除首尾空白字符）。
 
-按字符数截断字符串（默认按字符数，`mb_substr` 截断）。
+返回：`self` —— $this
 
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$length` | `int` | 无 | 截断长度 |
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-**示例**
+### lower()
 
 ```php
-(new Mutator())->data("abcdefghij")->truncate(5)->convert();   // "abcde"
+public function lower(): self
 ```
 
-### `convert($types = null)` — 执行转换
+设定目标类型为 lower（转为小写）。
 
-执行累积的转换规则并返回结果。可在此传入覆盖规则。链式规则的终点。
+返回：`self` —— $this
 
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$types` | `array\|string\|null` | `null` | 可选的覆盖/补充规则 |
-
-**返回值**
-
-- `mixed`：转换后的数据。
-
-**示例**
+### upper()
 
 ```php
-$result = (new Mutator())
-    ->data(["name" => "  张三  ", "age" => "25"])
-    ->string()
-    ->trim()
-    ->convert();
-// ["name" => "张三", "age" => "25"]
+public function upper(): self
 ```
+
+设定目标类型为 upper（转为大写）。
+
+返回：`self` —— $this
+
+### number()
+
+```php
+public function number(): self
+```
+
+设定目标类型为 number（提取数字字符，保留 0-9、.、-）。
+
+返回：`self` —— $this
+
+### json()
+
+```php
+public function json(): self
+```
+
+设定目标类型为 json（数组/对象 → JSON 字符串）。
+
+返回：`self` —— $this
+
+### json_decode()
+
+```php
+public function json_decode(): self
+```
+
+设定目标类型为 json_decode（JSON 字符串 → 关联数组）。
+
+返回：`self` —— $this
+
+### abs()
+
+```php
+public function abs(): self
+```
+
+设定目标类型为 abs（取绝对值）。
+
+返回：`self` —— $this
+
+### strip_tags()
+
+```php
+public function strip_tags(): self
+```
+
+设定目标类型为 strip_tags（去除 HTML/PHP 标签）。
+
+返回：`self` —— $this
+
+### implode()
+
+```php
+public function implode(): self
+```
+
+设定目标类型为 implode（数组拼接为字符串，默认逗号分隔）。
+
+返回：`self` —— $this
+
+### pluck()
+
+```php
+public function pluck(): self
+```
+
+设定目标类型为 pluck（提取数组列表中指定键的值）。
+
+返回：`self` —— $this
+
+### urlencode()
+
+```php
+public function urlencode(): self
+```
+
+设定目标类型为 urlencode（URL 编码）。
+
+返回：`self` —— $this
+
+### urldecode()
+
+```php
+public function urldecode(): self
+```
+
+设定目标类型为 urldecode（URL 解码）。
+
+返回：`self` —— $this
+
+### htmlspecialchars()
+
+```php
+public function htmlspecialchars(): self
+```
+
+设定目标类型为 htmlspecialchars（HTML 实体转义）。
+
+返回：`self` —— $this
+
+### round()
+
+```php
+public function round(): self
+```
+
+设定目标类型为 round（四舍五入）。
+
+返回：`self` —— $this
+
+### number_format()
+
+```php
+public function number_format(): self
+```
+
+设定目标类型为 number_format（千分位格式化）。
+
+返回：`self` —— $this
+
+### base64()
+
+```php
+public function base64(): self
+```
+
+设定目标类型为 base64（Base64 编码）。
+
+返回：`self` —— $this
+
+### base64_decode()
+
+```php
+public function base64_decode(): self
+```
+
+设定目标类型为 base64_decode（Base64 解码）。
+
+返回：`self` —— $this
+
+### truncate()
+
+```php
+public function truncate(): self
+```
+
+设定目标类型为 truncate（截断字符串）。
+
+返回：`self` —— $this
+
+### convert()
+
+```php
+public function convert($types = null)
+```
+
+执行数据转换，返回转换后的数据。
+
+类型规则支持以下形式：
+| 规则形式 | 示例 | 说明 |
+|---------|------|------|
+| 字符串类型 | "int" | 整份数据转为该类型 |
+| 管道链式(字符串) | "string\|int\|mask:3" | 用 \| 分隔多步类型，按序串行处理 |
+| 管道链式(数组) | ["string","int","mask:3"] | 等效于字符串管道形式 |
+| 时间戳 | "timestamp" | 将日期字符串/DateTime 转为 Unix 秒级时间戳 |
+| 毫秒时间戳 | "timestamp_m" | 将日期字符串/DateTime 转为 Unix 毫秒级时间戳 |
+| 日期 | "date" | 将 DateTime/时间戳/日期字符串 转为日期字符串（Y-m-d） |
+| 日期时间 | "datetime" | 将 DateTime/时间戳/日期字符串 转为日期时间字符串（Y-m-d H:i:s） |
+| 自定义格式 | "date:Y年m月d日" | date/datetime 支持 :format 后缀自定义输出格式 |
+| 密文遮盖 | "mask" | 字符串中间部分替换为 *，默认遮盖 80% |
+| 指定遮盖位数 | "mask:4" | 精确遮盖 4 位，如 13288364266 → 132****4266 |
+| 去除空白 | "trim" | 去除首尾空白字符 |
+| 转小写 | "lower" | 转为小写 |
+| 转大写 | "upper" | 转为大写 |
+| 提取数字 | "number" | 提取数值字符（保留 0-9 . -），如 "¥99.99元" → "99.99" |
+| 去除标签 | "strip_tags" | 去除 HTML/PHP 标签；strip_tags:a,b 保留指定标签 |
+| HTML 转义 | "htmlspecialchars" | HTML 实体转义（防 XSS） |
+| JSON 编码 | "json" | 数组/对象 → JSON 字符串 |
+| JSON 解码 | "json_decode" | JSON 字符串 → 关联数组 |
+| 绝对值 | "abs" | 取绝对值 |
+| 空值兜底 | "default:匿名" | null / '' 时使用指定默认值 |
+| 四舍五入 | "round:2" | 保留指定小数位；round 默认 0 位 |
+| 千分位 | "number_format" | 千分位格式化（默认 2 位小数）；number_format:0 无小数 |
+| 数组提取 | "pluck:id" | 从数组列表中提取每项的指定键值 |
+| 数组拼接 | "implode" | 数组拼接为字符串（默认逗号分隔）；implode:\| 指定分隔符 |
+| URL 编码 | "urlencode" | URL 编码 |
+| URL 解码 | "urldecode" | URL 解码 |
+| Base64 编码 | "base64" | Base64 编码 |
+| Base64 解码 | "base64_decode" | Base64 解码 |
+| 字符串截断 | "truncate:100" | 截断到指定字符数，超出加 "..."；truncate:50:→ 自定义后缀 |
+| 分隔符语法 | "int/," | 按分隔符拆分字符串后逐元素转换 |
+| array<> 语法 | "array＜int＞" | 索引数组逐元素指定类型 |
+| 关联数组 | ["name" => "string"] | 逐键映射；键支持点号路径和通配符 |
+| 数值键保留 | ["username","profile"] | 保留字段但不做类型转换，原样透传 |
+| 展开标记 | ["...", "name" => "string"] | 保留所有原始字段，仅对显式定义做转换；可排除字段（"...\|password,secret"） |
+| Mutator 实例 | new Mutator("int") | 通过管道处理（索引数组自动遍历） |
+| callable | fn($v) => intval($v) | 自定义转换函数 |
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$types` | `array|string|null` | `null` | 转换规则。传入 null 则使用构造时或 fluent 方法设定的规则。 |
+
+## 非公开方法
+
+**private**
+
+- `private function convertByStringType(string $type)` —— 将整份数据按照单一字符串类型转换。
+- `private function convertIndexedData(array $types): array` —— 对索引数据的每个元素递归应用同一套规则。
+- `private function convertAssocData(array $types): array` —— 处理关联数组规则。
+- `private function applyFlatRule(array &$result, $key, $type)` —— 应用一条扁平规则到结果数组。
+- `private function applyMutatorRule(array &$result, string $key, self $mutator)` —— 将 Mutator 实例规则应用到结果数组的指定键。
+- `private function applyDotRule(array &$result, string $ruleKey, $type)` —— 应用一条点号语法规则。
+- `private function applyWildcardRule(array &$result, array $path, int $wildcardIndex, $type)` —— 应用含通配符 "*" 的点号规则。
+- `private function convertValue($value, $type)` —— 将单个值按字符串类型规则转换。
+- `private function getPipelineSteps($type)` —— 判断 $type 是否为管道类型，若是则返回步骤数组，否则返回 null。
+- `private function applyPipelineSteps($value, array $steps)` —— 按步骤数组将值串行转换。
+- `private function convertIndexedValue(array $value, string $type): array` —— 转换索引数组的每个元素。
+- `private function convertWithSeparator($value, string $type): array` —— 按分隔符拆分字符串后逐元素转换。
+- `private function auto($target)` —— 自动识别值类型并转换。
+- `private function setType($target, string $type)` —— 将值强制转换为指定类型。
+- `private function toTimestamp($target): int` —— 将值转为 Unix 时间戳（秒）。
+- `private function toTimestampMs($target): int` —— 将值转为 Unix 时间戳（毫秒）。
+- `private function toDate($target, string $type = 'date'): string` —— 将值转为日期字符串（默认 Y-m-d）。
+- `private function toDatetime($target, string $type = 'datetime'): string` —— 将值转为日期时间字符串（默认 Y-m-d H:i:s）。
+- `private function formatDateValue($target, string $format): string` —— 将任意值按指定格式转为日期字符串（底层实现）。
+- `private function toMask($target, string $type = 'mask'): string` —— 将值转为密文字符串（中间遮盖为 *）。
+- `private function applyTrim($target): string` —— 去除首尾空白字符。
+- `private function applyCase($target, string $mode): string` —— 大小写转换（lower / upper 共用）。
+- `private function applyNumber($target): string` —— 提取数值字符（保留 0-9、.、-）。
+- `private function applyJsonEncode($target): string` —— 数组/对象 → JSON 字符串。
+- `private function applyJsonDecode($target)` —— JSON 字符串 → 关联数组。
+- `private function applyAbs($target)` —— 取绝对值。
+- `private function applyUrlEncode($target): string` —— URL 编码。
+- `private function applyUrlDecode($target): string` —— URL 解码。
+- `private function applyHtmlspecialchars($target): string` —— HTML 实体转义（防 XSS）。
+- `private function applyBase64Encode($target): string` —— Base64 编码。
+- `private function applyBase64Decode($target)` —— Base64 解码。
+- `private function applyDefault($target, string $type)` —— 空值兜底：null / '' 时使用默认值，其他情况原样返回。
+- `private function applyStripTags($target, string $type): string` —— 去除 HTML/PHP 标签，可选保留指定标签。
+- `private function applyImplode($target, string $type): string` —— 数组拼接为字符串。
+- `private function applyPluck($target, string $type): array` —— 从数组列表中提取指定键的值。
+- `private function applyRound($target, string $type): float` —— 四舍五入到指定小数位。
+- `private function applyNumberFormat($target, string $type): string` —— 千分位数字格式化。
+- `private function applyTruncate($target, string $type): string` —— 字符串截断，超出长度追加后缀。
+- `private function parseFormattedType(string $type): array` —— 解析带参数的格式化类型名。
+- `private function parsePath(string $key): array` —— 将点号语法键解析为路径数组。
+- `private function getNestedValue($data, array $path)` —— 从嵌套数组中按路径读取值。
+- `private function setNestedValue(array &$array, array $path, $value)` —— 按路径向嵌套数组写入值。
+- `private function resolveConvert($value, $type)` —— 统一分发不同类型的转换规则。
+- `private function createChild($types): self` —— 创建子 Mutator 实例。
+
+## 同目录
+
+- [Arr](/php/api/foundation/data/arr)
+- [Date](/php/api/foundation/data/date)
+- [Func](/php/api/foundation/data/func)
+- [Money](/php/api/foundation/data/money)
+- [Numeric](/php/api/foundation/data/numeric)
+- [Serializer](/php/api/foundation/data/serializer)
+- [Str](/php/api/foundation/data/str)
+- [Transform](/php/api/foundation/data/transform)
+

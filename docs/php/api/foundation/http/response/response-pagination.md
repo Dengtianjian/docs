@@ -1,71 +1,73 @@
-# ResponsePagination — 分页响应
+# ResponsePagination
 
-- **文件位置**: `kernel/Foundation/HTTP/Response/ResponsePagination.php`
-- **命名空间**: `kernel\Foundation\HTTP\Response`
-- **继承**: 继承 `kernel\Foundation\HTTP\Response`
-- **是否可继承**: 是
+`kernel\Foundation\HTTP\Response\ResponsePagination`  ·  class
 
-分页响应对象。输出时把数据包装为 `{ list, pagination }` 结构，`pagination` 含总量、每页条数、页码、跳过条数、当前页条数。控制器返回分页列表请用它（`ControllerResponse::list()` 内部也用它）。
+源码：`gstudio_kernel/Foundation/HTTP/Response/ResponsePagination.php`
 
-## 属性
-
-| 属性 | 类型 | 默认 | 可见性 | 说明 |
-|------|------|------|--------|------|
-| `$request` | `Request\|null` | `null` | private | 请求实例 |
-| `$total` | `int\|null` | `null` | private | 数据总量 |
-| `$items` | `int\|null` | `null` | private | 当前页数据条数 |
-
-## 方法速查表
-
-| 方法 | 作用 |
-|------|------|
-| `__construct(Request $R, $total, $data)` | 构造：设置分页上下文与数据 |
-| `setTotal($total)` | 设置数据总量 |
-| `output()` | 输出包装后的分页响应 |
-
-## 方法
-
-### `__construct(Request $R, $total, $data = null)` — 构造
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$R` | `Request` | 无 | 请求实例（读取分页参数） |
-| `$total` | `int` | 无 | 数据总量 |
-| `$data` | `mixed` | `null` | 数据列表；为数组时自动统计当前页条数 |
-
-**返回值**
-
-- 无。
-
-### `setTotal($total)` — 设置数据总量
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$total` | `int` | 无 | 数据总量 |
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-### `output()` — 输出分页响应
-
-包装响应数据为 `{ list: $data, pagination: { total, limit, page, skip, items } }` 后交父类输出。分页参数直接取自 `$request->query`（`limit` → `perPage` → 默认 10；`page` → 默认 1；`skip` 有则取）。
-
-**参数**
-
-- 无。
-
-**返回值**
-
-- 无（`void`）。
-
-**示例**
+## 声明
 
 ```php
-return new ResponsePagination($request, $total, $rows);
-// 输出：{ "list": [...], "pagination": { "total": 100, "limit": 10, "page": 1, "skip": 0, "items": 10 } }
+class ResponsePagination extends Response
 ```
+
+父类：[Response](/php/api/foundation/http/response)
+
+## 受保护 / 私有属性
+
+| 属性 | 类型 | 可见性 | 说明 |
+|---|---|---|---|
+| `$request` | `request` | private | 请求体 |
+| `$total` | `integer` | private | 数据总量 |
+| `$items` | `integer` | private | 当前页数数据量 |
+| `$pagination` | `RequestPagination` | private | 从请求中提取的分页参数 |
+
+## 方法一览
+
+| 方法 | 说明 |
+|---|---|
+| [`__construct()`](#__construct) | 响应分页类 |
+| [`setTotal()`](#settotal) | 设置数据总量 |
+| [`output()`](#output) | — |
+
+### __construct()
+
+```php
+public function __construct(Request $R, $total, $data = null)
+```
+
+响应分页类
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$R` | `Request` | — | 请求体 |
+| `$total` | `integer` | — | 数据总量 |
+| `$data` | `mixed` | `null` | 数据 |
+
+### setTotal()
+
+```php
+public function setTotal($total)
+```
+
+设置数据总量
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$total` | `integer` | — | 数据总量 |
+
+### output()
+
+```php
+public function output()
+```
+
+## 同目录
+
+- [ResponseDownload](/php/api/foundation/http/response/response-download)
+- [ResponseError](/php/api/foundation/http/response/response-error)
+- [ResponseFile](/php/api/foundation/http/response/response-file)
+- [ResponseProxy](/php/api/foundation/http/response/response-proxy)
+- [ResponseRedirect](/php/api/foundation/http/response/response-redirect)
+- [ResponseView](/php/api/foundation/http/response/response-view)
+- [ServerSentEvent](/php/api/foundation/http/response/server-sent-event)
+

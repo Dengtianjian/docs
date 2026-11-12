@@ -1,136 +1,139 @@
-# ControllerResponse — 控制器响应封装
+# ControllerResponse
 
-- **文件位置**: `kernel/Foundation/Controller/ControllerResponse.php`
-- **命名空间**: `kernel\Foundation\Controller`
-- **继承自**: `Response`
-- **是否可继承**: 是
+`kernel\Foundation\Controller\ControllerResponse`  ·  class
 
-控制器响应的统一封装，继承自 `Response`。在响应基类能力之外，提供文件、下载、分页、视图等便捷响应工厂方法，便于业务控制器按需返回特定类型响应。
+源码：`gstudio_kernel/Foundation/Controller/ControllerResponse.php`
 
-## 方法速查表
+> 控制器响应工厂
 
-| 方法 | 作用 |
-|------|------|
-| `file($filePath, $downloadFileName, $imageQuality, $cacheControl, $httpExpires)` | 文件类型响应（预览） |
-| `download($filePath, $downloadFileName, $rateLimit)` | 下载文件响应 |
-| `pagination($total, $data)` | 分页列表响应 |
-| `view($viewFile, $viewData, $viewFileBaseDir, $templateId, $viewFileDir)` | 视图响应 |
-
-## 方法
-
-### `file($filePath, $downloadFileName = null, $imageQuality = null, $cacheControl = "no-cache", $httpExpires = null)` — 文件类型响应
-
-返回 `ResponseFile`，支持在线预览图片等文件（详见 [response-file.md](../http/response/response-file.md)）。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$filePath` | `string` | 无 | 文件绝对路径 |
-| `$downloadFileName` | `string\|null` | `null` | 下载时保存的文件名，为 `null` 时保留原名 |
-| `$imageQuality` | `int\|null` | `null` | 图片质量（图片类型文件有效，影响输出图片质量） |
-| `$cacheControl` | `string` | `"no-cache"` | HTTP `Cache-Control` 头值 |
-| `$httpExpires` | `string\|null` | `null` | HTTP 资源过期时间，秒级时间戳 |
-
-**返回值**
-
-- `ResponseFile`：文件响应实例。
-
-**示例**
+## 声明
 
 ```php
-return $this->response->file(APP_PATH . "/public/image.png");
+class ControllerResponse extends Response
 ```
 
-### `download($filePath, $downloadFileName = null, $rateLimit = false)` — 下载文件响应
+父类：[Response](/php/api/foundation/http/response)
 
-返回 `ResponseDownload`，强制下载（详见 [response-download.md](../http/response/response-download.md)）。
+## 概述
 
-**参数**
+继承 [Response](/php/api/foundation/http/response)，作为控制器内部快速构建各类具体响应对象的工厂类。
+框架在 `Controller::__construct` 中将其初始化为 `$this->response` 的默认实例，
+控制器可通过 `success()`/`fail()` 复用该实例，也可在 `data()` 中调用以下工厂方法
+生成「独立响应对象」（如文件下载、分页、视图），由其作为最终结果输出。
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$filePath` | `string` | 无 | 下载的文件绝对路径 |
-| `$downloadFileName` | `string\|null` | `null` | 下载到客户端时保存的文件名，为 `null` 时保留原名 |
-| `$rateLimit` | `bool\|int` | `false` | 下载速率限制，单位 KB/秒（千字节）；非 `false` 即开启限速 |
+除 `proxy()` 外，其余工厂方法均自动注入当前请求（`Applications::default()->request()`）作为响应上下文，
+因此无需手动传入 Request 即可直接使用。
 
-**返回值**
+## 方法一览
 
-- `ResponseDownload`：下载响应实例。
+| 方法 | 说明 |
+|---|---|
+| [`file()`](#file) | 文件类型响应 |
+| [`download()`](#download) | 下载文件响应 |
+| [`pagination()`](#pagination) | 响应分页列表 |
+| [`view()`](#view) | 视图响应 |
+| [`redirect()`](#redirect) | 重定向响应 |
+| [`proxy()`](#proxy) | 远程资源代理响应 |
 
-**示例**
+### file()
 
 ```php
-return $this->response->download(APP_PATH . "/public/file.zip", "report.zip", 1024);
+public function file($filePath, $downloadFileName = null, $imageQuality = null, $cacheControl = "no-cache", $httpExpires = null)
 ```
 
-### `pagination($total, $data = null)` — 分页列表响应
+文件类型响应
 
-返回 `ResponsePagination`，供模型分页结果输出（详见 [response-pagination.md](../http/response/response-pagination.md)）。`$total` 与 `$data` 一起构成分页结果。
+用于直接输出文件内容（含图片缩略图、Range 分片下载等），支持浏览器内联或强制下载。
 
-**参数**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$filePath` | `string` | — | 下载的文件绝对路径 |
+| `$downloadFileName` | `mixed` | `null` | — |
+| `$imageQuality` | `int` | `null` | 如果是图片类型文件，该值将影响输出的图片质量 |
+| `$cacheControl` | `string` | `"no-cache"` | HTTP 缓存控制属性值 |
+| `$httpExpires` | `string` | `null` | HTTP 资源过期时间，秒级时间戳 |
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$total` | `int` | 无 | 数据总量 |
-| `$data` | `mixed` | `null` | 当前页数据 |
-
-**返回值**
-
-- `ResponsePagination`：分页响应实例。
-
-**示例**
+### download()
 
 ```php
-// Model 层返回：new ResponsePagination(getApp()->request(), $total, $data)
-// Controller 层使用：
-return $this->response->pagination($total, $data);
+public function download($filePath, $downloadFileName = null, $rateLimit = false)
 ```
 
-### `view($viewFile, $viewData = [], $viewFileBaseDir = "Views", $templateId = "page", $viewFileDir = null)` — 视图响应
+下载文件响应
 
-返回 `ResponseView`，渲染指定视图文件（详见 [response-view.md](../http/response/response-view.md)）。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$filePath` | `string` | — | 下载的文件绝对路径 |
+| `$downloadFileName` | `mixed` | `null` | — |
+| `$rateLimit` | `boolean|int` | `false` | 下载速率限制，如果值不为false，即开启了下载速率，kb/秒，单位是：千字节 |
 
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$viewFile` | `string` | 无 | 渲染的视图文件（相对于 `$viewFileBaseDir` 目录） |
-| `$viewData` | `array` | `[]` | 渲染数据 |
-| `$viewFileBaseDir` | `string` | `"Views"` | 视图文件所在目录（相对于根目录） |
-| `$templateId` | `string` | `"page"` | 模板 ID，用于缓存模板 |
-| `$viewFileDir` | `string\|null` | `null` | 视图文件根目录，默认基于 `Path::root()`；可指定渲染其它项目视图文件 |
-
-**返回值**
-
-- `ResponseView`：视图响应实例。
-
-**示例**
+### pagination()
 
 ```php
-return $this->response->view("user/profile", ["user" => $user]);
+public function pagination($total, $data = null)
 ```
 
-## 完整示例
+响应分页列表
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$total` | `integer` | — | 数据总量 |
+| `$data` | `mixed` | `null` | 数据 |
+
+### view()
 
 ```php
-use kernel\Foundation\Controller\Controller;
-use kernel\Foundation\Validation\Rule;
-
-class UserController extends Controller
-{
-    protected function data()
-    {
-        $file = $this->params("file");
-        $user = getUser($this->body("id"));
-
-        if ($file === "avatar") {
-            return $this->response->file($user["avatar_path"]);
-        }
-        if ($file === "data.json") {
-            return $this->response->download("/tmp/data.json", "export.json");
-        }
-        return $this->response->pagination($total, $users);
-    }
-}
+public function view($viewFile, $viewData = [], $viewFileBaseDir = "Views", $templateId = "page", $viewFileDir = null)
 ```
+
+视图响应
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$viewFile` | `string` | — | 渲染的视图文件，相对于$viewFileBaseDir目录 |
+| `$viewData` | `array` | `[]` | 渲染的数据 |
+| `$viewFileBaseDir` | `string` | `"Views"` | 视图文件所在的目录，相对于根目录 |
+| `$templateId` | `string` | `"page"` | 模板ID，用于缓存模板 |
+| `$viewFileDir` | `string` | `null` | 视图文件根目录，默认是基于Path::root()的，也就是当前项目的根目录，但是有时候可能需要渲染别的项目的视图文件，可通过该参数来修改 |
+
+### redirect()
+
+```php
+public function redirect($to = null, $statusCode = 302)
+```
+
+重定向响应
+
+返回 `ResponseRedirect` 实例，用于控制器内快速发起跳转（Laravel 风格）。
+返回值需由 `data()` 方法 `return`，框架据此输出 3xx 响应。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$to` | `string|null` | `null` | 初始目标地址（可选，也可后续链式 `->route()`/`->back()` 等） |
+| `$statusCode` | `integer` | `302` | HTTP 状态码，默认 302 |
+
+### proxy()
+
+```php
+public function proxy($url, $downloadFileName = null, $cacheControl = "no-cache", $forceDownload = false)
+```
+
+远程资源代理响应
+
+由服务端取回远程资源并**流式转发**给客户端，用于浏览器自己取不了的协议（如 `ftp://`）。
+只应传入存储磁盘产出的 URL；可代理的协议、超时与体积上限见 [ResponseProxy](/php/api/foundation/http/response/response-proxy)。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$url` | `string` | — | 远程资源地址（**必须来自存储磁盘**） |
+| `$downloadFileName` | `string|null` | `null` | 输出文件名 |
+| `$cacheControl` | `string` | `"no-cache"` | HTTP 缓存控制值 |
+| `$forceDownload` | `boolean` | `false` | 是否强制附件下载（下载端点用；默认按 MIME 决定 inline/attachment） |
+
+## 同目录
+
+- [AuthController](/php/api/foundation/controller/auth-controller)
+- [Controller](/php/api/foundation/controller/controller)
+- [ControllerBody](/php/api/foundation/controller/controller-body)
+- [ControllerQuery](/php/api/foundation/controller/controller-query)
+

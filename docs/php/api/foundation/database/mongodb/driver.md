@@ -1,35 +1,154 @@
-# Driver — MongoDB 驱动
+# Driver
 
-- **文件位置**: `kernel/Foundation/Database/MongoDB/Driver.php`
-- **命名空间**: `kernel\Foundation\Database\MongoDB`
-- **是否可继承**: 是
+`kernel\Foundation\Database\MongoDB\Driver`  ·  class
 
-MongoDB 连接驱动，封装连接、CRUD 与命令执行。
+源码：`gstudio_kernel/Foundation/Database/MongoDB/Driver.php`
 
-## 构造
+## 声明
 
 ```php
-new Driver($host = "localhost", $port = 27017, $username, $password, $databaseName, $options = [])
+class Driver
 ```
 
-## 方法
+## 受保护 / 私有属性
+
+| 属性 | 类型 | 可见性 | 说明 |
+|---|---|---|---|
+| `$instance` | `mixed` | private | — |
+| `$config` | `mixed` | private | — |
+
+## 方法一览
 
 | 方法 | 说明 |
-|------|------|
-| `query($setName, $filter = [], $options = []): array` | 查询集合 |
-| `id($id = ""): ObjectId` | 字符串转 ObjectId |
-| `insert($setName, $doc, $options = []): int` | 插入（返回 ID） |
-| `update($setName, $query = [], $updateData = [], $options = []): WriteResult` | 更新 |
-| `delete($setName, $query, $options = []): int` | 删除 |
-| `commamd($commands = [], $options = []): Command` | 构造命令 |
-| `execCommand($databaseName, Command $command, $options = []): array` | 执行命令 |
+|---|---|
+| [`__construct()`](#__construct) | — |
+| [`query()`](#query) | — |
+| [`id()`](#id) | — |
+| [`insert()`](#insert) | — |
+| [`update()`](#update) | — |
+| [`delete()`](#delete) | — |
+| [`commamd()`](#commamd) | — |
+| [`execCommand()`](#execcommand) | — |
 
-## 使用
+### __construct()
 
 ```php
-use kernel\Foundation\Database\MongoDB\Driver;
-
-$driver = new Driver("localhost", 27017, "user", "pass", "mydb");
-$users = $driver->query("users", ["age" => ["$gte" => 18]]);
-$driver->insert("users", ["name" => "张三"]);
+public function __construct(string $host = "localhost", int $port = 27017, string $username, string $password, string $databaseName, array $options = [])
 ```
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$host` | `string` | `"localhost"` | — |
+| `$port` | `int` | `27017` | — |
+| `$username` | `string` | — | — |
+| `$password` | `string` | — | — |
+| `$databaseName` | `string` | — | — |
+| `$options` | `array` | `[]` | — |
+
+### query()
+
+```php
+public function query(string $setName, array $filter = [], array $options = []): array
+```
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$setName` | `string` | — | — |
+| `$filter` | `array` | `[]` | — |
+| `$options` | `array` | `[]` | — |
+
+返回：`array`
+
+### id()
+
+```php
+public function id(string $id = ""): \MongoDB\BSON\ObjectId
+```
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$id` | `string` | `""` | — |
+
+返回：`\MongoDB\BSON\ObjectId`
+
+### insert()
+
+```php
+public function insert(string $setName, array $doc, array $options = []): int
+```
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$setName` | `string` | — | — |
+| `$doc` | `array` | — | — |
+| `$options` | `array` | `[]` | — |
+
+返回：`int`
+
+### update()
+
+```php
+public function update(string $setName, array $query = [], array $updateData = [], array $options = []): \MongoDB\Driver\WriteResult
+```
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$setName` | `string` | — | — |
+| `$query` | `array` | `[]` | — |
+| `$updateData` | `array` | `[]` | — |
+| `$options` | `array` | `[]` | — |
+
+返回：`\MongoDB\Driver\WriteResult`
+
+### delete()
+
+```php
+public function delete(string $setName, array $query, array $options = []): int
+```
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$setName` | `string` | — | — |
+| `$query` | `array` | — | — |
+| `$options` | `array` | `[]` | — |
+
+返回：`int`
+
+### commamd()
+
+```php
+public function commamd(array $commands = [],$options = []): \MongoDB\Driver\Command
+```
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$commands` | `array` | `[]` | — |
+| `$options` | `mixed` | `[]` | — |
+
+返回：`\MongoDB\Driver\Command`
+
+### execCommand()
+
+```php
+public function execCommand(string $databaseName, \MongoDB\Driver\Command $command, array $options = []): array
+```
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$databaseName` | `string` | — | — |
+| `$command` | `\MongoDB\Driver\Command` | — | — |
+| `$options` | `array` | `[]` | — |
+
+返回：`array`
+
+## 非公开方法
+
+**private**
+
+- `private function genNamespace(string $extra): string`
+
+## 同目录
+
+- [Collection](/php/api/foundation/database/mongodb/collection)
+- [Mongo](/php/api/foundation/database/mongodb/mongo)
+

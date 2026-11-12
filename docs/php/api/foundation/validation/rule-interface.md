@@ -1,436 +1,444 @@
-# RuleInterface — 校验规则契约接口
+# RuleInterface
+
+`kernel\Foundation\Validation\RuleInterface`  ·  interface
 
-- **文件位置**: `kernel/Foundation/Validation/RuleInterface.php`
-- **命名空间**: `kernel\Foundation\Validation`
-- **类型**: 接口
-- **默认实现**: `RuleBuilder`
+源码：`gstudio_kernel/Foundation/Validation/RuleInterface.php`
 
-定义所有校验规则方法的完整契约，`RuleBuilder` 为默认实现。上层通过 `Rule` 门面类调用，实现与具体构建器的解耦。
+> 校验规则契约接口
 
-## 方法速查表
+## 声明
+
+```php
+interface RuleInterface
+```
 
-| 方法 | 作用 |
-|------|------|
-| `required($message)` | 校验值是否为空或 `null` |
-| `type($value, $message)` | 校验数据类型 |
-| `equal($value, $message)` | 校验是否等于指定值（`===`） |
-| `includes($value, $message)` | 校验字符串包含子串 / 数组包含元素 |
-| `hasKeys($value, $message)` | 校验数组是否存在指定键 |
-| `min($value, $message)` | 校验数值 >= 指定值 |
-| `max($value, $message)` | 校验数值 <= 指定值 |
-| `range($min, $max, $message)` | 校验数值在 `[min, max]` 内 |
-| `minLength($value, $message)` | 校验长度 >= 指定值 |
-| `maxLength($value, $message)` | 校验长度 <= 指定值 |
-| `length($min, $max, $message)` | 校验长度在 `[min, max]` 内 |
-| `pattern($pattern, $message)` | 正则表达式校验 |
-| `custom($callback)` | 自定义校验 |
-| `useRule($validateRule)` | 复用已有的校验规则实例 |
-| `email($message)` | 校验有效邮箱地址 |
-| `url($message)` | 校验有效 URL |
-| `ip($message)` | 校验有效 IP（IPv4/IPv6） |
-| `date($message)` | 校验有效日期字符串 |
-| `dateFormat($format, $message)` | 校验指定日期格式 |
-| `in($values, $message)` | 校验值在值列表中 |
-| `notIn($values, $message)` | 校验值不在值列表中 |
-| `confirmed($message)` | 校验值与 `字段名_confirmation` 一致 |
-| `same($field, $message)` | 校验值与另一字段相同 |
-| `different($field, $message)` | 校验值与另一字段不同 |
-| `nullable($message)` | 允许值为 `null` |
-| `present($message)` | 允许值为空字符串 |
-| `prohibited($message)` | 校验字段不能存在于输入数据中 |
-| `requiredIf($anotherField, $values, $message)` | 另一字段等于指定值时必填 |
-| `requiredUnless($anotherField, $values, $message)` | 除非另一字段等于指定值否则必填 |
+## 概述
 
-## 方法
+定义所有校验规则方法的完整契约，`RuleBuilder` 为默认实现。
+上层通过 `Rule` 门面类调用，实现与具体构建器的解耦。
 
-### `required($message = "")` — 校验值是否为空或为 null
+## 相关
 
-**参数**
+- `RuleBuilder`
+- `Rule`
+- `Rules`
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+## 方法一览
 
-**返回值**
+| 方法 | 说明 |
+|---|---|
+| [`required()`](#required) | 校验值是否为空或者为 null |
+| [`type()`](#type) | 校验目标值的数据类型是否等于指定数据类型，或是否存在于指定的数据类型数组中 int 自动转为 integer，bool 自动转为 boolean |
+| [`equal()`](#equal) | 校验是否等于指定值（严格比较 ===） |
+| [`includes()`](#includes) | 校验字符串是否包含子串，或数组是否包含指定元素 |
+| [`hasKeys()`](#haskeys) | 校验数组是否存在指定键或指定键数组 |
+| [`min()`](#min) | 校验数值是否 >= 指定值 |
+| [`max()`](#max) | 校验数值是否 <= 指定值 |
+| [`range()`](#range) | 校验数值是否在 [min, max] 范围内 |
+| [`minLength()`](#minlength) | 校验字符串/数组长度是否 >= 指定值 |
+| [`maxLength()`](#maxlength) | 校验字符串/数组长度是否 <= 指定值 |
+| [`length()`](#length) | 校验字符串/数组长度是否在 [min, max] 范围内 |
+| [`pattern()`](#pattern) | 正则表达式校验 |
+| [`custom()`](#custom) | 自定义校验 |
+| [`useRule()`](#userule) | 复用已有的校验规则实例 |
+| [`email()`](#email) | 校验值是否为有效的邮箱地址 |
+| [`url()`](#url) | 校验值是否为有效的 URL 地址 |
+| [`ip()`](#ip) | 校验值是否为有效的 IP 地址（支持 IPv4 和 IPv6） |
+| [`date()`](#date) | 校验值是否为有效的日期字符串 |
+| [`dateFormat()`](#dateformat) | 校验值是否符合指定的日期格式 |
+| [`in()`](#in) | 校验值是否在给定的值列表中 |
+| [`notIn()`](#notin) | 校验值是否不在给定的值列表中 |
+| [`confirmed()`](#confirmed) | 校验字段的值是否与 字段名_confirmation 的值一致（常用于密码确认） |
+| [`same()`](#same) | 校验字段的值是否与另一个指定字段的值相同 |
+| [`different()`](#different) | 校验字段的值是否与另一个指定字段的值不同 |
+| [`nullable()`](#nullable) | 允许字段值为 null。值为 null 时跳过后续所有校验规则，直接通过 |
+| [`present()`](#present) | 允许字段值为空字符串。值为空字符串时跳过后续所有校验规则，直接通过 |
+| [`prohibited()`](#prohibited) | 校验字段不能存在于输入数据中 |
+| [`requiredIf()`](#requiredif) | 当另一个字段的值等于指定值时，此字段为必填 |
+| [`requiredUnless()`](#requiredunless) | 除非另一个字段的值等于指定值，否则此字段为必填 |
 
-- `$this`：支持链式调用。
+### required()
 
-### `type($value, $message = "")` — 校验数据类型
+```php
+public function required($message = "")
+```
 
-校验目标值的数据类型是否等于指定数据类型，或是否存在于指定的数据类型数组中。`int` 自动转为 `integer`，`bool` 自动转为 `boolean`。
+校验值是否为空或者为 null
 
-**参数**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$value` | `string\|string[]` | 无 | 数据类型或数据类型数组 |
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+### type()
 
-**返回值**
+```php
+public function type($value, $message = "")
+```
 
-- `$this`：支持链式调用。
+校验目标值的数据类型是否等于指定数据类型，或是否存在于指定的数据类型数组中 int 自动转为 integer，bool 自动转为 boolean
 
-### `equal($value, $message = "")` — 校验是否等于指定值
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$value` | `string|string[]` | — | 数据类型或数据类型数组 |
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-使用严格比较 `===`。
+### equal()
 
-**参数**
+```php
+public function equal($value, $message = "")
+```
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$value` | `mixed` | 无 | 指定的对比值 |
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+校验是否等于指定值（严格比较 ===）
 
-**返回值**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$value` | `mixed` | — | 指定值 |
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-- `$this`：支持链式调用。
+### includes()
 
-### `includes($value, $message = "")` — 校验是否包含指定值
+```php
+public function includes($value, $message = "")
+```
 
-校验字符串是否包含子串，或数组是否包含指定元素。
+校验字符串是否包含子串，或数组是否包含指定元素
 
-**参数**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$value` | `string|array` | — | 任意基本类型值或任意基本类型数组 |
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$value` | `string\|array` | 无 | 任意基本类型值或任意基本类型数组 |
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+### hasKeys()
 
-**返回值**
+```php
+public function hasKeys($value, $message = "")
+```
 
-- `$this`：支持链式调用。
+校验数组是否存在指定键或指定键数组
 
-### `hasKeys($value, $message = "")` — 校验数组是否存在指定键
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$value` | `string|string[]` | — | 键或键数组 |
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-**参数**
+### min()
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$value` | `string\|string[]` | 无 | 键名或键名数组 |
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+```php
+public function min($value, $message = "")
+```
 
-**返回值**
+校验数值是否 >= 指定值
 
-- `$this`：支持链式调用。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$value` | `int` | — | 指定的最小值 |
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-### `min($value, $message = "")` — 校验数值是否大于等于指定值
+### max()
 
-**参数**
+```php
+public function max($value, $message = "")
+```
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$value` | `int` | 无 | 指定的最小值 |
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+校验数值是否 <= 指定值
 
-**返回值**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$value` | `int` | — | 指定的最大值 |
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-- `$this`：支持链式调用。
+### range()
 
-### `max($value, $message = "")` — 校验数值是否小于等于指定值
+```php
+public function range($min, $max, $message = "")
+```
 
-**参数**
+校验数值是否在 [min, max] 范围内
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$value` | `int` | 无 | 指定的最大值 |
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$min` | `int` | — | 最小值 |
+| `$max` | `int` | — | 最大值 |
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-**返回值**
+### minLength()
 
-- `$this`：支持链式调用。
+```php
+public function minLength($value, $message = "")
+```
 
-### `range($min, $max, $message = "")` — 校验数值是否在 `[min, max]` 范围内
+校验字符串/数组长度是否 >= 指定值
 
-**参数**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$value` | `int` | — | 指定的最小长度 |
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$min` | `int` | 无 | 最小值 |
-| `$max` | `int` | 无 | 最大值 |
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+### maxLength()
 
-**返回值**
+```php
+public function maxLength($value, $message = "")
+```
 
-- `$this`：支持链式调用。
+校验字符串/数组长度是否 <= 指定值
 
-### `minLength($value, $message = "")` — 校验长度是否大于等于指定值
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$value` | `int` | — | 指定的最大长度 |
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-**参数**
+### length()
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$value` | `int` | 无 | 指定的最小长度 |
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+```php
+public function length($min, $max, $message = "")
+```
 
-**返回值**
+校验字符串/数组长度是否在 [min, max] 范围内
 
-- `$this`：支持链式调用。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$min` | `int` | — | 最小长度 |
+| `$max` | `int` | — | 最大长度 |
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-### `maxLength($value, $message = "")` — 校验长度是否小于等于指定值
+### pattern()
 
-**参数**
+```php
+public function pattern($pattern, $message = "")
+```
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$value` | `int` | 无 | 指定的最大长度 |
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+正则表达式校验
 
-**返回值**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$pattern` | `string` | — | 正则表达式 |
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-- `$this`：支持链式调用。
+### custom()
 
-### `length($min, $max, $message = "")` — 校验长度是否在 `[min, max]` 范围内
+```php
+public function custom($callback)
+```
 
-**参数**
+自定义校验
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$min` | `int` | 无 | 最小长度 |
-| `$max` | `int` | 无 | 最大长度 |
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$callback` | `\Closure|callable` | — | 校验函数，返回值必须是继承自 Response 的实例 |
 
-**返回值**
+### useRule()
 
-- `$this`：支持链式调用。
+```php
+public function useRule(RuleInterface $validateRule)
+```
 
-### `pattern($pattern, $message = "")` — 正则表达式校验
+复用已有的校验规则实例
 
-**参数**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$validateRule` | `RuleInterface` | — | 校验规则实例 |
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$pattern` | `string` | 无 | 正则表达式 |
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+### email()
 
-**返回值**
+```php
+public function email($message = "")
+```
 
-- `$this`：支持链式调用。
+校验值是否为有效的邮箱地址
 
-### `custom($callback)` — 自定义校验
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-**参数**
+### url()
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$callback` | `\Closure\|callable` | 无 | 校验函数，返回值必须是继承自 `Response` 的实例 |
+```php
+public function url($message = "")
+```
 
-**返回值**
+校验值是否为有效的 URL 地址
 
-- `$this`：支持链式调用。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-### `useRule(RuleInterface $validateRule)` — 复用已有的校验规则实例
+### ip()
 
-**参数**
+```php
+public function ip($message = "")
+```
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$validateRule` | `RuleInterface` | 无 | 校验规则实例 |
+校验值是否为有效的 IP 地址（支持 IPv4 和 IPv6）
 
-**返回值**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-- `$this`：支持链式调用。
+### date()
 
-### `email($message = "")` — 校验值是否为有效邮箱地址
+```php
+public function date($message = "")
+```
 
-**参数**
+校验值是否为有效的日期字符串
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-**返回值**
+### dateFormat()
 
-- `$this`：支持链式调用。
+```php
+public function dateFormat($format, $message = "")
+```
 
-### `url($message = "")` — 校验值是否为有效 URL 地址
+校验值是否符合指定的日期格式
 
-**参数**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$format` | `string` | — | 日期格式，如 Y-m-d、Y-m-d H:i:s |
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+### in()
 
-**返回值**
+```php
+public function in($values, $message = "")
+```
 
-- `$this`：支持链式调用。
+校验值是否在给定的值列表中
 
-### `ip($message = "")` — 校验值是否为有效 IP 地址
+可变参数：支持 in('a', 'b', 'c') 或 in(['a', 'b', 'c'], 'message')。
 
-支持 IPv4 和 IPv6。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$values` | `array|string` | — | 值列表或数组+消息 |
+| `$message` | `mixed` | `""` | — |
 
-**参数**
+### notIn()
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+```php
+public function notIn($values, $message = "")
+```
 
-**返回值**
+校验值是否不在给定的值列表中
 
-- `$this`：支持链式调用。
+可变参数：支持 notIn('a', 'b', 'c') 或 notIn(['a', 'b', 'c'], 'message')。
 
-### `date($message = "")` — 校验值是否为有效日期字符串
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$values` | `array|string` | — | 值列表或数组+消息 |
+| `$message` | `mixed` | `""` | — |
 
-**参数**
+### confirmed()
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+```php
+public function confirmed($message = "")
+```
 
-**返回值**
+校验字段的值是否与 字段名_confirmation 的值一致（常用于密码确认）
 
-- `$this`：支持链式调用。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-### `dateFormat($format, $message = "")` — 校验值是否符合指定日期格式
+### same()
 
-**参数**
+```php
+public function same($field, $message = "")
+```
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$format` | `string` | 无 | 日期格式，如 `Y-m-d`、`Y-m-d H:i:s` |
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+校验字段的值是否与另一个指定字段的值相同
 
-**返回值**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$field` | `string` | — | 另一个字段名 |
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-- `$this`：支持链式调用。
+### different()
 
-### `in($values, $message = "")` — 校验值是否在给定值列表中
+```php
+public function different($field, $message = "")
+```
 
-可变参数：支持 `in('a', 'b', 'c')` 或 `in(['a', 'b', 'c'], 'message')`。
+校验字段的值是否与另一个指定字段的值不同
 
-**参数**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$field` | `string` | — | 另一个字段名 |
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$values` | `array\|string` | 无 | 值列表或数组+消息 |
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+### nullable()
 
-**返回值**
+```php
+public function nullable($message = "")
+```
 
-- `$this`：支持链式调用。
+允许字段值为 null。值为 null 时跳过后续所有校验规则，直接通过
 
-### `notIn($values, $message = "")` — 校验值是否不在给定值列表中
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$message` | `string` | `""` | 校验失败报错信息（本规则不产生错误，仅用于兼容接口） |
 
-可变参数：支持 `notIn('a', 'b', 'c')` 或 `notIn(['a', 'b', 'c'], 'message')`。
+### present()
 
-**参数**
+```php
+public function present($message = "")
+```
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$values` | `array\|string` | 无 | 值列表或数组+消息 |
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+允许字段值为空字符串。值为空字符串时跳过后续所有校验规则，直接通过
 
-**返回值**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$message` | `string` | `""` | 校验失败报错信息（本规则不产生错误，仅用于兼容接口） |
 
-- `$this`：支持链式调用。
+### prohibited()
 
-### `confirmed($message = "")` — 校验值是否与确认字段一致
+```php
+public function prohibited($message = "")
+```
 
-校验字段的值与 `字段名_confirmation` 的值是否一致，常用于密码确认。
+校验字段不能存在于输入数据中
 
-**参数**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+### requiredIf()
 
-**返回值**
+```php
+public function requiredIf($anotherField, $values, $message = "")
+```
 
-- `$this`：支持链式调用。
+当另一个字段的值等于指定值时，此字段为必填
 
-### `same($field, $message = "")` — 校验值与另一字段相同
+可变参数：支持 requiredIf('status', ['active', 'pending'], 'message') 或 requiredIf('status', 'active', 'pending')。
 
-**参数**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$anotherField` | `string` | — | 另一个字段名 |
+| `$values` | `array|string` | — | 指定值或值列表 |
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$field` | `string` | 无 | 另一个字段名 |
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+### requiredUnless()
 
-**返回值**
+```php
+public function requiredUnless($anotherField, $values, $message = "")
+```
 
-- `$this`：支持链式调用。
+除非另一个字段的值等于指定值，否则此字段为必填
 
-### `different($field, $message = "")` — 校验值与另一字段不同
+可变参数：支持 requiredUnless('status', ['draft'], 'message') 或 requiredUnless('status', 'draft')。
 
-**参数**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$anotherField` | `string` | — | 另一个字段名 |
+| `$values` | `array|string` | — | 指定值或值列表 |
+| `$message` | `string` | `""` | 校验失败报错信息 |
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$field` | `string` | 无 | 另一个字段名 |
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
+## 同目录
 
-**返回值**
+- [Rule](/php/api/foundation/validation/rule)
+- [RuleBuilder](/php/api/foundation/validation/rule-builder)
+- [Rules](/php/api/foundation/validation/rules)
+- [Validator](/php/api/foundation/validation/validator)
 
-- `$this`：支持链式调用。
-
-### `nullable($message = "")` — 允许字段值为 null
-
-值为 `null` 时跳过后续所有校验规则，直接通过。本规则不产生错误，`$message` 仅用于兼容接口。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$message` | `string` | `""` | 校验失败时的报错信息（兼容接口，实际不使用） |
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-### `present($message = "")` — 允许字段值为空字符串
-
-值为空字符串时跳过后续所有校验规则，直接通过。本规则不产生错误，`$message` 仅用于兼容接口。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$message` | `string` | `""` | 校验失败时的报错信息（兼容接口，实际不使用） |
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-### `prohibited($message = "")` — 校验字段不能存在于输入数据中
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-### `requiredIf($anotherField, $values, $message = "")` — 条件必填
-
-当另一个字段的值等于指定值时，此字段为必填。可变参数：支持 `requiredIf('status', ['active', 'pending'], 'message')` 或 `requiredIf('status', 'active', 'pending')`。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$anotherField` | `string` | 无 | 另一个字段名 |
-| `$values` | `array\|string` | 无 | 指定值或值列表 |
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
-
-**返回值**
-
-- `$this`：支持链式调用。
-
-### `requiredUnless($anotherField, $values, $message = "")` — 条件必填（除非）
-
-除非另一个字段的值等于指定值，否则此字段为必填。可变参数：支持 `requiredUnless('status', ['draft'], 'message')` 或 `requiredUnless('status', 'draft')`。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$anotherField` | `string` | 无 | 另一个字段名 |
-| `$values` | `array\|string` | 无 | 指定值或值列表 |
-| `$message` | `string` | `""` | 校验失败时的报错信息 |
-
-**返回值**
-
-- `$this`：支持链式调用。

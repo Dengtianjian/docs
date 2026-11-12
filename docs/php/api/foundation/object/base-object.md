@@ -1,128 +1,154 @@
-# BaseObject — 基对象
+# BaseObject
 
-- **文件位置**: `kernel/Foundation/Object/BaseObject.php`
-- **命名空间**: `kernel\Foundation\Object`
-- **是否可继承**: 是（继承链根）
+`kernel\Foundation\Object\BaseObject`  ·  class
 
-提供通用的实例化与单例能力，是整个对象继承链的根类。`singleton()` 是 **Model 层核心约定**，不可改名。
+源码：`gstudio_kernel/Foundation/Object/BaseObject.php`
 
-**单例设计约定**：
-- 单例缓存按 `get_called_class()`（实际类名，后期静态绑定）分类存放，**互不共享、不随继承传递**——每个具体子类各持有一份单例。
-- 单例"只认类型、不认参数"：构造参数仅在**首次实例化**时生效；首次实例化后无参调用 `singleton()` 是取缓存的常规用法；若之后以**不同的非空参数**调用，会抛 `LogicException` 提示。
-- 单例不可通过 `clone` 或反序列化绕过唯一性（`__clone` 私有化，`__wakeup` 抛异常）。
+> 基对象，提供通用的实例化与单例能力
+
+## 声明
+
+```php
+class BaseObject
+```
+
+## 概述
+
+设计约定（子类与调用方务必知晓）：
+- 单例缓存按 `get_called_class()`（后期静态绑定的实际类名）分类存放，
+互不共享、也不随继承传递——每个具体子类各持有一份单例。
+- 单例「只认类型、不认参数」：构造参数仅在首次实例化时生效。
+首次实例化后，无参调用 `singleton()` 是取缓存的常规用法，不受影响；
+若之后又以**不同的非空参数**调用 `singleton()`，会抛出 `LogicException`
+以提示调用方，避免静默拿到旧实例。
+- 单例不可通过 `clone` 或反序列化绕过唯一性（已私有化 `__clone`、
+并令 `__wakeup` 抛异常）。
 
 ## 属性
 
-| 属性 | 类型 | 默认 | 可见性 | 说明 |
-|------|------|------|--------|------|
-| `$singletonPool` | `array<string, static>` | `[]` | static private | 单例实例池，键为实际类名 |
-| `$singletonFingerprints` | `array<string, string\|null>` | `[]` | static private | 单例首次实例化的构造参数指纹；`null` 表示参数无法序列化，跳过一致性检测 |
+| 属性 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `static $singletonPool` | `array` | `[]` | 单例实例池，键为实际类名（get_called_class()） |
+| `static $singletonFingerprints` | `array` | `[]` | 单例首次实例化时的构造参数指纹，键为实际类名 |
 
-## 方法速查表
+## 受保护 / 私有属性
 
-| 方法 | 作用 |
-|------|------|
-| `singleton(...$args)` | 单例调用：每个类仅实例化一次，后续返回缓存实例 |
-| `make(...$args)` | 工厂调用：每次调用都实例化一次 |
-| `hasSingleton($class = null)` | 判断某类是否已单例实例化 |
-| `clearSingleton($class = null)` | 清空单例缓存（测试重置/释放实例） |
-| `buildFingerprint($args)` | 生成构造参数指纹（private） |
-| `__clone()` | 私有化，防止克隆破坏单例唯一性（private） |
-| `__wakeup()` | 反序列化抛异常，防止重建实例 |
+| 属性 | 类型 | 可见性 | 说明 |
+|---|---|---|---|
+| `$app` | `\kernel\Foundation\App|null` | protected | 本对象所属的应用 |
 
-## 方法
+## 方法一览
 
-### `singleton(...$args)` — 单例调用
+| 方法 | 说明 |
+|---|---|
+| [`__wakeup()`](#__wakeup) | 防止反序列化重建实例破坏单例唯一性 |
+| [`singleton()`](#singleton) | — |
+| [`make()`](#make) | — |
+| [`hasSingleton()`](#hassingleton) | — |
+| [`clearSingleton()`](#clearsingleton) | — |
+| [`app()`](#app) | 本对象所属的应用 |
+| [`bindApp()`](#bindapp) | 补归属应用（容器专用） |
 
-每个类仅实例化一次，后续调用返回缓存实例。**final**，不可覆盖。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$args` | `mixed`（可变参数） | 无 | 首次实例化时传入的构造参数 |
-
-**返回值**
-
-- `static`：单例实例。
-
-**异常**
-
-- `\LogicException`：首次实例化后，又以不同的非空参数调用单例时抛出。
-
-**示例**
+### __wakeup()
 
 ```php
-$db = Database::singleton("host", "user");
-$db = Database::singleton();   // 取缓存实例（无参调用为常规用法）
+public function __wakeup()
 ```
 
-### `make(...$args)` — 工厂调用
+防止反序列化重建实例破坏单例唯一性
 
-每次调用都实例化一次类。需要单例时请用 `singleton()`。**final**。
+可能抛出：
 
-**参数**
+- `\LogicException`
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$args` | `mixed`（可变参数） | 无 | 实例化时传入的参数 |
+### singleton()
 
-**返回值**
+```php
+public static function singleton(...$args)
+```
 
-- `static`：新实例。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$args` | `...` | — | — |
 
-### `hasSingleton($class = null)` — 判断是否已单例实例化
+### make()
 
-**参数**
+```php
+public static function make(...$args)
+```
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$class` | `string\|null` | `null` | 要查询的类名；为空时使用调用者类名 |
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$args` | `...` | — | — |
 
-**返回值**
+### hasSingleton()
 
-- `bool`：已单例实例化返回 `true`，否则 `false`。
+```php
+public static function hasSingleton($class = null)
+```
 
-### `clearSingleton($class = null)` — 清空单例缓存
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$class` | `mixed` | `null` | — |
 
-**参数**
+### clearSingleton()
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$class` | `string\|null` | `null` | 要清除的类名；为空时清空全部单例缓存 |
+```php
+public static function clearSingleton($class = null)
+```
 
-**返回值**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$class` | `mixed` | `null` | — |
 
-- 无（`void`）。
+### app()
 
-### `buildFingerprint($args)` — 生成构造参数指纹
+```php
+public function app()
+```
 
-参数无法序列化（如闭包、资源、含闭包对象）时返回 `null`，表示跳过一致性检测。
+本对象所属的应用
 
-**参数**
+优先返回构造期注入的实例；未注入时回落到默认应用（= 当前请求的应用）。
+两者都没有说明引导阶段就有对象在算表名 / 路径，属于装配错误——直接抛错，
+让问题在 `new` 的那一刻暴露，而不是把表名拼成 `_files` 这种错得无声无息的结果。
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$args` | `array` | 无 | 构造参数 |
+可能抛出：
 
-**返回值**
+- [Error](/php/api/foundation/exception/error) 未关联任何应用时抛出
 
-- `string|null`：参数的序列化指纹；无法序列化返回 `null`。
+### bindApp()
 
-### `__clone()` — 防止克隆
+```php
+public function bindApp($app)
+```
 
-> private。空实现，禁止外部克隆。
+补归属应用（容器专用）
 
-**参数**
+只在对象自身还没有归属时补；已有归属（构造签名里写了 `App` 的）原样保留。
 
-- 无。
+读与写都在本类内完成——`Container` 从外部读写 protected 的 `$app` 会直接报
+`Cannot access non-public member`，所以这里开一个受控入口，而不是让容器玩反射。
 
-### `__wakeup()` — 防止反序列化
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$app` | `\kernel\Foundation\App|null` | — | 所属应用；null 表示交给默认应用 |
 
-**参数**
+## 非公开方法
 
-- 无。
+**protected**
 
-**异常**
+- `protected function onAppBound()` —— 归属绑定完成的钩子
+- `protected function resolveApp($app = null)` —— 构造期注入所属应用
 
-- `\LogicException`：始终抛出"单例类不允许被反序列化"。
+**private**
+
+- `private function __clone()` —— 防止克隆破坏单例唯一性
+- `private static function buildFingerprint(array $args)` —— 生成构造参数的指纹，用于单例参数一致性检测
+
+## 同目录
+
+- [AbilityBaseObject](/php/api/foundation/object/ability-base-object)
+- [DataObject](/php/api/foundation/object/data-object)
+- [ReadonlyDataObject](/php/api/foundation/object/readonly-data-object)
+

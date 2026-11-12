@@ -1,205 +1,60 @@
-# MiddlewareBase — 中间件基类
+# 中间件
 
-`MiddlewareBase` 是所有中间件的基类。中间件用于在控制器执行前/后进行拦截处理，常用于认证、日志、CORS 等场景。
+中间件在路由命中后、控制器执行前后运行，构成洋葱模型。基类是 `kernel\Foundation\Middleware\MiddlewareBase`。
 
-- **命名空间**: `kernel\Foundation\Middleware`
-- **文件位置**: `kernel/Foundation/Middleware/MiddlewareBase.php`
-
-## 属性
-
-| 属性 | 类型 | 说明 |
-|------|------|------|
-| `$request` | `Request` | 当前请求实例 |
-| `$controller` | `Controller\|AuthController\|Closure` | 当前控制器实例，如果是闭包则为 `null` |
-
-## 方法列表
-
-### `__construct($request, $controller)`
-
-中间件构造函数。接收请求实例和控制器实例。
-
-| 参数 | 类型 | 说明 |
-|------|------|------|
-| `$request` | `Request` | 当前请求实例 |
-| `$controller` | `Controller\|AuthController\|null` | 控制器实例，闭包控制器时为 `null` |
-
-> 注意：子类必须实现 `handle()` 方法。
-
-## handle() 方法约定
-
-每个中间件都需要实现 `handle(\Closure $next)` 方法，该方法：
-
-1. 接收 `$next` 闭包，调用 `$next()` 才会继续执行后续中间件或控制器
-2. 返回 Response 实例
-3. 如果返回错误响应，中间件链会中断
-
-## 使用方式
-
-### 1. 创建全局中间件
-
-全局中间件对每个请求都执行，在装配类 `Setup/Bootstrap.php`（或入口文件）中手动 `new Middleware` 后注册，再注入 App：
+## 写一个中间件
 
 ```php
-$middleware = new Middleware;
-$middleware->set(GlobalAuthMiddleware::class);
-$middleware->set(GlobalCorsMiddleware::class);
-$App->set(["middleware" => $middleware]);
-```
-
-#### 中间件别名
-
-`set()` 支持第三参数作为别名，方便路由引用：
-
-```php
-$middleware = new Middleware;
-$middleware->set(GlobalAuthMiddleware::class, null, "auth");  // 注册别名 "auth"
-$middleware->set(GlobalCorsMiddleware::class, null, "cors");
-$App->set(["middleware" => $middleware]);
-```
-
-路由中使用别名：
-
-```php
-Route::get("users", UserController::class)->middleware("auth");
-Route::get("api/data", ApiController::class)->middleware(["auth", "cors"]);
-```
-
-**键名规则**：`$middlewares` 为关联数组，键名优先级：别名 > 类路径 > 闭包对象 id（`spl_object_id`）。
-
-### 2. 创建路由级中间件
-
-路由级中间件只对特定路由执行，在路由注册时指定：
-
-```php
-Router::post("notifications/send", SendNoticeController::class)
-    ->middleware([GlobalDingTalkMiddleware::class]);
-
-Router::prefix("admin")->middleware([AdminMiddleware::class])->group(function () {
-    // ...
-});
-```
-
-### 3. 自定义中间件示例
-
-```php
-<?php
-namespace myapp\Middleware;
+namespace myapp\Middlewares;
 
 use kernel\Foundation\Middleware\MiddlewareBase;
-use kernel\Foundation\Result;
+use kernel\Foundation\HTTP\Response;
 
-class RateLimitMiddleware extends MiddlewareBase
+class GlobalCorsMiddleware extends MiddlewareBase
 {
-    public function handle(\Closure $next)
-    {
-        $ip = \kernel\Foundation\HTTP\Request::ip();
-        $key = "rate_limit:" . $ip;
-        
-        // 原子自增计数（基于文件锁，并发安全）
-        $count = \kernel\Foundation\Cache::increment($key, 1, 0);
-        
-        if ($count > 100) {
-            // 超过限制，返回错误
-            $RR = new Result(false);
-            $RR->error(429, "429001", "请求过于频繁，请稍后再试");
-            return $RR;
-        }
-        
-        // 继续执行后续中间件和控制器
-        return $next();
-    }
+  public function handle($next): Response
+  {
+    // 前置逻辑...
+
+    $Response = $next();   // 放行到下一层（控制器 + 内层中间件）
+
+    // 后置逻辑（$next 返回之后）...
+    return Cors::applyTo($Response, $this->getOrigin());
+  }
 }
 ```
 
-### 4. 闭包中间件
+- 构造函数拿到 `$request` 与 `$controller`，需要什么从构造注入；
+- `handle($next)` 必须 `return $next()` 或返回 `Response`。
 
-也可以用闭包直接作为中间件，在 `Middleware` 实例上 `set()` 注册：
+## 登记：全局
+
+在装配类里登记，执行顺序即登记顺序：
 
 ```php
-$middleware = new Middleware;
-$middleware->set(function ($request, $next) {
-    // 前置处理
-    $startTime = microtime(true);
-    
-    // 执行后续
-    $response = $next();
-    
-    // 后置处理
-    $duration = microtime(true) - $startTime;
-    $response->addBody(["duration" => $duration . "s"]);
-    
-    return $response;
-});
-$App->set(["middleware" => $middleware]);
+$this->app()->middleware()->set(\myapp\Middlewares\GlobalAuthMiddleware::class);
+$this->app()->middleware()->set(\myapp\Middlewares\GlobalCorsMiddleware::class);
 ```
 
-## 中间件执行顺序
+`set($classOrClosure, $executeParams = null, $alias = null)` 支持类名、闭包，可带别名。
 
-```
-请求
-  │
-  ▼
-┌─────────────────────────┐
-│  全局中间件 1 (Global1)  │  ← 先注册先执行
-│        ↓ $next()        │
-│  全局中间件 2 (Global2)  │
-│        ↓ $next()        │
-│  路由级中间件 1          │
-│        ↓ $next()        │
-│  路由级中间件 2          │
-│        ↓ $next()        │
-│  控制器 data()           │
-│        ↓ return         │
-│  路由级中间件 2 (后置)    │  ← 洋葱模型：后进先出
-│  路由级中间件 1 (后置)    │
-│  全局中间件 2 (后置)      │
-│  全局中间件 1 (后置)      │
-└─────────────────────────┘
-  │
-  ▼
-响应
+## 登记：路由级
+
+路由链式声明：
+
+```php
+Route::get("/admin", AdminController::class)
+  ->middleware([AuthMiddleware::class]);
 ```
 
-## 内置全局中间件
+执行时按键名（别名或类名）查找；未注册的类名会直接实例化。
 
-内置全局中间件（子类）位于 `kernel/Middleware/`，继承 `kernel\Foundation\Middleware\MiddlewareBase` 基类；基类与管理器位于 `kernel/Foundation/Middleware/`。
+## 执行顺序
 
-### GlobalAuthMiddleware
+`App::runMiddleware()` 调 `Middleware::execute($route['middlewares'], $controller, $onion)`，洋葱内层依次执行：
 
-**文件**: `kernel/Middleware/GlobalAuthMiddleware.php`
+```
+before() → data()（或指定方法）→ after()
+```
 
-负责用户认证：
-- 读取请求头中的 `Authorization` Token
-- 验证 Token 有效性和过期时间
-- Token 剩余有效期不足 20% 时自动刷新
-- 支持 `AuthController` 的 `$Admin`/`$Auth` 属性
-
-**方法**:
-
-| 方法 | 说明 |
-|------|------|
-| `sameOrigin()` | 判断请求是否同源 |
-| `verifyToken($strongCheck)` | 验证 Token，`$strongCheck=true` 时必须提供有效 Token |
-| `handle(\Closure $next)` | 中间件入口，读取控制器认证需求并执行对应校验 |
-
-### GlobalCorsMiddleware
-
-**文件**: `kernel/Middleware/GlobalCorsMiddleware.php`
-
-处理跨域请求（CORS）。
-
-### GlobalWechatOfficialAccountMiddleware
-
-**文件**: `kernel/Middleware/GlobalWechatOfficialAccountMiddleware.php`
-
-处理微信公众号相关请求。
-
-## 与其他类的协作
-
-| 类 | 关系 | 说明 |
-|------|------|------|
-| [App](./app.md) | 注入全局中间件 | `set(["middleware" => $middleware])` |
-| [Router](./router.md) | 路由级中间件 | 路由注册时指定 |
-| [AuthController](./auth-controller.md) | 配合认证 | 中间件读取认证属性 |
-| [Controller](./controller.md) | 拦截目标 | 中间件在控制器前后执行 |
-| [Result](./result.md) | 错误返回 | 中间件用 Result 返回错误 |
+字符串中间件以 `new $class($request, $controller)` 实例化后 `handle(...$params, $next)`；闭包则注入 request 后调用。

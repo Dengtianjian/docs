@@ -1,36 +1,34 @@
-# RequestParams — 请求路径参数
+# RequestParams
 
-- **文件位置**: `kernel/Foundation/HTTP/Request/RequestParams.php`
-- **命名空间**: `kernel\Foundation\HTTP\Request`
-- **继承**: 继承 `kernel\Foundation\HTTP\Request\RequestData`
-- **是否可继承**: 是
+`kernel\Foundation\HTTP\Request\RequestParams`  ·  class
 
-封装当前请求的 **URI 路径参数**（路由动态参数，如 `/user/{id}` 中的 `id`）。数据由 `App::run()`/`Console` 在路由匹配后经父类 `fill()` 注入。
+源码：`gstudio_kernel/Foundation/HTTP/Request/RequestParams.php`
 
-本类**自身不定义任何方法**，仅作为类型标识区分 `params` 与 `query`/`body`/`header`；取值、注入、转换、校验等能力全部继承自 `RequestData`。
+> URI 参数（路由动态参数）集合
 
-## 属性
+**无方法**
 
-| 属性 | 类型 | 默认 | 可见性 | 说明 |
-|------|------|------|--------|------|
-| （继承自 `RequestData`） | — | — | — | `$data` / `$mutator` / `$validator` / `$validatedResult` |
-
-## 方法速查表
-
-| 方法 | 作用 | 来源 |
-|------|------|------|
-| `fill($data)` | 注入数据并合并（路由匹配后注入参数） | `RequestData` |
-| `get($key, $default)` | 获取参数值 | `RequestData` |
-| `has($key)` | 是否存在某个键 | `RequestData` |
-| `some($keys, $completion)` | 批量获取 | `RequestData` |
-
-## 示例
+## 声明
 
 ```php
-// 路由：GET user/{userId}
-$id = $request->params->get("userId");
+class RequestParams extends RequestData
 ```
 
----
+父类：`RequestData`
 
-> **本类无自有方法**：`fill()` / `has()` / `get()` / `some()` / `handle()` 等均继承自《RequestData》页。
+## 概述
+
+数据不在构造时填充，而是在路由匹配完成后由 App::run()/Console 经父类 fill()
+注入（Router 匹配参数的唯一通道）；has/get/some/prepare 等继承自 RequestData。
+
+## 方法
+
+本类没有公开方法。
+
+## 同目录
+
+- [RequestBody](/php/api/foundation/http/request/request-body)
+- [RequestData](/php/api/foundation/http/request/request-data)
+- [RequestHeader](/php/api/foundation/http/request/request-header)
+- [RequestQuery](/php/api/foundation/http/request/request-query)
+

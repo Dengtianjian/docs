@@ -1,147 +1,152 @@
-# Money — 金额工具
+# Money
 
-- **文件位置**: `kernel/Foundation/Data/Money.php`
-- **命名空间**: `kernel\Foundation\Data`
-- **类型**: 纯静态工具类
+`kernel\Foundation\Data\Money`  ·  class
 
-金额处理静态工具类：分/元转换、格式化、折扣、税费、中文大写。全部通过 `Money::方法名(...)` 调用。
+源码：`gstudio_kernel/Foundation/Data/Money.php`
 
-## 方法速查表
+> 货币工具类
 
-| 类别 | 方法 |
-|------|------|
-| 单位转换 | `fenToYuan`、`yuanToFen` |
-| 格式化 | `yuan` |
-| 计算 | `discount`、`tax` |
-| 大写 | `toChinese` |
-
-## 方法
-
-### `fenToYuan($fen)` — 分转元
-
-将「分」为单位的整数金额转为「元」为单位的浮点数。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$fen` | `int` | 无 | 分单位的金额 |
-
-**返回值**
-
-- `float`：元单位的金额。
-
-**示例**
+## 声明
 
 ```php
-Money::fenToYuan(12345);   // 123.45
+class Money
 ```
 
-### `yuanToFen($yuan)` — 元转分
+## 概述
 
-将「元」为单位的金额转为「分」为单位的整数（四舍五入取整）。
+提供元/分互转、折扣、税费、中文大写等货币相关静态方法。全部方法无需实例化即可调用。
 
-**参数**
+方法分为以下几组：
+- 转换：       fenToYuan、yuanToFen、yuan
+- 计算：       discount、tax
+- 格式化：     toChinese
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$yuan` | `float\|int` | 无 | 元单位的金额 |
-
-**返回值**
-
-- `int`：分单位的金额。
-
-**示例**
-
-```php
-Money::yuanToFen(123.45);   // 12345
-```
-
-### `yuan($yuan)` — 元金额格式化字符串
-
-将元金额格式化为固定两位小数的金额字符串（如 `"123.50"`）。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$yuan` | `float\|int` | 无 | 元单位的金额 |
-
-**返回值**
-
-- `string`：固定两位小数的金额字符串。
-
-**示例**
-
-```php
-Money::yuan(123.5);   // "123.50"
-```
-
-### `discount($yuan, $percent)` — 按百分比折扣
-
-按折扣百分比计算折后金额。`$percent` 表示折扣力度（如 `80` 表示 8 折，即原价 × 80%）。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$yuan` | `float\|int` | 无 | 原价（元） |
-| `$percent` | `float\|int` | 无 | 折扣百分比（0-100） |
-
-**返回值**
-
-- `float`：折后金额（元）。
-
-**示例**
-
-```php
-Money::discount(100, 80);   // 80.0（8 折）
-```
-
-### `tax($yuan, $rate)` — 税费计算
-
-按税率计算税费金额。`$rate` 为税率百分比（如 `13` 表示 13%）。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$yuan` | `float\|int` | 无 | 计税基数（元） |
-| `$rate` | `float\|int` | 无 | 税率（百分比，0-100） |
-
-**返回值**
-
-- `float`：税费金额（元）。
-
-**示例**
-
-```php
-Money::tax(100, 13);   // 13.0
-```
-
-### `toChinese($yuan)` — 金额转中文大写
-
-将元金额转换为中文大写金额（如 `"壹佰元整"`、`"壹佰元伍角"`）。支持元、角、分，整数部分以「整」结尾。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$yuan` | `float\|int` | 无 | 元单位的金额 |
-
-**返回值**
-
-- `string`：中文大写金额。
-
-**示例**
-
-```php
-Money::toChinese(100.5);   // "壹佰元伍角"
-Money::toChinese(100);     // "壹佰元整"
-```
-
-## 私有辅助方法
+## 方法一览
 
 | 方法 | 说明 |
-|------|------|
-| `_integerToChinese($num)` | 将整数部分转为中文大写数字（`toChinese()` 内部调用） |
+|---|---|
+| [`fenToYuan()`](#fentoyuan) | 分转元 |
+| [`yuanToFen()`](#yuantofen) | 元转分 |
+| [`yuan()`](#yuan) | 元转显示字符串 |
+| [`discount()`](#discount) | 折扣计算 |
+| [`tax()`](#tax) | 税费计算 |
+| [`toChinese()`](#tochinese) | 转中文大写金额 |
+
+### fenToYuan()
+
+```php
+public static function fenToYuan($fen): float
+```
+
+分转元
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$fen` | `int|float` | — | 金额（分） |
+
+返回：`float` —— float 金额（元）
+
+### yuanToFen()
+
+```php
+public static function yuanToFen($yuan): int
+```
+
+元转分
+
+不四舍五入：截断到分，超出 2 位小数的部分直接舍弃。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$yuan` | `int|float` | — | 金额（元） |
+
+返回：`int` —— int 金额（分）
+
+### yuan()
+
+```php
+public static function yuan($yuan): string
+```
+
+元转显示字符串
+
+输出带 ¥ 符号、固定 2 位小数的字符串，适合直接渲染到页面。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$yuan` | `int|float` | — | 金额（元） |
+
+返回：`string` —— string 如 "¥1.23"
+
+### discount()
+
+```php
+public static function discount($yuan, $percent): float
+```
+
+折扣计算
+
+按百分比计算折后金额，截断到分（不四舍五入）。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$yuan` | `int|float` | — | 原价（元） |
+| `$percent` | `int|float` | — | 折扣，如 8.5 表示 8.5 折 |
+
+返回：`float` —— float 折后价（元）
+
+### tax()
+
+```php
+public static function tax($yuan, $rate): float
+```
+
+税费计算
+
+按税率计算税费，截断到分（不四舍五入）。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$yuan` | `int|float` | — | 金额（元） |
+| `$rate` | `int|float` | — | 税率百分比，如 6 表示 6%，13 表示 13% |
+
+返回：`float` —— float 税费（元）
+
+### toChinese()
+
+```php
+public static function toChinese($yuan): string
+```
+
+转中文大写金额
+
+将元为单位的金额转为财务中文大写，符合发票、合同等正式场景。
+
+规则：
+- 元后无角分 → 加"整"
+- 有角无分 → 末尾不补
+- 角为零分非零 → 角位补"零"
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$yuan` | `int|float` | — | 金额（元） |
+
+返回：`string` —— string 如 "壹拾贰元叁角肆分"
+
+## 非公开方法
+
+**private**
+
+- `private static function _integerToChinese(int $num, array $digits): string` —— 整数部分转中文大写
+
+## 同目录
+
+- [Arr](/php/api/foundation/data/arr)
+- [Date](/php/api/foundation/data/date)
+- [Func](/php/api/foundation/data/func)
+- [Mutator](/php/api/foundation/data/mutator)
+- [Numeric](/php/api/foundation/data/numeric)
+- [Serializer](/php/api/foundation/data/serializer)
+- [Str](/php/api/foundation/data/str)
+- [Transform](/php/api/foundation/data/transform)
+

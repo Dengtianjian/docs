@@ -1,91 +1,229 @@
-# RouteGroup — 路由组
+# RouteGroup
 
-- **文件位置**: `kernel/Foundation/Router/RouteGroup.php`
-- **命名空间**: `kernel\Foundation\Router`
-- **是否可继承**: 是
-- **继承**: `RouteRegister`
+`kernel\Foundation\Router\RouteGroup`  ·  class
 
-用于路由组注册，构造时设置前缀并执行回调。
+源码：`gstudio_kernel/Foundation/Router/RouteGroup.php`
 
-## 构造
+## 声明
+
+```php
+class RouteGroup extends RouteRegister
+```
+
+父类：`RouteRegister`
+
+## 方法一览
+
+| 方法 | 说明 |
+|---|---|
+| [`__construct()`](#__construct) | — |
+| [`group()`](#group) | 嵌套子组（组中组）+ 读取所属组（双语义，兼容父类 getter） |
+| [`same()`](#same) | 组内含 same（same 中再分 HTTP 方法）+ 读取所属 same（双语义） |
+| [`get()`](#get) | — |
+| [`post()`](#post) | — |
+| [`put()`](#put) | — |
+| [`patch()`](#patch) | — |
+| [`delete()`](#delete) | — |
+| [`head()`](#head) | — |
+| [`options()`](#options) | — |
+| [`any()`](#any) | — |
+| [`fallback()`](#fallback) | 组内 fallback 兜底路由（该组下所有正常路由未命中时命中） |
+
+### __construct()
 
 ```php
 public function __construct($prefix, $callback, $same = null, $group = null)
 ```
 
-| 参数 | 类型 | 说明 |
-|------|------|------|
-| `$prefix` | `string` | 组前缀 |
-| `$callback` | `callable` | 组回调，注入 `RouteGroup` 实例 |
-| `$same` | `RouteSame\|null` | 所属同 URI 注册器 |
-| `$group` | `RouteGroup\|null` | 所属父组 |
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$prefix` | `mixed` | — | — |
+| `$callback` | `mixed` | — | — |
+| `$same` | `mixed` | `null` | — |
+| `$group` | `mixed` | `null` | — |
 
-## DSL 方法
-
-组内 DSL 收 `($uri, $controller)`，创建子路由并自动 `Routes::push`：
+### group()
 
 ```php
-function get($uri = null, $controller = null): RouteRegister
-function post($uri = null, $controller = null): RouteRegister
-function put($uri = null, $controller = null): RouteRegister
-function patch($uri = null, $controller = null): RouteRegister
-function delete($uri = null, $controller = null): RouteRegister
-function head($uri = null, $controller = null): RouteRegister
-function options($uri = null, $controller = null): RouteRegister
-function any($uri = null, $controller = null): RouteRegister
+public function group($prefix = null, $callback = null)
 ```
 
-**参数**
+嵌套子组（组中组）+ 读取所属组（双语义，兼容父类 getter）
 
-| 参数 | 类型 | 说明 |
-|------|------|------|
-| `$uri` | `string\|null` | 路由 URI（`null` 时读取所属父级） |
-| `$controller` | `string\|array\|\Closure\|null` | 控制器 |
+- 无参调用：读取当前组所属的父组（继承 RouteRegister::group() getter 语义）
+- 传 prefix + callback：创建子组，子组前缀在当前组前缀之上叠加（mergePath），
+生成的子 RouteGroup 作为纯容器供其内部叶子路由通过 group 位引用，
+resolvedUri() 取子组 prefix 即得完整前缀。
 
-**示例**
-
-```php
-Route::group("api", function ($g) {
-    $g->get("users", UserController::class);     // /api/users
-    $g->post("users", StoreUserController::class); // POST /api/users
+```
+Route::group('api', function ($g) {
+$g->group('v1', function ($g2) {
+$g2->get('users'); // uri = api/v1/users
+});
 });
 ```
 
-## 嵌套
-
 ```php
-function group($prefix = null, $callback = null): RouteGroup|mixed
-function same($uri = null, $callback = null): RouteSame|mixed
-function fallback($controller = null): RouteRegister
-```
-
-无参调用读取所属父级，传值创建子级。
-
-**示例**
-
-```php
-Route::group("api", function ($g) {
-    // 嵌套组
-    $g->group("v1", function ($g2) {
-        $g2->get("users", V1UserController::class); // /api/v1/users
-    });
-
-    // 嵌套 same
-    $g->same("links/{id}", function ($rs) {
-        $rs->get(ShowLinkController::class);      // /api/links/{id} (GET)
-        $rs->put(UpdateLinkController::class);    // /api/links/{id} (PUT)
-    });
-
-    // 组内兜底
-    $g->fallback(ApiNotFoundController::class);
+Route::group('api', function ($g) {
+$g->group('v1', function ($g2) {
+$g2->get('users'); // uri = api/v1/users
+});
 });
 ```
 
-## 继承自 RouteRegister
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$prefix` | `string|null` | `null` | 子组前缀（相对当前组） |
+| `$callback` | `callable|null` | `null` | 子组回调（注入子 RouteGroup） |
 
-所有 `RouteRegister` 的读写一体 setter 和链式方法均可使用：
+### same()
 
-- `name()` / `prefix()` / `domain()` / `fallback()`
-- `controller()` / `method()` / `uri()` / `parameters()`
-- `middleware()` / `where()` / `whereNumber()` / `whereAlpha()` / ...
-- `append()` / `params()` / `resolve()`
+```php
+public function same($uri = null, $callback = null)
+```
+
+组内含 same（same 中再分 HTTP 方法）+ 读取所属 same（双语义）
+
+- 无参调用：读取当前组所属的 same（交叉嵌套时才有值）
+- 传 uri + callback：在组内创建同 URI 注册器，生成的 RouteSame 通过其 group 位
+引用当前组，resolvedUri() 组合「组前缀 + same 共用 URI + 叶子 URI」。
+
+```
+Route::group('api', function ($g) {
+$g->same('users', function ($rs) {
+$rs->get(ShowUserController::class); // uri = api/users
+});
+});
+```
+
+```php
+Route::group('api', function ($g) {
+$g->same('users', function ($rs) {
+$rs->get(ShowUserController::class); // uri = api/users
+});
+});
+```
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$uri` | `string|null` | `null` | 同 URI 基础 |
+| `$callback` | `callable|null` | `null` | 同 URI 回调（注入子 RouteSame） |
+
+### get()
+
+```php
+public function get($uri = null, $controller = null)
+```
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$uri` | `mixed` | `null` | — |
+| `$controller` | `mixed` | `null` | — |
+
+### post()
+
+```php
+public function post($uri = null, $controller = null)
+```
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$uri` | `mixed` | `null` | — |
+| `$controller` | `mixed` | `null` | — |
+
+### put()
+
+```php
+public function put($uri = null, $controller = null)
+```
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$uri` | `mixed` | `null` | — |
+| `$controller` | `mixed` | `null` | — |
+
+### patch()
+
+```php
+public function patch($uri = null, $controller = null)
+```
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$uri` | `mixed` | `null` | — |
+| `$controller` | `mixed` | `null` | — |
+
+### delete()
+
+```php
+public function delete($uri = null, $controller = null)
+```
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$uri` | `mixed` | `null` | — |
+| `$controller` | `mixed` | `null` | — |
+
+### head()
+
+```php
+public function head($uri = null, $controller = null)
+```
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$uri` | `mixed` | `null` | — |
+| `$controller` | `mixed` | `null` | — |
+
+### options()
+
+```php
+public function options($uri = null, $controller = null)
+```
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$uri` | `mixed` | `null` | — |
+| `$controller` | `mixed` | `null` | — |
+
+### any()
+
+```php
+public function any($uri = null, $controller = null)
+```
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$uri` | `mixed` | `null` | — |
+| `$controller` | `mixed` | `null` | — |
+
+### fallback()
+
+```php
+public function fallback($controller = null)
+```
+
+组内 fallback 兜底路由（该组下所有正常路由未命中时命中）
+
+不限定方法/URI；叶子以当前组为其 group 位，resolve() 沿祖先链继承
+domain / prefix 等。可配合 Route::domain 声明域名组内专属兜底。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$controller` | `string|array|\Closure|null` | `null` | 兜底控制器/闭包 |
+
+## 非公开方法
+
+**private**
+
+- `private function leaf($uri, $method, $controller)` —— 组内叶子 DSL 公共构造：生成归属当前组的路由载体
+
+## 同目录
+
+- [Route](/php/api/foundation/router/route)
+- [RouteDomain](/php/api/foundation/router/route-domain)
+- [RouteRegister](/php/api/foundation/router/route-register)
+- [RouteSame](/php/api/foundation/router/route-same)
+- [Router](/php/api/foundation/router/router)
+- [Routes](/php/api/foundation/router/routes)
+

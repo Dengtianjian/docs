@@ -1,90 +1,72 @@
-# ResponseFile — 文件预览响应
+# ResponseFile
 
-- **文件位置**: `kernel/Foundation/HTTP/Response/ResponseFile.php`
-- **命名空间**: `kernel\Foundation\HTTP\Response`
-- **继承**: 继承 `kernel\Foundation\HTTP\Response\ResponseDownload`
-- **是否可继承**: 是
+`kernel\Foundation\HTTP\Response\ResponseFile`  ·  class
 
-以**内联预览**（`Content-Disposition: inline`）形式输出本地文件。图片支持**实时裁剪/缩放/旋转/转格式/质量**（经 query 参数 `w`/`h`/`r`/`q`/`ext` 触发，用 GD 生成缩略图并输出 webp/jpg/png/gif 等），并带 HTTP 缓存控制（ETag / Last-Modified / 304）。
+源码：`gstudio_kernel/Foundation/HTTP/Response/ResponseFile.php`
 
-## 属性
+## 声明
 
-| 属性 | 类型 | 默认 | 可见性 | 说明 |
-|------|------|------|--------|------|
-| `$imageQuality` | `int\|null` | `null` | private | 图片输出质量 |
-| `$cacheControl` | `string` | `"no-cache"` | private | HTTP 缓存控制属性值 |
-| `$httpExpires` | `int\|null` | `null` | private | HTTP 资源过期时间（秒级时间戳） |
-| （继承自 `ResponseDownload`） | — | — | — | `$filePath` / `$fileName` / `$fileSize` / `$fileExtension` / `$DownloadRateLimit` / `$request` |
+```php
+class ResponseFile extends ResponseDownload
+```
 
-## 方法速查表
+父类：`ResponseDownload`
 
-| 方法 | 作用 |
-|------|------|
-| `__construct(...)` | 构造：设置图片质量与缓存控制 |
-| `createThumb(...)` | 用 GD 生成缩略图并输出（private） |
-| `setCache($fileTag)` | 设置 HTTP 缓存头（protected） |
-| `output()` | 输出预览响应 |
+## 受保护 / 私有属性
 
-## 方法
+| 属性 | 类型 | 可见性 | 说明 |
+|---|---|---|---|
+| `$imageQuality` | `integer` | private | 预览图片的质量 |
+| `$cacheControl` | `mixed` | private | HTTP 缓存控制 |
+| `$httpExpires` | `string` | private | HTTP 资源过期时间，秒级时间戳 |
 
-### `__construct(Request $R, $filePath, $downloadFileName = null, $imageQuality = null, $cacheControl = "no-cache", $httpExpires = null)` — 构造
+## 方法一览
 
-**参数**
+| 方法 | 说明 |
+|---|---|
+| [`__construct()`](#__construct) | 文件格式输出响应 |
+| [`output()`](#output) | — |
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$R` | `Request` | 无 | 请求实例 |
-| `$filePath` | `string` | 无 | 文件的绝对路径 |
-| `$downloadFileName` | `string\|null` | `null` | 输出文件名（含扩展名）；为空用源文件名 |
-| `$imageQuality` | `int\|null` | `null` | 图片输出质量 |
+### __construct()
+
+```php
+public function __construct(Request $R, $filePath, $downloadFileName = null, $imageQuality = null, $cacheControl = "no-cache", $httpExpires = null)
+```
+
+文件格式输出响应
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$R` | `Request` | — | 请求体 |
+| `$filePath` | `string` | — | 下载的文件绝对路径 |
+| `$downloadFileName` | `mixed` | `null` | — |
+| `$imageQuality` | `int` | `null` | 如果是图片类型文件，该值将影响输出的图片质量 |
 | `$cacheControl` | `string` | `"no-cache"` | HTTP 缓存控制属性值 |
-| `$httpExpires` | `int\|null` | `null` | HTTP 资源过期时间（秒级时间戳） |
+| `$httpExpires` | `string` | `null` | HTTP 资源过期时间，秒级时间戳 |
 
-**返回值**
+### output()
 
-- 无。
+```php
+public function output()
+```
 
-### `createThumb($filePath, $fileName, $targetWdith, $targetHeight, $targetRatio, $NewExtension = null)` — 生成缩略图
+## 非公开方法
 
-> private。按源图类型创建画布，计算目标宽高（`$targetRatio` 缩放比例优先，否则按 `$targetWdith`/`$targetHeight` 等比例推导），`imagecopyresampled` 缩放后按目标扩展名输出（webp/jpg/png/gif/bmp），支持质量参数 `q`。
+**protected**
 
-**参数**
+- `protected function setCache($fileTag)`
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$filePath` | `string` | 无 | 源图片绝对路径 |
-| `$fileName` | `string` | 无 | 输出文件名 |
-| `$targetWdith` | `int\|bool` | 无 | 目标宽度；`false` 表示由高度推导 |
-| `$targetHeight` | `int\|bool` | 无 | 目标高度；`false` 表示由宽度推导 |
-| `$targetRatio` | `float\|bool` | 无 | 缩放比例；`false` 表示按宽高 |
-| `$NewExtension` | `string\|null` | `null` | 目标输出格式（如 `"jpg"`）；为空按源图决定 |
+**private**
 
-**返回值**
+- `private function createThumb($filePath, $fileName, $targetWidth, $targetHeight, $targetRatio, $NewExtension = null)`
 
-- 无（`void`）。
+## 同目录
 
-### `setCache($fileTag)` — 设置 HTTP 缓存头
+- [ResponseDownload](/php/api/foundation/http/response/response-download)
+- [ResponseError](/php/api/foundation/http/response/response-error)
+- [ResponsePagination](/php/api/foundation/http/response/response-pagination)
+- [ResponseProxy](/php/api/foundation/http/response/response-proxy)
+- [ResponseRedirect](/php/api/foundation/http/response/response-redirect)
+- [ResponseView](/php/api/foundation/http/response/response-view)
+- [ServerSentEvent](/php/api/foundation/http/response/server-sent-event)
 
-> protected。将文件标识 MD5 为 ETag；若请求头 `If-None-Match` 匹配则输出 `304 Not Modified` 并 `exit`。否则输出 `Last-Modified` / `etag` / `cache-control` / 可选 `expires`。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$fileTag` | `string` | 无 | 缓存标识（参与 ETag 计算） |
-
-**返回值**
-
-- 无（命中 304 时 `exit`）。
-
-### `output()` — 输出预览响应
-
-输出 `Accept-Ranges` / `Content-Length` / `Content-Disposition: inline` / `Content-type`（按文件 MIME）。图片且 query 含 `w`/`h`/`r`/`q`/`ext` 时：按参数裁剪缩放输出，`ext` 可转格式；否则直接输出原始内容。
-
-**参数**
-
-- 无。
-
-**返回值**
-
-- 无（`void`）。

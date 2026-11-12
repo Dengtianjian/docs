@@ -1,41 +1,56 @@
-# MakeAppCommand — 创建应用命令
+# MakeAppCommand
 
-- **文件位置**: `kernel/Commands/MakeAppCommand.php`
-- **命名空间**: `kernel\Commands`
-- **命令名**: `make:app`
+`kernel\Commands\MakeAppCommand`  ·  class
 
-创建新应用骨架的命令。
+源码：`gstudio_kernel/Commands/MakeAppCommand.php`
 
-## 用法
+> 创建新应用命令
 
-```bash
-php kernel/console make:app <AppId>
-php kernel/console make:app hello
+## 声明
+
+```php
+class MakeAppCommand
 ```
 
-## 生成内容
+## 概述
 
-生成到 `{root}/{AppId}/`：
+命令名 make:app 在 kernel/console 中注册（Console::addCommand）。
 
-| 路径 | 说明 |
-|------|------|
-| `Setup/Bootstrap.php` | 应用装配类（手动 new Config/FileSystem/Cache + 生命周期注入） |
-| `Setup/Bootup.php` / `Setup/Shutdown.php` | 生命周期装配类 |
-| `Routes/index.php` | HTTP 路由 |
-| `Controller/IndexController.php` | 默认控制器 |
-| `index.php` | HTTP 入口 |
-| `console` | CLI 入口（Console 子类） |
-| `Controller/` `Data/` `Storage/` | 目录结构 |
+用法：
+php kernel/console make:app ＜AppId＞
 
-## 参数
+生成应用骨架到 {root}/{AppId}/：Setup/（Bootstrap/Bootup/Shutdown 装配类）、Routes/index.php（HTTP 路由 + 命令注册）、
+Controllers/、console 入口（Console 子类）等。
 
-| 参数 | 说明 |
-|------|------|
-| `$args[0]` | 应用 ID（字母开头，仅字母数字下划线） |
-| 选项 | 无 |
-
-## 方法
+## 方法一览
 
 | 方法 | 说明 |
-|------|------|
-| `handle($console, $args, $options): int` | 校验 AppId → 生成骨架 → 输出结果 |
+|---|---|
+| [`handle()`](#handle) | 命令处理器 |
+
+### handle()
+
+```php
+public function handle($console, $args, $options): int
+```
+
+命令处理器
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$console` | `\kernel\Foundation\Console\Console` | — | 控制台实例 |
+| `$args` | `array` | — | 位置参数：[0] 应用 ID（如 "test"、"isdtj"） |
+| `$options` | `array` | — | 选项参数（无） |
+
+返回：`int` —— integer 退出码，0 表示成功
+
+## 同目录
+
+- [MakeCommand](/php/api/commands/make-command)
+- [MakeControllerCommand](/php/api/commands/make-controller-command)
+- [MakeMiddlewareCommand](/php/api/commands/make-middleware-command)
+- [MakeModelCommand](/php/api/commands/make-model-command)
+- [PackageCommand](/php/api/commands/package-command)
+- [ScheduleRunCommand](/php/api/commands/schedule-run-command)
+- [UnpackCommand](/php/api/commands/unpack-command)
+

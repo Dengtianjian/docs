@@ -1,178 +1,195 @@
-# DataObject — 数据对象（可写）
+# DataObject
 
-- **文件位置**: `kernel/Foundation/Object/DataObject.php`
-- **命名空间**: `kernel\Foundation\Object`
-- **继承**: 继承 `stdClass`
-- **是否可继承**: 是
+`kernel\Foundation\Object\DataObject`  ·  class
 
-一种数据容器，实例化时一次性填充已声明属性，之后仍可通过 `set()` 或 `->prop = $v` 继续写入（含动态属性）。子类通过声明 **protected 属性**定义数据结构，构造时从传入数组/对象中取对应键填充；**缺失的键保留属性默认值**，不覆盖。
+源码：`gstudio_kernel/Foundation/Object/DataObject.php`
 
-只读变体：`kernel\Foundation\Object\ReadonlyDataObject`（继承本类并拦截 `__set`）。
+> 数据对象（Data Object）
 
-## 属性
-
-| 属性 | 类型 | 默认 | 可见性 | 说明 |
-|------|------|------|--------|------|
-| （本类无自身属性） | — | — | — | 属性由各子类声明；构造时填充 |
-
-## 方法速查表
-
-| 方法 | 作用 |
-|------|------|
-| `__construct($data)` | 一次性赋值（缺键保留默认值） |
-| `__get($name)` | 魔术读取：不存在属性返回 `null` |
-| `__set($k, $v)` | 魔术写入：写入未声明属性抛异常 |
-| `properties()` | 获取全部属性名（含继承，排除静态）（protected） |
-| `toArray()` | 输出为关联数组 |
-| `has($key)` | 是否包含指定属性 |
-| `get($key, $default)` | 安全读取属性（带默认值） |
-| `keys()` | 返回全部属性名 |
-| `toJson($flags)` | 序列化为 JSON 字符串 |
-| `__toString()` | 转字符串时输出 JSON |
-
-## 方法
-
-### `__construct($data)` — 一次性赋值
-
-从传入数组/对象中取对应键填充已声明属性；缺失键保留属性默认值。传入对象时若其有 `toArray()` 则转数组，否则 `(array)` 强转。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$data` | `array\|object` | 无 | 初始数据 |
-
-**返回值**
-
-- 无。
-
-**示例**
+## 声明
 
 ```php
-class FileInfo extends DataObject
-{
-    protected $name = "";
-    protected $size = 0;
-}
-
-$info = new FileInfo(["name" => "a.txt"]);
-$info->size;   // 0（缺键保留默认值）
+class DataObject extends stdClass
 ```
 
-### `__get($name)` — 魔术读取
+父类：`stdClass`
 
-访问不存在的属性返回 `null` 而非触发 Undefined property 告警。
+## 概述
 
-**参数**
+一种数据容器，继承自 stdClass。实例化时通过构造参数一次性填充已声明
+属性，之后仍允许通过 `set` 或 `->prop = $v` 继续写入数据
+（含未声明的动态属性），适合需要在生命周期内多次更新字段的场景。
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$name` | `string` | 无 | 属性名 |
+若希望「实例化后完全只读」，请继承 `ReadonlyDataObject`（而非本类），
+它仅在 __set 上叠加写入拦截，其余读写能力由本类提供。
 
-**返回值**
+适用场景：
+- 把结构化数据（如配置、查询结果行、外部 API 响应）封装成对象
+- 在多个组件间传递，且允许任意一方更新字段
+- 需要 `toArray()` / `toJson()` / `get()` / `has()` / `keys()` 等便捷访问
 
-- `mixed`：属性值；不存在返回 `null`。
+## 方法一览
 
-### `__set($k, $v)` — 魔术写入
+| 方法 | 说明 |
+|---|---|
+| [`__construct()`](#__construct) | — |
+| [`__get()`](#__get) | 读取属性 |
+| [`__set()`](#__set) | 允许在实例化后写入数据 |
+| [`set()`](#set) | 设置单个或多个属性 |
+| [`assign()`](#assign) | 批量赋值：把数组中的值赋给已有属性 |
+| [`toArray()`](#toarray) | 将属性输出为数组格式 |
+| [`has()`](#has) | 是否包含指定属性（已声明且键存在） |
+| [`get()`](#get) | 安全读取属性，不存在时返回默认值 |
+| [`keys()`](#keys) | 返回全部属性名 |
+| [`toJson()`](#tojson) | 序列化为 JSON 字符串 |
+| [`__toString()`](#__tostring) | 序列化为 JSON 字符串（转字符串时调用） |
 
-实例化后写入**未声明的动态属性**会抛异常，保证"实例化后只读"。构造期对已声明属性的赋值不会进入此方法。
+### __construct()
 
-**参数**
+```php
+public function __construct($data)
+```
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$k` | `string` | 无 | 属性名 |
-| `$v` | `mixed` | 无 | 属性值 |
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$data` | `mixed` | — | — |
 
-**返回值**
+### __get()
 
-- 无。
+```php
+public function __get($name)
+```
 
-**异常**
+读取属性
 
-- `\kernel\Foundation\Exception\Error`：写入未声明属性时抛出。
+访问不存在的属性时返回 null 而非触发 Undefined property 告警。
 
-### `properties()` — 获取全部属性名
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$name` | `string` | — | — |
 
-> protected。用反射获取全部实例属性（含父类继承的），排除静态属性，去重后返回。
+### __set()
 
-**参数**
+```php
+public function __set($k, $v)
+```
 
-- 无。
+允许在实例化后写入数据
 
-**返回值**
+支持写入「已声明的 protected 属性」以及「未声明的动态属性」。
+在类作用域内直接赋值，不会递归触发本方法。
 
-- `string[]`：属性名列表。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$k` | `string` | — | — |
+| `$v` | `mixed` | — | — |
 
-### `toArray()` — 输出为关联数组
+### set()
 
-**参数**
+```php
+public function set($key, $value = null)
+```
 
-- 无。
+设置单个或多个属性
 
-**返回值**
+- `set('name', $value)`：设置单个属性
+- `set(['name' => $a, 'age' => $b])`：批量设置
 
-- `array`：属性名 → 属性值的关联数组。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$key` | `string|array` | — | 属性名或键值对数组 |
+| `$value` | `mixed` | `null` | 单个属性的值（数组模式忽略） |
 
-### `has($key)` — 是否包含指定属性
+### assign()
 
-**参数**
+```php
+public function assign(array $data)
+```
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$key` | `string` | 无 | 属性名 |
+批量赋值：把数组中的值赋给已有属性
 
-**返回值**
+仅更新已存在的属性（已声明的属性 + 已写入的动态属性），
+数组中不存在的键会被忽略，也不会创建新的动态属性。
+区别于 `set`：set() 会无条件写入任意键（含动态属性）。
 
-- `bool`：属性已声明且存在返回 `true`。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$data` | `array` | — | 键值对数据 |
 
-### `get($key, $default = null)` — 安全读取属性
+### toArray()
 
-**参数**
+```php
+public function toArray()
+```
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$key` | `string` | 无 | 属性名 |
-| `$default` | `mixed` | `null` | 属性不存在时的返回值 |
+将属性输出为数组格式
 
-**返回值**
+### has()
 
-- `mixed`：属性值；不存在返回 `$default`。
+```php
+public function has($key)
+```
 
-### `keys()` — 返回全部属性名
+是否包含指定属性（已声明且键存在）
 
-**参数**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$key` | `string` | — | — |
 
-- 无。
+### get()
 
-**返回值**
+```php
+public function get($key, $default = null)
+```
 
-- `string[]`：属性名列表（同 `properties()`）。
+安全读取属性，不存在时返回默认值
 
-### `toJson($flags = JSON_UNESCAPED_UNICODE)` — 序列化为 JSON 字符串
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$key` | `string` | — | — |
+| `$default` | `mixed` | `null` | — |
 
-**参数**
+### keys()
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$flags` | `int` | `JSON_UNESCAPED_UNICODE` | `json_encode` 标志位（默认不转义中文） |
+```php
+public function keys()
+```
 
-**返回值**
+返回全部属性名
 
-- `string`：JSON 字符串。
+### toJson()
 
-**异常**
+```php
+public function toJson($flags = JSON_UNESCAPED_UNICODE)
+```
 
-- `\RuntimeException`：序列化失败时抛出。
+序列化为 JSON 字符串
 
-### `__toString()` — 转字符串时输出 JSON
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$flags` | `int` | `JSON_UNESCAPED_UNICODE` | json_encode 标志位，默认转义 Unicode |
 
-调用 `toJson(JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)`；序列化失败时返回 `"{}"`。
+可能抛出：
 
-**参数**
+- `\RuntimeException` 序列化失败时抛出
 
-- 无。
+### __toString()
 
-**返回值**
+```php
+public function __toString()
+```
 
-- `string`：JSON 字符串。
+序列化为 JSON 字符串（转字符串时调用）
+
+## 非公开方法
+
+**protected**
+
+- `protected function properties()` —— 获取全部属性名（已声明属性 + 已写入的动态属性）
+
+## 同目录
+
+- [AbilityBaseObject](/php/api/foundation/object/ability-base-object)
+- [BaseObject](/php/api/foundation/object/base-object)
+- [ReadonlyDataObject](/php/api/foundation/object/readonly-data-object)
+

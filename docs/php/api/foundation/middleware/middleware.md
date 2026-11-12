@@ -1,95 +1,76 @@
-# Middleware — 中间件管理器
+# Middleware
 
-- **文件位置**: `kernel/Foundation/Middleware/Middleware.php`
-- **命名空间**: `kernel\Foundation\Middleware`
-- **是否可继承**: 是
+`kernel\Foundation\Middleware\Middleware`  ·  class
 
-全局中间件管理器。注册全局中间件并通过洋葱模型递归执行中间件链（全局中间件 + 路由级中间件）。通过 `$app->set(["middleware" => $m])` 注入应用，应用 `run()` 时调用 `execute()`。
+源码：`gstudio_kernel/Foundation/Middleware/Middleware.php`
 
-## 属性
-
-| 属性 | 类型 | 默认 | 可见性 | 说明 |
-|------|------|------|--------|------|
-| `$middlewares` | `array` | `[]` | protected | 全局中间件关联数组，键名 => `["target" => 中间件, "params" => 执行参数]`。键名规则：别名 > 类路径 > 闭包对象 id |
-
-## 方法
-
-### `__construct()` — 构建中间件管理器
-
-**参数**
-
-- 无。
-
-**返回值**
-
-- 无。
-
-### `set($classOrFun, $executeParams = null, $alias = null)` — 注册全局中间件
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$classOrFun` | `\Closure\|object\|string` | 无 | 中间件。类名（构造接收 `Request` 与控制器，调 `handle` 方法）或闭包（首参为 `Request`） |
-| `$executeParams` | `array` | `null` | 执行中间件时传入的参数，会追加到调用链中 |
-| `$alias` | `string` | `null` | 中间件别名，供路由 `->middleware("alias")` 引用。未指定时键名为类路径或闭包对象 id |
-
-**返回值**
-
-- 无。
-
-**键名规则**
-
-`$middlewares` 为关联数组，键名优先级：
-1. 别名（`$alias` 非 null 时使用）
-2. 类路径（字符串类名）
-3. 闭包对象 id（`closure_{spl_object_id}`）
-
-### `execute($routeMiddlewares, Controller $controller, \Closure $callback)` — 执行中间件链
-
-将路由级中间件合并到全局中间件列表之后，统一以洋葱模型递归执行。最内层为 `$callback`（业务逻辑）。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$routeMiddlewares` | `array\|null` | 无 | 路由级中间件列表，元素为中间件类名/闭包 |
-| `$controller` | `Controller` | 无 | 控制器实例 |
-| `$callback` | `\Closure` | 无 | 最内层回调，执行业务逻辑并返回 `Response` |
-
-**返回值**
-
-- `\kernel\Foundation\HTTP\Response`：中间件链最终返回的响应。
-
-### `executeMiddleware($middlewares, Controller $controller, \Closure $callback)` — 递归执行中间件链
-
-> private。洋葱模型核心：无剩余中间件时调用 `$callback()`；否则弹出首个中间件，构造 `$next` 递归函数作为该中间件执行的最后参数。类中间件以 `new $target(getApp()->request(), $controller)` 实例化并调 `handle(...$params, $next)`；闭包中间件以 `$target(getApp()->request(), ...$params, $next)` 调用。中间件返回 `null` 时抛 `RuntimeException`（提示缺少 `return $next()`）。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$middlewares` | `array` | 无 | 待执行中间件列表 |
-| `$controller` | `Controller` | 无 | 控制器实例 |
-| `$callback` | `\Closure` | 无 | 最内层回调 |
-
-**返回值**
-
-- `\kernel\Foundation\HTTP\Response`：中间件链最终返回的响应。
-
-**异常**
-
-- `RuntimeException`：中间件未返回 `Response` 时抛出。
-
-## 示例
+## 声明
 
 ```php
-use kernel\Foundation\Middleware\Middleware;
-
-$m = new Middleware();
-$m->set(\App\Middleware\GlobalCors::class);          // 全局类中间件
-$m->set(function ($request, $next) {                  // 全局闭包中间件
-    return $next();
-});
-$app->set(["middleware" => $m]);
+class Middleware
 ```
+
+## 受保护 / 私有属性
+
+| 属性 | 类型 | 可见性 | 说明 |
+|---|---|---|---|
+| `$middlewares` | `array` | protected | 全局中间件列表（关联数组：键名 => 中间件定义） |
+
+## 方法一览
+
+| 方法 | 说明 |
+|---|---|
+| [`__construct()`](#__construct) | 构建中间件管理器 |
+| [`set()`](#set) | 注册全局中间件 |
+| [`execute()`](#execute) | 执行中间件链（全局中间件 + 路由级中间件，洋葱模型） |
+
+### __construct()
+
+```php
+public function __construct()
+```
+
+构建中间件管理器
+
+### set()
+
+```php
+public function set($classOrFun, $executeParams = null, $alias = null)
+```
+
+注册全局中间件
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$classOrFun` | `\Closure|object|string` | — | 中间件类或者函数 |
+| `$executeParams` | `array` | `null` | 执行中间件时传入的参数 |
+| `$alias` | `string|null` | `null` | 中间件别名（可选，用于键名和路由引用） |
+
+### execute()
+
+```php
+public function execute($routeMiddlewares, Controller $controller, \Closure $callback)
+```
+
+执行中间件链（全局中间件 + 路由级中间件，洋葱模型）
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$routeMiddlewares` | `array|null` | — | 路由级中间件列表（类名或别名） |
+| `$controller` | `Controller` | — | 控制器实例 |
+| `$callback` | `\Closure` | — | 最内层回调（执行业务逻辑） |
+
+## 非公开方法
+
+**protected**
+
+- `protected function resolveKey($classOrFun, $alias = null)` —— 生成中间件键名
+
+**private**
+
+- `private function executeMiddleware($middlewares, Controller $controller, \Closure $callback)` —— 递归执行中间件链
+
+## 同目录
+
+- [MiddlewareBase](/php/api/foundation/middleware/middleware-base)
+

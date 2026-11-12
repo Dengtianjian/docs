@@ -1,190 +1,182 @@
-# Zip — ZIP 压缩/解压工具
+# Zip
 
-- **文件位置**: `kernel/Foundation/FileSystem/Zip.php`
-- **命名空间**: `kernel\Foundation\FileSystem`
-- **是否可继承**: 是
+`kernel\Foundation\FileSystem\Zip`  ·  class
 
-基于 PHP 内置 `ZipArchive` 的目录打包与解压封装。
+源码：`gstudio_kernel/Foundation/FileSystem/Zip.php`
 
-- `zipDirectory()` / `pack()`：目录递归打包，支持黑名单排除、压缩等级配置；
-- `unzip()` / `extract()`：解压并内置 **zip slip**（路径穿越）、**zip bomb**（解压大小/文件数上限）、**符号链接**三重防护；
-- `isZip()`：按 magic bytes 快速校验是否合法 zip。
+> ZIP 压缩/解压工具
 
-**提供两种用法**：
-- **实例链式**：`setCompressionLevel()` / `exclude()` / `maxExtractSize` 等属性可配置；
-- **静态无状态**：`pack()` / `extract()` 通过 `$options` 数组传参，不依赖实例状态。
+## 声明
 
-**黑名单规则**（`blacklist`，默认 `[".git", "README.md"]`）：
-- 普通条目按**文件名精确匹配**（任意层级同名即排除，如 `.git`）；
-- 含通配符（`*`、`?`、`[]`）的条目按 `fnmatch` 对文件名匹配（如 `*.md`）。
+```php
+class Zip
+```
+
+## 概述
+
+基于 PHP 内置 ZipArchive 的目录打包与解压封装：
+- zipDirectory() / pack()：将目录递归打包为 zip，支持忽略名单排除、压缩等级配置；
+- unzip() / extract()：解压 zip 到指定目录，内置 zip slip（路径穿越）防护、
+解压大小/文件数上限（防 zip bomb）、符号链接策略；
+- isZip()：快速校验文件是否为合法 zip。
+
+忽略名单规则（ignore，默认 [".git", "README.md"]）：
+- 普通条目按文件名精确匹配（任意层级同名即排除，如 .git、README.md）；
+- 含通配符（*、?、[]）的条目按 fnmatch 对文件名匹配（如 *.md）。
+
+同时提供实例链式调用（setCompressionLevel/exclude）与静态无状态入口
+（pack/extract，选项数组传入，不依赖实例状态）。
 
 ## 属性
 
-| 属性 | 类型 | 默认 | 可见性 | 说明 |
-|------|------|------|--------|------|
-| `$blacklist` | `array` | `[".git", "README.md"]` | public | 打包排除名单：精确文件名或 fnmatch 通配符 |
-| `$compressionLevel` | `int` | `-1` | public | 压缩等级：`-1` 使用默认，`0-9` 为 DEFLATE 等级 |
-| `$maxExtractSize` | `int` | `0` | public | 解压总大小上限（字节），`0` 不限制（防 zip bomb） |
-| `$maxExtractFiles` | `int` | `0` | public | 解压文件数上限，`0` 不限制（防 zip bomb） |
-| `$preserveSymlinks` | `bool` | `false` | public | 解压是否保留符号链接；`false` 跳过链接条目（防链接越界） |
-| `$blacklistFileNames` | `array` | `[]` | protected | 本次打包精确匹配的黑名单（每次打包前重置） |
-| `$blacklistWildcards` | `array` | `[]` | protected | 本次打包的通配符黑名单（仅本次生效） |
-| `$lastError` | `string\|null` | `null` | protected | 最近一次操作的错误信息；成功或未操作为 `null` |
+| 属性 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$ignore` | `array` | `[ ".git", "README.md" ]` | 打包忽略名单：普通条目精确匹配文件名，含通配符的条目 fnmatch 匹配 |
+| `$compressionLevel` | `integer` | `-1` | 压缩等级：-1 使用 ZipArchive 默认，0-9 为 DEFLATE 压缩等级 |
+| `$maxExtractSize` | `integer` | `0` | 解压后总大小上限（字节），0 表示不限制（防 zip bomb） |
+| `$maxExtractFiles` | `integer` | `0` | 解压文件数上限，0 表示不限制（防 zip bomb） |
+| `$preserveSymlinks` | `boolean` | `false` | 解压时是否保留符号链接条目：false 时跳过符号链接（防止链接指向目标目录外） |
 
-## 方法速查表
+## 受保护 / 私有属性
 
-| 方法 | 作用 |
-|------|------|
-| `setCompressionLevel($level)` | 配置压缩等级（链式） |
-| `exclude(array $names)` | 追加黑名单条目（链式） |
-| `lastError()` | 获取最近一次操作的错误信息 |
-| `isZip($path)` | 快速校验文件是否为合法 zip |
-| `zipDirectory($sourcePath, $outputPath)` | 目录递归打包为 zip |
-| `unzip(string $filePath, string $dest)` | 解压 zip 到指定目录 |
-| `Zip::pack($sourcePath, $outputPath, $options)` | 静态快捷打包 |
-| `Zip::extract($filePath, $dest, $options)` | 静态快捷解压 |
-| `extractWithGuard($zip, $dest)` | 守卫式解压（private） |
-| `directoryToZip($zip, $directory, $removedLength)` | 递归遍历目录写入 zip（private） |
+| 属性 | 类型 | 可见性 | 说明 |
+|---|---|---|---|
+| `$ignoreFileNames` | `array` | protected | 精确匹配的忽略文件名（每次打包前重置，仅对本次打包生效） |
+| `$ignoreWildcards` | `array` | protected | 通配符忽略项（fnmatch 模式，仅对本次打包生效） |
+| `$lastError` | `string|null` | protected | 最近一次操作的错误信息（成功或未操作时为 null） |
 
-## 方法
+## 方法一览
 
-### `setCompressionLevel($level)` — 配置压缩等级
+| 方法 | 说明 |
+|---|---|
+| [`setCompressionLevel()`](#setcompressionlevel) | 配置压缩等级（链式） |
+| [`exclude()`](#exclude) | 追加忽略条目（链式，去重合并进 ignore） |
+| [`lastError()`](#lasterror) | 获取最近一次操作的错误信息 |
+| [`isZip()`](#iszip) | 快速校验文件是否为合法 zip（magic bytes） |
+| [`zipDirectory()`](#zipdirectory) | 将目录递归打包为 zip |
+| [`unzip()`](#unzip) | 解压 zip 到指定目录 |
+| [`pack()`](#pack) | 静态快捷打包：将目录递归打包为 zip（无状态入口） |
+| [`extract()`](#extract) | 静态快捷解压：解压 zip 到指定目录（无状态入口） |
 
-**参数**
+### setCompressionLevel()
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$level` | `int` | 无 | 压缩等级：`-1` 使用 ZipArchive 默认，`0-9` 为 DEFLATE 等级 |
+```php
+public function setCompressionLevel($level)
+```
 
-**返回值**
+配置压缩等级（链式）
 
-- `$this`：支持链式调用。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$level` | `integer` | — | -1 使用默认，0-9 为 DEFLATE 压缩等级 |
 
-### `exclude(array $names)` — 追加黑名单条目
+### exclude()
 
-**参数**
+```php
+public function exclude(array $names)
+```
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$names` | `array` | 无 | 文件名或 fnmatch 通配符数组，如 `[".svn", "*.log"]`，会去重合并进 `blacklist` |
+追加忽略条目（链式，去重合并进 ignore）
 
-**返回值**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$names` | `array` | — | 文件名或 fnmatch 通配符（如 [".svn", "*.log"]） |
 
-- `$this`：支持链式调用。
+### lastError()
 
-### `lastError()` — 获取错误信息
+```php
+public function lastError()
+```
 
-**参数**
+获取最近一次操作的错误信息
 
-- 无。
+### isZip()
 
-**返回值**
+```php
+public function isZip($path)
+```
 
-- `string|null`：失败原因描述；成功或未操作为 `null`。
+快速校验文件是否为合法 zip（magic bytes）
 
-### `isZip($path)` — 校验是否为合法 zip
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$path` | `string` | — | 待校验文件路径 |
 
-按文件头 magic bytes（`PK\x03\x04` / `PK\x05\x06` / `PK\x07\x08`）判断。
+### zipDirectory()
 
-**参数**
+```php
+public function zipDirectory($sourcePath, $outputPath)
+```
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$path` | `string` | 无 | 待校验文件路径 |
+将目录递归打包为 zip
 
-**返回值**
+目录不存在返回 false；打包过程中忽略名单内条目（任意层级）会被跳过。
+失败原因可通过 lastError() 读取。
 
-- `bool`：是 zip 返回 `true`；文件不存在或 magic 不符返回 `false`。
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$sourcePath` | `string` | — | 源目录路径 |
+| `$outputPath` | `string` | — | 输出 zip 文件路径（已存在则覆盖） |
 
-### `zipDirectory($sourcePath, $outputPath)` — 目录递归打包
+### unzip()
 
-目录不存在返回 `false`；打包过程中黑名单条目（任意层级）被跳过。失败原因可经 `lastError()` 读取。
+```php
+public function unzip(string $filePath, string $dest)
+```
 
-**参数**
+解压 zip 到指定目录
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$sourcePath` | `string` | 无 | 源目录路径 |
-| `$outputPath` | `string` | 无 | 输出 zip 文件路径（已存在则覆盖） |
+目标目录不存在会自动创建（0755）。内置多重防护：
+- zip slip：含 ".."、绝对路径（/ 或盘符开头）的条目直接拒绝；
+- 目标目录越界：解压目标 realpath 必须在 $dest 之内；
+- zip bomb：解压总大小 / 文件数超过 maxExtractSize / maxExtractFiles 上限即中止；
+- 符号链接：preserveSymlinks 为 false（默认）时跳过链接条目。
+失败原因可通过 lastError() 读取。
 
-**返回值**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$filePath` | `string` | — | zip 文件路径 |
+| `$dest` | `string` | — | 解压目标目录 |
 
-- `bool`：打包成功返回 `true`；源目录不存在或打开 zip 失败返回 `false`。
+### pack()
 
-### `unzip(string $filePath, string $dest)` — 解压 zip
+```php
+public static function pack($sourcePath, $outputPath, array $options = [])
+```
 
-目标目录不存在自动创建（0755）。内置多重防护：zip slip（拒绝含 `..`/绝对路径条目）、目标越界（realpath 校验）、zip bomb（大小/文件数上限）、符号链接策略。失败原因可经 `lastError()` 读取。
+静态快捷打包：将目录递归打包为 zip（无状态入口）
 
-**参数**
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$sourcePath` | `string` | — | 源目录路径 |
+| `$outputPath` | `string` | — | 输出 zip 文件路径 |
+| `$options` | `array` | `[]` | 选项：ignore（追加忽略名单）、compressionLevel（压缩等级 -1~9） |
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$filePath` | `string` | 无 | zip 文件路径 |
-| `$dest` | `string` | 无 | 解压目标目录 |
+### extract()
 
-**返回值**
+```php
+public static function extract($filePath, $dest, array $options = [])
+```
 
-- `bool`：解压成功返回 `true`；zip 无效、含危险条目或超限返回 `false`。
+静态快捷解压：解压 zip 到指定目录（无状态入口）
 
-### `Zip::pack($sourcePath, $outputPath, array $options = [])` — 静态快捷打包
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$filePath` | `string` | — | zip 文件路径 |
+| `$dest` | `string` | — | 解压目标目录 |
+| `$options` | `array` | `[]` | 选项：maxExtractSize（解压总大小上限，0 不限）、 |
 
-无状态入口，内部 `new Zip` 并应用选项后调用 `zipDirectory()`。
+## 非公开方法
 
-**参数**
+**private**
 
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$sourcePath` | `string` | 无 | 源目录路径 |
-| `$outputPath` | `string` | 无 | 输出 zip 文件路径 |
-| `$options` | `array` | `[]` | 选项：`blacklist`（追加黑名单）、`compressionLevel`（压缩等级 `-1~9`） |
+- `private function extractWithGuard($zip, $dest)` —— 守卫式解压（内部辅助）
+- `private function matchIgnoreFileName($fileName, $basePath = null)`
+- `private function directoryToZip($zip, $directory, $removedLength, $root = true)` —— 递归遍历目录并写入 zip（内部辅助）
 
-**返回值**
+## 同目录
 
-- `bool`：打包成功返回 `true`。
+- [FileHelper](/php/api/foundation/filesystem/file-helper)
+- [FileSystem](/php/api/foundation/filesystem/file-system)
+- [Path](/php/api/foundation/filesystem/path)
 
-### `Zip::extract($filePath, $dest, array $options = [])` — 静态快捷解压
-
-无状态入口。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$filePath` | `string` | 无 | zip 文件路径 |
-| `$dest` | `string` | 无 | 解压目标目录 |
-| `$options` | `array` | `[]` | 选项：`maxExtractSize`（总大小上限，`0` 不限）、`maxExtractFiles`（文件数上限，`0` 不限）、`preserveSymlinks`（是否保留符号链接） |
-
-**返回值**
-
-- `bool`：解压成功返回 `true`。
-
-### `extractWithGuard($zip, $dest)` — 守卫式解压
-
-> private。逐条目流式解压并累计写入字节数：校验 zip slip、目标越界、文件数/总大小上限，超限即中止返回 `false`。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$zip` | `\ZipArchive` | 无 | 已打开的 zip 实例 |
-| `$dest` | `string` | 无 | 解压目标目录 |
-
-**返回值**
-
-- `bool`：全部安全解压返回 `true`；任一校验失败返回 `false`。
-
-### `directoryToZip($zip, $directory, $removedLength)` — 递归遍历目录写入 zip
-
-> private。文件条目 `addFile`、目录条目 `addEmptyDir` 后递归；符号链接跳过；黑名单按文件名匹配任意层级；压缩等级非默认时逐条目设置。
-
-**参数**
-
-| 参数 | 类型 | 默认 | 说明 |
-|------|------|------|------|
-| `$zip` | `\ZipArchive` | 无 | 目标 zip 实例 |
-| `$directory` | `string` | 无 | 当前遍历目录 |
-| `$removedLength` | `int` | 无 | 源目录字符串长度（计算 zip 内相对路径） |
-
-**返回值**
-
-- 无（`void`）。

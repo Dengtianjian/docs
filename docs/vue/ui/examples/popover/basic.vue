@@ -1,0 +1,22 @@
+<script setup lang="ts">
+import KPopover from 'kit/vue/ui/components/Popover/Popover.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+</script>
+
+<template>
+  <KSpace size="lg" wrap>
+    <KPopover title="卡片标题" content="hover/focus 触发的浮层卡片，移入弹层不消失（0.1s 容差）。" placement="right">
+      <template #trigger><KButton>Hover 卡片</KButton></template>
+    </KPopover>
+    <KPopover placement="bottom" trigger="click" closable>
+      <template #trigger><KButton type="primary">Click 卡片</KButton></template>
+      <template #title>Click + closable</template>
+      <p style="margin: 0">默认插槽 = 内容区，可放任意结构：表单、操作列表、图片预览。</p>
+      <a href="#" style="color: var(--k-color-primary)" @click.prevent>一个链接</a>
+    </KPopover>
+    <KPopover title="翻转到上方" content="左侧空间不足时 left 自动翻到 right。" placement="left">
+      <template #trigger><KButton>Left→翻转</KButton></template>
+    </KPopover>
+  </KSpace>
+</template>

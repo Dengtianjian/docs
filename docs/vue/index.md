@@ -67,6 +67,7 @@ import 'kit/core/css/common.css'          // 与框架无关的基础样式
 | [api](/vue/api/index) | 接口封装（`AttachmentsApi`、`SettingsApi`、`discuzX/*`） |
 | [types](/vue/types/index) | 通用类型、组件类型、`vue-router` 模块扩充 |
 | [vite-plugin](/vue/vite-plugin) | 业务工程用的 vite 插件：`dedupe`、`fs.allow` 放行、kit 源码 HMR 监听 |
+| [K UI 组件库](/vue/ui/index) | `packages/vue/ui/` 双端组件库：设计语言、主题 token 规格与逐组件文档（入口在总览页） |
 
 ## 注意事项
 

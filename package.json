@@ -13,11 +13,16 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "vitepress": "^1.6.0"
+    "@shikijs/transformers": "^4.6.0",
+    "shiki": "^4.6.0",
+    "vitepress": "^1.6.4"
   },
   "dependencies": {
+    "@vicons/tabler": "^0.13.0",
     "clipboard": "^2.0.11",
-    "naive-ui": "^2.45.1",
-    "vue": "^3.5.41"
+    "kit": "link:../kit",
+    "naive-ui": "^2.45.3",
+    "vue": "^3.5.45",
+    "vue-router": "^5.5.1"
   }
 }

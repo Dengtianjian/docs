@@ -172,7 +172,11 @@ export default defineConfig({
                 { text: "KMessage 全局提示（P2b）", link: "/vue/ui/components/message" },
                 { text: "KNotification 通知（P2b）", link: "/vue/ui/components/notification" },
                 { text: "KAlert 警告提示（P2b）", link: "/vue/ui/components/alert" },
-                { text: "KSpin 加载中（P2b）", link: "/vue/ui/components/spin" }
+                { text: "KSpin 加载中（P2b）", link: "/vue/ui/components/spin" },
+                { text: "KDatePicker 日期选择（P2.5）", link: "/vue/ui/components/date-picker" },
+                { text: "KUpload 上传（P2.5）", link: "/vue/ui/components/upload" },
+                { text: "KPreview 预览（P2.5）", link: "/vue/ui/components/preview" },
+                { text: "KSortable 拖拽排序（P2.5）", link: "/vue/ui/components/sortable" }
               ]
             }
           ]

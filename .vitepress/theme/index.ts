@@ -3,6 +3,7 @@ import { h } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import Demo from './Demo.vue'
+import CommonProps from './CommonProps.vue'
 import MatrixPlayground from './MatrixPlayground.vue'
 import ThemeControls from './ThemeControls.vue'
 import 'kit/vue/ui/css/index.css'
@@ -18,6 +19,7 @@ export default {
   },
   enhanceApp({ app, router, siteData }) {
     app.component('Demo', Demo)
+    app.component('CommonProps', CommonProps)
     app.component('MatrixPlayground', MatrixPlayground)
   }
 } satisfies Theme

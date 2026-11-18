@@ -29,8 +29,8 @@
 | open / v-model:open | 受控开合 | `boolean` | — |
 | disabled | 禁用弹出 | `boolean` | `false` |
 | arrow | 显示箭头 | `boolean` | `true` |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KTooltipRenderScope) => VNodeChild` | — |
-| classNames / styles | `'root'`（仅默认渲染） | — | — |
+
+<CommonProps />
 
 ### Events
 
@@ -57,6 +57,8 @@
 | `--k-tooltip-arrow-size` | `8px` 常数（等腰直角三角形半对角，外露 ≈5.7px 略探过 gap 贴住触发器） |
 
 ## 注意事项
+
+- 触屏（`hover: none`）下未显式传 `trigger` 时默认改为 `click` 触发，避免 hover 语义在移动端失效；显式 `trigger` 仍完全按传入值执行。
 
 - **插槽语义与内容通道**（2026-11-18 改判 naive 同款，破坏性）：`#trigger` 包触发元素、**默认插槽 = 显示内容**；内容优先级 默认插槽 > `content` prop > `title` prop（`title` 为 antd 同名兼容别名）；旧 `#content`/`#title` 插槽别名已删。各通道皆空时不弹空泡（hover/focus/click 均静默）。
 

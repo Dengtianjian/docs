@@ -25,7 +25,8 @@
 | size | 尺寸：轴名映射图标阶梯，数字为 px，缺省跟随当前字号 | `number \| 'xs' \| 'sm' \| 'md' \| 'lg'` | — |
 | spin | 持续旋转 | `boolean` | `false` |
 | label | 无障碍标签；不传视为装饰性图标（`aria-hidden`） | `string` | — |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KIconRenderScope) => VNodeChild` | — |
+
+<CommonProps />
 
 其余透传属性（class/style/aria-*）落到根节点。
 

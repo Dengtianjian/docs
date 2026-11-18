@@ -23,8 +23,8 @@
 | closable | 显示关闭 X | `boolean` | `false` |
 | open / v-model:open | 受控开合（关闭钮发 `update:open=false` + 自隐） | `boolean` | `true` |
 | banner | 贴边通告条（直角 + 去左右边框） | `boolean` | `false` |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KAlertRenderScope) => VNodeChild` | — |
-| classNames / styles | `root \| icon \| content \| title \| description \| action \| close` | — | — |
+
+<CommonProps />
 
 ### Events
 
@@ -54,6 +54,8 @@
 | `--k-alert-close-color` | `text-tertiary`（hover 升 secondary） |
 
 ## 注意事项
+
+- 触屏（`hover: none`）：关闭按钮扩大命中区，操作区可换行。
 
 - `role="alert"` 静态渲染；异步出现需要播报时用 [message](./message.md)。
 - 关闭是单向的（自隐不可逆），受控场景用 `v-model:open` 由数据源决定重现。

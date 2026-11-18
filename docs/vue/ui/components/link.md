@@ -31,8 +31,8 @@
 | underline | 下划线时机 | `'always' \| 'hover' \| 'never'` | `'hover'` |
 | external | 外链（自动 noopener noreferrer） | `boolean` | `false` |
 | disabled | 禁用（渲染 `span`，`aria-disabled`） | `boolean` | `false` |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KLinkRenderScope) => VNodeChild` | — |
-| classNames / styles | 语义化结构 class/style | `Partial<Record<'root', …>>` | — |
+
+<CommonProps />
 
 ### Slots
 

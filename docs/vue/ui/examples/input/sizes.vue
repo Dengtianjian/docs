@@ -11,5 +11,6 @@ import KSpace from 'kit/vue/ui/components/Space/Space.vue'
     <KInput size="lg" placeholder="size=lg" />
     <KInput variant="filled" placeholder="variant=filled" />
     <KInput variant="borderless" placeholder="variant=borderless" />
+    <KInput variant="underlined" placeholder="variant=underlined" />
   </KSpace>
 </template>

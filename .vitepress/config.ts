@@ -147,36 +147,61 @@ export default defineConfig({
               collapsed: false,
               items: [
                 { text: "共同约定与交付顺序", link: "/vue/ui/components/index" },
-                { text: "KApp 应用容器", link: "/vue/ui/components/app" },
-                { text: "KConfigProvider 全局配置", link: "/vue/ui/components/config-provider" },
-                { text: "KButton 按钮", link: "/vue/ui/components/button" },
-                { text: "KIcon 图标", link: "/vue/ui/components/icon" },
-                { text: "KSpace 间距", link: "/vue/ui/components/space" },
-                { text: "KFlex 弹性布局", link: "/vue/ui/components/flex" },
-                { text: "KDivider 分割线", link: "/vue/ui/components/divider" },
-                { text: "KRow / KCol 栅格", link: "/vue/ui/components/grid" },
-                { text: "KLayout 布局组", link: "/vue/ui/components/layout" },
-                { text: "KTitle / KParagraph / KText 文字排版", link: "/vue/ui/components/typography" },
-                { text: "KLink 链接", link: "/vue/ui/components/link" },
-                { text: "KInput 输入框（P2a）", link: "/vue/ui/components/input" },
-                { text: "KInputNumber 数值输入（P2a）", link: "/vue/ui/components/input-number" },
-                { text: "KSelect 选择器（P2a）", link: "/vue/ui/components/select" },
-                { text: "KCheckbox 复选框（P2a）", link: "/vue/ui/components/checkbox" },
-                { text: "KRadio 单选框（P2a）", link: "/vue/ui/components/radio" },
-                { text: "KSwitch 开关（P2a）", link: "/vue/ui/components/switch" },
-                { text: "KForm 表单（P2a）", link: "/vue/ui/components/form" },
-                { text: "KTooltip 文字提示（P2b）", link: "/vue/ui/components/tooltip" },
-                { text: "KPopover 卡片气泡（P2b）", link: "/vue/ui/components/popover" },
-                { text: "KPopconfirm 确认气泡（P2b）", link: "/vue/ui/components/popconfirm" },
-                { text: "KModal 对话框（P2b）", link: "/vue/ui/components/modal" },
-                { text: "KMessage 全局提示（P2b）", link: "/vue/ui/components/message" },
-                { text: "KNotification 通知（P2b）", link: "/vue/ui/components/notification" },
-                { text: "KAlert 警告提示（P2b）", link: "/vue/ui/components/alert" },
-                { text: "KSpin 加载中（P2b）", link: "/vue/ui/components/spin" },
-                { text: "KDatePicker 日期选择（P2.5）", link: "/vue/ui/components/date-picker" },
-                { text: "KUpload 上传（P2.5）", link: "/vue/ui/components/upload" },
-                { text: "KPreview 预览（P2.5）", link: "/vue/ui/components/preview" },
-                { text: "KSortable 拖拽排序（P2.5）", link: "/vue/ui/components/sortable" }
+                {
+                  text: "基础与应用（P1）",
+                  collapsed: false,
+                  items: [
+                    { text: "KApp 应用容器", link: "/vue/ui/components/app" },
+                    { text: "KConfigProvider 全局配置", link: "/vue/ui/components/config-provider" },
+                    { text: "KButton 按钮", link: "/vue/ui/components/button" },
+                    { text: "KIcon 图标", link: "/vue/ui/components/icon" },
+                    { text: "KSpace 间距", link: "/vue/ui/components/space" },
+                    { text: "KControlGroup 控件组", link: "/vue/ui/components/control-group" },
+                    { text: "KFlex 弹性布局", link: "/vue/ui/components/flex" },
+                    { text: "KDivider 分割线", link: "/vue/ui/components/divider" },
+                    { text: "KRow / KCol 栅格", link: "/vue/ui/components/grid" },
+                    { text: "KLayout 布局组", link: "/vue/ui/components/layout" },
+                    { text: "KTitle / KParagraph / KText 文字排版", link: "/vue/ui/components/typography" },
+                    { text: "KLink 链接", link: "/vue/ui/components/link" }
+                  ]
+                },
+                {
+                  text: "表单（P2a）",
+                  collapsed: false,
+                  items: [
+                    { text: "KInput 输入框", link: "/vue/ui/components/input" },
+                    { text: "KInputNumber 数值输入", link: "/vue/ui/components/input-number" },
+                    { text: "KSelect 选择器", link: "/vue/ui/components/select" },
+                    { text: "KCheckbox 复选框", link: "/vue/ui/components/checkbox" },
+                    { text: "KRadio 单选框", link: "/vue/ui/components/radio" },
+                    { text: "KSwitch 开关", link: "/vue/ui/components/switch" },
+                    { text: "KForm 表单", link: "/vue/ui/components/form" }
+                  ]
+                },
+                {
+                  text: "反馈与浮层（P2b）",
+                  collapsed: false,
+                  items: [
+                    { text: "KTooltip 文字提示", link: "/vue/ui/components/tooltip" },
+                    { text: "KPopover 卡片气泡", link: "/vue/ui/components/popover" },
+                    { text: "KPopconfirm 确认气泡", link: "/vue/ui/components/popconfirm" },
+                    { text: "KModal 对话框", link: "/vue/ui/components/modal" },
+                    { text: "KMessage 全局提示", link: "/vue/ui/components/message" },
+                    { text: "KNotification 通知", link: "/vue/ui/components/notification" },
+                    { text: "KAlert 警告提示", link: "/vue/ui/components/alert" },
+                    { text: "KSpin 加载中", link: "/vue/ui/components/spin" }
+                  ]
+                },
+                {
+                  text: "数据与交互（P2.5）",
+                  collapsed: false,
+                  items: [
+                    { text: "KDatePicker 日期选择", link: "/vue/ui/components/date-picker" },
+                    { text: "KUpload 上传", link: "/vue/ui/components/upload" },
+                    { text: "KPreview 预览", link: "/vue/ui/components/preview" },
+                    { text: "KSortable 拖拽排序", link: "/vue/ui/components/sortable" }
+                  ]
+                }
               ]
             }
           ]

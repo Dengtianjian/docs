@@ -24,8 +24,8 @@
 | rules | 表级规则：`{ [name]: Rule \| Rule[] }`（async-validator 语义；字段级 `KFormItem rules` 覆盖） | `Record<string, unknown>` | — |
 | layout | `'vertical' \| 'horizontal' \| 'inline'` | — | `'vertical'` |
 | labelWidth / labelAlign / colon | horizontal/inline 标签列 | `number\|string` / `'left'\|'right'` / `boolean` | `100` / `right` / `true` |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KFormRenderScope) => VNodeChild` | — |
-| classNames / styles | `root` | — | — |
+
+<CommonProps />
 
 ### Events（KForm）
 
@@ -55,7 +55,8 @@ Expose：`validate(): Promise<void>`（失败 reject `{errors, values}`）、`re
 | validateTrigger | `'blur' \| 'change' \| 'both'`（缺省 both；规则级 `trigger` 数组同样生效） |
 | extra | 常驻帮助文案（无错误时替代错误行显示；`#extra` 插槽优先） |
 | warningOnly | 规则对象里 `warningOnly: true` → 错误按 `status=warning` 下发（不判失败）※见注意事项 |
-| render | 自定义渲染闭包（`#render` 插槽优先）；scope = `KFormItemRenderScope` |
+
+<CommonProps />
 
 ### 校验联动契约（context）
 
@@ -64,6 +65,8 @@ Expose：`validate(): Promise<void>`（失败 reject `{errors, values}`）、`re
 - Checkbox/Radio/Switch 不消费 status（回显靠错误行文案；控件变色留后批拍板）。
 
 ## 注意事项
+
+- 移动端（≤767px）：横向/内联表单自动改为标签在上、控件通栏，不再使用固定 100px 标签宽。
 
 - **整表校验 = 逐字段 Promise.allSettled 汇总**（校验逻辑全部下沉 FormItem），不存在「表级 schema 与字段独有规则两套回显路径」的分叉。
 - 字段 rules 只在 FormItem 侧合并一次：`props.rules ?? form.rules[name]`。

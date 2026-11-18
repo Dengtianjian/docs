@@ -23,8 +23,8 @@
 | model-value / v-model | standalone 时存「选中值」，与 `:value` 相等即选中 | `string \| number` | — |
 | value | 选项值（组模式必配对；standalone 配 v-model 也可） | `string \| number` | — |
 | disabled / name / id | 原生透传 | — | — |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KRadioRenderScope) => VNodeChild` | — |
-| classNames / styles | `'root' \| 'input' \| 'dot' \| 'text'` | — | — |
+
+<CommonProps />
 
 ### KRadioGroup
 
@@ -34,7 +34,8 @@
 | options | `Array<string \| {label, value, disabled?}>` |
 | shape | `'circle'`（缺省）\| `'button'` |
 | disabled / name | 组级下发 / 原生 name（同组互斥由 context 收敛） |
-| render | 自定义渲染闭包（`#render` 插槽优先）；scope = `KRadioGroupRenderScope` |
+
+<CommonProps />
 
 ### Events
 
@@ -55,6 +56,8 @@
 圆点框：`--k-radio-dot-size`=`--k-size`；选中内点 `--k-radio-inner`=`primary`；边框链同 Checkbox。button 形态段高 = `control-height`，段距零（拼接），变量 `--k-radio-btn-padding-x`=`size`（16px）。
 
 ## 注意事项
+
+- 触屏（`hover: none`）：整行最小高度 44px，扩大点击区。
 
 - button 形态选中段左缘由 `::before` 1px 竖条补上并翻主色（段自身 `border-left:0`，左缘像素归前段右边框所有，选中描边染不到左缘）；竖条高度含上下边框行才与选中上下边连成整框，`z-index:1` 压相邻边、共用边线不双描（antd 实况同，2026-11-17 左边框补全）。
 - 圆点内点取 8×8 @ 3px 整偏移（`inset: calc(25% - 0.5px)`）：纯 25% 得 7px @ 3.5px 半像素，栅格化把环隙舍入成 3/4 不对称而视觉偏芯（2026-11-17 居中修正）。

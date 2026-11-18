@@ -33,8 +33,8 @@
 | closable | 右上关闭 X | `boolean` | `true` |
 | draggable | 按住标题栏拖拽移动弹窗（naive 同款） | `boolean` | `false` |
 | source | 动画原点覆盖元素（优先级：`source` > 最近 pointerdown 自动记录 > 中心缩放；与落位无关） | `Element` | — |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换（含 Teleport/Transition） | `(scope: KModalRenderScope) => VNodeChild` | — |
-| classNames / styles | `root \| mask \| wrap \| dialog \| header \| title \| body \| footer` | — | — |
+
+<CommonProps />
 
 ### Events
 

@@ -91,14 +91,14 @@ function resetColumnDrag() {
           </th>
         </tr>
       </thead>
-      <KSortable v-model="rows" item-key="id" root-tag="tbody" item-tag="tr" :columns="3" pointer>
+      <KSortable v-model="rows" item-key="id" root-tag="tbody" item-tag="tr" :columns="3">
         <template #default="{ item }">
           <td v-for="col in columns" :key="col.key">{{ item[col.key] }}</td>
         </template>
       </KSortable>
     </table>
     <p class="hint">
-      rootTag="tbody" + itemTag="tr" + pointer：行拖拽为 dnd-kit 式 pointer（克隆浮层跟随、无原生拖影），拖拽时行内让位、占位整行覆盖；表头列可拖拽换列序（与行排序互不影响）。
+      rootTag="tbody" + itemTag="tr"：表格自动走 pointer 拖拽（克隆浮层跟随、无原生拖影，免闪烁），拖拽时行内让位、占位整行覆盖；表头列可拖拽换列序（与行排序互不影响）。
     </p>
   </div>
 </template>

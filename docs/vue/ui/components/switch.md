@@ -21,8 +21,8 @@
 | checkedChildren / unCheckedChildren | 轨道内嵌文字 | `string` | — |
 | disabled / loading | 禁用 / 加载中（不可交互，spinner 在把手位） | `boolean` | `false` |
 | id / name | 原生透传（`button` 元素，name 仅语义） | — | — |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KSwitchRenderScope) => VNodeChild` | — |
-| classNames / styles | `'root' \| 'handle'` | — | — |
+
+<CommonProps />
 
 ### Events
 
@@ -44,6 +44,8 @@ Slots：`render` = 自定义渲染作用域插槽（scope 见文末「自定义�
 | 动效 | 轨道与把手 `motion-duration-mid ease-in-out-cubic`；spinner `motion-duration-spin` |
 
 ## 注意事项
+
+- 触屏（`hover: none`）：伪元素向四周扩 10px 命中区，视觉轨道尺寸不变。
 
 - 原生 `button[role=switch]` + `aria-checked`，Space/Enter 切换（键盘语义零成本，focus 环 = control-outline 同基线）。
 - 把手位移走 `left`（transform 会跟内嵌文字打架，位移成本两帧内可忽略）。

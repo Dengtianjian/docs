@@ -25,8 +25,8 @@
 | okType | 确定钮类型 | `'primary' \| 'danger'` | `'primary'` |
 | okLoading | 确定钮 loading：点确定不即关，`true→false` 收尾时自动关（受控 `open` 时同样发 `openChange`） | `boolean` | `false` |
 | placement / open / v-model:open / disabled / arrow | 同 [KPopover](./popover.md) | — | `'top'` |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换（含 Teleport/Transition） | `(scope: KPopconfirmRenderScope) => VNodeChild` | — |
-| classNames / styles | `'root'` | — | — |
+
+<CommonProps />
 
 ### Events
 
@@ -56,6 +56,8 @@
 | 图标着色 | `--k-color-warning` / `--k-color-info`（随 `icon`） |
 
 ## 注意事项
+
+- 移动端（≤767px）：气泡最大宽度收为 `100vw - 24px`，避免超出屏幕。
 
 - **插槽语义**（2026-11-18 改判 naive 同款，破坏性）：`#trigger` 包触发元素、**默认插槽 = 消息文案整块**（覆盖 title/description 文案区）；无默认插槽时 `#title`/`#description` 部件插槽与同名 prop 照旧。
 

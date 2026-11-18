@@ -25,8 +25,8 @@
 | mouseEnterDelay / mouseLeaveDelay | 出/入延迟（秒） | `number` | `0.1 / 0.1` |
 | open / v-model:open | 受控开合 | `boolean` | — |
 | disabled / arrow / closable | 禁用 / 箭头 / 右上关闭 X | `boolean` | `false / true / false` |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换（含 Teleport/Transition） | `(scope: KPopoverRenderScope) => VNodeChild` | — |
-| classNames / styles | `'root' \| 'title' \| 'content'` | — | — |
+
+<CommonProps />
 
 ### Events
 
@@ -54,6 +54,8 @@
 | `--k-popover-arrow-size` | `8px` 常数 |
 
 ## 注意事项
+
+- 触屏（`hover: none`）下未显式传 `trigger` 时默认改为 `click` 触发，避免 hover 语义在移动端失效；显式 `trigger` 仍完全按传入值执行。
 
 - **插槽语义**（2026-11-18 改判 naive 同款，破坏性）：`#trigger` 包触发元素、**默认插槽 = 内容区**；旧 `#content` 插槽别名已删（`content` prop 保留兜底）；`#title` 为卡片标题部件插槽，照旧。
 

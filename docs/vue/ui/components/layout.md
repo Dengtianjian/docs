@@ -22,8 +22,8 @@
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | hasSider | 子级含 Sider → 本层主轴变横向 | `boolean` | `false` |
-| classNames / styles | 语义化结构 class/style | `Partial<Record<'root', …>>` | — |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换（五子件各自支持） | `(scope: 对应 KLayout*RenderScope) => VNodeChild` | — |
+
+<CommonProps />
 
 ### 子件 Props
 

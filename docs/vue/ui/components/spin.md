@@ -20,8 +20,8 @@
 | size | 指示器档位 | `'sm' \| 'md' \| 'lg'` | `'md'` |
 | tip | 指示器下方文案（支持 VNode） | `string \| VNode` | — |
 | delay | 延迟展示毫秒（防瞬时请求闪烁） | `number` | — |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KSpinRenderScope) => VNodeChild` | — |
-| classNames / styles | `root \| indicator \| tip \| nested` | — | — |
+
+<CommonProps />
 
 ### Slots
 

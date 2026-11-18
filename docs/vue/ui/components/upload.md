@@ -69,7 +69,6 @@
 | 插槽 | 说明 | 参数 |
 | --- | --- | --- |
 | trigger | 替换触发区内容（picture-card 的「+」块 / 文本触发按钮） | `{ open, disabled }` |
-| render | headless 整件自定义渲染；提供时默认触发区、列表、预览 Modal 都不渲染 | `KUploadRenderScope` |
 
 ### Expose
 
@@ -106,6 +105,7 @@
 - 默认模板交互动画：新增项进场（淡入 + 位移/缩放）、删除退场（列表绝对定位 + 其余项 FLIP 上移）、排序用 TransitionGroup 的 move 过渡（0.22s）、失败态抖动一次；图片预览动画由 KPreview 承担（淡入 + 方向滑动）。动画只作用于默认模板，headless 自绘请自行处理。
 - `clickToUpload`：缩略图点击改为打开文件选择，选中后**原位替换**——复用 uid 保住列表位置，先 abort 旧请求并回收旧对象 URL，再走完整管线（maxSize / upload），change reason 为 `replace`；替换不占 `maxCount` 名额。开启后预览改走「预览」按钮或文件名；**卡片墙 hover 操作蒙层统一为黑底（65%）白色大图标**（预览 / 删除 / 重新上传 同款，仅图标、`title` / `aria-label` 提示），**图片列表与文件列表 hover 只在行尾出现与删除同款的「重新上传」图标按钮**（text 无缩略图，按钮是唯一入口），不覆盖整行也不撑高行。
 - `showActions=false` 隐藏 hover 操作栏（picture-card 的预览/删除、列表的删除）；error 项的「重试」始终保留。
+- 触屏（`hover: none`）：卡片操作栏改为常显底部小按钮（不再依赖 hover），列表的「重新上传」按钮常显。**触屏排序**：按住 `sortable` 项约 250ms 激活，之后移动即实时让位；列表按纵向中点、卡片墙按横向中点判定落点，松手换序。可拖项 `touch-action: none`（同类库取舍），页面滚动请从列表空隙/空白处发起；卡片上的预览/删除/重传按钮区域不触发长按排序。
 - `sortable` 使用原生 HTML5 拖拽：文件项 `draggable`，拖拽源半透明；**列表在拖动经过相邻项中点时，中间行实时上/下让位（0.18s transform 过渡，距离 = 行高 + 行距）**，目标行仍描上/下边；松手后按落位重排并走 TransitionGroup FLIP（0.22s）。卡片墙按横向中点描左/右边、落位后 FLIP。与 `drag`（文件拖进根区域）互不干扰（排序拖拽带 `text/plain`，文件拖拽带 `Files`）。
 - headless 模式不渲染预览器（KPreview）与默认 input，需绑定 `inputEl` / `inputAttrs` / `inputOn`，预览可自行接 `preview` 事件。
 

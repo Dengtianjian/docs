@@ -47,7 +47,9 @@
 | columns | itemTag=tr 时占位行 colspan | `number` | `1` |
 | showPlaceholder | 是否渲染内置占位块（树形等自定义投影指示时可关） | `boolean` | `true` |
 | placeholderInset | 占位块左侧内缩（px），纵向时宽度同步收窄（树形投影按深度缩进） | `number` | `0` |
-| pointer | pointer 事件拖拽（dnd-kit 式克隆浮层跟随，无原生拖影；表格场景推荐，支持触屏） | `boolean` | `false` |
+| touchDelay | 触屏长按激活延迟（ms）；期间移动超过容差会让给页面滚动 | `number` | `250` |
+| touchTolerance | 触屏长按前允许的移动容差（px） | `number` | `8` |
+| pointer | pointer 事件拖拽（dnd-kit 式克隆浮层跟随、无原生拖影；支持触屏与 `group` 跨列）；缺省时 `rootTag` 合并根（表格等）**自动开启** | `boolean` | 自动 |
 
 <CommonProps />
 
@@ -69,7 +71,6 @@
 | --- | --- | --- |
 | default | 每一项的内容 | `{ item, index }` |
 | handle | 自定义拖拽把手；提供后仅把手可起拖 | `{ item, index }` |
-| render | headless 整件自定义渲染 | `KSortableRenderScope` |
 
 ### Expose
 
@@ -95,12 +96,13 @@
 - **松手收位**：`move()` 先清让位再换序，TransitionGroup 记录的旧位置即当前视觉位置，由 FLIP 收位；`change` 只在真正换序时触发。
 - **把手**：提供 `#handle` 插槽后，项本身不再 `draggable`，仅把手可起拖，适合行内含链接/输入等交互元素；不传则整项可拖。把手模式项自动 `display: flex`，把手与内容同一行（内容 `flex: 1` 占满剩余宽度）。
 - **动画只默认模板**：headless 自绘时让位/进出场/FLIP 都需自行实现；`itemAttrs` 已带 `data-dragging / data-drop / data-shift` 供自绘样式使用。
-- **容器溢出**：未设高度时列表随内容撑开，由页面滚动（浏览器原生拖拽会滚动页面）；通过 `styles.root` / `classNames.root` 给根节点设 `max-height + overflow:auto` 后，拖到容器上/下 40px 边缘会自动滚动（≤16px/帧，仅容器可滚动时生效）。拖拽中容器或页面发生滚动会重测布局并重算落点，占位块随内容滚动；**滚动期间占位与让位临时禁用过渡（滚动停止 140ms 后恢复），避免过渡滞后造成错位/视觉压缩**。横向容器的左右边缘自动滚动暂未内置。
+- **容器溢出**：未设高度时列表随内容撑开，由页面滚动（浏览器原生拖拽会滚动页面）；通过 `styles.root` / `classNames.root` 给根节点设 `max-height + overflow:auto` 后，拖到容器上/下/左/右 40px 边缘会自动滚动（≤16px/帧，横纵向均可，仅对应轴向可滚动时生效）。拖拽中容器或页面发生滚动会重测布局并重算落点，占位块随内容滚动；**滚动期间占位与让位临时禁用过渡（滚动停止 140ms 后恢复），避免过渡滞后造成错位/视觉压缩**。横向容器的左右边缘自动滚动暂未内置。
 - **列满 / 定高容器**：纵向行项 `flex: none`，内容再多也不会被 flex 压缩；**本列内拖拽**的让位空档自带余量，不额外补尾空；**跨列/树形外部拖入**时无论插在何处都会补尾空（占位尺寸 + 间距）承接下移的行，且占位块宽高收敛到目标列表内容盒，不越出列边框；表格模式用尾部占位行补空。定高列建议配 `max-height + overflow:auto`，拖到上下 40px 边缘会自动滚动（≤16px/帧）；未设高度则随内容撑开。
 - **跨列（group）**：同 `group` 的实例共享拖拽会话，拖入/拖出各自更新 v-model；源列表 emit `remove`、目标 emit `add`。同组建议同 `orientation`；拖回源列表本身按本地排序处理（change）。空列表需给根节点最小高度（`styles.root`）才能作为落点。
-- **表格（rootTag/itemTag + pointer）**：`rootTag="tbody"` 时组件根节点直接是 tbody（表头留在组件外），`itemTag="tr"` 让每行保留原生表格语义；**pointer 模式**参考 dnd-kit：pointerdown/move/up + 克隆浮层跟随（tr 克隆进临时 table、逐格复制计算样式），无原生拖影，因此行让位不再闪烁；占位仍为 fixed 虚线浮层，松手 FLIP。pointer 模式目前仅支持单列表内拖拽（不使用 `group` 跨列），支持触屏；HTML5 模式不支持触屏。克隆浮层会逐格复制计算样式（边框按四边 longhand、背景/圆角/字体），并沿用原 table 类名；演示中的**列拖拽**由表头原生 DnD 自管（拖 th 换列序、同步重排所有行单元格），与行排序互不影响。
+- **表格（rootTag/itemTag，自动 pointer）**：`rootTag="tbody"` 时组件根节点直接是 tbody（表头留在组件外），`itemTag="tr"` 让每行保留原生表格语义；默认自动启用 **pointer 模式**（`pointer={false}` 可强制回 HTML5）参考 dnd-kit：pointerdown/move/up + 克隆浮层跟随（tr 克隆进临时 table、逐格复制计算样式），无原生拖影，因此行让位不再闪烁；占位仍为 fixed 虚线浮层，松手 FLIP。pointer 模式同样支持 `group` 跨列（window 级 pointer 路由到同组目标实例）与触屏；HTML5 模式不支持触屏。pointer 拖拽按**列表矩形**判定是否在容器内（越过表格行间距等空隙不会闪断），离开列表保留上次预览，松手在列表外则取消。克隆浮层会逐格复制计算样式（边框按四边 longhand、背景/圆角/字体），并沿用原 table 类名；演示中的**列拖拽**由表头原生 DnD 自管（拖 th 换列序、同步重排所有行单元格），与行排序互不影响。
 - **树形（dnd-kit 投影）**：演示采用 dnd-kit SortableTree 的思路——树存为**扁平列表 + depth**，拖动时用 `dragstart` 记录起点 X、`dragmove` 提供插入位；可嵌入深度取前一项 `depth + 1`、下限为后一项 `depth`，横向位移 `/ 24px` 决定开口。拖到空父级下方再右移即可成为其子级，不需要预留空列表落点。落点仍使用内置占位块，并通过 `placeholder-inset = 投影深度 × 缩进` 让占位块按深度缩进、宽度同步收窄。**同位置也允许横向改层级**（子级列表首项可原地升级）：同插槽时不受后一项最小深度限制，松手即使没有换序也应用投影深度，且只改被拖节点、后续同级不连带重挂（缩进可能出现跳级）。如需自绘指示可设 `showPlaceholder=false` 并用 `dragmove` 绘制。
-- **触屏**：原生 HTML5 DnD 不支持触摸拖动；移动端排序（pointer 方案）列入后续登记。
+- **键盘**：item 可聚焦（`tabindex`）；`空格 / Enter` 拾起，方向键移动（纵向 ↑↓、横向 ←→、网格四向），`空格 / Enter / Esc` 结束；焦点随节点移动，拾起项带 `aria-grabbed` 与左侧主色条，聚焦环为 `focus-visible` 主色描边。
+- **触屏**：`pointer` 模式使用 Pointer Events，支持触屏/触控笔；手指按住 `touchDelay`（默认 250ms）后进入拖拽，之前移动超过 `touchTolerance` 取消候选。可拖项 `touch-action: none`（dnd-kit 同类取舍），页面滚动从列表空隙/空白处发起；拖拽中锁定选择。默认 HTML5 模式不支持触摸拖动。
 - **键盘**：首批不含键盘排序；需要时用 `move()` 自行接按钮/快捷键。
 
 ## 自定义渲染（headless）
@@ -174,6 +176,5 @@
 
 ### 后续登记
 
-- 触摸/pointer 排序与自动滚动。
-- 键盘排序（空格起拖 + 方向键移动）。
-- 多容器跨列表拖拽。
+- 无障碍播报（aria-live 朗读拾起/落位/结束）。
+- 折叠树与多容器分组的项目管理能力。

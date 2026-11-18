@@ -28,8 +28,8 @@
 | precision | 显式小数位（失焦格式化） | `number` | 随 step |
 | controls | 右侧步进列开关 | `boolean` | `true` |
 | size / variant / status / placeholder / disabled / readonly / id | 同 [KInput](./input.md)，透传 | — | — |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KInputNumberRenderScope) => VNodeChild` | — |
-| classNames / styles | 语义化结构（部件见下） | `Partial<Record<'root' \| 'input' \| 'step', …>>` | — |
+
+<CommonProps />
 
 ### Events
 
@@ -55,6 +55,8 @@ Slots：`render` = 自定义渲染作用域插槽（scope 见文末「自定义�
 | `--k-input-number-step-divider` | `--k-color-split` |
 
 ## 注意事项
+
+- 触屏（`hover: none`）：步进按钮纵向命中区不足 44px，默认收起步进列，改用数字键盘（`inputmode=decimal`）输入。
 
 - **组合实现**：步进列绝对定位在组合壳右侧，`.k-input-number--controls` 时给内层输入框加右内边距让位（特异性 (0,2,0) 压过 KInput 基线，不改 KInput 源码）；输入框 hover/focus 边框与聚焦圈全由 KInput 承担。
 - **文本态/数值态分离**：打字中间态（`-`、`1.`）不回填输入框；`min/max` 限幅与 `precision` 格式化只在失焦与步进落定发生（antd 同语义）。

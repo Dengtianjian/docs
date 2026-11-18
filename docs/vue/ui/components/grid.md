@@ -29,8 +29,8 @@
 | justify | 水平排列 | `'start' \| 'end' \| 'center' \| 'space-between' \| 'space-around' \| 'space-evenly'` | — |
 | align | 垂直对齐 | `'top' \| 'middle' \| 'bottom' \| 'stretch'` | — |
 | wrap | 允许折行 | `boolean` | `true` |
-| classNames / styles | 语义化结构 class/style | `Partial<Record<'root', …>>` | — |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KRowRenderScope / KColRenderScope) => VNodeChild` | — |
+
+<CommonProps />
 
 ### KCol Props
 
@@ -40,8 +40,8 @@
 | offset | 左侧间隔格数，支持断点对象 | `number \| Partial<Record<Breakpoint, number>>` | — |
 | order | 排序 | `number` | — |
 | flex | flex 值：数字生成 `n 0 0`，字符串透传 | `string \| number` | — |
-| classNames / styles | 语义化结构 class/style | `Partial<Record<'root', …>>` | — |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KRowRenderScope / KColRenderScope) => VNodeChild` | — |
+
+<CommonProps />
 
 断点：`xs <576 ≤ sm <768 ≤ md <992 ≤ lg <1200 ≤ xl <1600 ≤ xxl`（`--k-screen-*`，与 mobile token 组的 768 分界一致）。
 

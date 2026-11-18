@@ -24,8 +24,8 @@
 | value | 组模式选项值（组内消费 context，不配 v-model） | `string \| number` | — |
 | indeterminate | 半选视觉 | `boolean` | `false` |
 | disabled / required / name / id | 原生透传（name 仅 standalone） | — | — |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KCheckboxRenderScope) => VNodeChild` | — |
-| classNames / styles | `'root' \| 'input' \| 'box' \| 'text'` | — | — |
+
+<CommonProps />
 
 ### KCheckboxGroup
 
@@ -34,7 +34,8 @@
 | v-model | `(string \| number)[]` |
 | options | `Array<string \| {label, value, disabled?}>`；不传 = 插槽形态 |
 | disabled | 组级禁用下发 |
-| render | 自定义渲染闭包（`#render` 插槽优先）；scope = `KCheckboxGroupRenderScope` |
+
+<CommonProps />
 
 ### Events
 
@@ -62,6 +63,8 @@
 | focus 环 | `control-outline(-width)` 垫在框体（原生 input 隐藏同法） |
 
 ## 注意事项
+
+- 触屏（`hover: none`）：整行最小高度 44px，扩大点击区。
 
 - 勾 = 右下半边框旋转 45°（零图标依赖，同 KInput 清除件路数）；半选 = 居中横条，与勾互斥渲染。勾的定位 `translate` 写在 `rotate` 左侧（未旋转坐标系位移）并上移补偿墨迹重心，保证勾在框体正中（2026-11-17 居中修正）。
 - 隐藏原生 `input`（`opacity:0` absolute）承担 a11y 语义与键盘 Space；focus 环走 `:focus-visible + box`。

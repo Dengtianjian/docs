@@ -30,8 +30,8 @@
 | justify | 主轴分布 | `'start' \| 'end' \| 'center' \| 'between' \| 'around' \| 'evenly'` | — |
 | align | 交叉轴对齐 | `'start' \| 'center' \| 'end' \| 'baseline' \| 'stretch'` | — |
 | gap | 间距：轴名走尺寸阶梯，数字直接 px，可传 `[行, 列]` | `'xxs' \| 'xs' \| 'sm' \| 'md' \| 'lg' \| number \| [Size, Size]` | — |
-| classNames / styles | 语义化结构 class/style | `Partial<Record<'root', …>>` | — |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KFlexRenderScope) => VNodeChild` | — |
+
+<CommonProps />
 
 ### Slots
 

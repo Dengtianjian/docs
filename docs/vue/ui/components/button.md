@@ -16,7 +16,7 @@
 
 <Demo path="button/variants" title="外观变体" desc="`variant` 轴与 `type` 正交，十种外观 × 语义色全矩阵；等级四档（基础/次要/次次要/次次次要 = outlined/filled/tonal/text）+ quiet（text 的灰底交互版）+ dashed（无底色虚线框）+ ghost（透明底，彩色/复杂底图用）+ plain/soft（白底：plain 有框、交互变边框+文字；soft 无边框、交互变背景 tint+文字）+ border（隐框：静置边框透明，交互现边框色+文字色）。" />
 
-<Demo path="button/sizes" title="尺寸" desc="`size` 轴走控件高度阶梯（24/28/32/40），移动端 token 组自动升到 44px 触控高度。" />
+<Demo path="button/sizes" title="尺寸" desc="`size` 轴走控件高度阶梯（30/34/38/42），移动端 token 组自动升到 44px 触控高度。" />
 
 <Demo path="button/shapes" title="形状" desc="`shape` 轴：round 全圆角；circle / square 用于 icon-only，circle 需配 `aria-label`。" />
 
@@ -67,9 +67,8 @@
 | iconPlacement | 图标位置（loading 占同位） | `'start' \| 'end'` | `'start'` |
 | wave | 点击波纹开关；缺省跟随 Provider（`wave.disabled` / `defaults.KButton.wave`），显式传值强制开/关 | `boolean` | — |
 | nativeType | 原生 type 属性 | `'button' \| 'submit' \| 'reset'` | `'button'` |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KButtonRenderScope) => VNodeChild` | — |
-| classNames | 语义化结构 class，见「部件」 | `Partial<Record<'root' \| 'loading' \| 'icon' \| 'content', string>>` | — |
-| styles | 语义化结构 style | 同上结构，值为 `CSSProperties` | — |
+
+<CommonProps />
 
 ### Events
 
@@ -101,8 +100,8 @@
 | --- | --- | --- | --- |
 | size | 下发给组内 KButton 的尺寸；子级自传 `size` 优先 | 同 KButton `size` | — |
 | vertical | 纵排（接壤边转为上下叠压） | `boolean` | `false` |
-| classNames / styles | 根节点 class/style | `Partial<Record<'root', …>>` | — |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KButtonGroupRenderScope) => VNodeChild` | — |
+
+<CommonProps />
 
 结构 `div.k-button-group[data-part=root][role=group]`；组内直接子级 `KButton` 叠边 -1px、首尾保留外侧半径（hover/focus 自动抬 z-index，防邻钮压边）。
 

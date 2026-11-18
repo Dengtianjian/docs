@@ -256,7 +256,8 @@ Alias 同名映射 `padding*` / `margin*`；`wireframe` 预留模式下 XXS→2�
 
 ```
 controlHeightXS = max(20, controlHeight - 8)   controlHeightSM = max(24, controlHeight - 4)
-controlHeightBase = controlHeight              controlHeightLG = controlHeight + 8
+controlHeightBase = controlHeight              controlHeightLG = controlHeight + 4
+// 桌面 seed = 38 → xs30 / sm34 / md38 / lg42；移动端 md=44、lg 保留 52
 ```
 
 ### 5.5 动效与 zIndex

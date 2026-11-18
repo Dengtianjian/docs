@@ -160,3 +160,20 @@
   width: 100%;
   overflow-x: auto;
 }
+
+/* 移动端：表格自身横向滚动，避免撑宽整页（桌面保持原样） */
+@media (max-width: 768px) {
+  .vp-doc table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* iOS：禁止双击页面缩放（仍允许单指滚动与双指缩放内容） */
+html {
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+}

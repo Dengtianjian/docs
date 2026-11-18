@@ -53,6 +53,7 @@ function onRemove(item: Card) {
           v-model="column.items"
           item-key="id"
           group="board"
+          pointer
           :styles="{ root: { minHeight: '120px' } }"
           @add="onAdd"
           @remove="onRemove"
@@ -66,7 +67,7 @@ function onRemove(item: Card) {
         </KSortable>
       </div>
     </div>
-    <p class="hint">同 group 实例之间可互相拖入/拖出，各自维护 v-model；add / remove 事件回传落点与源位置。{{ last }}</p>
+    <p class="hint">同 group 实例之间可互相拖入/拖出（pointer 模式，支持触屏），各自维护 v-model；add / remove 事件回传落点与源位置。{{ last }}</p>
   </div>
 </template>
 

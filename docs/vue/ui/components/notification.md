@@ -32,8 +32,8 @@
 | showProgress / progressDuration | 倒计时条 / 时长（秒，实例队列由 duration 注入） | `boolean` / `number` | `false` |
 | pauseOnHover | 悬停冻结进度条动画 | `boolean` | `true` |
 | role | 无障碍角色 | `'alert' \| 'status'` | `'alert'` |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KNotificationRenderScope) => VNodeChild` | — |
-| classNames / styles | 语义部件覆盖（下表） | — | — |
+
+<CommonProps />
 
 #### Slots
 
@@ -84,7 +84,6 @@ notification.config(options)   // 实例级全局默认，合入其后每次 ope
 | closeIcon | 关闭钮图标；`null` 不渲染 | 内建 X |
 | showProgress / pauseOnHover | 倒计时条 / 悬停暂停（计时与条同步） | `false` / `true` |
 | role / key / onClick / onClose | 同 message 语义 | `'alert'` |
-| classNames / styles | 语义部件覆盖 | — |
 
 | config() 字段 | 说明 |
 | --- | --- |

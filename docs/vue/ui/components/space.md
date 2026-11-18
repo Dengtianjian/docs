@@ -29,8 +29,8 @@
 | align | 交叉轴对齐 | `'start' \| 'center' \| 'end' \| 'baseline'` | — |
 | wrap | 允许折行 | `boolean` | `false` |
 | separator | 子项间插入分隔线（见上，有额外 DOM 代价） | `boolean` | `false` |
-| classNames / styles | 语义化结构 class/style | `Partial<Record<'root' \| 'item' \| 'separator', …>>` | — |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KSpaceRenderScope) => VNodeChild` | — |
+
+<CommonProps />
 
 ### Slots
 

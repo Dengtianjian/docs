@@ -26,8 +26,8 @@
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | level | 标题层级（渲染对应 `h1~h5`） | `1 \| 2 \| 3 \| 4 \| 5` | 必填 |
-| classNames / styles | 语义化结构 class/style | `Partial<Record<'root', …>>` | — |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换（三件各自支持） | `(scope: 对应 RenderScope) => VNodeChild` | — |
+
+<CommonProps />
 
 ### KParagraph
 

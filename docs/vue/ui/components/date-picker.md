@@ -64,7 +64,6 @@
 | --- | --- | --- |
 | suffix | 追加到默认日历图标前的后缀内容 | — |
 | extraFooter | 追加到内置“今天 / 清除”行之后 | — |
-| render | headless 整件自定义渲染；提供时默认触发器、Teleport、Transition 和面板全部不渲染 | `KDatePickerRenderScope` |
 
 ### Expose
 

@@ -41,8 +41,8 @@
 | hideSelected | 菜单隐藏已选中项 | `boolean` | `false` |
 | size / variant / status | 同 [KInput](./input.md) 三轴（触发器视觉同源） | — | — |
 | disabled / allowClear / id | 同 KInput 语义（filterable 时 id 落输入框） | — | — |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KSelectRenderScope) => VNodeChild` | — |
-| classNames / styles | `'root' \| 'control' \| 'content' \| 'suffix' \| 'list' \| 'option' \| 'group' \| 'header' \| 'footer' \| 'empty' \| 'tag'`（仅默认渲染） | — | — |
+
+<CommonProps />
 
 ### Events
 

@@ -25,8 +25,8 @@
 | dashed | 虚线 | `boolean` | `false` |
 | orientation | 文字位置（仅含文字时生效） | `'start' \| 'center' \| 'end'` | `'center'` |
 | plain | 文字用常规字重（缺省 500 强调） | `boolean` | `false` |
-| render | 自定义渲染闭包（`#render` 插槽优先）；提供时整件视觉输出被替换 | `(scope: KDividerRenderScope) => VNodeChild` | — |
-| classNames / styles | 语义化结构 class/style（仅默认渲染） | `Partial<Record<'root' \| 'text', …>>` | — |
+
+<CommonProps />
 
 ### Slots
 

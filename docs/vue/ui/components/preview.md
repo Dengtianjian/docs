@@ -1,17 +1,23 @@
 # KPreview 预览
 
-> 共同约定见 [共同约定](./index.md)。P2.5 预览器（图片先行）；独立全屏遮罩，不依赖 KModal。
+> 共同约定见 [共同约定](./index.md)。独立全屏预览器，不依赖 KModal；支持图片缩放/旋转/翻转、多图缩略图、视频播放与可插拔类型渲染。
 
 ## 何时使用
 
 - 需要在暗色舞台上查看大图，并在多张图片间切换、缩放。
-- 需要为后续文件类型（pdf / video 等）预留统一预览入口：首批按图片渲染，其他类型经 `#item` 插槽接管。
+- 需要统一预览图片、视频与其他文件类型：内置 image/video，PDF 等通过 `resolveType` + `renderers` 或 `#item` 插槽交给业务渲染。
 
 ## 代码演示
 
 <Demo path="preview/basic" title="多图画廊" desc="items 传图片列表；点缩略图从对应张打开；←/→ 切换、+/− 缩放、0 复位、Esc 关闭；工具栏百分比可点复位。" />
 
 <Demo path="preview/slots" title="自定义内容（#item）" desc="#item 插槽按业务字段/type 接管当前内容渲染（示例：PDF 占位卡），切换、缩放、键盘与开合仍由组件提供。" />
+
+<Demo path="preview/media" title="缩略图 + 视频 + 自定义 PDF" desc="多图默认出现底部缩略图条；后缀自动识别 image/video/pdf；视频内置播放器手动播放；PDF 通过 renderers.pdf 交给业务渲染，也可用 #item 覆盖任意类型。" />
+
+<Demo path="preview/resolve" title="resolveType 类型判定" desc="items 携带业务字段 kind；resolveType 优先于后缀推断，把 data:image 的合同项判成 pdf 并命中 renderers.pdf，演示自定义类型决策链路。" />
+
+<Demo path="preview/states" title="加载 / 失败 / 缩略图兜底" desc="缩略图地址无效时退回名称占位；大图或视频加载失败显示错误卡（重新加载 / 打开原文件）；远程大图可观察加载 spinner。" />
 
 ## API
 
@@ -26,10 +32,17 @@
 | maxScale | 最大缩放 | `number` | `5` |
 | maskClosable | 点遮罩是否关闭 | `boolean` | `true` |
 | closable | 是否显示右上角关闭钮 | `boolean` | `true` |
-| toolbar | 是否显示底部缩放工具栏 | `boolean` | `true` |
+| toolbar | 是否显示底部缩放工具栏（仅图片） | `boolean` | `true` |
+| thumbnails | 多图时显示底部缩略图条 | `boolean` | `true` |
+| resolveType | 类型判定钩子，返回 undefined 回落后缀推断 | `(item) => string \| undefined` | — |
+| renderers | 按类型注册渲染函数（可覆盖内置 image/video） | `Record<string, KPreviewRenderer>` | — |
 <CommonProps />
 
-`KPreviewItem`：`{ src: string; alt?: string; name?: string; type?: 'image'; [key: string]: unknown }`。`type` 首批只有 `'image'`，缺省按图片处理；其他值会落到「暂不支持」占位，可用 `#item` 覆盖。
+`KPreviewItem`：`{ src: string; alt?: string; name?: string; type?: string; thumbnail?: string; poster?: string; [key: string]: unknown }`。
+
+类型判定优先级：`item.type` > `resolveType(item)` > 后缀推断（`png/jpg/gif/webp/avif/svg` → image，`mp4/webm/mov/m4v` → video，`pdf` → pdf，其余 → other）。
+
+渲染优先级：`#item` 插槽 > `renderers[type]` > 内置 image/video > 兜底卡（文件名 + 下载/新窗口）。PDF 不内置，需要业务注册 `renderers.pdf` 或用 `#item` 接管。
 
 ### Events
 
@@ -47,7 +60,7 @@
 
 | 插槽 | 说明 | 参数 |
 | --- | --- | --- |
-| item | 接管当前内容渲染（文件类型扩展点） | `{ item, index }` |
+| item | 接管当前内容渲染（优先级最高，可覆盖 image/video/pdf） | `{ item, index, type }` |
 
 ### Expose
 
@@ -71,13 +84,17 @@
 
 ## 注意事项
 
-- 键盘：`←` / `→` 切换，`+` / `-` 缩放，`0` 复位全部变换（缩放/旋转/翻转），`Esc` 关闭；打开时焦点落到遮罩容器，关闭后焦点回到打开前的元素。
+- 键盘：`←` / `→` 切换，`+` / `-` 缩放，`0` 复位全部变换（缩放/旋转/翻转），`Esc` 关闭；Tab / Shift+Tab 在预览内控件间循环（焦点圈定），打开时焦点落到遮罩容器，关闭后焦点回到打开前的元素。
 - 点暗色空白区域或遮罩关闭；点在图片/控件上不关闭（舞台铺满全屏，空白点击由舞台层判定）。
 - 切换图片带方向滑动 + 淡变（out-in，约 0.18s），方向随切换序自动判定；工具栏右侧为逆时针旋转 / 顺时针旋转 / 水平翻转，`100%` 按钮复位全部变换。
 - 打开期间锁定 `body` 滚动，关闭恢复；切换图片或重新打开时缩放自动复位为 100%。
 - 滚轮在舞台内缩放（阻止页面滚动）；**触屏手势**：双指捏合缩放、放大后单指拖动平移、单指左右滑切换上一张/下一张（滑动阈值 50px、垂直位移 <40px）。舞台 `touch-action: none`，复位/切换图片会清空平移。
 - 遮罩恒定深色（与 KModal mask 同款破格登记），不随主题反相；控件白字半透明。
 - 层级走 `--k-z-index-modal`；ConfigProvider 的 scoped 主题类会随遮罩根节点输出，token 链不断。
+- **缩略图**：`items.length > 1` 且 `thumbnails` 为真时显示底部横滚条；点击切换，当前项自动滚到中间；`thumbnail` 缺省时图片取 `src`、视频取 `poster`，都没有或加载失败则显示名称/类型占位；移动端缩略项 44px 命中。带缩略图时工具栏与计数器自动上移。
+- **媒体加载态**：图片/视频加载中显示居中 spinner（媒体半透明），加载失败显示错误卡（文件名 + 重新加载 + 打开原文件）；切换项或关闭会重置状态，重新加载走 key 重建元素。PDF/自定义类型不进入媒体加载态。
+- **视频**：内置 `<video controls playsinline>`，不自动播放；切换项或关闭预览时自动 `pause()`。视频/其他类型不启用缩放旋转、滚轮与捏合手势，工具栏隐藏；`←/→` 切换与 Esc 关闭照常。
+- **类型与渲染器**：类型判定与渲染优先级见上文；`renderers` 可覆盖内置 image/video，`#item` 插槽优先级最高。未命中渲染器时显示兜底卡（文件名 + 下载/新窗口），方便业务后续接管 PDF 等类型。
 - headless 模式不渲染 Teleport/Transition，自绘时需自行 Teleport 并绑定 `rootOn`（键盘）与各动作包。
 
 ## 自定义渲染（headless）

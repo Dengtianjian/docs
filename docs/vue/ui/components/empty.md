@@ -9,7 +9,7 @@
 
 ## 代码演示
 
-<Demo path="empty/basic" title="尺寸 / 操作区 / 自定义插图" desc="`size` 三档；`#actions` 放引导按钮；`#image` 替换内置插图；`description` 可被默认插槽覆盖。" />
+<Demo path="empty/basic" title="尺寸 / 操作区 / 自定义插图" :desc="['`size` 三档。', '`#actions` 放引导按钮。', '`icon` 传图标组件，`#image` 替换内置插图。', '`title` 展示在描述上方。', '`description` 可被默认插槽覆盖。']" />
 
 ## API
 
@@ -17,10 +17,12 @@
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
+| title | 标题，展示在描述上方；不传时不渲染 | `string` | — |
+| icon | 图标组件，替代内置插图；`#image` 插槽优先 | `Component` | — |
 | description | 描述文案 | `string` | `'暂无数据'` |
 | size | 插图与间距档 | `'sm' \| 'md' \| 'lg'` | `'md'` |
-| classNames | 部件类名（`root / image / description / actions`） | `Partial<Record<Part, string>>` | — |
-| styles | 部件内联样式（`root / image / description / actions`） | `Partial<Record<Part, CSSProperties>>` | — |
+| classNames | 部件类名（`root / image / title / description / actions`） | `Partial<Record<Part, string>>` | — |
+| styles | 部件内联样式（`root / image / title / description / actions`） | `Partial<Record<Part, CSSProperties>>` | — |
 
 <CommonProps />
 

@@ -63,6 +63,7 @@
 - **进出场动画**（2026-11-17 补退场）：`Transition` 驱动——进场 `k-popover-zoom`（0.85→1 + 淡入），退场 `k-popover-zoom-out` 反向，时长 `--k-motion-duration-fast`；退场播完才移除节点。
 
 - 与 [KTooltip](./tooltip.md) 共用 `usePopupHost/useOverlayPosition/usePopupDismiss` 基座；出口契约、翻转语义见 tooltip 页注意事项。
+- 触发器始终带 `aria-haspopup/aria-expanded`，展开时 `aria-controls` 指向弹层；弹层有标题时带 `aria-labelledby`。Esc 关闭由共用 dismiss 基座处理。
 - closable 的 X 只关气泡（走 `setOpen(false)`），受控时同样只发事件。
 - 内容区可放表单控件；focus 触发 + 内容可聚焦元素组合时建议改用 `trigger="click"`（focusout 会在焦点移入内容前触发关闭）。
 
@@ -93,9 +94,9 @@
 
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
-| triggerAttrs | `Record<string, unknown>` | 触发器：仅 `data-part="trigger"`，无 ARIA/类；默认模板的 `span.k-popover__trigger`（inline-block 包裹层）是视觉壳，自绘自理 |
+| triggerAttrs | `Record<string, unknown>` | 触发器：`data-part="trigger"` + `aria-haspopup="dialog"` + `aria-expanded`（随开合）+ 展开时 `aria-controls` 指向弹层 id；默认模板的 `span.k-popover__trigger`（inline-block 包裹层）是视觉壳，自绘自理 |
 | triggerOn | `Record<string, (e: Event) => void>` | 触发器事件：`mouseenter`/`mouseleave`（hover 档走 `mouseEnterDelay`/`mouseLeaveDelay` 延迟链，单位秒；开启路径有 disabled 守卫）、`focusin`/`focusout`（focus 档同延迟链）、`click`（click 档 `setOpen(!visible)`）；`trigger` 组合决定哪些事件实际生效，未配置的档空转 |
-| popupAttrs | `Record<string, unknown>` | 弹层节点：`data-part="root"` + `class` 出口类 + `data-k-theme`（Provider scheme 非 auto 时）+ `data-placement`（实际方位）+ `role="dialog"` + `aria-modal="false"`（非模态浮层语义）+ `style` 定位包。**class 含 `k-popover` token 宿主类**——`--k-popover-*` 变量（bg/color/title-color/radius/padding/min-max-width/arrow-size）与 `z-index-popup-base` 都声明在它上面，必须保留否则 token 断链；另含 scoped Provider 的 `k-config-provider + scopeClass`。style = position（fixed/absolute）+ top/left + visibility（先隐藏测量再落位的两遍渲染）+ `--k-overlay-arrow-offset`（箭头主轴偏移 px，JS 端 clamp 进限位）。**卡片视觉壳不在包内**——`.k-popover__card` 的背景/圆角/阴影/宽度限制、标题行与关闭 X 全自绘 |
+| popupAttrs | `Record<string, unknown>` | 弹层节点：`id`（供触发器 aria-controls）+ `data-part="root"` + `class` 出口类 + `data-k-theme`（Provider scheme 非 auto 时）+ `data-placement`（实际方位）+ `role="dialog"` + `aria-modal="false"`（非模态浮层语义）+ 有标题时 `aria-labelledby` 指向标题节点 + `style` 定位包。**class 含 `k-popover` token 宿主类**——`--k-popover-*` 变量（bg/color/title-color/radius/padding/min-max-width/arrow-size）与 `z-index-popup-base` 都声明在它上面，必须保留否则 token 断链；另含 scoped Provider 的 `k-config-provider + scopeClass`。style = position（fixed/absolute）+ top/left + visibility（先隐藏测量再落位的两遍渲染）+ `--k-overlay-arrow-offset`（箭头主轴偏移 px，JS 端 clamp 进限位）。**卡片视觉壳不在包内**——`.k-popover__card` 的背景/圆角/阴影/宽度限制、标题行与关闭 X 全自绘 |
 | popupOn | `Record<string, (e: Event) => void>` | 弹层悬停容差：`mouseenter`（hover 档清掉待关计时器——移入卡片不消失）、`mouseleave`（hover 档按 `mouseLeaveDelay` 延迟关闭） |
 
 #### 动作

@@ -56,4 +56,5 @@ message.destroy(key) / message.destroyAll()
 - 实例 API 只在 KApp 之下可用（拍板③：无全局静态），队列与计时器随 KApp 卸载整体清理；`useKApp()` 返回 `undefined` 时先检查页面是否套了 `<KApp>`。
 - Holder 出口 Teleport 到 body 并按契约④携带 `scopeClass`/`data-k-theme`。
 - 图标是内建 inline SVG（路径表同 notification），零图标库依赖。
+- 读屏：普通消息 `role="status"`（polite），错误消息 `role="alert"`（assertive），单条 `aria-atomic="true"` 整条朗读；动态插入自动播报。
 - loading 常驻靠 `duration: 0`，结束时同 key 更新或 `handle.destroy()`。

@@ -68,6 +68,7 @@
 - 弹层 `Teleport` 出口走 popupContainer 契约（ConfigProvider 职责④）：缺省 body = `position: fixed` + scroll/resize 跟随；指定容器 = `absolute` 进容器文档流（随内容滚、被裁切）；z `--k-z-index-popup-base`，`scopeClass`/`data-k-theme` 随出口节点走。
 - 定位/外点关闭/Esc 走共用基座 `composables/usePopup.ts`（`utils/overlay.ts` 纯函数算位），与 KPopover/KPopconfirm 同源；KSelect 的自有定位暂不并轨（宽度贴触发器等专属语义）。
 - 触发元素放 `#trigger` 插槽，外包一层 `span.k-tooltip__trigger`（inline-block），事件绑在这层；焦点语义保持留在触发元素上。
+- 弹层显示时触发层带 `aria-describedby` 指向弹层 id（`role="tooltip"`），读屏在焦点触发时可朗读提示内容；隐藏时移除关联，避免指向空节点。
 - 受控模式（传 `open`）下外点/Esc 只发 `openChange`，改不改由调用方决定。
 
 ## 自定义渲染（headless）

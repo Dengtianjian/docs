@@ -101,9 +101,8 @@
 - **跨列（group）**：同 `group` 的实例共享拖拽会话，拖入/拖出各自更新 v-model；源列表 emit `remove`、目标 emit `add`。同组建议同 `orientation`；拖回源列表本身按本地排序处理（change）。空列表需给根节点最小高度（`styles.root`）才能作为落点。
 - **表格（rootTag/itemTag，自动 pointer）**：`rootTag="tbody"` 时组件根节点直接是 tbody（表头留在组件外），`itemTag="tr"` 让每行保留原生表格语义；默认自动启用 **pointer 模式**（`pointer={false}` 可强制回 HTML5）参考 dnd-kit：pointerdown/move/up + 克隆浮层跟随（tr 克隆进临时 table、逐格复制计算样式），无原生拖影，因此行让位不再闪烁；占位仍为 fixed 虚线浮层，松手 FLIP。pointer 模式同样支持 `group` 跨列（window 级 pointer 路由到同组目标实例）与触屏；HTML5 模式不支持触屏。pointer 拖拽按**列表矩形**判定是否在容器内（越过表格行间距等空隙不会闪断），离开列表保留上次预览，松手在列表外则取消。克隆浮层会逐格复制计算样式（边框按四边 longhand、背景/圆角/字体），并沿用原 table 类名；演示中的**列拖拽**由表头原生 DnD 自管（拖 th 换列序、同步重排所有行单元格），与行排序互不影响。
 - **树形（dnd-kit 投影）**：演示采用 dnd-kit SortableTree 的思路——树存为**扁平列表 + depth**，拖动时用 `dragstart` 记录起点 X、`dragmove` 提供插入位；可嵌入深度取前一项 `depth + 1`、下限为后一项 `depth`，横向位移 `/ 24px` 决定开口。拖到空父级下方再右移即可成为其子级，不需要预留空列表落点。落点仍使用内置占位块，并通过 `placeholder-inset = 投影深度 × 缩进` 让占位块按深度缩进、宽度同步收窄。**同位置也允许横向改层级**（子级列表首项可原地升级）：同插槽时不受后一项最小深度限制，松手即使没有换序也应用投影深度，且只改被拖节点、后续同级不连带重挂（缩进可能出现跳级）。如需自绘指示可设 `showPlaceholder=false` 并用 `dragmove` 绘制。
-- **键盘**：item 可聚焦（`tabindex`）；`空格 / Enter` 拾起，方向键移动（纵向 ↑↓、横向 ←→、网格四向），`空格 / Enter / Esc` 结束；焦点随节点移动，拾起项带 `aria-grabbed` 与左侧主色条，聚焦环为 `focus-visible` 主色描边。
+- **键盘**：item 可聚焦（`tabindex`）；`空格 / Enter` 拾起，方向键移动（纵向 ↑↓、横向 ←→、网格四向），`空格 / Enter / Esc` 结束；焦点随节点移动，拾起项带 `aria-grabbed` 与左侧主色条，聚焦环为 `focus-visible` 主色描边。每项 `aria-describedby` 指向操作说明；拾起/移动/放下/取消通过 `role="status" aria-live="polite"` 区域播报（如「已移动到第 3 项，共 8 项」）。
 - **触屏**：`pointer` 模式使用 Pointer Events，支持触屏/触控笔；手指按住 `touchDelay`（默认 250ms）后进入拖拽，之前移动超过 `touchTolerance` 取消候选。可拖项 `touch-action: none`（dnd-kit 同类取舍），页面滚动从列表空隙/空白处发起；拖拽中锁定选择。默认 HTML5 模式不支持触摸拖动。
-- **键盘**：首批不含键盘排序；需要时用 `move()` 自行接按钮/快捷键。
 
 ## 自定义渲染（headless）
 
@@ -176,5 +175,4 @@
 
 ### 后续登记
 
-- 无障碍播报（aria-live 朗读拾起/落位/结束）。
 - 折叠树与多容器分组的项目管理能力。

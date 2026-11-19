@@ -216,6 +216,23 @@ export default defineConfig({
                     { text: "KBadge 徽标", link: "/vue/ui/components/badge" },
                     { text: "KCard 卡片", link: "/vue/ui/components/card" }
                   ]
+                },
+                {
+                  text: "导航（P4）",
+                  collapsed: false,
+                  items: [
+                    { text: "KBreadcrumb 面包屑", link: "/vue/ui/components/breadcrumb" },
+                    { text: "KSteps 步骤条", link: "/vue/ui/components/steps" },
+                    { text: "KTabs 标签页", link: "/vue/ui/components/tabs" },
+                    { text: "KDropdown 下拉菜单", link: "/vue/ui/components/dropdown" },
+                    { text: "KMenu 导航菜单", link: "/vue/ui/components/menu" },
+                    { text: "KAnchor 锚点", link: "/vue/ui/components/anchor" },
+                    { text: "KBackTop 回到顶部", link: "/vue/ui/components/back-top" },
+                    { text: "KAffix 吸顶", link: "/vue/ui/components/affix" },
+                    { text: "KDrawer 抽屉", link: "/vue/ui/components/drawer" },
+                    { text: "KNavBar 顶部导航", link: "/vue/ui/components/navbar" },
+                    { text: "KTabBar 底部导航", link: "/vue/ui/components/tabbar" }
+                  ]
                 }
               ]
             }

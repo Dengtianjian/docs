@@ -63,6 +63,25 @@
 | [alert.md](./alert.md) | KAlert | 已落地（P2b-4，静态件拍板范围） |
 | [spin.md](./spin.md) | KSpin | 已落地（P2b-4） |
 
+## 组件清单（P4 导航）
+
+| 文件 | 组件 | 状态 |
+| --- | --- | --- |
+| [breadcrumb.md](./breadcrumb.md) | KBreadcrumb / KBreadcrumbItem | 已落地（P4a） |
+| [steps.md](./steps.md) | KSteps / KStep | 已落地（P4a） |
+| [tabs.md](./tabs.md) | KTabs / KTabPane | 已落地（P4a） |
+| [dropdown.md](./dropdown.md) | KDropdown | 已落地（P4b） |
+| [menu.md](./menu.md) | KMenu | 已落地（P4c，含 Sider 折叠联动） |
+| [anchor.md](./anchor.md) | KAnchor | 已落地（P4d） |
+| [back-top.md](./back-top.md) | KBackTop | 已落地（P4d） |
+| [affix.md](./affix.md) | KAffix | 已落地（P4d） |
+| [drawer.md](./drawer.md) | KDrawer + `useKApp().drawer` | 已落地（P4e） |
+| [navbar.md](./navbar.md) | KNavBar | 已落地（P4f） |
+| [tabbar.md](./tabbar.md) | KTabBar | 已落地（P4f） |
+
+> 2026-11-19：**P4 导航批开工**（用户拍板：核心 + 锚点辅助 + Drawer + 移动导航；小件先行；Menu 完整首版）。
+> P4a 落地 Breadcrumb / Steps / Tabs；P4b 落地 Dropdown（单层菜单，多级子菜单随 Menu 批补齐）；P4c 落地 Menu（items 递归树、三种模式、Sider 折叠联动、路由）；P4d 落地 Anchor / BackTop / Affix；P4e 落地 Drawer（组件 + 实例 API）；P4f 落地 NavBar / TabBar，P4 导航批全部组件完成。
+
 ## 交付顺序与依赖
 
 ```

@@ -12,6 +12,8 @@
 
 <Demo path="form/layout" title="布局" desc="`layout=vertical`（缺省）/ `horizontal`（labelWidth 定宽 + labelAlign）/ `inline`（横排紧凑）；冒号 `colon` 默认开。" />
 
+<Demo path="form/a11y" title="分组控件关联" desc="RadioGroup / CheckboxGroup 用 aria-labelledby 关联字段标签，Switch 用 label for；错误时自动带 aria-describedby 与 aria-invalid。" />
+
 <Demo path="form/render" title="自定义渲染（headless）" desc="Form / FormItem 双层 `#render`：自绘卡片表单 + 字段行——字段注册、整表校验（submit 拦截）、错误回显、控件 status 注入全照跑；validate/resetFields 动作直消费。" />
 
 ## API
@@ -69,7 +71,7 @@ Expose：`validate(): Promise<void>`（失败 reject `{errors, values}`）、`re
 ## 注意事项
 
 - 移动端（≤767px）：横向/内联表单自动改为标签在上、控件通栏，不再使用固定 100px 标签宽。
-- **标签与错误关联**：FormItem 自动生成控件 id 并经 `FORM_ITEM_KEY` 下发，控件（Input/InputNumber/Select/DatePicker/DateRangePicker/Checkbox）自动绑定 `id`；标签 `for` 指向它（自定义触发器不是 labelable 元素时，点标签会兜底 `focus()`）。有 `error`/`extra` 时控件自动带 `aria-describedby` 指向帮助文案，错误态带 `aria-invalid="true"`，错误文案 `role="alert"`；校验通过后自动移除。
+- **标签与错误关联**：FormItem 自动生成控件 id 并经 `FORM_ITEM_KEY` 下发，控件（Input/InputNumber/Select/DatePicker/DateRangePicker/Checkbox/Radio/Switch）自动绑定 `id`；RadioGroup/CheckboxGroup 由组根节点绑定 `id` 并用 `aria-labelledby` 关联标签；标签 `for` 指向它（自定义触发器不是 labelable 元素时，点标签会兜底 `focus()`）。有 `error`/`extra` 时控件自动带 `aria-describedby` 指向帮助文案，错误态带 `aria-invalid="true"`，错误文案 `role="alert"`；校验通过后自动移除。
 
 - **整表校验 = 逐字段 Promise.allSettled 汇总**（校验逻辑全部下沉 FormItem），不存在「表级 schema 与字段独有规则两套回显路径」的分叉。
 - 字段 rules 只在 FormItem 侧合并一次：`props.rules ?? form.rules[name]`。
@@ -127,7 +129,7 @@ Expose：`validate(): Promise<void>`（失败 reject `{errors, values}`）、`re
 | validating | `boolean` | 本字段校验进行中（runValidate 进入置 true、finally 置 false）；自绘字段级 loading 消费 |
 | extra | `string \| undefined` | 常驻帮助文案原值；默认渲染仅无错误时显示（`#extra` 插槽优先），自绘按 `error ? error : (slots.extra ?? extra)` 排 |
 | colon | `boolean` | **表级 colon 注入值**（非本件 prop）；自绘标签行据此补冒号 |
-| controlId / helpId | `string` | 自动生成的控件 id / 帮助文案 id；自绘标签用 `:for="ctx.controlId"`、自绘错误行用 `:id="ctx.helpId"` |
+| controlId / labelId / helpId | `string` | 自动生成的控件 id / 标签 id / 帮助文案 id；自绘标签用 `:id="ctx.labelId" :for="ctx.controlId"`、分组控件用 `aria-labelledby="ctx.labelId"`、错误行用 `:id="ctx.helpId"` |
 | describedBy | `string \| undefined` | 有 error/extra 时的 helpId；自绘控件绑 `aria-describedby` 用 |
 | invalid | `boolean` | 当前是否错误（`status === 'error'`）；自绘控件绑 `aria-invalid` 用 |
 

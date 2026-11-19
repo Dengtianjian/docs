@@ -33,7 +33,7 @@
 | v-model | `string \| number` |
 | options | `Array<string \| {label, value, disabled?}>` |
 | shape | `'circle'`（缺省）\| `'button'` |
-| disabled / name | 组级下发 / 原生 name（同组互斥由 context 收敛） |
+| disabled / name / id | 组级下发 / 原生 name（同组互斥由 context 收敛）/ 组根节点 id（缺省取 FormItem 自动 id） |
 
 <CommonProps />
 

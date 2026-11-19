@@ -33,7 +33,7 @@
 | --- | --- |
 | v-model | `(string \| number)[]` |
 | options | `Array<string \| {label, value, disabled?}>`；不传 = 插槽形态 |
-| disabled | 组级禁用下发 |
+| disabled / id | 组级禁用下发 / 组根节点 id（缺省取 FormItem 自动 id） |
 
 <CommonProps />
 

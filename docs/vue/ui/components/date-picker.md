@@ -11,6 +11,12 @@
 
 <Demo path="date-picker/time" title="日期 + 时间" desc="`showTime` 点日期只落草稿并保持面板，底部选时/分/秒后点「确定」提交；默认格式 `YYYY-MM-DD HH:mm:ss`，`disabledTime` 可按日期给出时分秒黑名单。" />
 
+<Demo path="date-picker/minute-step" title="分钟步长" desc="`showTime` + `minuteStep=5`：分钟列按 5 分钟一档，打开已有值时自动向下对齐到档位。" />
+
+<Demo path="date-picker/multiple" title="多选日期" desc="`multiple`：v-model 为时间戳数组，点日期切换选中并保持面板打开；「今天」切换当天，「清除」清空数组。" />
+
+<Demo path="date-picker/presets" title="快捷预设" desc="`presets` 在面板左侧渲染快捷项（label + value）；点击直接提交并关闭，命中当前值时高亮。" />
+
 <Demo path="date-picker/basic" title="基础使用" desc="值为毫秒时间戳；clearable、disabled、size、variant、status 均可组合使用。" />
 
 <Demo path="date-picker/pickers" title="五种 picker" desc="首批支持 date、week、month、quarter、year 单选；每种模式的 v-model 仍是周期起点时间戳。" />
@@ -31,7 +37,7 @@
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| v-model | 周期起点的毫秒时间戳；未选择为 `null` | `number \| null` | `null` |
+| v-model | 周期起点的毫秒时间戳；未选择为 `null`；`multiple` 时为时间戳数组 | `number \| number[] \| null` | `null` |
 | picker | 选择粒度 | `'date' \| 'week' \| 'month' \| 'quarter' \| 'year'` | `'date'` |
 | size | 触发器尺寸 | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
 | variant | 触发器样式 | `'outlined' \| 'filled' \| 'borderless'` | `'outlined'` |
@@ -41,6 +47,9 @@
 | clearable | 是否显示清除按钮 | `boolean` | `false` |
 | inline | 面板内联常驻（无触发器与弹层；`open`/`close` 为空操作） | `boolean` | `false` |
 | showTime | 选择时分秒；点日期不自动提交，需点「确定」 | `boolean` | `false` |
+| minuteStep | 分钟步长（showTime 时生效，取值 1-60） | `number` | `1` |
+| multiple | 多选日期；与 showTime 互斥（多选时隐藏时间列） | `boolean` | `false` |
+| presets | 左侧快捷项 `{ label, value }`，点击提交并关闭 | `KDatePickerPreset[]` | — |
 | disabledTime | 当前草稿日期的时分秒黑名单 | `(date: Dayjs) => { disabledHours?, disabledMinutes?, disabledSeconds? }` | — |
 | format | dayjs 回显格式；不改变 v-model 值 | `string` | 随 picker 变化 |
 | min | 可选下限，按 picker 粒度比较 | `number \| string` | — |
@@ -96,6 +105,9 @@
 - 弹层复用 popupContainer 契约：缺省挂到 body 使用 fixed；传入 HTMLElement 或函数返回 HTMLElement 时使用容器内 absolute。
 - KFormItem 会自动合并 status，并在日期改变、触发器失焦或关闭时参与字段校验。
 - `format` 只影响触发器回显，不影响时间戳的周期语义。
+- `minuteStep`：分钟候选按步长生成；打开已有值时向下对齐到最近档位，点「确定」提交对齐后的时间。
+- `multiple`：v-model 为时间戳数组，点格切换选中且面板不关闭，回显按时间升序逗号拼接；「今天」切换当天、「清除」置空数组；与 `showTime` 互斥，多选时时间列隐藏。
+- `presets`：面板左侧列表，`value` 支持时间戳或可解析字符串；点击按当前 picker 粒度提交并关闭，多选模式则置为单个选中值。移动端预设改为顶部横滚行。
 
 ## 自定义渲染（headless）
 
@@ -107,8 +119,10 @@
 | --- | --- | --- |
 | open | `boolean` | 面板是否打开（inline 下恒为 false） |
 | inline | `boolean` | 是否内联常驻面板 |
-| value | `number \| null` | 当前 v-model 毫秒时间戳 |
+| value | `number \| number[] \| null` | 当前 v-model 值（multiple 为数组） |
 | picker | `KPickerMode` | 当前选择粒度 |
+| multiple / minuteStep | `boolean` / `number` | 多选模式 / 分钟步长 |
+| presets | `KDatePickerPreset[] \| undefined` | 左侧快捷项；`presetActive/applyPreset` 可直接复用 |
 | format | `string \| undefined` | 自定义回显格式 |
 | placeholder | `string` | 解析后的提示文案 |
 | disabled | `boolean \| undefined` | 是否禁用 |
@@ -122,9 +136,9 @@
 | flipped | `boolean` | 面板是否相对触发器上翻 |
 | hasValue | `boolean` | 是否有已选值 |
 | displayText | `string` | 触发器回显文本（showTime 打开中显示草稿） |
-| showTime / draftDate / canConfirmTime | `boolean` / `number \| null` / `boolean` | 时间模式、草稿时间戳、确定可用性 |
+| showTime / draftDate / canConfirmTime | `boolean` / `number \| null` / `boolean` | 时间 UI（multiple 时恒为 false）、草稿时间戳、确定可用性 |
 | timePart / updateTimePart | `(unit) => number` / `(unit, value) => void` | 草稿时/分/秒读写 |
-| hours / minutes / seconds | `number[]` | 时间下拉候选 |
+| hours / minutes / seconds | `number[]` | 时间下拉候选（minutes 已按 minuteStep 过滤） |
 | disabledTime | `KDatePickerDisabledTime` | 当前草稿日期的禁用时分秒 |
 | confirmTime / confirmOn | `() => void` / `KOnPack` | 提交时间模式草稿 |
 | showClear | `boolean` | 清除按钮是否应显示 |
@@ -241,5 +255,5 @@
 ### 后续登记
 
 - 范围选择已由 [KDateRangePicker](./date-range-picker.md) 独立承接（含 showTime / presets）。
-- 单选剩余：`multiple` 多值、时间步进（minuteStep）、文本输入解析、复杂时区策略。
+- 单选剩余：文本输入解析、复杂时区策略。
 - 单值快捷预设 `ranges` 尚未接入（范围组件已有 `presets`）。

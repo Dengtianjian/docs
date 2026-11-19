@@ -213,7 +213,8 @@ export default defineConfig({
                   collapsed: false,
                   items: [
                     { text: "KTag 标签", link: "/vue/ui/components/tag" },
-                    { text: "KBadge 徽标", link: "/vue/ui/components/badge" }
+                    { text: "KBadge 徽标", link: "/vue/ui/components/badge" },
+                    { text: "KCard 卡片", link: "/vue/ui/components/card" }
                   ]
                 }
               ]

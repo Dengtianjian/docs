@@ -1,8 +1,8 @@
 <template>
   <div>
-    <KButton type="primary" @click="open = true">打开（视频 + 自定义 PDF）</KButton>
+    <KButton type="primary" @click="open = true">打开（视频 + 覆盖 PDF 渲染）</KButton>
     <p style="margin: 8px 0 0; font-size: 12px; color: #888">
-      第 2 项按后缀识别为视频，使用内置播放器（手动播放）；第 3 项识别为 pdf，由 renderers.pdf 接管；底部缩略图点击可跳转。
+      第 2 项按后缀识别为视频，使用内置播放器（手动播放）；第 3 项识别为 pdf，renderers.pdf 覆盖内置渲染；底部缩略图点击可跳转。
     </p>
     <KPreview
       v-model:open="open"

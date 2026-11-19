@@ -1,11 +1,11 @@
 # KPreview 预览
 
-> 共同约定见 [共同约定](./index.md)。独立全屏预览器，不依赖 KModal；支持图片缩放/旋转/翻转、多图缩略图、视频播放与可插拔类型渲染。
+> 共同约定见 [共同约定](./index.md)。独立全屏预览器，不依赖 KModal；支持图片缩放/旋转/翻转/拖拽平移、多图缩略图、视频/音频播放、PDF 嵌入与 Office 文件卡，并保留可插拔类型渲染。
 
 ## 何时使用
 
 - 需要在暗色舞台上查看大图，并在多张图片间切换、缩放。
-- 需要统一预览图片、视频与其他文件类型：内置 image/video，PDF 等通过 `resolveType` + `renderers` 或 `#item` 插槽交给业务渲染。
+- 需要统一预览图片、视频、音频、PDF 与 Office 文件：前四类内置渲染，Office 提供文件卡与打开入口；特殊类型仍可通过 `resolveType` + `renderers` 或 `#item` 插槽接管。
 
 ## 代码演示
 
@@ -13,11 +13,13 @@
 
 <Demo path="preview/slots" title="自定义内容（#item）" desc="#item 插槽按业务字段/type 接管当前内容渲染（示例：PDF 占位卡），切换、缩放、键盘与开合仍由组件提供。" />
 
-<Demo path="preview/media" title="缩略图 + 视频 + 自定义 PDF" desc="多图默认出现底部缩略图条；后缀自动识别 image/video/pdf；视频内置播放器手动播放；PDF 通过 renderers.pdf 交给业务渲染，也可用 #item 覆盖任意类型。" />
+<Demo path="preview/media" title="缩略图 + 视频 + 自定义 PDF" desc="多图默认出现底部缩略图条；后缀自动识别 image/video/pdf；视频内置播放器手动播放；注册 renderers.pdf 后覆盖内置 PDF 渲染，演示类型覆盖优先级。" />
+
+<Demo path="preview/builtin" title="内置音频 / PDF / Office" desc="audio 内置播放器；pdf 用浏览器内置阅读器嵌入并附新窗口入口；Office 文档（doc/docx/xls/xlsx/ppt/pptx）展示文件卡与打开原文件，不在页面内解析。" />
 
 <Demo path="preview/resolve" title="resolveType 类型判定" desc="items 携带业务字段 kind；resolveType 优先于后缀推断，把 data:image 的合同项判成 pdf 并命中 renderers.pdf，演示自定义类型决策链路。" />
 
-<Demo path="preview/states" title="加载 / 失败 / 缩略图兜底" desc="缩略图地址无效时退回名称占位；大图或视频加载失败显示错误卡（重新加载 / 打开原文件）；远程大图可观察加载 spinner。" />
+<Demo path="preview/states" title="加载 / 失败 / 缩略图兜底" desc="缩略图地址无效时退回名称占位；大图或视频加载失败显示错误卡（重新加载 / 打开原文件）；单张慢速大图演示微光骨架，多图中的远程大图可观察加载态。" />
 
 ## API
 
@@ -35,14 +37,14 @@
 | toolbar | 是否显示底部缩放工具栏（仅图片） | `boolean` | `true` |
 | thumbnails | 多图时显示底部缩略图条 | `boolean` | `true` |
 | resolveType | 类型判定钩子，返回 undefined 回落后缀推断 | `(item) => string \| undefined` | — |
-| renderers | 按类型注册渲染函数（可覆盖内置 image/video） | `Record<string, KPreviewRenderer>` | — |
+| renderers | 按类型注册渲染函数（可覆盖内置 image/video/audio/pdf/office） | `Record<string, KPreviewRenderer>` | — |
 <CommonProps />
 
 `KPreviewItem`：`{ src: string; alt?: string; name?: string; type?: string; thumbnail?: string; poster?: string; [key: string]: unknown }`。
 
-类型判定优先级：`item.type` > `resolveType(item)` > 后缀推断（`png/jpg/gif/webp/avif/svg` → image，`mp4/webm/mov/m4v` → video，`pdf` → pdf，其余 → other）。
+类型判定优先级：`item.type` > `resolveType(item)` > 后缀推断（`png/jpg/gif/webp/avif/svg` → image，`mp4/webm/mov/m4v` → video，`mp3/wav/ogg/oga/m4a/aac/flac` → audio，`pdf` → pdf，`doc/docx/xls/xlsx/ppt/pptx` → office，其余 → other）；同时识别 `data:image/*`、`data:video/*`、`data:audio/*`、`data:application/pdf`。
 
-渲染优先级：`#item` 插槽 > `renderers[type]` > 内置 image/video > 兜底卡（文件名 + 下载/新窗口）。PDF 不内置，需要业务注册 `renderers.pdf` 或用 `#item` 接管。
+渲染优先级：`#item` 插槽 > `renderers[type]` > 内置 image/video/audio/pdf/office > 兜底卡（文件名 + 下载/新窗口）。Office 只提供文件卡（扩展名徽标 + 下载/新窗口），不在页面内解析文档。
 
 ### Events
 
@@ -60,7 +62,7 @@
 
 | 插槽 | 说明 | 参数 |
 | --- | --- | --- |
-| item | 接管当前内容渲染（优先级最高，可覆盖 image/video/pdf） | `{ item, index, type }` |
+| item | 接管当前内容渲染（优先级最高，可覆盖 image/video/audio/pdf/office） | `{ item, index, type }` |
 
 ### Expose
 
@@ -92,9 +94,11 @@
 - 遮罩恒定深色（与 KModal mask 同款破格登记），不随主题反相；控件白字半透明。
 - 层级走 `--k-z-index-modal`；ConfigProvider 的 scoped 主题类会随遮罩根节点输出，token 链不断。
 - **缩略图**：`items.length > 1` 且 `thumbnails` 为真时显示底部横滚条；点击切换，当前项自动滚到中间；`thumbnail` 缺省时图片取 `src`、视频取 `poster`，都没有或加载失败则显示名称/类型占位；移动端缩略项 44px 命中。带缩略图时工具栏与计数器自动上移。缩略条可横向滚动，左右边缘按滚动位置渐隐提示。
-- **媒体加载态**：图片/视频加载中显示居中 spinner（媒体半透明），加载失败显示错误卡（文件名 + 重新加载 + 打开原文件）；切换项或关闭会重置状态，重新加载走 key 重建元素。PDF/自定义类型不进入媒体加载态。
-- **视频**：内置 `<video controls playsinline>`，不自动播放；切换项或关闭预览时自动 `pause()`。视频/其他类型不启用缩放旋转、滚轮与捏合手势，工具栏隐藏；`←/→` 切换与 Esc 关闭照常。
-- **类型与渲染器**：类型判定与渲染优先级见上文；`renderers` 可覆盖内置 image/video，`#item` 插槽优先级最高。未命中渲染器时显示统一兜底卡（文件名 + 说明 + 打开原文件）；媒体加载失败另有重新加载。
+- **媒体加载态**：图片加载中显示微光骨架 + 半透明图，视频/音频加载中显示居中 spinner，加载失败显示错误卡（文件名 + 重新加载 + 打开原文件）；切换项或关闭会重置状态，重新加载走 key 重建元素。PDF/Office/自定义类型不进入媒体加载态。
+- **相邻预加载**：打开或切换后，预取前后各 2 项的图片（data URI 除外），已预取地址不重复请求。
+- **视频 / 音频**：内置 `<video controls playsinline>` 与 `<audio controls>`，均不自动播放；切换项或关闭预览时自动 `pause()`。非图片类型不启用缩放旋转、滚轮与捏合手势，工具栏隐藏；`←/→` 切换与 Esc 关闭照常。
+- **PDF**：`<iframe>` 嵌入浏览器内置阅读器，右上角提供「新窗口打开」；嵌入策略受浏览器与文件源响应头影响，无法内嵌时请用新窗口入口或自定义 `renderers.pdf`。
+- **类型与渲染器**：类型判定与渲染优先级见上文；`renderers` 可覆盖内置 image/video/audio/pdf/office，`#item` 插槽优先级最高。未命中渲染器时显示统一兜底卡（文件名 + 说明 + 打开原文件）；媒体加载失败另有重新加载。
 - headless 模式不渲染 Teleport/Transition，自绘时需自行 Teleport 并绑定 `rootOn`（键盘）与各动作包。
 
 ## 自定义渲染（headless）
@@ -111,6 +115,8 @@
 | current | `number` | 当前序号（已收敛到合法范围） |
 | currentItem | `KPreviewItem \| null` | 当前项 |
 | scale | `number` | 当前缩放 |
+| panX / panY | `number` | 放大后的平移偏移（px） |
+| isPannable | `boolean` | 当前是否可拖拽平移（图片且 scale > 1） |
 | rotate | `number` | 旋转累计角度（可持续累加，不取模） |
 | flipX | `boolean` | 是否水平翻转 |
 | minScale | `number` | 最小缩放 |
@@ -143,7 +149,7 @@
 | rotateLeftOn / rotateRightOn | `KOnPack` | 逆 / 顺时针旋转 90° |
 | flipOn | `KOnPack` | 水平翻转切换 |
 | imageAttrs | `Record<string, unknown>` | src / alt / draggable=false |
-| imageStyle | `CSSProperties` | `transform: scale(...) rotate(...deg) scaleX(±1)` |
+| imageStyle | `CSSProperties` | `transform: translate(panX, panY) scale(...) rotate(...deg) scaleX(±1)` |
 
 #### 动作
 
@@ -198,13 +204,11 @@
 ### 层级与交互
 
 - 根节点 `position: fixed; inset: 0; z-index: var(--k-z-index-modal)`；遮罩与舞台分层，控件 `z-index: 2`。
-- 鼠标滚轮缩放步进 1.1，范围受 `minScale` / `maxScale` 约束。
+- 鼠标滚轮缩放步进 1.1，范围受 `minScale` / `maxScale` 约束；放大后鼠标/触屏拖动平移，光标切换 grab/grabbing，缩回 100% 或复位时清空平移。
 - 切换图片时缩放/旋转/翻转全部复位；变换不改变图片布局盒（`transform` 为主），顺序为 `scale → rotate → scaleX`。
 - 轮播动画：切换方向由序号比较决定，离场图绝对定位居中避免撑高，随后入场图平移 + 淡入。
 
 ### 后续登记
 
-- `pdf` / `video` / `audio` / office 类型的内置渲染（`type` 联合类型扩展 + 默认内容分流）。
-- 拖拽平移（缩放后的手持移动）。
-- 底部缩略图条快速跳转。
-- 相邻图片预加载与加载态骨架。
+- Office 文档的在线渲染（需接入第三方文档预览服务，当前仅文件卡 + 打开原文件）。
+- 预加载失败重试与相邻项预取数量配置（当前固定前后 2 项、图片类）。

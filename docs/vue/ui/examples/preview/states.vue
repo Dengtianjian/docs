@@ -2,9 +2,13 @@
   <div>
     <KButton type="primary" @click="open = true">打开（加载 / 失败 / 缩略图兜底）</KButton>
     <p style="margin: 8px 0 0; font-size: 12px; color: #888">
-      第 2 项缩略图地址无效 → 缩略条显示名称占位；第 3/4 项大图与视频地址无效 → 打开后显示失败卡（可重试/打开原文件）；第 5 项远程大图可观察加载 spinner（需联网）。
+      第 2 项缩略图地址无效 → 缩略条显示名称占位；第 3/4 项大图与视频地址无效 → 打开后显示失败卡（可重试/打开原文件）；第 5 项远程大图可观察加载态（需联网）。
     </p>
     <KPreview v-model:open="open" :items="items" />
+    <div style="margin-top: 12px">
+      <KButton size="sm" @click="slowOpen = true">打开单张慢速大图（观察骨架）</KButton>
+      <KPreview v-model:open="slowOpen" :items="slowItems" :thumbnails="false" />
+    </div>
   </div>
 </template>
 
@@ -38,10 +42,17 @@ const items: KPreviewItem[] = [
     poster: svg('视频封面', '#722ed1'),
   },
   {
-    src: 'https://picsum.photos/2000/1400',
+    src: 'https://picsum.photos/2000/1400.jpg',
     name: '远程大图（观察加载态，需联网）',
   },
 ]
 
 const open = ref(false)
+const slowOpen = ref(false)
+const slowItems: KPreviewItem[] = [
+  {
+    src: `https://picsum.photos/2400/1600.jpg?random=${Date.now()}`,
+    name: '慢速大图（骨架屏，需联网）',
+  },
+]
 </script>

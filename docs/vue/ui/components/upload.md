@@ -291,7 +291,5 @@ type KUploadUpload = (options: {
 
 ### 后续登记
 
-- `picture-circle` 为 `picture-card` 的圆形变体：卡片与「+」块 `border-radius: 50%`，蒙层与 uploading/error 遮罩随 `overflow: hidden` 裁圆；其余能力（排序、重传、预览）与 `picture-card` 完全一致，排序落点同样按横向中点判定。
-- 目录上传（`webkitdirectory`）与粘贴上传。
-- 图片裁剪、压缩前置钩子。
-- 分片 / 并发多字段上传策略（当前由 upload 内部自理）。
+- 拖入文件夹的递归展开（当前 `directory` 仅支持原生文件夹选择；拖拽只收散文件）。
+- 多实例同时开启 `paste` 的去重协调（当前为 document 级监听，由业务保证只开一个实例）。

@@ -29,7 +29,11 @@
 
 <Demo path="input/sizes" title="尺寸与形态" desc="`size` 四档走 controlHeight 阶梯；`variant` 四档：outlined（缺省带框）/ filled 灰底无框 / borderless 全透明 / underlined 仅底部边框（hover/focus 只变底线颜色、无聚焦圈）。" />
 
-<Demo path="input/count" title="字数统计" desc="`maxlength` 限长 + `showCount` 计数；无 `maxlength` 时仅显示当前字数。超限拦截由原生 maxlength 完成，「超额可输、计数标红」的 allowExceed 形态留后批。" />
+<Demo path="input/count" title="字数统计" desc="`maxlength` 限长 + `showCount` 计数；无 `maxlength` 时仅显示当前字数。" />
+
+<Demo path="input/count-overflow" title="计数超限" desc="输入侧仍由原生 `maxlength` 拦截；程序化写入超过上限时，`showCount` 计数标红（无需额外开关）。" />
+
+<Demo path="input/addon" title="组合标签" desc="`addonBefore / addonAfter` 在外壳内左右贴边，与输入框共用边框和聚焦圈；纯文本可直接传 prop，自定义内容用同名插槽。四档 size 与 disabled 均适配。" />
 
 <Demo path="input/prefix-suffix" title="前后缀" desc="`#prefix / #suffix` 插槽（示例图标 = @vicons/tabler）；清除钮与计数自动落进后缀区，顺序 = 插槽内容 → 清除 → 计数。" />
 
@@ -59,7 +63,8 @@
 | disabled / readonly | 禁用 / 只读 | `boolean` | `false` |
 | clearable | 显示清除钮（有值且非禁用/只读，悬浮或聚焦时可见） | `boolean` | `false` |
 | maxlength | 原生最大长度 | `number \| string` | — |
-| showCount | 字数统计 | `boolean` | `false` |
+| showCount | 字数统计；超过 `maxlength` 时计数标红 | `boolean` | `false` |
+| addonBefore / addonAfter | 前置 / 后置组合标签（纯文本；插槽优先） | `string \| number` | — |
 | autofocus / autocomplete / id / name | 原生属性透传 | — | — |
 
 <CommonProps />
@@ -69,6 +74,7 @@
 | 插槽名 | 说明 |
 | --- | --- |
 | prefix / suffix | 前缀 / 后缀内容（图标、文本、开关均可） |
+| addonBefore / addonAfter | 组合标签内容（贴外壳左右边缘，与输入框共用边框）；优先于同名 prop |
 | render | 自定义渲染作用域插槽，scope 见文末「自定义渲染」节；提供时整件替换 |
 
 ### Events
@@ -105,7 +111,11 @@
 | `--k-input-placeholder-color` | `var(--k-color-text-tertiary)` | 占位色 |
 | `--k-input-icon-color` | `var(--k-color-text-tertiary)` | 前后缀区色 |
 | `--k-input-clear-color / -hover` | quaternary / tertiary | 清除钮两态色 |
-| `--k-input-count-color` | `var(--k-color-text-tertiary)` | 计数色 |
+| `--k-input-count-color` | `var(--k-color-text-tertiary)` | 计数色；超限时改用 `--k-color-error` |
+| `--k-input-addon-bg` | `var(--k-color-fill-secondary)` | 组合标签底色（filled/borderless/underlined 自动降为透明） |
+| `--k-input-addon-text-color` | `var(--k-color-text-secondary)` | 组合标签字色 |
+| `--k-input-addon-border-color` | 跟随 `--k-input-border-color` | 标签与输入框之间的分隔线 |
+| `--k-input-addon-padding-x` | `12px`（xs/sm 8 / lg 16） | 组合标签左右内边距 |
 
 ## 注意事项
 
@@ -124,7 +134,8 @@
 - 清除钮命中区 = 图标本体（1em），`@mousedown.prevent` 保焦点不闪；必须保留 `aria-label="清除"` 语义（内建）；
 - 前后缀插槽直供的裸 svg（@vicons 等只有 viewBox 无宽高）由宿主定 `1em` 尺寸（同 KButton/KIcon 路数，2026-11-18 补）；KSelect 前后缀同规则（内建箭头 0.6em 嵌套在自身 span 里不受覆写）；
 - **不套 App 端黑 8% 按压遮罩**：表单件按压语义 = 聚焦，与触发类件（Button）不同，此为登记在 theme-tokens §8.2 平台形态规则下的显式豁免；
-- addon 前后组（`addonBefore/After`）与 `showCount` 超额标红未在本批（登记待办）；KForm/KFormItem（含 async-validator 接线与 status 自动下发）为 P2a 尾件。
+- 组合标签（`addonBefore/After`）画在外壳内部、抵消外壳 padding 贴边，因此与输入框共用外层边框、圆角和聚焦圈；标签自带垂直分隔线，不额外嵌套边框。需要多个控件拼接时仍用 [KControlGroup](./control-group.md)。
+- `showCount` 超限只影响计数颜色：原生 `maxlength` 已拦截用户输入，标红主要覆盖程序化写入 v-model 的场景。
 
 ## 自定义渲染（headless）
 
@@ -143,7 +154,10 @@
 | readonly | `boolean \| undefined` | 只读 prop 原值；inputAttrs 的原生 readonly（true 才落键）与 showClear 合成消费它；只读仍可选可聚焦，仅不可编辑 |
 | clearable | `boolean \| undefined` | 清除钮开关 prop 原值；实际显隐看 showClear 合成值 |
 | maxlength | `number \| string \| undefined` | 原生最大长度原值；已并入 inputAttrs（超限拦截由原生完成）；自绘计数分母也用它 |
-| showCount | `boolean \| undefined` | 字数统计开关 prop 原值；默认渲染在后缀区画 `当前字数 / maxlength`（无上限只显当前字数），自绘用 `value.length` 自行排版 |
+| showCount | `boolean \| undefined` | 字数统计开关 prop 原值；默认渲染在后缀区画 `当前字数 / maxlength`（无上限只显当前字数），超限标红 |
+| countLength | `number` | 当前字数（与原生 `maxlength` 同口径）；默认渲染与 overCount 共用 |
+| overCount | `boolean` | `showCount && 数字 maxlength && countLength > maxlength`；超限标红的唯一判据 |
+| addonBefore / addonAfter | `string \| number \| undefined` | 组合标签文本 prop 原值（插槽内容不进 scope）；默认渲染贴外壳左右边缘，自绘可自行排版 |
 | id | `string \| undefined` | 原生 id 原值；已并入 inputAttrs，外部 label for 关联无需单独消费 |
 | name | `string \| undefined` | 原生 name 原值；已并入 inputAttrs |
 | value | `string` | 当前绑定值（v-model，缺省 `''`）；已并入 inputAttrs.value 受控回写 DOM；自绘计数/占位判断直接用它 |
@@ -171,7 +185,7 @@
 | onClear | `() => void` | 清除：置 `model.value = ''`（抛 `update:modelValue`）+ emit `clear` + `inputEl.focus()` 回焦。**函数本身无 disabled/readonly 守卫**（显隐由 showClear 合成把关，自绘直调需自查）；不触发 KFormItem 字段校验、不发 change（源码未调用）；默认渲染经 `@mousedown.prevent` 调用以保焦点不闪，自绘建议沿用 mousedown + preventDefault |
 | focus | `() => void` | 编程式聚焦（`inputEl.value?.focus()`）；与组件 expose 的 `focus()` 同一函数，未绑 inputEl 时空操作 |
 
-另有 `slots`（`ReturnType<typeof useSlots>`）：默认渲染的插槽集合（prefix / suffix = 前后缀内容），自绘时可按需取用，如 `ctx.slots.prefix?.()`；默认后缀区顺序 = suffix 插槽 → 清除钮 → 计数，自绘可自定。
+另有 `slots`（`ReturnType<typeof useSlots>`）：默认渲染的插槽集合（prefix / suffix = 前后缀内容，addonBefore / addonAfter = 组合标签内容），自绘时可按需取用，如 `ctx.slots.prefix?.()`；默认后缀区顺序 = suffix 插槽 → 清除钮 → 计数，自绘可自定。
 
 ## 规格附录（实现决策，面向贡献者）
 

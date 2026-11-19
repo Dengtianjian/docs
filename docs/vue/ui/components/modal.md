@@ -102,8 +102,8 @@ modal.destroyAll()
 
 - 出口优先级：KApp root → ConfigProvider popupContainer → body；scoped Provider 下出口节点自带 `k-config-provider + scopeClass` 与 `data-k-theme`（契约④）。
 - 打开时 `body` 滚动锁定（模块级计数，多模态叠层只由最后一个释放）。
-- Esc 走 document keydown；嵌套弹层（如 Popconfirm 里开 Modal）会同时收到 Escape，暂不做焦点圈定式拦截（待办）。
-- 焦点移入 dialog（`tabindex="-1"`），未做完整焦点圈定（focus trap），待无障碍批。
+- **焦点管理（focus trap）**：打开时记录原焦点并把焦点移入 dialog——优先 `[autofocus]`/`[data-autofocus]`，其次正文第一个可聚焦元素，再次 footer，最后 dialog 本身；Tab / Shift+Tab 在 dialog 内循环。退场结束后焦点还原到打开前元素（已卸载则跳过）。
+- **叠层**：Esc 与 Tab 圈定只由最上层弹窗响应（模块级打开栈），关闭上层后焦点回到下层；dialog 带 `aria-modal="true"` + `aria-labelledby`（指向标题）。
 
 ## 自定义渲染（headless）
 
@@ -121,7 +121,7 @@ modal.destroyAll()
 | placement | `KModalPlacement` | 九宫格屏幕落位（`'top-left' \| 'top' \| 'top-right' \| 'left' \| 'center' \| 'right' \| 'bottom-left' \| 'bottom' \| 'bottom-right'`）；写进 rootAttrs 的 `data-placement`，落位 CSS（wrap flex 对齐 + 缘距 + 限高换档）由自绘自理 |
 | mask | `boolean` | 是否应渲染压暗蒙层；false 时不画蒙层，但 wrap 外点判定与滚动锁等模态语义不变 |
 | maskClosable | `boolean` | 点蒙层/空白是否关闭；wrapOn 的外点路径内部据此守卫 |
-| keyboard | `boolean` | Esc 是否关闭；document keydown 监听随开合 watch 挂/卸（headless 照跑），处理器内据此守卫 |
+| keyboard | `boolean` | Esc 是否关闭；document keydown 监听随开合 watch 挂/卸（headless 照跑），只有打开栈最上层响应，处理器内据此守卫 |
 | closable | `boolean` | 是否应渲染右上关闭 X；自绘关闭钮据此显隐并绑 `requestClose` |
 | draggable | `boolean` | 头部拖拽总开关；headerOn 拖拽链内部据此守卫，dialogAttrs.style 也只在开启时携带 translate 位移 |
 | dragging | `boolean` | 拖拽进行中（pointerdown → pointerup/cancel）；自绘可据此切 grab/grabbing 光标 |
@@ -132,7 +132,8 @@ modal.destroyAll()
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
 | teleportTarget | `HTMLElement \| string` | Teleport 目标，优先级 **KApp root > ConfigProvider popupContainer（元素或函数）> `'body'`**；`<Teleport :to="ctx.teleportTarget">` 直接消费 |
-| dialogEl | `Ref<HTMLElement \| null>` | dialog 节点 ref：原点测量（量 dialog 框相对触发源算 `--k-modal-transform-origin`）、打开时 `focus()` 落点（配合 dialogAttrs 的 `tabindex=-1`）；`:ref="ctx.dialogEl"` 绑到自绘 dialog，**必绑**——不绑原点回落中心缩放、焦点不移入 |
+| dialogEl | `Ref<HTMLElement \| null>` | dialog 节点 ref：原点测量（量 dialog 框相对触发源算 `--k-modal-transform-origin`）、焦点圈定根节点（Tab 循环与初始焦点都在它内部找）；`:ref="ctx.dialogEl"` 绑到自绘 dialog，**必绑**——不绑原点回落中心缩放、焦点圈定失效 |
+| titleId | `string` | 标题节点 id；`dialogAttrs` 的 `aria-labelledby` 指向它，自绘标题节点需 `:id="ctx.titleId"`，否则读屏拿不到标题 |
 
 #### 绑定包（spread 到自绘节点才继承）
 
@@ -142,7 +143,7 @@ modal.destroyAll()
 | maskAttrs | `Record<string, unknown>` | 蒙层：仅 `data-part="mask"`；压暗视觉自绘（默认 `--k-modal-mask-bg` 恒定黑 45%、fixed inset 0、z-mask）；`mask=false` 时不渲染该节点 |
 | wrapAttrs | `Record<string, unknown>` | 包裹层：仅 `data-part="wrap"`；九宫格 flex 对齐、缘距留白、抬层压过蒙层（默认 z = mask+1）全自绘——wrap 不抬层会被蒙层盖住，外点判定也失效 |
 | wrapOn | `Record<string, (e: Event) => void>` | 包裹层：`click` 外点判定——**`e.target === e.currentTarget`（点到 wrap 本身的空白区）才算外点**，再经 `maskClosable` 守卫走 `requestClose(new MouseEvent('click'))`（合成事件）；点在 dialog 内冒泡上来不关 |
-| dialogAttrs | `Record<string, unknown>` | dialog 节点：`data-part="dialog"` + `role="dialog"` + `aria-modal="true"` + `tabindex="-1"`（焦点落点）+ **布局 style**：`width`（归一化值）+ draggable 开启时 `translate: "x y"`（独立 translate 属性承载拖拽位移，与 zoom 的 `transform: scale` 复合不冲突）+ `--k-modal-transform-origin`（测得的原点内联变量，动画 `transform-origin` 消费它）。**视觉壳不在包内**——背景/圆角/阴影/限高/overflow 与 `is-zoomed` 可见性门、zoom 动画全自绘（消费 `ctx.zoomed`） |
+| dialogAttrs | `Record<string, unknown>` | dialog 节点：`data-part="dialog"` + `role="dialog"` + `aria-modal="true"` + `aria-labelledby`（有标题时指向标题节点 id）+ `tabindex="-1"`（焦点落点）+ **布局 style**：`width`（归一化值）+ draggable 开启时 `translate: "x y"`（独立 translate 属性承载拖拽位移，与 zoom 的 `transform: scale` 复合不冲突）+ `--k-modal-transform-origin`（测得的原点内联变量，动画 `transform-origin` 消费它）。**视觉壳不在包内**——背景/圆角/阴影/限高/overflow 与 `is-zoomed` 可见性门、zoom 动画全自绘（消费 `ctx.zoomed`） |
 | headerAttrs | `Record<string, unknown>` | 头部：仅 `data-part="header"`；grab 光标、`touch-action: none`（触屏拖拽前提）等把手视觉自绘 |
 | headerOn | `Record<string, (e: Event) => void>` | 头部拖拽链：`pointerdown`（守卫：draggable 开启、非拖拽中、鼠标仅左键、**`.k-modal__close` 区域豁免**——自绘关闭钮需保留该类名或自行排除；通过后 `setPointerCapture` 出窗不丢事件 + `preventDefault`）、`pointermove`（累计位移写 dragX/Y → dialogAttrs.style 的 translate 实时跟进）、`pointerup`/`pointercancel`（结束拖拽） |
 | triggerOn | `Record<string, (e: Event) => void>` | 触发器：仅 `click` → `requestOpen()`。注意 scope **无 triggerAttrs**（`data-part="trigger"` 由默认模板加），自绘触发器语义标记自理 |
@@ -151,10 +152,10 @@ modal.destroyAll()
 
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
-| requestOpen() | `() => void` | 打开：**受控双模**——自管置内部开合态 true，受控（传了 `open`）只 emit 不改内部态；两模都发 `update:open(true)`（不发 close）。连带开合 watch：body 滚动锁（模块级计数，多模态叠层只由最后一个释放）、挂 document keydown（Esc）、zoomed 复位 → 测原点 → 放行、拖拽位移归零（重开回位）、`dialogEl.focus()` |
-| requestClose(e) | `(e: MouseEvent \| KeyboardEvent) => void` | 关闭：自管置内部开合态 false，受控只 emit；两模都发 `update:open(false)` + `close(e)`。关闭 X / 点蒙层（wrapOn 合成 MouseEvent）/ Esc（原生 KeyboardEvent）三路径共用；连带释放滚动锁计数、卸 Esc 监听；zoomed/原点变量留到退场结束由 `onAfterLeave` 复位（退场动画期间 dialog 仍需可见） |
-| onAfterLeave() | `() => void` | **自绘退场动画结束后必须调用**（默认模板挂 Transition `@after-leave`）：复位 `zoomed=false` + 清原点变量 + 发 `afterClose`；不调则 afterClose 不发、zoom 态不复位（命令式 Holder 也据此才真正出队） |
+| requestOpen() | `() => void` | 打开：**受控双模**——自管置内部开合态 true，受控（传了 `open`）只 emit 不改内部态；两模都发 `update:open(true)`（不发 close）。连带开合 watch：body 滚动锁（模块级计数，多模态叠层只由最后一个释放）、挂 document keydown（Esc/Tab 圈定，仅最上层响应）、压入打开栈、zoomed 复位 → 测原点 → 放行、拖拽位移归零（重开回位）、焦点移入（autofocus → 正文 → footer → dialog） |
+| requestClose(e) | `(e: MouseEvent \| KeyboardEvent) => void` | 关闭：自管置内部开合态 false，受控只 emit；两模都发 `update:open(false)` + `close(e)`。关闭 X / 点蒙层（wrapOn 合成 MouseEvent）/ Esc（原生 KeyboardEvent）三路径共用；连带释放滚动锁计数、卸 Esc 监听、移出打开栈；zoomed/原点变量留到退场结束由 `onAfterLeave` 复位（退场动画期间 dialog 仍需可见） |
+| onAfterLeave() | `() => void` | **自绘退场动画结束后必须调用**（默认模板挂 Transition `@after-leave`）：复位 `zoomed=false` + 清原点变量 + 还原打开前焦点（未卸载时）+ 发 `afterClose`；不调则 afterClose 不发、zoom 态不复位、焦点不还原（命令式 Holder 也据此才真正出队） |
 
 另有 `slots`（`ReturnType<typeof useSlots>`）：默认渲染的插槽集合（trigger/title/default/footer），自绘时可按需取用，如 `ctx.slots.footer?.()`（页脚纯插槽驱动，不传就不画）。
 
-headless 下滚动锁（模块计数）、Esc document 监听、原点测量、焦点移入全在开合 watch 里照跑；Teleport/Transition 与九宫格落位 CSS 由调用方自管。
+headless 下滚动锁（模块计数）、Esc/Tab 焦点圈定（document 监听 + 打开栈）、原点测量、焦点移入/还原全在开合 watch 里照跑；Teleport/Transition 与九宫格落位 CSS 由调用方自管。

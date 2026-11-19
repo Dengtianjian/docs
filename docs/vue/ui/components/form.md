@@ -69,6 +69,7 @@ Expose：`validate(): Promise<void>`（失败 reject `{errors, values}`）、`re
 ## 注意事项
 
 - 移动端（≤767px）：横向/内联表单自动改为标签在上、控件通栏，不再使用固定 100px 标签宽。
+- **标签与错误关联**：FormItem 自动生成控件 id 并经 `FORM_ITEM_KEY` 下发，控件（Input/InputNumber/Select/DatePicker/DateRangePicker/Checkbox）自动绑定 `id`；标签 `for` 指向它（自定义触发器不是 labelable 元素时，点标签会兜底 `focus()`）。有 `error`/`extra` 时控件自动带 `aria-describedby` 指向帮助文案，错误态带 `aria-invalid="true"`，错误文案 `role="alert"`；校验通过后自动移除。
 
 - **整表校验 = 逐字段 Promise.allSettled 汇总**（校验逻辑全部下沉 FormItem），不存在「表级 schema 与字段独有规则两套回显路径」的分叉。
 - 字段 rules 只在 FormItem 侧合并一次：`props.rules ?? form.rules[name]`。
@@ -126,6 +127,9 @@ Expose：`validate(): Promise<void>`（失败 reject `{errors, values}`）、`re
 | validating | `boolean` | 本字段校验进行中（runValidate 进入置 true、finally 置 false）；自绘字段级 loading 消费 |
 | extra | `string \| undefined` | 常驻帮助文案原值；默认渲染仅无错误时显示（`#extra` 插槽优先），自绘按 `error ? error : (slots.extra ?? extra)` 排 |
 | colon | `boolean` | **表级 colon 注入值**（非本件 prop）；自绘标签行据此补冒号 |
+| controlId / helpId | `string` | 自动生成的控件 id / 帮助文案 id；自绘标签用 `:for="ctx.controlId"`、自绘错误行用 `:id="ctx.helpId"` |
+| describedBy | `string \| undefined` | 有 error/extra 时的 helpId；自绘控件绑 `aria-describedby` 用 |
+| invalid | `boolean` | 当前是否错误（`status === 'error'`）；自绘控件绑 `aria-invalid` 用 |
 
 #### 绑定包（spread 到自绘节点才继承）
 

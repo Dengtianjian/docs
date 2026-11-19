@@ -9,10 +9,11 @@ const loading = ref(false)
 </script>
 
 <template>
-  <KSpace size="lg">
+  <KSpace size="lg" align="center">
+    <KSwitch v-model="on" size="large" />
     <KSwitch v-model="on" />
-    <KSwitch v-model="off" checked-children="开" un-checked-children="关" />
     <KSwitch v-model="on" size="small" />
+    <KSwitch v-model="off" checked-children="开" un-checked-children="关" />
     <KSwitch v-model="loading" loading />
     <KSwitch disabled :model-value="false" />
   </KSpace>

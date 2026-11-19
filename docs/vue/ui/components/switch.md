@@ -8,7 +8,7 @@
 
 ## 代码演示
 
-<Demo path="switch/basic" title="基础与状态" desc="`v-model` 布尔；`checkedChildren/unCheckedChildren` 内嵌文字；`size=small`；`loading` 不可交互 + 把手位 spinner；disabled 态。" />
+<Demo path="switch/basic" title="基础与状态" desc="`v-model` 布尔；三档尺寸 large / medium / small；`checkedChildren/unCheckedChildren` 内嵌文字；`loading` 不可交互 + 把手位 spinner；disabled 态。" />
 
 <Demo path="switch/render" title="自定义渲染（headless）" desc="双通道：`#render` 自绘方形闸刀（role=switch/aria-checked 语义 + click/keydown 逻辑包继承）；`render` prop 自绘灯泡开关（checked 驱动自绘发光）。" />
 
@@ -17,7 +17,7 @@
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | model-value / v-model | 开合态 | `boolean` | `false` |
-| size | 轨道规格（非四轴 size 阶梯，开关只有两档） | `'default' \| 'small'` | `'default'` |
+| size | 轨道尺寸：large 68×30 / medium 52×26 / small 38×20 | `'large' \| 'medium' \| 'small'` | `'medium'` |
 | checkedChildren / unCheckedChildren | 轨道内嵌文字 | `string` | — |
 | disabled / loading | 禁用 / 加载中（不可交互，spinner 在把手位） | `boolean` | `false` |
 | id / name | 原生透传（`button` 元素，name 仅语义） | — | — |
@@ -36,7 +36,7 @@ Slots：`render` = 自定义渲染作用域插槽（scope 见文末「自定义�
 
 | 变量 | 初值 |
 | --- | --- |
-| `--k-switch-track-width / -height`（含 `-sm` 两档） | `control-height-xs ×2 / ×1`（small = ×1.5 / −4px） |
+| `--k-switch-track-width / -height`（含 `-lg` / `-sm` 三档） | medium 52×26；large 68×30；small 38×20（由 `--k-control-height-xs` 派生） |
 | `--k-switch-on-bg` | `--k-color-primary`（走 antd 主色路数，非移动端绿） |
 | `--k-switch-off-bg` | `text-quaternary` |
 | `--k-switch-disabled-on-bg` | `color-mix(primary 50% onto)` |
@@ -49,6 +49,7 @@ Slots：`render` = 自定义渲染作用域插槽（scope 见文末「自定义�
 
 - 原生 `button[role=switch]` + `aria-checked`，Space/Enter 切换（键盘语义零成本，focus 环 = control-outline 同基线）。
 - 把手位移走 `left`（transform 会跟内嵌文字打架，位移成本两帧内可忽略）。
+- **按压拉长**：按住时把手向对侧伸长 4px（贴边保持不动，iOS 同款），松开回弹；`disabled`/`loading` 不触发。
 - `loading` 优先级高于 `disabled`：都挡交互，把手位 spinner 用 `--k-motion-duration-spin`（1s 同源 token）。
 - 按压遮罩豁免（同输入族）。
 
@@ -60,7 +61,7 @@ Slots：`render` = 自定义渲染作用域插槽（scope 见文末「自定义�
 
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
-| size | `'default' \| 'small'` | 轨道规格档（缺省 `'default'`；开关只有两档，非四轴 size 阶梯）；默认渲染映射 `.k-switch--{size}` 类，自绘可映射为自己的尺寸变量 |
+| size | `'large' \| 'medium' \| 'small'` | 轨道尺寸档（缺省 `'medium'`）；默认渲染映射 `.k-switch--{size}` 类，自绘可映射为自己的尺寸变量 |
 | checked | `boolean` | 当前开合态（`modelValue === true` 的规范化布尔）；自绘发光/位移/内嵌文字切换统一用它 |
 | disabled | `boolean` | **`disabled \|\| loading` 合成后的不可交互态**（非 disabled prop 原值）；rootAttrs 的 aria-disabled/原生 disabled 与 toggle 守卫都消费它，自绘置灰也应以它为准 |
 | loading | `boolean` | 加载中 prop 原值；默认渲染据此在把手位画 spinner（`--k-motion-duration-spin` 旋转），自绘可据此画自己的加载指示 |

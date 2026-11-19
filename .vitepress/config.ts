@@ -212,7 +212,8 @@ export default defineConfig({
                   text: "数据展示（P3）",
                   collapsed: false,
                   items: [
-                    { text: "KTag 标签", link: "/vue/ui/components/tag" }
+                    { text: "KTag 标签", link: "/vue/ui/components/tag" },
+                    { text: "KBadge 徽标", link: "/vue/ui/components/badge" }
                   ]
                 }
               ]

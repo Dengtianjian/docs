@@ -1,3 +1,21 @@
+<template>
+  <KForm ref="form" :model="model" :rules="rules" layout="vertical" style="max-width: 320px">
+    <KFormItem label="生日" name="birthday">
+      <KDatePicker v-model="model.birthday" clearable placeholder="选值即触发 change 校验" />
+    </KFormItem>
+    <KFormItem label="起始月份" name="startMonth">
+      <KDatePicker v-model="model.startMonth" picker="month" clearable />
+    </KFormItem>
+    <KFormItem>
+      <KSpace>
+        <KButton type="primary" @click="onSubmit">校验提交</KButton>
+        <KButton @click="onReset">重置</KButton>
+      </KSpace>
+    </KFormItem>
+    <div>{{ result }}</div>
+  </KForm>
+</template>
+
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import KForm from 'kit/vue/ui/components/Form/Form.vue'
@@ -30,21 +48,3 @@ function onReset() {
   result.value = ''
 }
 </script>
-
-<template>
-  <KForm ref="form" :model="model" :rules="rules" layout="vertical" style="max-width: 320px">
-    <KFormItem label="生日" name="birthday">
-      <KDatePicker v-model="model.birthday" clearable placeholder="选值即触发 change 校验" />
-    </KFormItem>
-    <KFormItem label="起始月份" name="startMonth">
-      <KDatePicker v-model="model.startMonth" picker="month" clearable />
-    </KFormItem>
-    <KFormItem>
-      <KSpace>
-        <KButton type="primary" @click="onSubmit">校验提交</KButton>
-        <KButton @click="onReset">重置</KButton>
-      </KSpace>
-    </KFormItem>
-    <div>{{ result }}</div>
-  </KForm>
-</template>

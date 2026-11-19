@@ -64,7 +64,7 @@
 
 - 与 [KTooltip](./tooltip.md) 共用 `usePopupHost/useOverlayPosition/usePopupDismiss` 基座；出口契约、翻转语义见 tooltip 页注意事项。
 - 触发器始终带 `aria-haspopup/aria-expanded`，展开时 `aria-controls` 指向弹层；弹层有标题时带 `aria-labelledby`。Esc 关闭由共用 dismiss 基座处理。
-- closable 的 X 只关气泡（走 `setOpen(false)`），受控时同样只发事件。
+- closable 的 X 只关气泡（走 `setOpen(false)`），受控时同样只发事件；无标题时也渲染（卡片右上角），不再依赖标题行。
 - 内容区可放表单控件；focus 触发 + 内容可聚焦元素组合时建议改用 `trigger="click"`（focusout 会在焦点移入内容前触发关闭）。
 
 ## 自定义渲染（headless）

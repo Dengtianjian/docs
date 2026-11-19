@@ -48,7 +48,7 @@
 | [switch.md](./switch.md) | KSwitch | 已落地（P2a-4） |
 | [form.md](./form.md) | KForm / KFormItem | 已落地（P2a-5，运行时依赖 async-validator） |
 
-> 2026-11-17：**P2b 反馈批开工**（静态件范围拍板 = KAlert + KSpin）：弹层定位基座落地（`utils/overlay.ts` 纯函数 12 方位 + 翻转、`composables/usePopup.ts` 定位/出口/外点三合一套件），KTooltip/KPopover/KPopconfirm 为首批消费者（KSelect 自有定位暂不并轨）；KModal 双形态（声明式 + `useKApp().modal.confirm`，onOk Promise 语义）；message/notification 实例 API 挂进 KApp context（队列 Holder 常驻 KApp，计时随卸载清理）；内建图标依赖评估定案：反馈件走内联 SVG（`utils/icons.ts`），不引图标库。
+> 2026-11-17：**P2b 反馈批开工**（静态件范围拍板 = KAlert + KSpin）：弹层定位基座落地（`utils/overlay.ts` 纯函数 12 方位 + 翻转、`composables/usePopup.ts` 定位/出口/外点三合一套件），KTooltip/KPopover/KPopconfirm 为首批消费者；KSelect 后续也已并入同一基座；KModal 双形态（声明式 + `useKApp().modal.confirm`，onOk Promise 语义）；message/notification 实例 API 挂进 KApp context（队列 Holder 常驻 KApp，计时随卸载清理）；内建图标依赖评估定案：反馈件走内联 SVG（`utils/icons.ts`），不引图标库。
 
 ## 组件清单（P2b）
 

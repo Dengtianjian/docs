@@ -1,11 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-
-const v = ref<number | null>(null)
-</script>
-
 <template>
   <KSpace size="md" direction="vertical" style="width: 240px">
     <KDatePicker v-model="v" clearable />
@@ -20,3 +12,11 @@ const v = ref<number | null>(null)
     <KDatePicker status="warning" placeholder="status=warning" />
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+
+const v = ref<number | null>(null)
+</script>

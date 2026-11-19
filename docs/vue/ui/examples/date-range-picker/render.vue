@@ -1,14 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KDateRangePicker from 'kit/vue/ui/components/DateRangePicker/DateRangePicker.vue'
-
-const range = ref<[number, number] | null>(null)
-const presets = [
-  { label: '近 7 天', value: [Date.now() - 6 * 86400000, Date.now()] as [number, number] },
-  { label: '今天', value: [Date.now(), Date.now()] as [number, number] },
-]
-</script>
-
 <template>
   <KDateRangePicker v-model="range" :presets="presets" clearable>
     <template #render="ctx">
@@ -49,6 +38,17 @@ const presets = [
     </template>
   </KDateRangePicker>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KDateRangePicker from 'kit/vue/ui/components/DateRangePicker/DateRangePicker.vue'
+
+const range = ref<[number, number] | null>(null)
+const presets = [
+  { label: '近 7 天', value: [Date.now() - 6 * 86400000, Date.now()] as [number, number] },
+  { label: '今天', value: [Date.now(), Date.now()] as [number, number] },
+]
+</script>
 
 <style scoped>
 .mini { position: relative; width: 360px; max-width: 100%; }

@@ -1,3 +1,13 @@
+<template>
+  <div>
+    <KButton type="primary" @click="open = true">打开（加载 / 失败 / 缩略图兜底）</KButton>
+    <p style="margin: 8px 0 0; font-size: 12px; color: #888">
+      第 2 项缩略图地址无效 → 缩略条显示名称占位；第 3/4 项大图与视频地址无效 → 打开后显示失败卡（可重试/打开原文件）；第 5 项远程大图可观察加载 spinner（需联网）。
+    </p>
+    <KPreview v-model:open="open" :items="items" />
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import KPreview from 'kit/vue/ui/components/Preview/Preview.vue'
@@ -35,13 +45,3 @@ const items: KPreviewItem[] = [
 
 const open = ref(false)
 </script>
-
-<template>
-  <div>
-    <KButton type="primary" @click="open = true">打开（加载 / 失败 / 缩略图兜底）</KButton>
-    <p style="margin: 8px 0 0; font-size: 12px; color: #888">
-      第 2 项缩略图地址无效 → 缩略条显示名称占位；第 3/4 项大图与视频地址无效 → 打开后显示失败卡（可重试/打开原文件）；第 5 项远程大图可观察加载 spinner（需联网）。
-    </p>
-    <KPreview v-model:open="open" :items="items" />
-  </div>
-</template>

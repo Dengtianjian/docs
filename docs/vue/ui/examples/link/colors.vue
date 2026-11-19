@@ -1,9 +1,3 @@
-<script setup lang="ts">
-import KLink from 'kit/vue/ui/components/Link/Link.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-import KText from 'kit/vue/ui/components/Typography/Text.vue'
-</script>
-
 <template>
   <KSpace direction="vertical" :size="12">
     <KSpace :size="12">
@@ -28,3 +22,9 @@ import KText from 'kit/vue/ui/components/Typography/Text.vue'
     </KSpace>
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import KLink from 'kit/vue/ui/components/Link/Link.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KText from 'kit/vue/ui/components/Typography/Text.vue'
+</script>

@@ -1,3 +1,20 @@
+<template>
+  <div style="max-width: 460px">
+    <KButton size="sm" style="margin-bottom: 8px" @click="addSample">生成 1MB 示例文件</KButton>
+    <KUpload
+      ref="uploader"
+      v-model:file-list="files"
+      :upload="upload"
+      :merge="merge"
+      :chunk-size="256 * 1024"
+      :chunk-concurrency="2"
+    />
+    <p style="margin: 8px 0 0; font-size: 12px; color: #888">
+      256KB 分片 / 并发 2：分片调用 {{ chunkCalls }} 次，merge {{ mergeCalls }} 次，分片峰值并发 {{ peak }}。
+    </p>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import KUpload from 'kit/vue/ui/components/Upload/Upload.vue'
@@ -50,20 +67,3 @@ function addSample() {
   ;(window as any).__chunkStats = { chunks: 0, mergeCalls: 0, peak: 0 }
 }
 </script>
-
-<template>
-  <div style="max-width: 460px">
-    <KButton size="sm" style="margin-bottom: 8px" @click="addSample">生成 1MB 示例文件</KButton>
-    <KUpload
-      ref="uploader"
-      v-model:file-list="files"
-      :upload="upload"
-      :merge="merge"
-      :chunk-size="256 * 1024"
-      :chunk-concurrency="2"
-    />
-    <p style="margin: 8px 0 0; font-size: 12px; color: #888">
-      256KB 分片 / 并发 2：分片调用 {{ chunkCalls }} 次，merge {{ mergeCalls }} 次，分片峰值并发 {{ peak }}。
-    </p>
-  </div>
-</template>

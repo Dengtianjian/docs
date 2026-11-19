@@ -56,7 +56,7 @@
 
 ### 实例 API（`useKApp().modal`）
 
-先在 `<KApp>` 子树里取实例（上方 functional 示例即此结构），再调方法：
+先在 `<KApp>` 子树里取实例，再调方法（文档站由主题在最外层统一挂 KApp；业务里自行包一层）：
 
 ```ts
 import { useKApp } from 'kit/vue/ui'

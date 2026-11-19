@@ -1,3 +1,17 @@
+<template>
+  <KSpace direction="vertical" size="lg">
+    <KSpace size="lg" wrap>
+      <KButton type="primary" @click="burst(12)">弹 12 条（列内滚动）</KButton>
+      <KButton @click="notification!.config({ maxCount: 3 }); burst(12)">maxCount=3 再弹 12 条</KButton>
+      <KButton @click="notification!.config({ maxCount: undefined })">取消 maxCount</KButton>
+      <KButton variant="text" type="link" @click="notification!.destroyAll()">清空</KButton>
+    </KSpace>
+    <KText type="secondary">
+      本示例关闭堆叠（stackLimit: 0），按可滚动列表实现；默认 stackLimit=3 时同方位的列表会堆叠收起，见上方「堆叠收起」演示。maxCount 超限直接挤掉最旧一条（无退场动画）。
+    </KText>
+  </KSpace>
+</template>
+
 <script setup lang="ts">
 import { useKApp } from 'kit/vue/ui/composables/useKApp'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
@@ -17,17 +31,3 @@ function burst(n: number) {
   }
 }
 </script>
-
-<template>
-  <KSpace direction="vertical" size="lg">
-    <KSpace size="lg" wrap>
-      <KButton type="primary" @click="burst(12)">弹 12 条（列内滚动）</KButton>
-      <KButton @click="notification!.config({ maxCount: 3 }); burst(12)">maxCount=3 再弹 12 条</KButton>
-      <KButton @click="notification!.config({ maxCount: undefined })">取消 maxCount</KButton>
-      <KButton variant="text" type="link" @click="notification!.destroyAll()">清空</KButton>
-    </KSpace>
-    <KText type="secondary">
-      本示例关闭堆叠（stackLimit: 0），按可滚动列表实现；默认 stackLimit=3 时同方位的列表会堆叠收起，见上方「堆叠收起」演示。maxCount 超限直接挤掉最旧一条（无退场动画）。
-    </KText>
-  </KSpace>
-</template>

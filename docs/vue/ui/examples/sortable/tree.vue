@@ -1,3 +1,28 @@
+<template>
+  <div style="max-width: 520px">
+    <KSortable
+      v-model="flat"
+      item-key="id"
+      :placeholder-inset="(projection?.depth ?? 0) * INDENT"
+      @dragstart="onDragStart"
+      @dragmove="onDragMove"
+      @dragend="onDragEnd"
+      @change="onChange"
+    >
+      <template #default="{ item, index }">
+        <div class="tree-row" :style="{ marginLeft: `${item.depth * INDENT}px` }">
+          <span class="tree-toggle">{{ hasChildren(index) ? '▾' : '•' }}</span>
+          <span class="tree-name">{{ item.name }}</span>
+        </div>
+      </template>
+    </KSortable>
+    <p class="hint">
+      参照 dnd-kit SortableTree：扁平列表按缩进表示层级。拖动时左右移动鼠标调整投影深度，
+      拖到「设计」等空父级下方并右移即可成为其子级；落点仍用内置占位块，松手后按投影深度重挂。
+    </p>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import KSortable from 'kit/vue/ui/components/Sortable/Sortable.vue'
@@ -94,31 +119,6 @@ function onChange(items: FlatNode[], _info: KSortableMoveInfo<FlatNode>) {
   clearDrag()
 }
 </script>
-
-<template>
-  <div style="max-width: 520px">
-    <KSortable
-      v-model="flat"
-      item-key="id"
-      :placeholder-inset="(projection?.depth ?? 0) * INDENT"
-      @dragstart="onDragStart"
-      @dragmove="onDragMove"
-      @dragend="onDragEnd"
-      @change="onChange"
-    >
-      <template #default="{ item, index }">
-        <div class="tree-row" :style="{ marginLeft: `${item.depth * INDENT}px` }">
-          <span class="tree-toggle">{{ hasChildren(index) ? '▾' : '•' }}</span>
-          <span class="tree-name">{{ item.name }}</span>
-        </div>
-      </template>
-    </KSortable>
-    <p class="hint">
-      参照 dnd-kit SortableTree：扁平列表按缩进表示层级。拖动时左右移动鼠标调整投影深度，
-      拖到「设计」等空父级下方并右移即可成为其子级；落点仍用内置占位块，松手后按投影深度重挂。
-    </p>
-  </div>
-</template>
 
 <style scoped>
 .hint {

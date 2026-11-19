@@ -1,12 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KAlert from 'kit/vue/ui/components/Alert/Alert.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-
-const alive = ref(true)
-</script>
-
 <template>
   <KSpace direction="vertical" size="md" style="width: 100%">
     <KAlert message="info：普通通知，不带描述时单行紧凑" />
@@ -22,3 +13,12 @@ const alive = ref(true)
     <KButton v-else variant="text" type="link" @click="alive = true">恢复上一条</KButton>
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KAlert from 'kit/vue/ui/components/Alert/Alert.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+
+const alive = ref(true)
+</script>

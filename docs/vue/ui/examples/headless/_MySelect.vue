@@ -1,31 +1,3 @@
-<script setup lang="ts">
-import KSelect from 'kit/vue/ui/components/Select/Select.vue'
-import type { KSelectOption } from 'kit/vue/ui/components/Select/Select.vue'
-
-withDefaults(
-  defineProps<{
-    modelValue?: string | number | null
-    options?: KSelectOption[]
-    placeholder?: string
-    /** 强调色：触发器下划线 / 选中项 / 勾标共用，传 kit token 或任意 CSS 色值 */
-    accent?: string
-    disabled?: boolean
-  }>(),
-  {
-    modelValue: null,
-    options: () => [],
-    placeholder: '请选择',
-    accent: 'var(--k-color-primary)',
-    disabled: false,
-  },
-)
-
-const emit = defineEmits<{
-  'update:modelValue': [value: string | number | null]
-  change: [value: string | number | null]
-}>()
-</script>
-
 <template>
   <!-- 自有组件只消费 KSelect 的 headless 绑定包：开合/键盘/外点/定位/禁用全继承，视觉身份整件自绘 -->
   <KSelect
@@ -88,6 +60,34 @@ const emit = defineEmits<{
     </template>
   </KSelect>
 </template>
+
+<script setup lang="ts">
+import KSelect from 'kit/vue/ui/components/Select/Select.vue'
+import type { KSelectOption } from 'kit/vue/ui/components/Select/Select.vue'
+
+withDefaults(
+  defineProps<{
+    modelValue?: string | number | null
+    options?: KSelectOption[]
+    placeholder?: string
+    /** 强调色：触发器下划线 / 选中项 / 勾标共用，传 kit token 或任意 CSS 色值 */
+    accent?: string
+    disabled?: boolean
+  }>(),
+  {
+    modelValue: null,
+    options: () => [],
+    placeholder: '请选择',
+    accent: 'var(--k-color-primary)',
+    disabled: false,
+  },
+)
+
+const emit = defineEmits<{
+  'update:modelValue': [value: string | number | null]
+  change: [value: string | number | null]
+}>()
+</script>
 
 <style>
 .my-select {

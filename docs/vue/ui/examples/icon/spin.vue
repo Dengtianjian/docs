@@ -1,10 +1,3 @@
-<script setup lang="ts">
-import { Loader } from '@vicons/tabler'
-import KIcon from 'kit/vue/ui/components/Icon/Icon.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-</script>
-
 <template>
   <KSpace wrap align="center">
     <KIcon :component="Loader" spin size="lg" label="加载中" />
@@ -13,3 +6,10 @@ import KSpace from 'kit/vue/ui/components/Space/Space.vue'
     <KButton type="link" :icon="Loader" />
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import { Loader } from '@vicons/tabler'
+import KIcon from 'kit/vue/ui/components/Icon/Icon.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+</script>

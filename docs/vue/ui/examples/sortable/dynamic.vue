@@ -1,3 +1,19 @@
+<template>
+  <div style="max-width: 420px">
+    <KSortable v-model="notes" item-key="id">
+      <template #default="{ item }">
+        <div class="note">
+          <strong>{{ item.title }}</strong>
+          <span>{{ item.body }}</span>
+        </div>
+      </template>
+    </KSortable>
+    <p class="hint">
+      动态高度：每项高度随内容不同；拖动时占位块用被拖项自身尺寸，让位与占位按最终布局计算，不遮挡、不留白。
+    </p>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import KSortable from 'kit/vue/ui/components/Sortable/Sortable.vue'
@@ -15,22 +31,6 @@ const notes = ref<Note[]>([
   { id: 4, title: '再看一个短条目', body: '短。' },
 ])
 </script>
-
-<template>
-  <div style="max-width: 420px">
-    <KSortable v-model="notes" item-key="id">
-      <template #default="{ item }">
-        <div class="note">
-          <strong>{{ item.title }}</strong>
-          <span>{{ item.body }}</span>
-        </div>
-      </template>
-    </KSortable>
-    <p class="hint">
-      动态高度：每项高度随内容不同；拖动时占位块用被拖项自身尺寸，让位与占位按最终布局计算，不遮挡、不留白。
-    </p>
-  </div>
-</template>
 
 <style scoped>
 .note {

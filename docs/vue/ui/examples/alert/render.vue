@@ -1,22 +1,3 @@
-<script setup lang="ts">
-import { h, ref } from 'vue'
-import KAlert from 'kit/vue/ui/components/Alert/Alert.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import type { KAlertRenderScope } from 'kit/vue/ui/components/Alert/Alert.vue'
-
-const showBar = ref(true)
-
-// render prop 通道：关闭逻辑（onClose → update:open/close 事件）继承，紧凑横条视觉自绘
-const renderStrip = (ctx: KAlertRenderScope) =>
-  h('div', { ...ctx.rootAttrs, class: `hl-alert-strip hl-alert-strip--${ctx.type}` }, [
-    h('span', { class: 'hl-alert-strip__dot', 'aria-hidden': 'true' }),
-    h('span', { class: 'hl-alert-strip__text' }, ctx.message as string),
-    ctx.closable
-      ? h('button', { type: 'button', class: 'hl-alert-strip__close', 'aria-label': '关闭', onClick: ctx.onClose }, '✕')
-      : null,
-  ])
-</script>
-
 <template>
   <div style="display: flex; flex-direction: column; gap: 14px; max-width: 520px">
     <!-- #render 插槽通道：语义左缘条，type 驱动强调色，onClose 继承关闭（受控 open 回写） -->
@@ -37,6 +18,25 @@ const renderStrip = (ctx: KAlertRenderScope) =>
     <KAlert type="success" closable message="部署完成 · 3 个站点已上线" :render="renderStrip" />
   </div>
 </template>
+
+<script setup lang="ts">
+import { h, ref } from 'vue'
+import KAlert from 'kit/vue/ui/components/Alert/Alert.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import type { KAlertRenderScope } from 'kit/vue/ui/components/Alert/Alert.vue'
+
+const showBar = ref(true)
+
+// render prop 通道：关闭逻辑（onClose → update:open/close 事件）继承，紧凑横条视觉自绘
+const renderStrip = (ctx: KAlertRenderScope) =>
+  h('div', { ...ctx.rootAttrs, class: `hl-alert-strip hl-alert-strip--${ctx.type}` }, [
+    h('span', { class: 'hl-alert-strip__dot', 'aria-hidden': 'true' }),
+    h('span', { class: 'hl-alert-strip__text' }, ctx.message as string),
+    ctx.closable
+      ? h('button', { type: 'button', class: 'hl-alert-strip__close', 'aria-label': '关闭', onClick: ctx.onClose }, '✕')
+      : null,
+  ])
+</script>
 
 <!-- render prop 闭包产物在子组件作用域渲染，样式须全局（hl- 专属命名）或内联 -->
 <style>

@@ -1,3 +1,20 @@
+<template>
+  <div style="max-width: 460px">
+    <KButton size="sm" style="margin-bottom: 8px" @click="addSample">生成 1600×1200 示例图</KButton>
+    <KUpload
+      ref="uploader"
+      v-model:file-list="files"
+      :upload="upload"
+      :compress="{ maxWidth: 800, maxHeight: 800, quality: 0.75 }"
+      accept="image/*"
+    />
+    <p style="margin: 8px 0 0; font-size: 12px; color: #888">
+      原始 {{ original ? `${Math.round(original / 1024)} KB` : '—' }} → 压缩后
+      {{ compressed ? `${Math.round(compressed / 1024)} KB` : '—' }}（长边 ≤ 800）
+    </p>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import KUpload from 'kit/vue/ui/components/Upload/Upload.vue'
@@ -39,20 +56,3 @@ async function addSample() {
   }, 250)
 }
 </script>
-
-<template>
-  <div style="max-width: 460px">
-    <KButton size="sm" style="margin-bottom: 8px" @click="addSample">生成 1600×1200 示例图</KButton>
-    <KUpload
-      ref="uploader"
-      v-model:file-list="files"
-      :upload="upload"
-      :compress="{ maxWidth: 800, maxHeight: 800, quality: 0.75 }"
-      accept="image/*"
-    />
-    <p style="margin: 8px 0 0; font-size: 12px; color: #888">
-      原始 {{ original ? `${Math.round(original / 1024)} KB` : '—' }} → 压缩后
-      {{ compressed ? `${Math.round(compressed / 1024)} KB` : '—' }}（长边 ≤ 800）
-    </p>
-  </div>
-</template>

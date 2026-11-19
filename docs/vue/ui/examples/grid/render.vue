@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import KRow from 'kit/vue/ui/components/Grid/Row.vue'
-import KCol from 'kit/vue/ui/components/Grid/Col.vue'
-</script>
-
 <template>
   <!-- gutter 逻辑双向继承：Row 负外边距 + provide 照跑，Col 内边距随 rootAttrs；列宽百分比由 span 自绘 -->
   <KRow :gutter="[16, 16]">
@@ -23,6 +18,11 @@ import KCol from 'kit/vue/ui/components/Grid/Col.vue'
     </template>
   </KRow>
 </template>
+
+<script setup lang="ts">
+import KRow from 'kit/vue/ui/components/Grid/Row.vue'
+import KCol from 'kit/vue/ui/components/Grid/Col.vue'
+</script>
 
 <style scoped>
 .hl-row {

@@ -1,9 +1,3 @@
-<script setup lang="ts">
-import { Download } from '@vicons/tabler'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-</script>
-
 <template>
   <KSpace wrap>
     <!-- icon prop：注入图标组件（示例 = 推荐的 @vicons/tabler） -->
@@ -22,3 +16,9 @@ import KSpace from 'kit/vue/ui/components/Space/Space.vue'
     </KButton>
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import { Download } from '@vicons/tabler'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+</script>

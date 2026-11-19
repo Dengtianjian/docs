@@ -1,21 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KPopconfirm from 'kit/vue/ui/components/Popconfirm/Popconfirm.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-
-const log = ref('还没操作')
-const loading = ref(false)
-
-function fakeDelete() {
-  loading.value = true
-  setTimeout(() => {
-    loading.value = false
-    log.value = '已删除（onOk 异步 1.2s，期间确定钮 loading）'
-  }, 1200)
-}
-</script>
-
 <template>
   <KSpace size="lg" wrap align="center">
     <KPopconfirm title="确认删除这条记录？" @confirm="log = '已确认'" @cancel="log = '已取消'">
@@ -39,3 +21,21 @@ function fakeDelete() {
     <span style="color: var(--k-color-text-secondary)">{{ log }}</span>
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KPopconfirm from 'kit/vue/ui/components/Popconfirm/Popconfirm.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+
+const log = ref('还没操作')
+const loading = ref(false)
+
+function fakeDelete() {
+  loading.value = true
+  setTimeout(() => {
+    loading.value = false
+    log.value = '已删除（onOk 异步 1.2s，期间确定钮 loading）'
+  }, 1200)
+}
+</script>

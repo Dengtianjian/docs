@@ -1,10 +1,3 @@
-<script setup lang="ts">
-import KLayout from 'kit/vue/ui/components/Layout/Layout.vue'
-import KLayoutSider from 'kit/vue/ui/components/Layout/Sider.vue'
-import KLayoutHeader from 'kit/vue/ui/components/Layout/Header.vue'
-import KLayoutContent from 'kit/vue/ui/components/Layout/Content.vue'
-</script>
-
 <template>
   <KLayout style="height: 320px; border-radius: var(--k-border-radius); overflow: hidden">
     <KLayoutHeader>Header</KLayoutHeader>
@@ -14,6 +7,13 @@ import KLayoutContent from 'kit/vue/ui/components/Layout/Content.vue'
     </KLayout>
   </KLayout>
 </template>
+
+<script setup lang="ts">
+import KLayout from 'kit/vue/ui/components/Layout/Layout.vue'
+import KLayoutSider from 'kit/vue/ui/components/Layout/Sider.vue'
+import KLayoutHeader from 'kit/vue/ui/components/Layout/Header.vue'
+import KLayoutContent from 'kit/vue/ui/components/Layout/Content.vue'
+</script>
 
 <style scoped>
 /* 组件缺省 header/sider/footer 同为 bg-container（白），演示区分配色：仅示例样式，非组件行为 */

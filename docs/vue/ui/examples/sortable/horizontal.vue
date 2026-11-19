@@ -1,3 +1,14 @@
+<template>
+  <div style="max-width: 560px">
+    <KSortable v-model="channels" item-key="id" orientation="horizontal">
+      <template #default="{ item }">
+        <span class="chip">{{ item.label }}</span>
+      </template>
+    </KSortable>
+    <p class="hint">横向单行：按 X 轴中点判定落点，让位沿水平方向。</p>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import KSortable from 'kit/vue/ui/components/Sortable/Sortable.vue'
@@ -15,17 +26,6 @@ const channels = ref<Channel[]>([
   { id: 'desktop', label: '桌面端' },
 ])
 </script>
-
-<template>
-  <div style="max-width: 560px">
-    <KSortable v-model="channels" item-key="id" orientation="horizontal">
-      <template #default="{ item }">
-        <span class="chip">{{ item.label }}</span>
-      </template>
-    </KSortable>
-    <p class="hint">横向单行：按 X 轴中点判定落点，让位沿水平方向。</p>
-  </div>
-</template>
 
 <style scoped>
 .chip {

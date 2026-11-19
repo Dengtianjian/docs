@@ -1,3 +1,11 @@
+<template>
+  <KControlGroup>
+    <KInput v-model="keyword" placeholder="关键字" clearable style="width: 200px; flex: none" />
+    <KSelect v-model="scope" :options="scopes" style="width: 140px; flex: none" />
+    <KButton type="primary">搜索</KButton>
+  </KControlGroup>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import KControlGroup from 'kit/vue/ui/components/ControlGroup/ControlGroup.vue'
@@ -13,11 +21,3 @@ const scopes = [
   { label: '仅正文', value: 'body' },
 ]
 </script>
-
-<template>
-  <KControlGroup>
-    <KInput v-model="keyword" placeholder="关键字" clearable style="width: 200px; flex: none" />
-    <KSelect v-model="scope" :options="scopes" style="width: 140px; flex: none" />
-    <KButton type="primary">搜索</KButton>
-  </KControlGroup>
-</template>

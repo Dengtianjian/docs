@@ -1,39 +1,3 @@
-<script setup lang="ts">
-import { h, Teleport, ref } from 'vue'
-import KPopconfirm from 'kit/vue/ui/components/Popconfirm/Popconfirm.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import type { KPopconfirmRenderScope } from 'kit/vue/ui/components/Popconfirm/Popconfirm.vue'
-import { onProps } from 'kit/vue/ui/composables/useCustomRender'
-
-const removing = ref(false)
-const removed = ref(false)
-const inlineMsg = ref('')
-
-function onRemove() {
-  removing.value = true
-  setTimeout(() => {
-    removing.value = false
-    removed.value = true
-  }, 900)
-}
-
-// render prop 通道：确认/取消/okLoading 收尾逻辑继承，内联确认条视觉自绘
-const renderStrip = (ctx: KPopconfirmRenderScope) => [
-  h('span', { ref: ctx.triggerEl, ...ctx.triggerAttrs, ...onProps(ctx.triggerOn), class: 'hl-pcf-strip-trigger' }, '重置画布'),
-  h(
-    Teleport,
-    { to: ctx.teleportTarget, defer: true },
-    ctx.visible
-      ? [h('div', { ref: ctx.popupEl, ...ctx.popupAttrs, class: 'hl-pcf-strip' }, [
-          h('span', { class: 'hl-pcf-strip__text' }, ctx.title),
-          h('button', { type: 'button', class: 'hl-pcf-strip__btn', onClick: ctx.onCancel }, ctx.cancelText),
-          h('button', { type: 'button', class: 'hl-pcf-strip__btn hl-pcf-strip__btn--ok', onClick: ctx.onConfirm }, ctx.okText),
-        ])]
-      : [],
-  ),
-]
-</script>
-
 <template>
   <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap">
     <!-- #render 插槽通道：危险确认卡，okLoading 异步收尾（true→false 自动关）照跑 -->
@@ -70,6 +34,42 @@ const renderStrip = (ctx: KPopconfirmRenderScope) => [
     <span style="color: var(--k-color-text-tertiary); font-size: 13px">{{ inlineMsg }}</span>
   </div>
 </template>
+
+<script setup lang="ts">
+import { h, Teleport, ref } from 'vue'
+import KPopconfirm from 'kit/vue/ui/components/Popconfirm/Popconfirm.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import type { KPopconfirmRenderScope } from 'kit/vue/ui/components/Popconfirm/Popconfirm.vue'
+import { onProps } from 'kit/vue/ui/composables/useCustomRender'
+
+const removing = ref(false)
+const removed = ref(false)
+const inlineMsg = ref('')
+
+function onRemove() {
+  removing.value = true
+  setTimeout(() => {
+    removing.value = false
+    removed.value = true
+  }, 900)
+}
+
+// render prop 通道：确认/取消/okLoading 收尾逻辑继承，内联确认条视觉自绘
+const renderStrip = (ctx: KPopconfirmRenderScope) => [
+  h('span', { ref: ctx.triggerEl, ...ctx.triggerAttrs, ...onProps(ctx.triggerOn), class: 'hl-pcf-strip-trigger' }, '重置画布'),
+  h(
+    Teleport,
+    { to: ctx.teleportTarget, defer: true },
+    ctx.visible
+      ? [h('div', { ref: ctx.popupEl, ...ctx.popupAttrs, class: 'hl-pcf-strip' }, [
+          h('span', { class: 'hl-pcf-strip__text' }, ctx.title),
+          h('button', { type: 'button', class: 'hl-pcf-strip__btn', onClick: ctx.onCancel }, ctx.cancelText),
+          h('button', { type: 'button', class: 'hl-pcf-strip__btn hl-pcf-strip__btn--ok', onClick: ctx.onConfirm }, ctx.okText),
+        ])]
+      : [],
+  ),
+]
+</script>
 
 <!-- render prop 闭包产物在子组件作用域渲染，样式须全局（hl- 专属命名）或内联 -->
 <style>

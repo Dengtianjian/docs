@@ -1,3 +1,35 @@
+<template>
+  <div style="max-width: 560px">
+    <table class="demo-table">
+      <thead>
+        <tr>
+          <th
+            v-for="col in columns"
+            :key="col.key"
+            draggable="true"
+            :data-col-over="overColumn === col.key ? (dropBefore ? 'before' : 'after') : undefined"
+            :data-col-dragging="dragColumn === col.key || undefined"
+            @dragstart="onColDragStart(col, $event)"
+            @dragover="onColDragOver(col, $event)"
+            @drop="onColDrop(col, $event)"
+            @dragend="resetColumnDrag"
+          >
+            {{ col.label }}
+          </th>
+        </tr>
+      </thead>
+      <KSortable v-model="rows" item-key="id" root-tag="tbody" item-tag="tr" :columns="3">
+        <template #default="{ item }">
+          <td v-for="col in columns" :key="col.key">{{ item[col.key] }}</td>
+        </template>
+      </KSortable>
+    </table>
+    <p class="hint">
+      rootTag="tbody" + itemTag="tr"：表格自动走 pointer 拖拽（克隆浮层跟随、无原生拖影，免闪烁），拖拽时行内让位、占位整行覆盖；表头列可拖拽换列序（与行排序互不影响）。
+    </p>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import KSortable from 'kit/vue/ui/components/Sortable/Sortable.vue'
@@ -70,38 +102,6 @@ function resetColumnDrag() {
   overColumn.value = null
 }
 </script>
-
-<template>
-  <div style="max-width: 560px">
-    <table class="demo-table">
-      <thead>
-        <tr>
-          <th
-            v-for="col in columns"
-            :key="col.key"
-            draggable="true"
-            :data-col-over="overColumn === col.key ? (dropBefore ? 'before' : 'after') : undefined"
-            :data-col-dragging="dragColumn === col.key || undefined"
-            @dragstart="onColDragStart(col, $event)"
-            @dragover="onColDragOver(col, $event)"
-            @drop="onColDrop(col, $event)"
-            @dragend="resetColumnDrag"
-          >
-            {{ col.label }}
-          </th>
-        </tr>
-      </thead>
-      <KSortable v-model="rows" item-key="id" root-tag="tbody" item-tag="tr" :columns="3">
-        <template #default="{ item }">
-          <td v-for="col in columns" :key="col.key">{{ item[col.key] }}</td>
-        </template>
-      </KSortable>
-    </table>
-    <p class="hint">
-      rootTag="tbody" + itemTag="tr"：表格自动走 pointer 拖拽（克隆浮层跟随、无原生拖影，免闪烁），拖拽时行内让位、占位整行覆盖；表头列可拖拽换列序（与行排序互不影响）。
-    </p>
-  </div>
-</template>
 
 <style scoped>
 .demo-table {

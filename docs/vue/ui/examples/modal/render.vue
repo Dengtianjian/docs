@@ -1,46 +1,3 @@
-<script setup lang="ts">
-import { h, Teleport, Transition, ref } from 'vue'
-import KModal from 'kit/vue/ui/components/Modal/Modal.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import type { KModalRenderScope } from 'kit/vue/ui/components/Modal/Modal.vue'
-import { onProps } from 'kit/vue/ui/composables/useCustomRender'
-
-const log = ref('')
-
-// render prop 通道：滚动锁/Esc/蒙层关闭/原点动画逻辑继承，居中 sheets 视觉自绘
-const renderSheet = (ctx: KModalRenderScope) => [
-  h('span', { ...ctx.triggerAttrs, ...onProps(ctx.triggerOn), class: 'hl-modal-link' }, '打开发布说明'),
-  h(
-    Teleport,
-    { to: ctx.teleportTarget, defer: true },
-    [h(Transition, { name: 'hl-modal-fade', onAfterLeave: ctx.onAfterLeave }, {
-      default: () => ctx.open
-        ? [h('div', { ...ctx.rootAttrs, class: 'hl-modal-sheet-root' }, [
-            ctx.mask ? h('div', { ...ctx.maskAttrs, class: 'hl-modal-sheet-mask' }) : null,
-            h('div', { ...ctx.wrapAttrs, ...onProps(ctx.wrapOn), class: 'hl-modal-sheet-wrap' }, [
-              h('div', {
-                ref: ctx.dialogEl,
-                ...ctx.dialogAttrs,
-                class: 'hl-modal-sheet',
-                style: [ctx.dialogAttrs.style, { visibility: ctx.zoomed ? 'visible' : 'hidden' }],
-              }, [
-                h('div', { ...ctx.headerAttrs, class: 'hl-modal-sheet__head' }, [
-                  h('strong', null, 'v0.9 发布说明'),
-                  h('button', { type: 'button', class: 'hl-modal-sheet__close', 'aria-label': '关闭', onClick: ctx.requestClose }, '✕'),
-                ]),
-                h('div', { class: 'hl-modal-sheet__body' }, [
-                  h('p', null, 'headless 自定义渲染全量铺开：27 个视觉组件支持 #render 插槽 / render prop 双通道。'),
-                  h('p', null, '本弹窗的滚动锁、Esc 关闭、蒙层点击关闭与原点缩放全部由组件逻辑驱动。'),
-                ]),
-              ]),
-            ]),
-          ])]
-        : [],
-    })],
-  ),
-]
-</script>
-
 <template>
   <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap">
     <!-- #render 插槽通道：自绘拖拽面板，headerOn 拖拽链 + requestClose + Esc + 滚动锁全继承 -->
@@ -85,6 +42,49 @@ const renderSheet = (ctx: KModalRenderScope) => [
     <span style="color: var(--k-color-text-tertiary); font-size: 13px">{{ log }}</span>
   </div>
 </template>
+
+<script setup lang="ts">
+import { h, Teleport, Transition, ref } from 'vue'
+import KModal from 'kit/vue/ui/components/Modal/Modal.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import type { KModalRenderScope } from 'kit/vue/ui/components/Modal/Modal.vue'
+import { onProps } from 'kit/vue/ui/composables/useCustomRender'
+
+const log = ref('')
+
+// render prop 通道：滚动锁/Esc/蒙层关闭/原点动画逻辑继承，居中 sheets 视觉自绘
+const renderSheet = (ctx: KModalRenderScope) => [
+  h('span', { ...ctx.triggerAttrs, ...onProps(ctx.triggerOn), class: 'hl-modal-link' }, '打开发布说明'),
+  h(
+    Teleport,
+    { to: ctx.teleportTarget, defer: true },
+    [h(Transition, { name: 'hl-modal-fade', onAfterLeave: ctx.onAfterLeave }, {
+      default: () => ctx.open
+        ? [h('div', { ...ctx.rootAttrs, class: 'hl-modal-sheet-root' }, [
+            ctx.mask ? h('div', { ...ctx.maskAttrs, class: 'hl-modal-sheet-mask' }) : null,
+            h('div', { ...ctx.wrapAttrs, ...onProps(ctx.wrapOn), class: 'hl-modal-sheet-wrap' }, [
+              h('div', {
+                ref: ctx.dialogEl,
+                ...ctx.dialogAttrs,
+                class: 'hl-modal-sheet',
+                style: [ctx.dialogAttrs.style, { visibility: ctx.zoomed ? 'visible' : 'hidden' }],
+              }, [
+                h('div', { ...ctx.headerAttrs, class: 'hl-modal-sheet__head' }, [
+                  h('strong', null, 'v0.9 发布说明'),
+                  h('button', { type: 'button', class: 'hl-modal-sheet__close', 'aria-label': '关闭', onClick: ctx.requestClose }, '✕'),
+                ]),
+                h('div', { class: 'hl-modal-sheet__body' }, [
+                  h('p', null, 'headless 自定义渲染全量铺开：27 个视觉组件支持 #render 插槽 / render prop 双通道。'),
+                  h('p', null, '本弹窗的滚动锁、Esc 关闭、蒙层点击关闭与原点缩放全部由组件逻辑驱动。'),
+                ]),
+              ]),
+            ]),
+          ])]
+        : [],
+    })],
+  ),
+]
+</script>
 
 <!-- render prop 闭包产物在子组件作用域渲染，样式须全局（hl- 专属命名）或内联 -->
 <style>

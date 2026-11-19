@@ -1,3 +1,18 @@
+<template>
+  <div>
+    <KButton type="primary" @click="open = true">打开（视频 + 自定义 PDF）</KButton>
+    <p style="margin: 8px 0 0; font-size: 12px; color: #888">
+      第 2 项按后缀识别为视频，使用内置播放器（手动播放）；第 3 项识别为 pdf，由 renderers.pdf 接管；底部缩略图点击可跳转。
+    </p>
+    <KPreview
+      v-model:open="open"
+      v-model:current="current"
+      :items="items"
+      :renderers="renderers"
+    />
+  </div>
+</template>
+
 <script setup lang="ts">
 import { h, ref } from 'vue'
 import KPreview from 'kit/vue/ui/components/Preview/Preview.vue'
@@ -34,21 +49,6 @@ const renderers = { pdf: pdfRenderer }
 const open = ref(false)
 const current = ref(1)
 </script>
-
-<template>
-  <div>
-    <KButton type="primary" @click="open = true">打开（视频 + 自定义 PDF）</KButton>
-    <p style="margin: 8px 0 0; font-size: 12px; color: #888">
-      第 2 项按后缀识别为视频，使用内置播放器（手动播放）；第 3 项识别为 pdf，由 renderers.pdf 接管；底部缩略图点击可跳转。
-    </p>
-    <KPreview
-      v-model:open="open"
-      v-model:current="current"
-      :items="items"
-      :renderers="renderers"
-    />
-  </div>
-</template>
 
 <style>
 .demo-pdf {

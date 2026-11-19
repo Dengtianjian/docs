@@ -1,3 +1,22 @@
+<template>
+  <div style="max-width: 420px">
+    <KSortable v-model="tasks" item-key="id" @change="onChange">
+      <template #default="{ item, index }">
+        <div class="task">
+          <span class="task-index">{{ index + 1 }}</span>
+          <div class="task-body">
+            <strong>{{ item.title }}</strong>
+            <span class="task-desc">{{ item.desc }}</span>
+          </div>
+        </div>
+      </template>
+    </KSortable>
+    <p class="hint">
+      拖动整项上下排序：经过相邻项中点时中间行实时让位，松手 FLIP 收位；change 回传移动项与前后下标。{{ last }}
+    </p>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import KSortable from 'kit/vue/ui/components/Sortable/Sortable.vue'
@@ -21,25 +40,6 @@ function onChange(_items: Task[], info: KSortableMoveInfo<Task>) {
   last.value = `${info.item.title}：第 ${info.from + 1} 位 → 第 ${info.to + 1} 位`
 }
 </script>
-
-<template>
-  <div style="max-width: 420px">
-    <KSortable v-model="tasks" item-key="id" @change="onChange">
-      <template #default="{ item, index }">
-        <div class="task">
-          <span class="task-index">{{ index + 1 }}</span>
-          <div class="task-body">
-            <strong>{{ item.title }}</strong>
-            <span class="task-desc">{{ item.desc }}</span>
-          </div>
-        </div>
-      </template>
-    </KSortable>
-    <p class="hint">
-      拖动整项上下排序：经过相邻项中点时中间行实时让位，松手 FLIP 收位；change 回传移动项与前后下标。{{ last }}
-    </p>
-  </div>
-</template>
 
 <style scoped>
 .task {

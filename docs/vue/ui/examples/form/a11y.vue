@@ -1,3 +1,23 @@
+<template>
+  <KForm ref="form" :model="model" :rules="rules" layout="vertical" style="max-width: 420px">
+    <KFormItem label="套餐" name="plan">
+      <KRadioGroup v-model="model.plan" :options="['基础版', '专业版']" />
+    </KFormItem>
+    <KFormItem label="通知渠道" name="channels">
+      <KCheckboxGroup v-model="model.channels" :options="['邮件', '短信', '站内信']" />
+    </KFormItem>
+    <KFormItem label="启用" name="enabled" extra="开关也会关联标签与错误信息">
+      <KSwitch v-model="model.enabled" />
+    </KFormItem>
+    <KFormItem>
+      <KSpace align="center">
+        <KButton type="primary" @click="submit">校验</KButton>
+        <span style="color: var(--k-color-text-tertiary); font-size: 12px">{{ result }}</span>
+      </KSpace>
+    </KFormItem>
+  </KForm>
+</template>
+
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import KForm from 'kit/vue/ui/components/Form/Form.vue'
@@ -29,23 +49,3 @@ async function submit() {
   }
 }
 </script>
-
-<template>
-  <KForm ref="form" :model="model" :rules="rules" layout="vertical" style="max-width: 420px">
-    <KFormItem label="套餐" name="plan">
-      <KRadioGroup v-model="model.plan" :options="['基础版', '专业版']" />
-    </KFormItem>
-    <KFormItem label="通知渠道" name="channels">
-      <KCheckboxGroup v-model="model.channels" :options="['邮件', '短信', '站内信']" />
-    </KFormItem>
-    <KFormItem label="启用" name="enabled" extra="开关也会关联标签与错误信息">
-      <KSwitch v-model="model.enabled" />
-    </KFormItem>
-    <KFormItem>
-      <KSpace align="center">
-        <KButton type="primary" @click="submit">校验</KButton>
-        <span style="color: var(--k-color-text-tertiary); font-size: 12px">{{ result }}</span>
-      </KSpace>
-    </KFormItem>
-  </KForm>
-</template>

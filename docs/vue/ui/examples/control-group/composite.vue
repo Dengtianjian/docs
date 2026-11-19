@@ -1,30 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KControlGroup from 'kit/vue/ui/components/ControlGroup/ControlGroup.vue'
-import KControlGroupItem from 'kit/vue/ui/components/ControlGroup/ControlGroupItem.vue'
-import KInputNumber from 'kit/vue/ui/components/InputNumber/InputNumber.vue'
-import KSelect from 'kit/vue/ui/components/Select/Select.vue'
-import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
-import KRadio from 'kit/vue/ui/components/Radio/Radio.vue'
-import KCheckbox from 'kit/vue/ui/components/Checkbox/Checkbox.vue'
-import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-
-const qty = ref(1)
-const unit = ref('piece')
-const cycle = ref('day')
-const enabled = ref(true)
-const mode = ref('auto')
-const autoSave = ref(true)
-
-const units = [
-  { label: '件', value: 'piece' },
-  { label: '箱', value: 'box' },
-  { label: '托', value: 'pallet' },
-]
-</script>
-
 <template>
   <KSpace direction="vertical" size="lg">
     <KControlGroup>
@@ -56,3 +29,30 @@ const units = [
     </KControlGroup>
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KControlGroup from 'kit/vue/ui/components/ControlGroup/ControlGroup.vue'
+import KControlGroupItem from 'kit/vue/ui/components/ControlGroup/ControlGroupItem.vue'
+import KInputNumber from 'kit/vue/ui/components/InputNumber/InputNumber.vue'
+import KSelect from 'kit/vue/ui/components/Select/Select.vue'
+import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
+import KRadio from 'kit/vue/ui/components/Radio/Radio.vue'
+import KCheckbox from 'kit/vue/ui/components/Checkbox/Checkbox.vue'
+import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+
+const qty = ref(1)
+const unit = ref('piece')
+const cycle = ref('day')
+const enabled = ref(true)
+const mode = ref('auto')
+const autoSave = ref(true)
+
+const units = [
+  { label: '件', value: 'piece' },
+  { label: '箱', value: 'box' },
+  { label: '托', value: 'pallet' },
+]
+</script>

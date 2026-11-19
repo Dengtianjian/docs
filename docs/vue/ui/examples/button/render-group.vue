@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import KButtonGroup from 'kit/vue/ui/components/Button/ButtonGroup.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-</script>
-
 <template>
   <!-- 组 headless：role=group 语义继承，size 下发（provide）照跑——组内按钮仍是默认 KButton，实测 sm 档高 -->
   <KButtonGroup size="sm">
@@ -15,6 +10,11 @@ import KButton from 'kit/vue/ui/components/Button/Button.vue'
     </template>
   </KButtonGroup>
 </template>
+
+<script setup lang="ts">
+import KButtonGroup from 'kit/vue/ui/components/Button/ButtonGroup.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+</script>
 
 <style scoped>
 .hl-btngroup {

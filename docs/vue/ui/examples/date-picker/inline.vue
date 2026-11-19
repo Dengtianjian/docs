@@ -1,11 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
-
-const date = ref<number | null>(Date.now())
-const month = ref<number | null>(null)
-</script>
-
 <template>
   <div style="display: flex; gap: 24px; flex-wrap: wrap">
     <div>
@@ -18,3 +10,11 @@ const month = ref<number | null>(null)
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
+
+const date = ref<number | null>(Date.now())
+const month = ref<number | null>(null)
+</script>

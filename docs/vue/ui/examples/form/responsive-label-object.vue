@@ -1,12 +1,3 @@
-<script setup lang="ts">
-import { reactive } from 'vue'
-import KForm from 'kit/vue/ui/components/Form/Form.vue'
-import KFormItem from 'kit/vue/ui/components/Form/FormItem.vue'
-import KInput from 'kit/vue/ui/components/Input/Input.vue'
-
-const model = reactive<Record<string, unknown>>({ user: '', mail: '' })
-</script>
-
 <template>
   <KForm
     :model="model"
@@ -24,3 +15,12 @@ const model = reactive<Record<string, unknown>>({ user: '', mail: '' })
     </KFormItem>
   </KForm>
 </template>
+
+<script setup lang="ts">
+import { reactive } from 'vue'
+import KForm from 'kit/vue/ui/components/Form/Form.vue'
+import KFormItem from 'kit/vue/ui/components/Form/FormItem.vue'
+import KInput from 'kit/vue/ui/components/Input/Input.vue'
+
+const model = reactive<Record<string, unknown>>({ user: '', mail: '' })
+</script>

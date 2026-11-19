@@ -1,10 +1,3 @@
-<script setup lang="ts">
-import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KText from 'kit/vue/ui/components/Typography/Text.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-</script>
-
 <template>
   <KSpace align="start">
     <div class="box">
@@ -19,6 +12,13 @@ import KSpace from 'kit/vue/ui/components/Space/Space.vue'
     </KConfigProvider>
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KText from 'kit/vue/ui/components/Typography/Text.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+</script>
 
 <style scoped>
 .box {

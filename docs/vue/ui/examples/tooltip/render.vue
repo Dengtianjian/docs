@@ -1,26 +1,3 @@
-<script setup lang="ts">
-import { h, Teleport } from 'vue'
-import KTooltip from 'kit/vue/ui/components/Tooltip/Tooltip.vue'
-import type { KTooltipRenderScope } from 'kit/vue/ui/components/Tooltip/Tooltip.vue'
-import { onProps } from 'kit/vue/ui/composables/useCustomRender'
-
-// render prop 通道：h() 里事件包要 onProps() 转成 onXxx 键（模板 v-on 直接散播）
-const renderMono = (ctx: KTooltipRenderScope) => [
-  h(
-    'button',
-    { ref: ctx.triggerEl, ...ctx.triggerAttrs, ...onProps(ctx.triggerOn), class: 'hl-tip-btn', type: 'button' },
-    'render prop 通道',
-  ),
-  h(
-    Teleport,
-    { to: ctx.teleportTarget },
-    ctx.visible
-      ? [h('div', { ref: ctx.popupEl, ...ctx.popupAttrs, ...onProps(ctx.popupOn), class: 'hl-bubble hl-bubble--mono' }, String(ctx.content ?? ''))]
-      : [],
-  ),
-]
-</script>
-
 <template>
   <div style="display: flex; gap: 16px; flex-wrap: wrap">
     <!-- #render 插槽通道：触发器与气泡都自绘；ref/attrs/on 散播后延迟、定位、翻转、主题逻辑照跑 -->
@@ -47,6 +24,29 @@ const renderMono = (ctx: KTooltipRenderScope) => [
     <KTooltip placement="bottom" content="h() 闭包画的气泡" :render="renderMono" />
   </div>
 </template>
+
+<script setup lang="ts">
+import { h, Teleport } from 'vue'
+import KTooltip from 'kit/vue/ui/components/Tooltip/Tooltip.vue'
+import type { KTooltipRenderScope } from 'kit/vue/ui/components/Tooltip/Tooltip.vue'
+import { onProps } from 'kit/vue/ui/composables/useCustomRender'
+
+// render prop 通道：h() 里事件包要 onProps() 转成 onXxx 键（模板 v-on 直接散播）
+const renderMono = (ctx: KTooltipRenderScope) => [
+  h(
+    'button',
+    { ref: ctx.triggerEl, ...ctx.triggerAttrs, ...onProps(ctx.triggerOn), class: 'hl-tip-btn', type: 'button' },
+    'render prop 通道',
+  ),
+  h(
+    Teleport,
+    { to: ctx.teleportTarget },
+    ctx.visible
+      ? [h('div', { ref: ctx.popupEl, ...ctx.popupAttrs, ...onProps(ctx.popupOn), class: 'hl-bubble hl-bubble--mono' }, String(ctx.content ?? ''))]
+      : [],
+  ),
+]
+</script>
 
 <!-- render prop 闭包产物在子组件作用域渲染，不带本 demo 的 scoped data-v，样式须全局（hl- 专属命名）或内联 -->
 <style>

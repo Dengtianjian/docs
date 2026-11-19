@@ -1,13 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KUpload from 'kit/vue/ui/components/Upload/Upload.vue'
-import type { KUploadFile } from 'kit/vue/ui/components/Upload/Upload.vue'
-import { createMockRequest } from './_mock'
-
-const files = ref<KUploadFile[]>([])
-const upload = createMockRequest({ stepMs: 220 })
-</script>
-
 <template>
   <div style="max-width: 460px">
     <!-- 整件自绘：暗色紧凑清单；选文件/拖放/状态机/删除/重试全由绑定包继承（inputEl 需绑定） -->
@@ -46,6 +36,16 @@ const upload = createMockRequest({ stepMs: 220 })
     </p>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KUpload from 'kit/vue/ui/components/Upload/Upload.vue'
+import type { KUploadFile } from 'kit/vue/ui/components/Upload/Upload.vue'
+import { createMockRequest } from './_mock'
+
+const files = ref<KUploadFile[]>([])
+const upload = createMockRequest({ stepMs: 220 })
+</script>
 
 <style scoped>
 .hl-up {

@@ -1,3 +1,14 @@
+<template>
+  <KDateRangePicker
+    v-model="range"
+    :min="min"
+    :max="max"
+    :disabled-date="disabledDate"
+    clearable
+    style="max-width: 380px"
+  />
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import dayjs from 'dayjs'
@@ -11,14 +22,3 @@ function disabledDate(date: dayjs.Dayjs) {
   return date.day() === 0 || date.day() === 6
 }
 </script>
-
-<template>
-  <KDateRangePicker
-    v-model="range"
-    :min="min"
-    :max="max"
-    :disabled-date="disabledDate"
-    clearable
-    style="max-width: 380px"
-  />
-</template>

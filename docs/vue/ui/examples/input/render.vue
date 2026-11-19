@@ -1,3 +1,27 @@
+<template>
+  <div style="display: flex; flex-direction: column; gap: 16px; max-width: 420px">
+    <!-- #render 插槽通道： underline 形态，focus 状态驱动自绘底线 -->
+    <KInput v-model="name" placeholder="署名" clearable>
+      <template #render="ctx">
+        <span v-bind="ctx.rootAttrs" class="hl-input-ink" :class="{ 'hl-input-ink--focus': ctx.focused }">
+          <input :ref="ctx.inputEl" v-bind="ctx.inputAttrs" v-on="ctx.inputOn" class="hl-input-ink__input" />
+          <button
+            v-if="ctx.showClear"
+            type="button"
+            class="hl-input-ink__clear"
+            aria-label="清除"
+            @mousedown.prevent="ctx.onClear()"
+          >×</button>
+          <span class="hl-input-ink__line" aria-hidden="true"></span>
+        </span>
+      </template>
+    </KInput>
+    <span style="color: var(--k-color-text-tertiary); font-size: 13px">v-model =「{{ name }}」</span>
+
+    <KInput v-model="kw" placeholder="搜索" clearable :render="renderSearch" />
+  </div>
+</template>
+
 <script setup lang="ts">
 import { h, ref } from 'vue'
 import KInput from 'kit/vue/ui/components/Input/Input.vue'
@@ -24,30 +48,6 @@ const renderSearch = (ctx: KInputRenderScope) =>
       : null,
   ])
 </script>
-
-<template>
-  <div style="display: flex; flex-direction: column; gap: 16px; max-width: 420px">
-    <!-- #render 插槽通道： underline 形态，focus 状态驱动自绘底线 -->
-    <KInput v-model="name" placeholder="署名" clearable>
-      <template #render="ctx">
-        <span v-bind="ctx.rootAttrs" class="hl-input-ink" :class="{ 'hl-input-ink--focus': ctx.focused }">
-          <input :ref="ctx.inputEl" v-bind="ctx.inputAttrs" v-on="ctx.inputOn" class="hl-input-ink__input" />
-          <button
-            v-if="ctx.showClear"
-            type="button"
-            class="hl-input-ink__clear"
-            aria-label="清除"
-            @mousedown.prevent="ctx.onClear()"
-          >×</button>
-          <span class="hl-input-ink__line" aria-hidden="true"></span>
-        </span>
-      </template>
-    </KInput>
-    <span style="color: var(--k-color-text-tertiary); font-size: 13px">v-model =「{{ name }}」</span>
-
-    <KInput v-model="kw" placeholder="搜索" clearable :render="renderSearch" />
-  </div>
-</template>
 
 <!-- render prop 闭包产物在子组件作用域渲染，样式须全局（hl- 专属命名）或内联 -->
 <style>

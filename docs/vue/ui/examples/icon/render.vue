@@ -1,3 +1,16 @@
+<template>
+  <div style="display: flex; gap: 16px; align-items: center">
+    <!-- #render 插槽通道：label→role=img 语义继承，盒体视觉自绘 -->
+    <KIcon :size="20" label="设置">
+      <template #render="ctx">
+        <span v-bind="ctx.rootAttrs" class="hl-icon-box"><Gear /></span>
+      </template>
+    </KIcon>
+
+    <KIcon :size="20" label="加载中" spin :render="renderBadge" />
+  </div>
+</template>
+
 <script setup lang="ts">
 import { h } from 'vue'
 import KIcon from 'kit/vue/ui/components/Icon/Icon.vue'
@@ -16,19 +29,6 @@ const renderBadge = (ctx: KIconRenderScope) =>
     h(Gear),
   ])
 </script>
-
-<template>
-  <div style="display: flex; gap: 16px; align-items: center">
-    <!-- #render 插槽通道：label→role=img 语义继承，盒体视觉自绘 -->
-    <KIcon :size="20" label="设置">
-      <template #render="ctx">
-        <span v-bind="ctx.rootAttrs" class="hl-icon-box"><Gear /></span>
-      </template>
-    </KIcon>
-
-    <KIcon :size="20" label="加载中" spin :render="renderBadge" />
-  </div>
-</template>
 
 <!-- render prop 闭包产物在子组件作用域渲染，样式须全局（hl- 专属命名）或内联 -->
 <style>

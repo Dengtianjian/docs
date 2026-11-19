@@ -1,3 +1,22 @@
+<template>
+  <div>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap">
+      <img
+        v-for="(it, i) in items"
+        :key="it.name"
+        :src="it.src"
+        :alt="it.alt"
+        style="width: 96px; height: 64px; object-fit: cover; border-radius: 8px; cursor: pointer"
+        @click="show(i)"
+      />
+    </div>
+    <p style="margin: 8px 0 0; font-size: 12px; color: #888">
+      点击缩略图从对应张打开；←/→ 切换（带滑动动画）、+/− 缩放、0 复位、Esc 关闭；工具栏可旋转/翻转，点暗色空白处关闭。状态：{{ open ? '打开中' : '已关闭' }}，当前第 {{ current + 1 }} 张。
+    </p>
+    <KPreview v-model:open="open" v-model:current="current" :items="items" />
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import KPreview from 'kit/vue/ui/components/Preview/Preview.vue'
@@ -21,22 +40,3 @@ function show(index: number) {
   open.value = true
 }
 </script>
-
-<template>
-  <div>
-    <div style="display: flex; gap: 8px; flex-wrap: wrap">
-      <img
-        v-for="(it, i) in items"
-        :key="it.name"
-        :src="it.src"
-        :alt="it.alt"
-        style="width: 96px; height: 64px; object-fit: cover; border-radius: 8px; cursor: pointer"
-        @click="show(i)"
-      />
-    </div>
-    <p style="margin: 8px 0 0; font-size: 12px; color: #888">
-      点击缩略图从对应张打开；←/→ 切换（带滑动动画）、+/− 缩放、0 复位、Esc 关闭；工具栏可旋转/翻转，点暗色空白处关闭。状态：{{ open ? '打开中' : '已关闭' }}，当前第 {{ current + 1 }} 张。
-    </p>
-    <KPreview v-model:open="open" v-model:current="current" :items="items" />
-  </div>
-</template>

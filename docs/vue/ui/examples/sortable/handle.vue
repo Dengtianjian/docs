@@ -1,20 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KSortable from 'kit/vue/ui/components/Sortable/Sortable.vue'
-
-interface RowItem {
-  id: number
-  name: string
-  url: string
-}
-
-const rows = ref<RowItem[]>([
-  { id: 1, name: '工作台', url: '#workbench' },
-  { id: 2, name: '订单中心', url: '#orders' },
-  { id: 3, name: '客户档案', url: '#customers' },
-])
-</script>
-
 <template>
   <div style="max-width: 420px">
     <KSortable v-model="rows" item-key="id">
@@ -31,6 +14,23 @@ const rows = ref<RowItem[]>([
     <p class="hint">提供 #handle 后只有把手能起拖，行内链接/按钮不再被拖动拦截。</p>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KSortable from 'kit/vue/ui/components/Sortable/Sortable.vue'
+
+interface RowItem {
+  id: number
+  name: string
+  url: string
+}
+
+const rows = ref<RowItem[]>([
+  { id: 1, name: '工作台', url: '#workbench' },
+  { id: 2, name: '订单中心', url: '#orders' },
+  { id: 3, name: '客户档案', url: '#customers' },
+])
+</script>
 
 <style scoped>
 .grip {

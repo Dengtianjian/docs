@@ -1,24 +1,3 @@
-<script setup lang="ts">
-import { h, ref } from 'vue'
-import KSpin from 'kit/vue/ui/components/Spin/Spin.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import type { KSpinRenderScope } from 'kit/vue/ui/components/Spin/Spin.vue'
-
-const loading = ref(true)
-
-// render prop 通道：delay 收敛后的 spinning 态继承，三点脉冲视觉自绘
-const renderPulse = (ctx: KSpinRenderScope) =>
-  h('span', { ...ctx.rootAttrs, class: 'hl-spin-pulse', 'aria-busy': ctx.spinning || undefined }, [
-    ctx.spinning
-      ? h('span', { ...ctx.indicatorAttrs, class: 'hl-spin-pulse__dots' }, [
-          h('i', { class: 'hl-spin-pulse__dot' }),
-          h('i', { class: 'hl-spin-pulse__dot' }),
-          h('i', { class: 'hl-spin-pulse__dot' }),
-        ])
-      : h('span', { class: 'hl-spin-pulse__done' }, '就绪'),
-  ])
-</script>
-
 <template>
   <div style="display: flex; flex-direction: column; gap: 16px; max-width: 520px">
     <KButton size="sm" @click="loading = !loading">{{ loading ? '停止加载' : '开始加载' }}</KButton>
@@ -43,6 +22,27 @@ const renderPulse = (ctx: KSpinRenderScope) =>
     <KSpin :spinning="loading" :render="renderPulse" />
   </div>
 </template>
+
+<script setup lang="ts">
+import { h, ref } from 'vue'
+import KSpin from 'kit/vue/ui/components/Spin/Spin.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import type { KSpinRenderScope } from 'kit/vue/ui/components/Spin/Spin.vue'
+
+const loading = ref(true)
+
+// render prop 通道：delay 收敛后的 spinning 态继承，三点脉冲视觉自绘
+const renderPulse = (ctx: KSpinRenderScope) =>
+  h('span', { ...ctx.rootAttrs, class: 'hl-spin-pulse', 'aria-busy': ctx.spinning || undefined }, [
+    ctx.spinning
+      ? h('span', { ...ctx.indicatorAttrs, class: 'hl-spin-pulse__dots' }, [
+          h('i', { class: 'hl-spin-pulse__dot' }),
+          h('i', { class: 'hl-spin-pulse__dot' }),
+          h('i', { class: 'hl-spin-pulse__dot' }),
+        ])
+      : h('span', { class: 'hl-spin-pulse__done' }, '就绪'),
+  ])
+</script>
 
 <!-- render prop 闭包产物在子组件作用域渲染，样式须全局（hl- 专属命名）或内联 -->
 <style>

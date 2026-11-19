@@ -1,18 +1,3 @@
-<script setup lang="ts">
-import { h } from 'vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-import type { KSpaceRenderScope } from 'kit/vue/ui/components/Space/Space.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-
-// render prop 通道：间距变量随 rootAttrs 带走，display/方向自绘；children 已拍平
-const renderRow = (ctx: KSpaceRenderScope) =>
-  h(
-    'div',
-    { ...ctx.rootAttrs, class: 'hl-space-row' },
-    ctx.children.map((child, i) => h('span', { key: i, class: 'hl-space-row__cell' }, [child])),
-  )
-</script>
-
 <template>
   <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start">
     <!-- #render 插槽通道：separator 子项包装逻辑换成自绘菱形分隔，间距仍走 size 解析 -->
@@ -37,6 +22,21 @@ const renderRow = (ctx: KSpaceRenderScope) =>
     </KSpace>
   </div>
 </template>
+
+<script setup lang="ts">
+import { h } from 'vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import type { KSpaceRenderScope } from 'kit/vue/ui/components/Space/Space.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+
+// render prop 通道：间距变量随 rootAttrs 带走，display/方向自绘；children 已拍平
+const renderRow = (ctx: KSpaceRenderScope) =>
+  h(
+    'div',
+    { ...ctx.rootAttrs, class: 'hl-space-row' },
+    ctx.children.map((child, i) => h('span', { key: i, class: 'hl-space-row__cell' }, [child])),
+  )
+</script>
 
 <!-- render prop 闭包产物在子组件作用域渲染，样式须全局（hl- 专属命名）或内联 -->
 <style>

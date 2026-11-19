@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import KLink from 'kit/vue/ui/components/Link/Link.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-</script>
-
 <template>
   <KSpace wrap align="center">
     <KLink href="#api">primary（缺省）</KLink>
@@ -13,3 +8,8 @@ import KSpace from 'kit/vue/ui/components/Space/Space.vue'
     <KLink disabled>disabled（渲染为 span）</KLink>
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import KLink from 'kit/vue/ui/components/Link/Link.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+</script>

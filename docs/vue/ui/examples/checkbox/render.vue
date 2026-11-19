@@ -1,21 +1,3 @@
-<script setup lang="ts">
-import { h, ref } from 'vue'
-import KCheckbox from 'kit/vue/ui/components/Checkbox/Checkbox.vue'
-import KCheckboxGroup from 'kit/vue/ui/components/Checkbox/CheckboxGroup.vue'
-import type { KCheckboxRenderScope } from 'kit/vue/ui/components/Checkbox/Checkbox.vue'
-
-const solo = ref(true)
-const picked = ref<(string | number)[]>(['vue'])
-
-// render prop 通道：原生 input 语义包 + change 逻辑包继承，卡片视觉自绘
-const renderCard = (ctx: KCheckboxRenderScope) =>
-  h('label', { ...ctx.rootAttrs, class: ['hl-check-card', ctx.checked && 'hl-check-card--on', ctx.disabled && 'hl-check-card--off'] }, [
-    h('input', { ...ctx.inputAttrs, class: 'hl-check-card__input', onChange: ctx.inputOn.change }),
-    h('span', { class: 'hl-check-card__mark', 'aria-hidden': 'true' }, ctx.checked ? '✓' : ''),
-    h('span', null, ['组件库', h('small', null, 'kit / vue / ui')]),
-  ])
-</script>
-
 <template>
   <div style="display: flex; flex-direction: column; gap: 16px">
     <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap">
@@ -55,6 +37,24 @@ const renderCard = (ctx: KCheckboxRenderScope) =>
     </KCheckboxGroup>
   </div>
 </template>
+
+<script setup lang="ts">
+import { h, ref } from 'vue'
+import KCheckbox from 'kit/vue/ui/components/Checkbox/Checkbox.vue'
+import KCheckboxGroup from 'kit/vue/ui/components/Checkbox/CheckboxGroup.vue'
+import type { KCheckboxRenderScope } from 'kit/vue/ui/components/Checkbox/Checkbox.vue'
+
+const solo = ref(true)
+const picked = ref<(string | number)[]>(['vue'])
+
+// render prop 通道：原生 input 语义包 + change 逻辑包继承，卡片视觉自绘
+const renderCard = (ctx: KCheckboxRenderScope) =>
+  h('label', { ...ctx.rootAttrs, class: ['hl-check-card', ctx.checked && 'hl-check-card--on', ctx.disabled && 'hl-check-card--off'] }, [
+    h('input', { ...ctx.inputAttrs, class: 'hl-check-card__input', onChange: ctx.inputOn.change }),
+    h('span', { class: 'hl-check-card__mark', 'aria-hidden': 'true' }, ctx.checked ? '✓' : ''),
+    h('span', null, ['组件库', h('small', null, 'kit / vue / ui')]),
+  ])
+</script>
 
 <!-- render prop 闭包产物在子组件作用域渲染，样式须全局（hl- 专属命名）或内联 -->
 <style>

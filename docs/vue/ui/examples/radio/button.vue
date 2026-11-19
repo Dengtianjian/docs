@@ -1,10 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
-
-const size = ref<string | number>('middle')
-</script>
-
 <template>
   <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start">
     <KRadioGroup
@@ -19,3 +12,10 @@ const size = ref<string | number>('middle')
     <div>当前值：{{ size }}</div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
+
+const size = ref<string | number>('middle')
+</script>

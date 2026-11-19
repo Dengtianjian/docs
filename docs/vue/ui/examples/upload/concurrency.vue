@@ -1,3 +1,12 @@
+<template>
+  <div style="max-width: 460px">
+    <KUpload v-model:file-list="files" :upload="upload" :concurrency="2" multiple />
+    <p style="margin: 8px 0 0; font-size: 12px; color: #888">
+      并发上限 2：超出部分排队，前一个完成后自动补位。当前执行 {{ active }} / 峰值 {{ peak }}。
+    </p>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import KUpload from 'kit/vue/ui/components/Upload/Upload.vue'
@@ -39,12 +48,3 @@ const upload: KUploadUpload = (ctx) => {
   }
 }
 </script>
-
-<template>
-  <div style="max-width: 460px">
-    <KUpload v-model:file-list="files" :upload="upload" :concurrency="2" multiple />
-    <p style="margin: 8px 0 0; font-size: 12px; color: #888">
-      并发上限 2：超出部分排队，前一个完成后自动补位。当前执行 {{ active }} / 峰值 {{ peak }}。
-    </p>
-  </div>
-</template>

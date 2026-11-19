@@ -1,10 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
-
-const val = ref<number | null>(null)
-</script>
-
 <template>
   <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
     <!-- 整件自绘：下划线触发器 + 深色紧凑面板；开合/键盘/下钻/点外关闭/定位翻转全由绑定包继承 -->
@@ -54,6 +47,13 @@ const val = ref<number | null>(null)
     <span style="font-size: 13px; color: var(--k-color-text-secondary)">时间戳：{{ val }}</span>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
+
+const val = ref<number | null>(null)
+</script>
 
 <style scoped>
 .hl-dp {

@@ -1,3 +1,7 @@
+<template>
+  <KDateRangePicker v-model="range" :presets="presets" clearable style="width: 100%; max-width: 420px" />
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import dayjs from 'dayjs'
@@ -16,7 +20,3 @@ const presets = [
   { label: '未来 30 天', value: [start, dayjs().add(29, 'day').endOf('day').valueOf()] },
 ]
 </script>
-
-<template>
-  <KDateRangePicker v-model="range" :presets="presets" clearable style="width: 100%; max-width: 420px" />
-</template>

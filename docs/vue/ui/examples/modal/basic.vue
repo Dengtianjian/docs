@@ -1,14 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KModal from 'kit/vue/ui/components/Modal/Modal.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KInput from 'kit/vue/ui/components/Input/Input.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-
-const centerOpen = ref(false)
-const done = ref('未提交')
-</script>
-
 <template>
   <KSpace size="lg" wrap align="center">
     <KModal title="编辑名称" @close="done = '已关闭（X / Esc / 蒙层）'">
@@ -29,3 +18,14 @@ const done = ref('未提交')
     <span style="color: var(--k-color-text-secondary)">{{ done }}</span>
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KModal from 'kit/vue/ui/components/Modal/Modal.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KInput from 'kit/vue/ui/components/Input/Input.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+
+const centerOpen = ref(false)
+const done = ref('未提交')
+</script>

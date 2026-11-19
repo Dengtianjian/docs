@@ -1,3 +1,12 @@
+<template>
+  <div class="k-doc-placements">
+    <KTooltip v-for="p in placements" :key="p" :placement="p">
+      <template #trigger><KButton size="sm">{{ p }}</KButton></template>
+      = {{ p }}
+    </KTooltip>
+  </div>
+</template>
+
 <script setup lang="ts">
 import KTooltip from 'kit/vue/ui/components/Tooltip/Tooltip.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
@@ -9,15 +18,6 @@ const placements = [
   'bottomLeft', 'bottom', 'bottomRight',
 ] as const
 </script>
-
-<template>
-  <div class="k-doc-placements">
-    <KTooltip v-for="p in placements" :key="p" :placement="p">
-      <template #trigger><KButton size="sm">{{ p }}</KButton></template>
-      = {{ p }}
-    </KTooltip>
-  </div>
-</template>
 
 <style scoped>
 .k-doc-placements :deep(.k-button) {

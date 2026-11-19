@@ -1,13 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KCheckbox from 'kit/vue/ui/components/Checkbox/Checkbox.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-
-const a = ref(true)
-const b = ref(false)
-const c = ref(false)
-</script>
-
 <template>
   <KSpace size="lg" direction="vertical">
     <KSpace :size="24">
@@ -22,3 +12,13 @@ const c = ref(false)
     </KSpace>
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KCheckbox from 'kit/vue/ui/components/Checkbox/Checkbox.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+
+const a = ref(true)
+const b = ref(false)
+const c = ref(false)
+</script>

@@ -1,23 +1,3 @@
-<script setup lang="ts">
-import { h, ref } from 'vue'
-import KNotification from 'kit/vue/ui/components/Notification/Notification.vue'
-import type { KNotificationRenderScope } from 'kit/vue/ui/components/Notification/Notification.vue'
-import { onProps } from 'kit/vue/ui/composables/useCustomRender'
-
-const clicked = ref('')
-const snackMsg = ref('')
-const closed = ref(false)
-
-// render prop 通道：close/click 事件逻辑继承，极简 snackbar 视觉自绘
-const renderSnack = (ctx: KNotificationRenderScope) =>
-  h('div', { ...ctx.rootAttrs, ...onProps(ctx.rootOn), class: 'hl-ntf-snack' }, [
-    h('span', { class: 'hl-ntf-snack__text' }, ctx.title as string),
-    ctx.closable
-      ? h('button', { type: 'button', class: 'hl-ntf-snack__close', 'aria-label': '关闭', onClick: (e: MouseEvent) => { e.stopPropagation(); ctx.onClose(e) } }, '收起')
-      : null,
-  ])
-</script>
-
 <template>
   <div style="display: flex; flex-direction: column; gap: 14px; max-width: 460px">
     <!-- #render 插槽通道：自绘 toast 卡，type 驱动强调色，rootOn/onClose 继承 -->
@@ -47,6 +27,26 @@ const renderSnack = (ctx: KNotificationRenderScope) =>
     <span style="color: var(--k-color-text-tertiary); font-size: 13px">{{ snackMsg }}</span>
   </div>
 </template>
+
+<script setup lang="ts">
+import { h, ref } from 'vue'
+import KNotification from 'kit/vue/ui/components/Notification/Notification.vue'
+import type { KNotificationRenderScope } from 'kit/vue/ui/components/Notification/Notification.vue'
+import { onProps } from 'kit/vue/ui/composables/useCustomRender'
+
+const clicked = ref('')
+const snackMsg = ref('')
+const closed = ref(false)
+
+// render prop 通道：close/click 事件逻辑继承，极简 snackbar 视觉自绘
+const renderSnack = (ctx: KNotificationRenderScope) =>
+  h('div', { ...ctx.rootAttrs, ...onProps(ctx.rootOn), class: 'hl-ntf-snack' }, [
+    h('span', { class: 'hl-ntf-snack__text' }, ctx.title as string),
+    ctx.closable
+      ? h('button', { type: 'button', class: 'hl-ntf-snack__close', 'aria-label': '关闭', onClick: (e: MouseEvent) => { e.stopPropagation(); ctx.onClose(e) } }, '收起')
+      : null,
+  ])
+</script>
 
 <!-- render prop 闭包产物在子组件作用域渲染，样式须全局（hl- 专属命名）或内联 -->
 <style>

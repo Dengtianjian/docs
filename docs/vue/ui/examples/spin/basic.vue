@@ -1,17 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KSpin from 'kit/vue/ui/components/Spin/Spin.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-
-const contentLoading = ref(false)
-
-function reload() {
-  contentLoading.value = true
-  setTimeout(() => (contentLoading.value = false), 2000)
-}
-</script>
-
 <template>
   <KSpace direction="vertical" size="lg" align="start">
     <KSpace size="xl" align="center">
@@ -45,3 +31,17 @@ function reload() {
     </div>
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KSpin from 'kit/vue/ui/components/Spin/Spin.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+
+const contentLoading = ref(false)
+
+function reload() {
+  contentLoading.value = true
+  setTimeout(() => (contentLoading.value = false), 2000)
+}
+</script>

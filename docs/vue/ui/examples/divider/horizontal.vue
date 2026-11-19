@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import KDivider from 'kit/vue/ui/components/Divider/Divider.vue'
-import KText from 'kit/vue/ui/components/Typography/Text.vue'
-</script>
-
 <template>
   <div>
     <p>第一段内容</p>
@@ -14,3 +9,8 @@ import KText from 'kit/vue/ui/components/Typography/Text.vue'
     <KDivider orientation="end" plain>右侧常规字重</KDivider>
   </div>
 </template>
+
+<script setup lang="ts">
+import KDivider from 'kit/vue/ui/components/Divider/Divider.vue'
+import KText from 'kit/vue/ui/components/Typography/Text.vue'
+</script>

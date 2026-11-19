@@ -1,11 +1,3 @@
-<script setup lang="ts">
-import { useResponsiveValue, getSharedBreakpoint } from 'kit/vue/ui'
-
-const breakpoint = getSharedBreakpoint().current
-const width = useResponsiveValue<number>(() => ({ xs: 140, sm: 180, md: 240, lg: 300, xl: 340 }))
-const padding = useResponsiveValue<string>(() => 'xs:8px sm:12px md:16px lg:24px')
-</script>
-
 <template>
   <div class="responsive-composable">
     <div
@@ -22,6 +14,14 @@ const padding = useResponsiveValue<string>(() => 'xs:8px sm:12px md:16px lg:24px
     </p>
   </div>
 </template>
+
+<script setup lang="ts">
+import { useResponsiveValue, getSharedBreakpoint } from 'kit/vue/ui'
+
+const breakpoint = getSharedBreakpoint().current
+const width = useResponsiveValue<number>(() => ({ xs: 140, sm: 180, md: 240, lg: 300, xl: 340 }))
+const padding = useResponsiveValue<string>(() => 'xs:8px sm:12px md:16px lg:24px')
+</script>
 
 <style scoped>
 .responsive-composable { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }

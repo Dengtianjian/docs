@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import KDivider from 'kit/vue/ui/components/Divider/Divider.vue'
-</script>
-
 <template>
   <span>
     链接一
@@ -11,3 +7,7 @@ import KDivider from 'kit/vue/ui/components/Divider/Divider.vue'
     链接三
   </span>
 </template>
+
+<script setup lang="ts">
+import KDivider from 'kit/vue/ui/components/Divider/Divider.vue'
+</script>

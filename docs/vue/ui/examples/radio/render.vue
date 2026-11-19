@@ -1,21 +1,3 @@
-<script setup lang="ts">
-import { h, ref } from 'vue'
-import KRadio from 'kit/vue/ui/components/Radio/Radio.vue'
-import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
-import type { KRadioRenderScope } from 'kit/vue/ui/components/Radio/Radio.vue'
-
-const plan = ref('pro')
-const solo = ref<string | number | undefined>('b')
-
-// render prop 通道：原生 radio 语义包 + change 逻辑包继承，卡片视觉自绘
-const renderTile = (ctx: KRadioRenderScope) =>
-  h('label', { ...ctx.rootAttrs, class: ['hl-radio-tile', ctx.checked && 'hl-radio-tile--on'] }, [
-    h('input', { ...ctx.inputAttrs, class: 'hl-radio-tile__input', onChange: ctx.inputOn.change }),
-    h('span', { class: 'hl-radio-tile__ring', 'aria-hidden': 'true' }),
-    h('span', null, ctx.value === 'a' ? '方案 A' : '方案 B'),
-  ])
-</script>
-
 <template>
   <div style="display: flex; flex-direction: column; gap: 16px">
     <!-- 组 headless：role=radiogroup 语义 + select/value 逻辑直消费 -->
@@ -46,6 +28,24 @@ const renderTile = (ctx: KRadioRenderScope) =>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { h, ref } from 'vue'
+import KRadio from 'kit/vue/ui/components/Radio/Radio.vue'
+import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
+import type { KRadioRenderScope } from 'kit/vue/ui/components/Radio/Radio.vue'
+
+const plan = ref('pro')
+const solo = ref<string | number | undefined>('b')
+
+// render prop 通道：原生 radio 语义包 + change 逻辑包继承，卡片视觉自绘
+const renderTile = (ctx: KRadioRenderScope) =>
+  h('label', { ...ctx.rootAttrs, class: ['hl-radio-tile', ctx.checked && 'hl-radio-tile--on'] }, [
+    h('input', { ...ctx.inputAttrs, class: 'hl-radio-tile__input', onChange: ctx.inputOn.change }),
+    h('span', { class: 'hl-radio-tile__ring', 'aria-hidden': 'true' }),
+    h('span', null, ctx.value === 'a' ? '方案 A' : '方案 B'),
+  ])
+</script>
 
 <!-- render prop 闭包产物在子组件作用域渲染，样式须全局（hl- 专属命名）或内联 -->
 <style>

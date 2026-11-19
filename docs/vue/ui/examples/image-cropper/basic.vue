@@ -1,3 +1,12 @@
+<template>
+  <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start">
+    <KButton type="primary" @click="input?.click()">选择图片并裁剪</KButton>
+    <input ref="input" type="file" accept="image/*" hidden @change="onPick" />
+    <img v-if="result" :src="result" alt="裁剪结果" style="max-width: 260px; border-radius: 8px" />
+    <KImageCropper v-if="file" :file="file" @confirm="onConfirm" @cancel="onCancel" />
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
@@ -25,12 +34,3 @@ function onConfirm(cropped: File) {
   ;(window as any).__cropped = { name: cropped.name, size: cropped.size, type: cropped.type }
 }
 </script>
-
-<template>
-  <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start">
-    <KButton type="primary" @click="input?.click()">选择图片并裁剪</KButton>
-    <input ref="input" type="file" accept="image/*" hidden @change="onPick" />
-    <img v-if="result" :src="result" alt="裁剪结果" style="max-width: 260px; border-radius: 8px" />
-    <KImageCropper v-if="file" :file="file" @confirm="onConfirm" @cancel="onCancel" />
-  </div>
-</template>

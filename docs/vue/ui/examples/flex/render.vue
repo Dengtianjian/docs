@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-</script>
-
 <template>
   <!-- gap 解析逻辑随 rootAttrs 继承；justify/align 是状态，视觉自绘消费 -->
   <KFlex gap="lg" justify="between" align="center">
@@ -18,6 +14,10 @@ import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
     </template>
   </KFlex>
 </template>
+
+<script setup lang="ts">
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+</script>
 
 <style scoped>
 .hl-flex-band {

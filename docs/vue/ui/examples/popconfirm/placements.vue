@@ -1,3 +1,11 @@
+<template>
+  <div class="k-doc-placements">
+    <KPopconfirm v-for="p in placements" :key="p" :placement="p" title="确认删除？" :description="`= ${p}`">
+      <template #trigger><KButton size="sm">{{ p }}</KButton></template>
+    </KPopconfirm>
+  </div>
+</template>
+
 <script setup lang="ts">
 import KPopconfirm from 'kit/vue/ui/components/Popconfirm/Popconfirm.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
@@ -9,14 +17,6 @@ const placements = [
   'bottomLeft', 'bottom', 'bottomRight',
 ] as const
 </script>
-
-<template>
-  <div class="k-doc-placements">
-    <KPopconfirm v-for="p in placements" :key="p" :placement="p" title="确认删除？" :description="`= ${p}`">
-      <template #trigger><KButton size="sm">{{ p }}</KButton></template>
-    </KPopconfirm>
-  </div>
-</template>
 
 <style scoped>
 .k-doc-placements :deep(.k-button) {

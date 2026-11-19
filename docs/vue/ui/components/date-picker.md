@@ -19,7 +19,7 @@
 
 <Demo path="date-picker/basic" title="基础使用" desc="值为毫秒时间戳；clearable、disabled、size、variant、status 均可组合使用。" />
 
-<Demo path="date-picker/pickers" title="五种 picker" desc="首批支持 date、week、month、quarter、year 单选；每种模式的 v-model 仍是周期起点时间戳。" />
+<Demo path="date-picker/pickers" title="五种 picker" desc="支持 date、week、month、quarter、year 单选；每种模式的 v-model 仍是周期起点时间戳。" />
 
 <Demo path="date-picker/limit" title="范围与禁用" desc="min/max 按 picker 粒度比较；disabledDate 接收当前面板粒度的周期起点；format 只改变回显。" />
 

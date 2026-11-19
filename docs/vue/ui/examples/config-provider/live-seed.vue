@@ -1,19 +1,3 @@
-<script setup lang="ts">
-import { computed, ref } from 'vue'
-import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KLink from 'kit/vue/ui/components/Link/Link.vue'
-import KDivider from 'kit/vue/ui/components/Divider/Divider.vue'
-
-const primary = ref('#722ed1')
-const radius = ref(6)
-
-// theme 响应式：改一个 seed → Provider 重算差量 <style>，子树全量联动（无 JS 派生计算）
-const theme = computed(() => ({
-  seed: { colorPrimary: primary.value, borderRadius: radius.value },
-}))
-</script>
-
 <template>
   <KConfigProvider scoped :theme="theme">
     <div class="panel">
@@ -37,6 +21,22 @@ const theme = computed(() => ({
     </div>
   </KConfigProvider>
 </template>
+
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KLink from 'kit/vue/ui/components/Link/Link.vue'
+import KDivider from 'kit/vue/ui/components/Divider/Divider.vue'
+
+const primary = ref('#722ed1')
+const radius = ref(6)
+
+// theme 响应式：改一个 seed → Provider 重算差量 <style>，子树全量联动（无 JS 派生计算）
+const theme = computed(() => ({
+  seed: { colorPrimary: primary.value, borderRadius: radius.value },
+}))
+</script>
 
 <style scoped>
 .panel {

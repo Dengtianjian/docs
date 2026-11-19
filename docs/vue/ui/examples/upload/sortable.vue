@@ -1,3 +1,20 @@
+<template>
+  <div style="max-width: 440px">
+    <KUpload
+      v-model:file-list="files"
+      :upload="upload"
+      drag
+      sortable
+      multiple
+      @change="onChange"
+      @reorder="onReorder"
+    />
+    <p style="margin: 8px 0 0; font-size: 12px; color: #888">
+      sortable 开启后列表项可拖拽换顺序（行内上/下半区决定插在目标前/后）；与拖文件进根区域互不干扰。{{ log }}
+    </p>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import KUpload from 'kit/vue/ui/components/Upload/Upload.vue'
@@ -15,20 +32,3 @@ function onReorder(_list: KUploadFileItem[], info: { file: KUploadFileItem; from
   log.value = `reorder 事件：${info.file.name} 第 ${info.from + 1} 位 → 第 ${info.to + 1} 位（${info.position}）`
 }
 </script>
-
-<template>
-  <div style="max-width: 440px">
-    <KUpload
-      v-model:file-list="files"
-      :upload="upload"
-      drag
-      sortable
-      multiple
-      @change="onChange"
-      @reorder="onReorder"
-    />
-    <p style="margin: 8px 0 0; font-size: 12px; color: #888">
-      sortable 开启后列表项可拖拽换顺序（行内上/下半区决定插在目标前/后）；与拖文件进根区域互不干扰。{{ log }}
-    </p>
-  </div>
-</template>

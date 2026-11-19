@@ -1,3 +1,28 @@
+<template>
+  <KSpace direction="vertical" size="lg">
+    <KSpace size="lg" wrap align="center">
+      <span style="color: var(--k-color-text-secondary)">弹出位置</span>
+      <KRadioGroup v-model="placement" shape="button">
+        <KRadio value="top">上中</KRadio>
+        <KRadio value="topLeft">左上</KRadio>
+        <KRadio value="topRight">右上</KRadio>
+        <KRadio value="bottom">下中</KRadio>
+        <KRadio value="bottomLeft">左下</KRadio>
+        <KRadio value="bottomRight">右下</KRadio>
+      </KRadioGroup>
+    </KSpace>
+    <KSpace size="lg" wrap>
+      <KButton type="primary" @click="openWithActions"
+        >带操作区（actions）</KButton
+      >
+      <KButton @click="openTypes">success + error（常驻）</KButton>
+      <KButton variant="text" type="link" @click="notification!.destroyAll()"
+        >清空</KButton
+      >
+    </KSpace>
+  </KSpace>
+</template>
+
 <script setup lang="ts">
 import { h, ref } from "vue";
 import { useKApp } from "kit/vue/ui/composables/useKApp";
@@ -33,28 +58,3 @@ function openTypes() {
   });
 }
 </script>
-
-<template>
-  <KSpace direction="vertical" size="lg">
-    <KSpace size="lg" wrap align="center">
-      <span style="color: var(--k-color-text-secondary)">弹出位置</span>
-      <KRadioGroup v-model="placement" shape="button">
-        <KRadio value="top">上中</KRadio>
-        <KRadio value="topLeft">左上</KRadio>
-        <KRadio value="topRight">右上</KRadio>
-        <KRadio value="bottom">下中</KRadio>
-        <KRadio value="bottomLeft">左下</KRadio>
-        <KRadio value="bottomRight">右下</KRadio>
-      </KRadioGroup>
-    </KSpace>
-    <KSpace size="lg" wrap>
-      <KButton type="primary" @click="openWithActions"
-        >带操作区（actions）</KButton
-      >
-      <KButton @click="openTypes">success + error（常驻）</KButton>
-      <KButton variant="text" type="link" @click="notification!.destroyAll()"
-        >清空</KButton
-      >
-    </KSpace>
-  </KSpace>
-</template>

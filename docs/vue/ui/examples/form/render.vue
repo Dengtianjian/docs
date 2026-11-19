@@ -1,28 +1,3 @@
-<script setup lang="ts">
-import { reactive, ref } from 'vue'
-import KForm from 'kit/vue/ui/components/Form/Form.vue'
-import KFormItem from 'kit/vue/ui/components/Form/FormItem.vue'
-import KInput from 'kit/vue/ui/components/Input/Input.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-
-const model = reactive({ title: '', email: '' })
-const rules = {
-  title: [{ required: true, message: '请填写标题' }],
-  email: [
-    { required: true, message: '请填写邮箱' },
-    { type: 'email', message: '邮箱格式不正确', trigger: 'blur' },
-  ],
-}
-const verdict = ref('')
-
-function onFinish() {
-  verdict.value = '校验通过 ✓'
-}
-function onFail(e: { errors: unknown[] }) {
-  verdict.value = `未通过：${e.errors.length} 处错误`
-}
-</script>
-
 <template>
   <!-- Form / FormItem 双层 headless：注册/校验/控件注入照跑，表单视觉整件自绘 -->
   <KForm :model="model" :rules="rules" @finish="onFinish" @finish-failed="onFail">
@@ -68,6 +43,31 @@ function onFail(e: { errors: unknown[] }) {
     </template>
   </KForm>
 </template>
+
+<script setup lang="ts">
+import { reactive, ref } from 'vue'
+import KForm from 'kit/vue/ui/components/Form/Form.vue'
+import KFormItem from 'kit/vue/ui/components/Form/FormItem.vue'
+import KInput from 'kit/vue/ui/components/Input/Input.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+
+const model = reactive({ title: '', email: '' })
+const rules = {
+  title: [{ required: true, message: '请填写标题' }],
+  email: [
+    { required: true, message: '请填写邮箱' },
+    { type: 'email', message: '邮箱格式不正确', trigger: 'blur' },
+  ],
+}
+const verdict = ref('')
+
+function onFinish() {
+  verdict.value = '校验通过 ✓'
+}
+function onFail(e: { errors: unknown[] }) {
+  verdict.value = `未通过：${e.errors.length} 处错误`
+}
+</script>
 
 <style scoped>
 .hl-form-card {

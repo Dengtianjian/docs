@@ -1,11 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-
-const dark = ref(false)
-</script>
-
 <template>
   <p class="mp-hint">按住不放对比四种按压形态（移动端决策预览，非组件能力）。波纹关闭走 <code>:wave="false"</code>。</p>
   <KSpace wrap style="margin-bottom: 16px">
@@ -21,6 +13,14 @@ const dark = ref(false)
     <KButton :wave="false" class="mp-o">D opacity</KButton>
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+
+const dark = ref(false)
+</script>
 
 <style scoped>
 .mp-hint {

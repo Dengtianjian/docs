@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-</script>
-
 <template>
   <div style="display: flex; gap: 48px; align-items: flex-start">
     <KSpace direction="vertical">
@@ -16,3 +11,8 @@ import KButton from 'kit/vue/ui/components/Button/Button.vue'
     </KSpace>
   </div>
 </template>
+
+<script setup lang="ts">
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+</script>

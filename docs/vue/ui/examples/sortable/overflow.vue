@@ -1,22 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KSortable from 'kit/vue/ui/components/Sortable/Sortable.vue'
-
-interface Task {
-  id: number
-  title: string
-  desc: string
-}
-
-const tasks = ref<Task[]>(
-  Array.from({ length: 8 }, (_, i) => ({
-    id: i + 1,
-    title: `事项 ${i + 1}`,
-    desc: i % 3 === 0 ? '一行说明，用来撑出不同高度' : '两行说明：容器定高后超出部分可滚动，拖到上下边缘会自动滚动。',
-  })),
-)
-</script>
-
 <template>
   <div style="max-width: 420px">
     <KSortable
@@ -36,6 +17,25 @@ const tasks = ref<Task[]>(
     </p>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KSortable from 'kit/vue/ui/components/Sortable/Sortable.vue'
+
+interface Task {
+  id: number
+  title: string
+  desc: string
+}
+
+const tasks = ref<Task[]>(
+  Array.from({ length: 8 }, (_, i) => ({
+    id: i + 1,
+    title: `事项 ${i + 1}`,
+    desc: i % 3 === 0 ? '一行说明，用来撑出不同高度' : '两行说明：容器定高后超出部分可滚动，拖到上下边缘会自动滚动。',
+  })),
+)
+</script>
 
 <style scoped>
 .task {

@@ -1,3 +1,11 @@
+<template>
+  <KControlGroup vertical style="width: 320px">
+    <KInput v-model="name" placeholder="名称" />
+    <KSelect v-model="role" :options="roles" />
+    <KButton type="primary">保存</KButton>
+  </KControlGroup>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import KControlGroup from 'kit/vue/ui/components/ControlGroup/ControlGroup.vue'
@@ -13,11 +21,3 @@ const roles = [
   { label: '产品', value: 'pm' },
 ]
 </script>
-
-<template>
-  <KControlGroup vertical style="width: 320px">
-    <KInput v-model="name" placeholder="名称" />
-    <KSelect v-model="role" :options="roles" />
-    <KButton type="primary">保存</KButton>
-  </KControlGroup>
-</template>

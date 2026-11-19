@@ -1,10 +1,3 @@
-<script setup lang="ts">
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-
-const variants = ['outlined', 'filled', 'tonal', 'text', 'quiet', 'dashed', 'ghost', 'plain', 'soft', 'border'] as const
-</script>
-
 <template>
   <div style="display: flex; flex-direction: column; gap: 12px">
     <KSpace wrap>
@@ -18,3 +11,10 @@ const variants = ['outlined', 'filled', 'tonal', 'text', 'quiet', 'dashed', 'gho
     </KSpace>
   </div>
 </template>
+
+<script setup lang="ts">
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+
+const variants = ['outlined', 'filled', 'tonal', 'text', 'quiet', 'dashed', 'ghost', 'plain', 'soft', 'border'] as const
+</script>

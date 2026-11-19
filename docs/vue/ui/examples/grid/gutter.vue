@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import KRow from 'kit/vue/ui/components/Grid/Row.vue'
-import KCol from 'kit/vue/ui/components/Grid/Col.vue'
-</script>
-
 <template>
   <div class="grid-demo">
     <!-- 水平间距 -->
@@ -18,6 +13,11 @@ import KCol from 'kit/vue/ui/components/Grid/Col.vue'
     </KRow>
   </div>
 </template>
+
+<script setup lang="ts">
+import KRow from 'kit/vue/ui/components/Grid/Row.vue'
+import KCol from 'kit/vue/ui/components/Grid/Col.vue'
+</script>
 
 <style scoped>
 .grid-demo .cell {

@@ -1,13 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KCheckboxGroup from 'kit/vue/ui/components/Checkbox/CheckboxGroup.vue'
-import KCheckbox from 'kit/vue/ui/components/Checkbox/Checkbox.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-
-const byOptions = ref<(string | number)[]>(['a'])
-const bySlot = ref<(string | number)[]>(['x'])
-</script>
-
 <template>
   <KSpace size="lg" direction="vertical">
     <KCheckboxGroup v-model="byOptions" :options="['苹果', { label: '香蕉（不可选）', value: 'banana', disabled: true }, { label: '橙子', value: 'orange' }]" />
@@ -18,3 +8,13 @@ const bySlot = ref<(string | number)[]>(['x'])
     <div>options 形态：{{ byOptions.join(', ') }}；slot 形态：{{ bySlot.join(', ') }}</div>
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KCheckboxGroup from 'kit/vue/ui/components/Checkbox/CheckboxGroup.vue'
+import KCheckbox from 'kit/vue/ui/components/Checkbox/Checkbox.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+
+const byOptions = ref<(string | number)[]>(['a'])
+const bySlot = ref<(string | number)[]>(['x'])
+</script>

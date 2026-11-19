@@ -1,9 +1,3 @@
-<script setup lang="ts">
-import KTitle from 'kit/vue/ui/components/Typography/Title.vue'
-import KText from 'kit/vue/ui/components/Typography/Text.vue'
-import KParagraph from 'kit/vue/ui/components/Typography/Paragraph.vue'
-</script>
-
 <template>
   <div>
     <!-- tag 派生逻辑继承（h3）；字阶视觉自绘；默认插槽内容经 slots.default 取回 -->
@@ -31,6 +25,12 @@ import KParagraph from 'kit/vue/ui/components/Typography/Paragraph.vue'
     </KParagraph>
   </div>
 </template>
+
+<script setup lang="ts">
+import KTitle from 'kit/vue/ui/components/Typography/Title.vue'
+import KText from 'kit/vue/ui/components/Typography/Text.vue'
+import KParagraph from 'kit/vue/ui/components/Typography/Paragraph.vue'
+</script>
 
 <style scoped>
 .hl-title {

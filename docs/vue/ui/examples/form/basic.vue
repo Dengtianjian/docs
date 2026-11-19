@@ -1,3 +1,33 @@
+<template>
+  <KForm
+    ref="form"
+    :model="model"
+    :rules="rules"
+    layout="vertical"
+    style="max-width: 360px"
+  >
+    <KFormItem label="姓名" name="name">
+      <KInput v-model="model.name" placeholder="blur/change 都会触发校验，错误态边框自动下发" />
+    </KFormItem>
+    <KFormItem label="年龄" name="age" extra="0 ~ 150">
+      <KInputNumber v-model="model.age" :min="0" :max="150" />
+    </KFormItem>
+    <KFormItem label="城市" name="city">
+      <KSelect v-model="model.city" :options="cities" allow-clear />
+    </KFormItem>
+    <KFormItem name="agree">
+      <KCheckbox v-model="model.agree">我已阅读并同意</KCheckbox>
+    </KFormItem>
+    <KFormItem>
+      <KSpace>
+        <KButton type="primary" @click="onSubmit">校验提交</KButton>
+        <KButton @click="onReset">重置</KButton>
+      </KSpace>
+    </KFormItem>
+    <div>{{ result }}</div>
+  </KForm>
+</template>
+
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import KForm from 'kit/vue/ui/components/Form/Form.vue'
@@ -52,33 +82,3 @@ function onReset() {
   result.value = ''
 }
 </script>
-
-<template>
-  <KForm
-    ref="form"
-    :model="model"
-    :rules="rules"
-    layout="vertical"
-    style="max-width: 360px"
-  >
-    <KFormItem label="姓名" name="name">
-      <KInput v-model="model.name" placeholder="blur/change 都会触发校验，错误态边框自动下发" />
-    </KFormItem>
-    <KFormItem label="年龄" name="age" extra="0 ~ 150">
-      <KInputNumber v-model="model.age" :min="0" :max="150" />
-    </KFormItem>
-    <KFormItem label="城市" name="city">
-      <KSelect v-model="model.city" :options="cities" allow-clear />
-    </KFormItem>
-    <KFormItem name="agree">
-      <KCheckbox v-model="model.agree">我已阅读并同意</KCheckbox>
-    </KFormItem>
-    <KFormItem>
-      <KSpace>
-        <KButton type="primary" @click="onSubmit">校验提交</KButton>
-        <KButton @click="onReset">重置</KButton>
-      </KSpace>
-    </KFormItem>
-    <div>{{ result }}</div>
-  </KForm>
-</template>

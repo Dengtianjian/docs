@@ -1,3 +1,20 @@
+<template>
+  <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap">
+    <!-- #render 插槽通道：方形闸刀，checked 状态驱动自绘 -->
+    <KSwitch v-model="a" checked-children="ON" un-checked-children="OFF">
+      <template #render="ctx">
+        <button v-bind="ctx.rootAttrs" v-on="ctx.rootOn" class="hl-switch-gate" :class="{ 'hl-switch-gate--on': ctx.checked }">
+          <span class="hl-switch-gate__label">{{ ctx.checked ? ctx.checkedChildren : ctx.unCheckedChildren }}</span>
+          <span class="hl-switch-gate__lever" aria-hidden="true"></span>
+        </button>
+      </template>
+    </KSwitch>
+    <span style="color: var(--k-color-text-tertiary); font-size: 13px">v-model = {{ a }}</span>
+
+    <KSwitch v-model="b" :render="renderLamp" />
+  </div>
+</template>
+
 <script setup lang="ts">
 import { h, ref } from 'vue'
 import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
@@ -22,23 +39,6 @@ const renderLamp = (ctx: KSwitchRenderScope) =>
     ],
   )
 </script>
-
-<template>
-  <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap">
-    <!-- #render 插槽通道：方形闸刀，checked 状态驱动自绘 -->
-    <KSwitch v-model="a" checked-children="ON" un-checked-children="OFF">
-      <template #render="ctx">
-        <button v-bind="ctx.rootAttrs" v-on="ctx.rootOn" class="hl-switch-gate" :class="{ 'hl-switch-gate--on': ctx.checked }">
-          <span class="hl-switch-gate__label">{{ ctx.checked ? ctx.checkedChildren : ctx.unCheckedChildren }}</span>
-          <span class="hl-switch-gate__lever" aria-hidden="true"></span>
-        </button>
-      </template>
-    </KSwitch>
-    <span style="color: var(--k-color-text-tertiary); font-size: 13px">v-model = {{ a }}</span>
-
-    <KSwitch v-model="b" :render="renderLamp" />
-  </div>
-</template>
 
 <!-- render prop 闭包产物在子组件作用域渲染，样式须全局（hl- 专属命名）或内联 -->
 <style>

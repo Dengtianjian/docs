@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-</script>
-
 <template>
   <KFlex wrap gap="xs" style="max-width: 360px">
     <span
@@ -11,3 +7,7 @@ import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
     >{{ tag }}</span>
   </KFlex>
 </template>
+
+<script setup lang="ts">
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+</script>

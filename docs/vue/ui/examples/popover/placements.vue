@@ -1,3 +1,11 @@
+<template>
+  <div class="k-doc-placements">
+    <KPopover v-for="p in placements" :key="p" :title="`= ${p}`" :placement="p" trigger="click" content="12 方位与 Tooltip 同一套基座（utils/overlay），点空白或 Esc 关闭。">
+      <template #trigger><KButton size="sm">{{ p }}</KButton></template>
+    </KPopover>
+  </div>
+</template>
+
 <script setup lang="ts">
 import KPopover from 'kit/vue/ui/components/Popover/Popover.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
@@ -9,14 +17,6 @@ const placements = [
   'bottomLeft', 'bottom', 'bottomRight',
 ] as const
 </script>
-
-<template>
-  <div class="k-doc-placements">
-    <KPopover v-for="p in placements" :key="p" :title="`= ${p}`" :placement="p" trigger="click" content="12 方位与 Tooltip 同一套基座（utils/overlay），点空白或 Esc 关闭。">
-      <template #trigger><KButton size="sm">{{ p }}</KButton></template>
-    </KPopover>
-  </div>
-</template>
 
 <style scoped>
 .k-doc-placements :deep(.k-button) {

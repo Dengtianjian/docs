@@ -1,3 +1,27 @@
+<template>
+  <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap">
+    <!-- #render 插槽通道：点击触发自绘快捷菜单，Teleport/定位/外点关闭全继承 -->
+    <KPopover trigger="click" placement="bottom">
+      <template #render="ctx">
+        <span :ref="ctx.triggerEl" v-bind="ctx.triggerAttrs" v-on="ctx.triggerOn" class="hl-pop-menu-trigger">
+          <KButton size="sm">快捷操作</KButton>
+        </span>
+        <Teleport :to="ctx.teleportTarget" defer>
+          <div v-if="ctx.visible" :ref="ctx.popupEl" v-bind="ctx.popupAttrs" v-on="ctx.popupOn" class="hl-pop-menu">
+            <button v-for="act in ['复制节点 ID', '导出为 SVG', '固定到画布']" :key="act" type="button" class="hl-pop-menu__item" @click="picked = act; ctx.setOpen(false)">
+              {{ act }}
+            </button>
+          </div>
+        </Teleport>
+      </template>
+    </KPopover>
+    <span style="color: var(--k-color-text-tertiary); font-size: 13px">{{ picked ? `已执行：${picked}` : '点击按钮打开菜单' }}</span>
+
+    <!-- render prop 通道：hover 墨线气泡 -->
+    <KPopover title="画布锚点" content="弹层坐标由组件计算：视口翻转、箭头限位、容器跟随全在 popupAttrs 里。" :render="renderInk" />
+  </div>
+</template>
+
 <script setup lang="ts">
 import { h, Teleport, ref } from 'vue'
 import KPopover from 'kit/vue/ui/components/Popover/Popover.vue'
@@ -26,30 +50,6 @@ const renderInk = (ctx: KPopoverRenderScope) => [
   ),
 ]
 </script>
-
-<template>
-  <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap">
-    <!-- #render 插槽通道：点击触发自绘快捷菜单，Teleport/定位/外点关闭全继承 -->
-    <KPopover trigger="click" placement="bottom">
-      <template #render="ctx">
-        <span :ref="ctx.triggerEl" v-bind="ctx.triggerAttrs" v-on="ctx.triggerOn" class="hl-pop-menu-trigger">
-          <KButton size="sm">快捷操作</KButton>
-        </span>
-        <Teleport :to="ctx.teleportTarget" defer>
-          <div v-if="ctx.visible" :ref="ctx.popupEl" v-bind="ctx.popupAttrs" v-on="ctx.popupOn" class="hl-pop-menu">
-            <button v-for="act in ['复制节点 ID', '导出为 SVG', '固定到画布']" :key="act" type="button" class="hl-pop-menu__item" @click="picked = act; ctx.setOpen(false)">
-              {{ act }}
-            </button>
-          </div>
-        </Teleport>
-      </template>
-    </KPopover>
-    <span style="color: var(--k-color-text-tertiary); font-size: 13px">{{ picked ? `已执行：${picked}` : '点击按钮打开菜单' }}</span>
-
-    <!-- render prop 通道：hover 墨线气泡 -->
-    <KPopover title="画布锚点" content="弹层坐标由组件计算：视口翻转、箭头限位、容器跟随全在 popupAttrs 里。" :render="renderInk" />
-  </div>
-</template>
 
 <!-- render prop 闭包产物在子组件作用域渲染，样式须全局（hl- 专属命名）或内联 -->
 <style>

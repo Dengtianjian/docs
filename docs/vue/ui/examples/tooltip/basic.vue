@@ -1,12 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KTooltip from 'kit/vue/ui/components/Tooltip/Tooltip.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-
-const controlled = ref(false)
-</script>
-
 <template>
   <KSpace size="lg" wrap>
     <KTooltip content="=top 默认方位（content prop 兜底）">
@@ -40,3 +31,12 @@ const controlled = ref(false)
     贴近视口上缘的 top 提示会自动翻到下方（可用浏览器缩窗口验证）。
   </p>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KTooltip from 'kit/vue/ui/components/Tooltip/Tooltip.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+
+const controlled = ref(false)
+</script>

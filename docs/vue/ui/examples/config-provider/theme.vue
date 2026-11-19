@@ -1,12 +1,3 @@
-<script setup lang="ts">
-import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-
-// 只写 seed，Map/Alias 全由 CSS 表达式图派生 —— 这就是「一变百变」
-const teal = { seed: { colorPrimary: '#13c2c2', borderRadius: 10 } }
-</script>
-
 <template>
   <KSpace align="start">
     <div class="box">
@@ -21,6 +12,15 @@ const teal = { seed: { colorPrimary: '#13c2c2', borderRadius: 10 } }
     </KConfigProvider>
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+
+// 只写 seed，Map/Alias 全由 CSS 表达式图派生 —— 这就是「一变百变」
+const teal = { seed: { colorPrimary: '#13c2c2', borderRadius: 10 } }
+</script>
 
 <style scoped>
 .box {

@@ -1,11 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KDateRangePicker from 'kit/vue/ui/components/DateRangePicker/DateRangePicker.vue'
-
-const range = ref<[number, number] | null>(null)
-const fmt = (ts?: number) => (ts ? new Date(ts).toLocaleString() : '')
-</script>
-
 <template>
   <div style="width: 100%; max-width: 460px">
     <KDateRangePicker v-model="range" show-time clearable />
@@ -14,3 +6,11 @@ const fmt = (ts?: number) => (ts ? new Date(ts).toLocaleString() : '')
     </p>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KDateRangePicker from 'kit/vue/ui/components/DateRangePicker/DateRangePicker.vue'
+
+const range = ref<[number, number] | null>(null)
+const fmt = (ts?: number) => (ts ? new Date(ts).toLocaleString() : '')
+</script>

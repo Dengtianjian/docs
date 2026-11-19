@@ -1,12 +1,3 @@
-<script setup lang="ts">
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KButtonGroup from 'kit/vue/ui/components/Button/ButtonGroup.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-import { getSharedBreakpoint } from 'kit/vue/ui'
-
-const breakpoint = getSharedBreakpoint().current
-</script>
-
 <template>
   <div class="responsive-button-demo">
     <div class="responsive-button-demo__hint">当前断点：<code>{{ breakpoint }}</code></div>
@@ -21,6 +12,15 @@ const breakpoint = getSharedBreakpoint().current
     </KSpace>
   </div>
 </template>
+
+<script setup lang="ts">
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KButtonGroup from 'kit/vue/ui/components/Button/ButtonGroup.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import { getSharedBreakpoint } from 'kit/vue/ui'
+
+const breakpoint = getSharedBreakpoint().current
+</script>
 
 <style scoped>
 .responsive-button-demo { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }

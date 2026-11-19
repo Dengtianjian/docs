@@ -1,18 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KSelect from 'kit/vue/ui/components/Select/Select.vue'
-import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
-
-const box = ref<HTMLElement | null>(null)
-const v = ref<string | number | null>(null)
-const opts = [
-  { label: '弹层进本盒文档流', value: 'a' },
-  { label: '随内容一起滚动', value: 'b' },
-  { label: '被盒边界裁切', value: 'c' },
-  { label: '（absolute 容器语义）', value: 'd' },
-]
-</script>
-
 <template>
   <KConfigProvider :popup-container="() => box!">
     <div
@@ -27,3 +12,18 @@ const opts = [
     </div>
   </KConfigProvider>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KSelect from 'kit/vue/ui/components/Select/Select.vue'
+import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
+
+const box = ref<HTMLElement | null>(null)
+const v = ref<string | number | null>(null)
+const opts = [
+  { label: '弹层进本盒文档流', value: 'a' },
+  { label: '随内容一起滚动', value: 'b' },
+  { label: '被盒边界裁切', value: 'c' },
+  { label: '（absolute 容器语义）', value: 'd' },
+]
+</script>

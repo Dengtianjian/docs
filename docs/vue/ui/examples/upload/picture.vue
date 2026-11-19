@@ -1,3 +1,12 @@
+<template>
+  <div style="max-width: 420px">
+    <KUpload v-model:file-list="files" :upload="upload" list-type="picture" multiple />
+    <p style="margin: 8px 0 0; font-size: 12px; color: #888">
+      图片缩略图优先用 thumbUrl，其次 url；新上传的图片在没有 url 时用本地 raw 对象 URL 即时出图。
+    </p>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import KUpload from 'kit/vue/ui/components/Upload/Upload.vue'
@@ -10,12 +19,3 @@ const files = ref<KUploadFile[]>([
 ])
 const upload = createMockRequest()
 </script>
-
-<template>
-  <div style="max-width: 420px">
-    <KUpload v-model:file-list="files" :upload="upload" list-type="picture" multiple />
-    <p style="margin: 8px 0 0; font-size: 12px; color: #888">
-      图片缩略图优先用 thumbUrl，其次 url；新上传的图片在没有 url 时用本地 raw 对象 URL 即时出图。
-    </p>
-  </div>
-</template>

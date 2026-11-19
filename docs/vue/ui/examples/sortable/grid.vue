@@ -1,3 +1,14 @@
+<template>
+  <div style="max-width: 420px">
+    <KSortable v-model="tiles" item-key="id" orientation="grid">
+      <template #default="{ item }">
+        <span class="tile" :style="{ background: item.tone }">{{ item.label }}</span>
+      </template>
+    </KSortable>
+    <p class="hint">网格：按最近中心定位目标格，横向中点决定插前/插后；换行位置由容器宽度决定。</p>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import KSortable from 'kit/vue/ui/components/Sortable/Sortable.vue'
@@ -17,17 +28,6 @@ const tiles = ref<Tile[]>([
   { id: 'f', label: '报表', tone: '#f6ffed' },
 ])
 </script>
-
-<template>
-  <div style="max-width: 420px">
-    <KSortable v-model="tiles" item-key="id" orientation="grid">
-      <template #default="{ item }">
-        <span class="tile" :style="{ background: item.tone }">{{ item.label }}</span>
-      </template>
-    </KSortable>
-    <p class="hint">网格：按最近中心定位目标格，横向中点决定插前/插后；换行位置由容器宽度决定。</p>
-  </div>
-</template>
 
 <style scoped>
 .tile {

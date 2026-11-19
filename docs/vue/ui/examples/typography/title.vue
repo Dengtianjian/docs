@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import KTitle from 'kit/vue/ui/components/Typography/Title.vue'
-import KParagraph from 'kit/vue/ui/components/Typography/Paragraph.vue'
-</script>
-
 <template>
   <div>
     <KTitle :level="1">h1 标题</KTitle>
@@ -16,3 +11,8 @@ import KParagraph from 'kit/vue/ui/components/Typography/Paragraph.vue'
     </KParagraph>
   </div>
 </template>
+
+<script setup lang="ts">
+import KTitle from 'kit/vue/ui/components/Typography/Title.vue'
+import KParagraph from 'kit/vue/ui/components/Typography/Paragraph.vue'
+</script>

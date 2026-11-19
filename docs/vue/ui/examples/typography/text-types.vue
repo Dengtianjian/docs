@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import KText from 'kit/vue/ui/components/Typography/Text.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-</script>
-
 <template>
   <KSpace direction="vertical" size="xxs">
     <KText>default —— 一级文本，正文默认色（不透明度 88%）</KText>
@@ -11,3 +6,8 @@ import KSpace from 'kit/vue/ui/components/Space/Space.vue'
     <KText type="disabled">disabled —— 禁用文本（25%）</KText>
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import KText from 'kit/vue/ui/components/Typography/Text.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+</script>

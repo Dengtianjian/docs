@@ -1,11 +1,3 @@
-<script setup lang="ts">
-import KLayout from 'kit/vue/ui/components/Layout/Layout.vue'
-import KLayoutHeader from 'kit/vue/ui/components/Layout/Header.vue'
-import KLayoutSider from 'kit/vue/ui/components/Layout/Sider.vue'
-import KLayoutContent from 'kit/vue/ui/components/Layout/Content.vue'
-import KLayoutFooter from 'kit/vue/ui/components/Layout/Footer.vue'
-</script>
-
 <template>
   <!-- 五子件各自 headless：高度/宽度变量随 rootAttrs 注入，骨架视觉全自绘 -->
   <KLayout>
@@ -41,6 +33,14 @@ import KLayoutFooter from 'kit/vue/ui/components/Layout/Footer.vue'
     </template>
   </KLayout>
 </template>
+
+<script setup lang="ts">
+import KLayout from 'kit/vue/ui/components/Layout/Layout.vue'
+import KLayoutHeader from 'kit/vue/ui/components/Layout/Header.vue'
+import KLayoutSider from 'kit/vue/ui/components/Layout/Sider.vue'
+import KLayoutContent from 'kit/vue/ui/components/Layout/Content.vue'
+import KLayoutFooter from 'kit/vue/ui/components/Layout/Footer.vue'
+</script>
 
 <style scoped>
 .hl-layout {

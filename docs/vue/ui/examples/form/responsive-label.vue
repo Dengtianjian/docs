@@ -1,15 +1,3 @@
-<script setup lang="ts">
-import { reactive } from 'vue'
-import KForm from 'kit/vue/ui/components/Form/Form.vue'
-import KFormItem from 'kit/vue/ui/components/Form/FormItem.vue'
-import KInput from 'kit/vue/ui/components/Input/Input.vue'
-import { getSharedBreakpoint } from 'kit/vue/ui'
-
-const breakpoint = getSharedBreakpoint().current
-
-const model = reactive<Record<string, unknown>>({ user: '', mail: '' })
-</script>
-
 <template>
   <div class="responsive-form-demo">
     <div class="responsive-form-demo__hint">当前断点：<code>{{ breakpoint }}</code>（拖动窗口跨过 768 / 992 / 1200 观察）</div>
@@ -30,6 +18,18 @@ const model = reactive<Record<string, unknown>>({ user: '', mail: '' })
     </KForm>
   </div>
 </template>
+
+<script setup lang="ts">
+import { reactive } from 'vue'
+import KForm from 'kit/vue/ui/components/Form/Form.vue'
+import KFormItem from 'kit/vue/ui/components/Form/FormItem.vue'
+import KInput from 'kit/vue/ui/components/Input/Input.vue'
+import { getSharedBreakpoint } from 'kit/vue/ui'
+
+const breakpoint = getSharedBreakpoint().current
+
+const model = reactive<Record<string, unknown>>({ user: '', mail: '' })
+</script>
 
 <style scoped>
 .responsive-form-demo { display: flex; flex-direction: column; gap: 16px; }

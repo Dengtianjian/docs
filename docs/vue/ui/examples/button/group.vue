@@ -1,9 +1,3 @@
-<script setup lang="ts">
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KButtonGroup from 'kit/vue/ui/components/Button/ButtonGroup.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-</script>
-
 <template>
   <KSpace direction="vertical" size="lg">
     <KButtonGroup>
@@ -22,3 +16,9 @@ import KSpace from 'kit/vue/ui/components/Space/Space.vue'
     </KButtonGroup>
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KButtonGroup from 'kit/vue/ui/components/Button/ButtonGroup.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+</script>

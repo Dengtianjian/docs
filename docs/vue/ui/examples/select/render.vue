@@ -1,17 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KSelect from 'kit/vue/ui/components/Select/Select.vue'
-
-const opts = [
-  { label: 'Vue', value: 'vue' },
-  { label: 'React', value: 'react' },
-  { label: 'Svelte', value: 'svelte' },
-  { label: 'Solid', value: 'solid' },
-  { label: 'Angular', value: 'angular', disabled: true },
-]
-const val = ref<string | number | null>('vue')
-</script>
-
 <template>
   <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
     <!-- 整件自绘：下划线触发器 + 深色面板；开合/键盘/点外关闭/定位翻转全由绑定包继承 -->
@@ -55,6 +41,20 @@ const val = ref<string | number | null>('vue')
     <span style="font-size: 13px; color: var(--k-color-text-secondary)">当前值：{{ val }}</span>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KSelect from 'kit/vue/ui/components/Select/Select.vue'
+
+const opts = [
+  { label: 'Vue', value: 'vue' },
+  { label: 'React', value: 'react' },
+  { label: 'Svelte', value: 'svelte' },
+  { label: 'Solid', value: 'solid' },
+  { label: 'Angular', value: 'angular', disabled: true },
+]
+const val = ref<string | number | null>('vue')
+</script>
 
 <style scoped>
 .hl-sel {

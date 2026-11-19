@@ -1,20 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KSortable from 'kit/vue/ui/components/Sortable/Sortable.vue'
-
-interface Step {
-  id: string
-  name: string
-}
-
-const steps = ref<Step[]>([
-  { id: 'draft', name: '草稿' },
-  { id: 'review', name: '审核中' },
-  { id: 'done', name: '已通过' },
-  { id: 'archive', name: '已归档' },
-])
-</script>
-
 <template>
   <div style="max-width: 420px">
     <KSortable v-model="steps" item-key="id">
@@ -36,6 +19,23 @@ const steps = ref<Step[]>([
     <p class="hint">headless：#render 整件替换为暗色清单；拖拽判定、换序与 change 逻辑由绑定包继承（动画需自绘）。</p>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KSortable from 'kit/vue/ui/components/Sortable/Sortable.vue'
+
+interface Step {
+  id: string
+  name: string
+}
+
+const steps = ref<Step[]>([
+  { id: 'draft', name: '草稿' },
+  { id: 'review', name: '审核中' },
+  { id: 'done', name: '已通过' },
+  { id: 'archive', name: '已归档' },
+])
+</script>
 
 <style scoped>
 .hd-list {

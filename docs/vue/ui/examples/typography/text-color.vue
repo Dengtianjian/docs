@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import KText from 'kit/vue/ui/components/Typography/Text.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-</script>
-
 <template>
   <KSpace direction="vertical" :size="12">
     <KSpace :size="8">
@@ -22,3 +17,8 @@ import KSpace from 'kit/vue/ui/components/Space/Space.vue'
     </KSpace>
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import KText from 'kit/vue/ui/components/Typography/Text.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+</script>

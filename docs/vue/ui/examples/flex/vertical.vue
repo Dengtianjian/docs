@@ -1,9 +1,3 @@
-<script setup lang="ts">
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KText from 'kit/vue/ui/components/Typography/Text.vue'
-</script>
-
 <template>
   <KFlex vertical gap="xs" style="max-width: 320px">
     <KText strong>纵向堆叠（vertical + gap）</KText>
@@ -14,3 +8,9 @@ import KText from 'kit/vue/ui/components/Typography/Text.vue'
     </KFlex>
   </KFlex>
 </template>
+
+<script setup lang="ts">
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KText from 'kit/vue/ui/components/Typography/Text.vue'
+</script>

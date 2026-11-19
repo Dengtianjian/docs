@@ -1,3 +1,20 @@
+<template>
+  <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap">
+    <!-- #render 插槽通道：票券形按钮，click 逻辑包继承（计数自证） -->
+    <KButton type="primary">
+      <template #render="ctx">
+        <button v-bind="ctx.rootAttrs" v-on="ctx.rootOn" class="hl-btn-ticket" @click="count++">
+          <span class="hl-btn-ticket__stub">ADMIT</span>
+          <span class="hl-btn-ticket__body">点我 · {{ count }}</span>
+        </button>
+      </template>
+    </KButton>
+
+    <KButton :render="renderTag" @click="hits++" />
+    <span style="color: var(--k-color-text-tertiary); font-size: 13px">render prop 点击 {{ hits }} 次</span>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { h, ref } from 'vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
@@ -18,23 +35,6 @@ const renderTag = (ctx: KButtonRenderScope) =>
     [h('span', { class: 'hl-btn-tag__dot' }), '标签按钮'],
   )
 </script>
-
-<template>
-  <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap">
-    <!-- #render 插槽通道：票券形按钮，click 逻辑包继承（计数自证） -->
-    <KButton type="primary">
-      <template #render="ctx">
-        <button v-bind="ctx.rootAttrs" v-on="ctx.rootOn" class="hl-btn-ticket" @click="count++">
-          <span class="hl-btn-ticket__stub">ADMIT</span>
-          <span class="hl-btn-ticket__body">点我 · {{ count }}</span>
-        </button>
-      </template>
-    </KButton>
-
-    <KButton :render="renderTag" @click="hits++" />
-    <span style="color: var(--k-color-text-tertiary); font-size: 13px">render prop 点击 {{ hits }} 次</span>
-  </div>
-</template>
 
 <!-- render prop 闭包产物在子组件作用域渲染，样式须全局（hl- 专属命名）或内联 -->
 <style>

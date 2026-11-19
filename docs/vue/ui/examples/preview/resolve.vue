@@ -1,3 +1,13 @@
+<template>
+  <div>
+    <KButton type="primary" @click="open = true">打开（resolveType 判定）</KButton>
+    <p style="margin: 8px 0 0; font-size: 12px; color: #888">
+      第 1/2 项由 kind 判定为 image/video；第 3 项 src 是 data:image，但 kind=contract 被 resolveType 判成 pdf，命中 renderers.pdf。
+    </p>
+    <KPreview v-model:open="open" :items="items" :resolve-type="resolveType" :renderers="renderers" />
+  </div>
+</template>
+
 <script setup lang="ts">
 import { h, ref } from 'vue'
 import KPreview from 'kit/vue/ui/components/Preview/Preview.vue'
@@ -37,16 +47,6 @@ const pdfRenderer: KPreviewRenderer = ({ item, type }) =>
 const renderers = { pdf: pdfRenderer }
 const open = ref(false)
 </script>
-
-<template>
-  <div>
-    <KButton type="primary" @click="open = true">打开（resolveType 判定）</KButton>
-    <p style="margin: 8px 0 0; font-size: 12px; color: #888">
-      第 1/2 项由 kind 判定为 image/video；第 3 项 src 是 data:image，但 kind=contract 被 resolveType 判成 pdf，命中 renderers.pdf。
-    </p>
-    <KPreview v-model:open="open" :items="items" :resolve-type="resolveType" :renderers="renderers" />
-  </div>
-</template>
 
 <style>
 .demo-resolve-pdf {

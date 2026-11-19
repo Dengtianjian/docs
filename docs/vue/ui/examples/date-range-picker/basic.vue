@@ -1,10 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KDateRangePicker from 'kit/vue/ui/components/DateRangePicker/DateRangePicker.vue'
-
-const range = ref<[number, number] | null>(null)
-</script>
-
 <template>
   <div style="width: 100%; max-width: 380px">
     <KDateRangePicker v-model="range" clearable />
@@ -13,3 +6,10 @@ const range = ref<[number, number] | null>(null)
     </p>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KDateRangePicker from 'kit/vue/ui/components/DateRangePicker/DateRangePicker.vue'
+
+const range = ref<[number, number] | null>(null)
+</script>

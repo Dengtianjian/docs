@@ -11,11 +11,13 @@
 
 <Demo path="message/basic" title="message" desc="四类型 + loading；时长秒、0 常驻；同 key 复更新（loading→success 不叠条）；destroyAll。" />
 
+<Demo path="message/render" title="自定义内容（render + classNames）" desc="render 只替换图标与正文，外层 k-message 的队列、role、计时与关闭回调仍由 Holder 提供；classNames/styles 逐部件覆盖。" />
+
 ## API
 
 ### 实例 API（`useKApp().message`）
 
-先在 `<KApp>` 子树里取实例（上方示例即此结构），再调方法：
+先在 `<KApp>` 子树里取实例，再调方法（文档站由主题在最外层统一挂 KApp；业务里自行包一层）：
 
 ```ts
 import { useKApp } from 'kit/vue/ui'
@@ -27,7 +29,7 @@ message.success('操作成功')
 ```
 message.open(config | string) → { destroy() }
 message.info|success|error|warning|loading(content, duration?, onClose?) → { destroy() }
-message.info|…({ content, duration, icon, key, onClose }) → { destroy() }
+message.info|…({ content, duration, icon, key, onClose, render, classNames, styles }) → { destroy() }
 message.destroy(key) / message.destroyAll()
 ```
 
@@ -37,6 +39,8 @@ message.destroy(key) / message.destroyAll()
 | duration | 自动关闭秒数，`0` = 常驻 | `3` |
 | type | 图标类型；icon 可覆盖、`null` 去图标 | `'info'` |
 | key | 同 key 复用同一条（内容/类型原地更新） | — |
+| render | 自定义图标+正文：`({ content, type, icon, close }) => VNodeChild`；外层队列/role/计时不变 | — |
+| classNames / styles | 部件覆盖：`root / icon / content` | — |
 | onClose | 该条销毁时回调 | — |
 
 ### 部件变量

@@ -1,28 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KUpload from 'kit/vue/ui/components/Upload/Upload.vue'
-import type { KUploadChangeReason, KUploadFile, KUploadFileItem } from 'kit/vue/ui/components/Upload/Upload.vue'
-import { createMockRequest, svgImage } from './_mock'
-
-const upload = createMockRequest()
-const lastReason = ref('')
-
-function onChange(_list: KUploadFileItem[], info: { reason: KUploadChangeReason }) {
-  lastReason.value = info.reason
-}
-
-const cards = ref<KUploadFile[]>([
-  { uid: 'seed-c1', name: '封面.svg', url: svgImage('封面', '#722ed1'), status: 'done' },
-  { uid: 'seed-c2', name: '插图.svg', url: svgImage('插图', '#fa8c16'), status: 'done' },
-])
-const pictures = ref<KUploadFile[]>([
-  { uid: 'seed-p1', name: 'banner.svg', url: svgImage('Banner', '#13c2c2'), status: 'done' },
-])
-const texts = ref<KUploadFile[]>([
-  { uid: 'seed-t1', name: '季度报告.pdf', status: 'done', size: 380 * 1024 },
-])
-</script>
-
 <template>
   <div style="display: flex; flex-direction: column; gap: 24px; max-width: 460px">
     <div>
@@ -67,3 +42,28 @@ const texts = ref<KUploadFile[]>([
     </p>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KUpload from 'kit/vue/ui/components/Upload/Upload.vue'
+import type { KUploadChangeReason, KUploadFile, KUploadFileItem } from 'kit/vue/ui/components/Upload/Upload.vue'
+import { createMockRequest, svgImage } from './_mock'
+
+const upload = createMockRequest()
+const lastReason = ref('')
+
+function onChange(_list: KUploadFileItem[], info: { reason: KUploadChangeReason }) {
+  lastReason.value = info.reason
+}
+
+const cards = ref<KUploadFile[]>([
+  { uid: 'seed-c1', name: '封面.svg', url: svgImage('封面', '#722ed1'), status: 'done' },
+  { uid: 'seed-c2', name: '插图.svg', url: svgImage('插图', '#fa8c16'), status: 'done' },
+])
+const pictures = ref<KUploadFile[]>([
+  { uid: 'seed-p1', name: 'banner.svg', url: svgImage('Banner', '#13c2c2'), status: 'done' },
+])
+const texts = ref<KUploadFile[]>([
+  { uid: 'seed-t1', name: '季度报告.pdf', status: 'done', size: 380 * 1024 },
+])
+</script>

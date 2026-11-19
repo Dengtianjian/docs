@@ -1,15 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KUpload from 'kit/vue/ui/components/Upload/Upload.vue'
-import type { KUploadFile } from 'kit/vue/ui/components/Upload/Upload.vue'
-import { createMockRequest, svgImage } from './_mock'
-
-const files = ref<KUploadFile[]>([
-  { uid: 'seed-r1', name: '头像.svg', url: svgImage('头像', '#2f54eb'), status: 'done' },
-])
-const upload = createMockRequest()
-</script>
-
 <template>
   <div style="max-width: 460px">
     <KUpload
@@ -25,3 +13,15 @@ const upload = createMockRequest()
     </p>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KUpload from 'kit/vue/ui/components/Upload/Upload.vue'
+import type { KUploadFile } from 'kit/vue/ui/components/Upload/Upload.vue'
+import { createMockRequest, svgImage } from './_mock'
+
+const files = ref<KUploadFile[]>([
+  { uid: 'seed-r1', name: '头像.svg', url: svgImage('头像', '#2f54eb'), status: 'done' },
+])
+const upload = createMockRequest()
+</script>

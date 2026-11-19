@@ -1,3 +1,30 @@
+<template>
+  <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap">
+    <!-- #render 插槽通道：数量步进器，stepUp/stepDown/setText/onCommit 全逻辑继承 -->
+    <KInputNumber v-model="qty" :min="0" :max="99">
+      <template #render="ctx">
+        <span v-bind="ctx.rootAttrs" class="hl-num-qty">
+          <button type="button" class="hl-num-qty__btn" aria-label="减少" :disabled="!ctx.showStep" @mousedown.prevent="ctx.stepDown()">−</button>
+          <input
+            :value="ctx.text"
+            class="hl-num-qty__input"
+            inputmode="decimal"
+            aria-label="数量"
+            @input="ctx.setText(($event.target as HTMLInputElement).value)"
+            @blur="ctx.onBlur($event)"
+            @keydown="ctx.onKeydown($event)"
+          />
+          <button type="button" class="hl-num-qty__btn" aria-label="增加" :disabled="!ctx.showStep" @mousedown.prevent="ctx.stepUp()">+</button>
+        </span>
+      </template>
+    </KInputNumber>
+    <span style="color: var(--k-color-text-tertiary); font-size: 13px">数量 = {{ qty }}</span>
+
+    <KInputNumber v-model="temp" :min="-10" :max="40" :step="0.5" :render="renderTemp" />
+    <span style="color: var(--k-color-text-tertiary); font-size: 13px">温度 = {{ temp }}（step 0.5）</span>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { h, ref } from 'vue'
 import KInputNumber from 'kit/vue/ui/components/InputNumber/InputNumber.vue'
@@ -25,33 +52,6 @@ const renderTemp = (ctx: KInputNumberRenderScope) =>
     h('button', { type: 'button', class: 'hl-num-temp__btn', 'aria-label': '增加', onMousedown: (e: MouseEvent) => { e.preventDefault(); ctx.stepUp() } }, '+'),
   ])
 </script>
-
-<template>
-  <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap">
-    <!-- #render 插槽通道：数量步进器，stepUp/stepDown/setText/onCommit 全逻辑继承 -->
-    <KInputNumber v-model="qty" :min="0" :max="99">
-      <template #render="ctx">
-        <span v-bind="ctx.rootAttrs" class="hl-num-qty">
-          <button type="button" class="hl-num-qty__btn" aria-label="减少" :disabled="!ctx.showStep" @mousedown.prevent="ctx.stepDown()">−</button>
-          <input
-            :value="ctx.text"
-            class="hl-num-qty__input"
-            inputmode="decimal"
-            aria-label="数量"
-            @input="ctx.setText(($event.target as HTMLInputElement).value)"
-            @blur="ctx.onBlur($event)"
-            @keydown="ctx.onKeydown($event)"
-          />
-          <button type="button" class="hl-num-qty__btn" aria-label="增加" :disabled="!ctx.showStep" @mousedown.prevent="ctx.stepUp()">+</button>
-        </span>
-      </template>
-    </KInputNumber>
-    <span style="color: var(--k-color-text-tertiary); font-size: 13px">数量 = {{ qty }}</span>
-
-    <KInputNumber v-model="temp" :min="-10" :max="40" :step="0.5" :render="renderTemp" />
-    <span style="color: var(--k-color-text-tertiary); font-size: 13px">温度 = {{ temp }}（step 0.5）</span>
-  </div>
-</template>
 
 <!-- render prop 闭包产物在子组件作用域渲染，样式须全局（hl- 专属命名）或内联 -->
 <style>

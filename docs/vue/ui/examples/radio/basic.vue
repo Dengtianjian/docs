@@ -1,13 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
-import KRadio from 'kit/vue/ui/components/Radio/Radio.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-
-const plan = ref<string | number>('a')
-const bySlot = ref<string | number>('1')
-</script>
-
 <template>
   <KSpace size="lg" direction="vertical">
     <KRadioGroup
@@ -25,3 +15,13 @@ const bySlot = ref<string | number>('1')
     <div>当前值：{{ plan }} / {{ bySlot }}</div>
   </KSpace>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
+import KRadio from 'kit/vue/ui/components/Radio/Radio.vue'
+import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+
+const plan = ref<string | number>('a')
+const bySlot = ref<string | number>('1')
+</script>

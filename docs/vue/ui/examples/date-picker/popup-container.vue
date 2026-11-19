@@ -1,12 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
-import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
-
-const box = ref<HTMLElement | null>(null)
-const v = ref<number | null>(null)
-</script>
-
 <template>
   <KConfigProvider :popup-container="() => box!">
     <div
@@ -21,3 +12,12 @@ const v = ref<number | null>(null)
     </div>
   </KConfigProvider>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
+import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
+
+const box = ref<HTMLElement | null>(null)
+const v = ref<number | null>(null)
+</script>

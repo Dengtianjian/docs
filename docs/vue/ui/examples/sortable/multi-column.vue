@@ -1,3 +1,30 @@
+<template>
+  <div style="max-width: 620px">
+    <div class="board">
+      <div v-for="column in columns" :key="column.key" class="column">
+        <p class="column-title">{{ column.title }}</p>
+        <KSortable
+          v-model="column.items"
+          item-key="id"
+          group="board"
+          pointer
+          :styles="{ root: { minHeight: '120px' } }"
+          @add="onAdd"
+          @remove="onRemove"
+        >
+          <template #default="{ item }">
+            <div class="card">
+              <strong>{{ item.title }}</strong>
+              <span>{{ item.tag }}</span>
+            </div>
+          </template>
+        </KSortable>
+      </div>
+    </div>
+    <p class="hint">同 group 实例之间可互相拖入/拖出（pointer 模式，支持触屏），各自维护 v-model；add / remove 事件回传落点与源位置。{{ last }}</p>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import KSortable from 'kit/vue/ui/components/Sortable/Sortable.vue'
@@ -43,33 +70,6 @@ function onRemove(item: Card) {
   last.value = `从原列取出「${item.title}」`
 }
 </script>
-
-<template>
-  <div style="max-width: 620px">
-    <div class="board">
-      <div v-for="column in columns" :key="column.key" class="column">
-        <p class="column-title">{{ column.title }}</p>
-        <KSortable
-          v-model="column.items"
-          item-key="id"
-          group="board"
-          pointer
-          :styles="{ root: { minHeight: '120px' } }"
-          @add="onAdd"
-          @remove="onRemove"
-        >
-          <template #default="{ item }">
-            <div class="card">
-              <strong>{{ item.title }}</strong>
-              <span>{{ item.tag }}</span>
-            </div>
-          </template>
-        </KSortable>
-      </div>
-    </div>
-    <p class="hint">同 group 实例之间可互相拖入/拖出（pointer 模式，支持触屏），各自维护 v-model；add / remove 事件回传落点与源位置。{{ last }}</p>
-  </div>
-</template>
 
 <style scoped>
 .board {

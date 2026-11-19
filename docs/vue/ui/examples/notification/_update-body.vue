@@ -1,3 +1,10 @@
+<template>
+  <KSpace size="lg" wrap>
+    <KButton type="primary" @click="deploy">同 key 三段式更新</KButton>
+    <KButton variant="text" type="link" @click="notification!.destroyAll()">清空</KButton>
+  </KSpace>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useKApp } from 'kit/vue/ui/composables/useKApp'
@@ -30,10 +37,3 @@ function deploy() {
   )
 }
 </script>
-
-<template>
-  <KSpace size="lg" wrap>
-    <KButton type="primary" @click="deploy">同 key 三段式更新</KButton>
-    <KButton variant="text" type="link" @click="notification!.destroyAll()">清空</KButton>
-  </KSpace>
-</template>

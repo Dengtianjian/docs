@@ -1,12 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import KTooltip from 'kit/vue/ui/components/Tooltip/Tooltip.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
-
-const box = ref<HTMLElement | null>(null)
-</script>
-
 <template>
   <KConfigProvider :popup-container="() => box!">
     <div
@@ -22,3 +13,12 @@ const box = ref<HTMLElement | null>(null)
     </div>
   </KConfigProvider>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KTooltip from 'kit/vue/ui/components/Tooltip/Tooltip.vue'
+import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
+
+const box = ref<HTMLElement | null>(null)
+</script>

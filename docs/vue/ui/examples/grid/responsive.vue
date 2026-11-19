@@ -5,8 +5,8 @@ import KCol from 'kit/vue/ui/components/Grid/Col.vue'
 
 <template>
   <!-- 拖动浏览器宽度看列宽切换：列宽是预生成断点 class（CSS-first），
-       gutter 对象值由 useBreakpoint 解析成当前档定值（列宽流动、gutter 不流动） -->
-  <KRow :gutter="{ xs: 8, md: 16, lg: 24 }">
+       gutter 字符串/对象由共享断点解析成当前档定值（列宽流动、gutter 不流动） -->
+  <KRow gutter="xs:8,4 sm:12,8 md:16,12 lg:24,16">
     <KCol :span="{ xs: 24, sm: 12, md: 8, lg: 6 }"><div class="cell">xs24 / sm12 / md8 / lg6</div></KCol>
     <KCol :span="{ xs: 24, sm: 12, md: 8, lg: 6 }"><div class="cell">xs24 / sm12 / md8 / lg6</div></KCol>
     <KCol :span="{ xs: 24, sm: 12, md: 8, lg: 6 }"><div class="cell">xs24 / sm12 / md8 / lg6</div></KCol>

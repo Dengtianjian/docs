@@ -1,36 +1,36 @@
 <script setup lang="ts">
-import { h, ref } from 'vue'
-import { useKApp } from 'kit/vue/ui/composables/useKApp'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
-import KRadio from 'kit/vue/ui/components/Radio/Radio.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
-import type { KNotificationPlacement } from 'kit/vue/ui/components/Notification/service'
+import { h, ref } from "vue";
+import { useKApp } from "kit/vue/ui/composables/useKApp";
+import KButton from "kit/vue/ui/components/Button/Button.vue";
+import KRadioGroup from "kit/vue/ui/components/Radio/RadioGroup.vue";
+import KRadio from "kit/vue/ui/components/Radio/Radio.vue";
+import KSpace from "kit/vue/ui/components/Space/Space.vue";
+import type { KNotificationPlacement } from "kit/vue/ui/components/Notification/service";
 
-const { notification } = useKApp()!
-const placement = ref<KNotificationPlacement>('topRight')
+const { notification } = useKApp()!;
+const placement = ref<KNotificationPlacement>("topRight");
 
 function openWithActions() {
   const handle = notification!.open({
-    title: '构建完成',
-    description: '产物已上传 CDN，用时 42s。',
+    title: `${Date.now()} 构建完成`,
+    description: "产物已上传 CDN，用时 42s。",
     placement: placement.value,
     actions: h(
       KButton,
-      { size: 'xs', type: 'primary', onClick: () => handle.destroy() },
-      () => '查看详情',
+      { size: "xs", type: "primary", onClick: () => handle.destroy() },
+      () => "查看详情",
     ),
-  })
+  });
 }
 
 function openTypes() {
-  notification!.success({ title: '保存成功', placement: placement.value })
+  notification!.success({ title: "保存成功", placement: placement.value });
   notification!.error({
-    title: '请求失败',
-    description: '502 Bad Gateway，已自动重试 1 次。',
+    title: "请求失败",
+    description: "502 Bad Gateway，已自动重试 1 次。",
     duration: 0,
     placement: placement.value,
-  })
+  });
 }
 </script>
 
@@ -48,9 +48,13 @@ function openTypes() {
       </KRadioGroup>
     </KSpace>
     <KSpace size="lg" wrap>
-      <KButton type="primary" @click="openWithActions">带操作区（actions）</KButton>
+      <KButton type="primary" @click="openWithActions"
+        >带操作区（actions）</KButton
+      >
       <KButton @click="openTypes">success + error（常驻）</KButton>
-      <KButton variant="text" type="link" @click="notification!.destroyAll()">清空</KButton>
+      <KButton variant="text" type="link" @click="notification!.destroyAll()"
+        >清空</KButton
+      >
     </KSpace>
   </KSpace>
 </template>

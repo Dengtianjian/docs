@@ -55,7 +55,7 @@
 | passivelyActivated | 点击外壳空白/前后缀区域也聚焦输入框 | `boolean` | `false` |
 | showPassword | type=password 时显示明文切换按钮 | `boolean` | `true` |
 | type | 控件类型（含 textarea） | `'text' \| 'password' \| 'textarea' \| 'search' \| 'email' \| 'tel' \| 'url' \| 'number'` | `'text'` |
-| placeholder | 占位文本 | `string` | — |
+| placeholder | 占位文本 | `string` | textarea `'请输入内容'`；其余 `'请输入'` |
 | disabled / readonly | 禁用 / 只读 | `boolean` | `false` |
 | clearable | 显示清除钮（有值且非禁用/只读，悬浮或聚焦时可见） | `boolean` | `false` |
 | maxlength | 原生最大长度 | `number \| string` | — |
@@ -138,7 +138,7 @@
 | variant | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | 外观形态（缺省 `'outlined'`）；filled 灰底无框 / borderless 全透明 / underlined 仅底部边框，后三者不参与完整边框反馈与聚焦圈——自绘按此语义绘制 |
 | type | `string` | 原生 input 类型（prop 限 `'text' \| 'password' \| 'search' \| 'email' \| 'tel' \| 'url' \| 'number'`，缺省 `'text'`）；已并入 inputAttrs |
 | status | `InputStatus \| undefined` | 校验态（`'error' \| 'warning'`），**合并链：prop > KFormItem 校验态**（`props.status ?? formItem.status`）；自绘语义色边框/聚焦圈消费它，无校验为 undefined |
-| placeholder | `string \| undefined` | 占位文本原值；已并入 inputAttrs |
+| placeholder | `string` | 占位文本（已应用默认：textarea「请输入内容」，其余「请输入」）；已并入 inputAttrs |
 | disabled | `boolean \| undefined` | 禁用 prop 原值；inputAttrs 的原生 disabled（true 才落键）与 showClear 合成消费它；置灰底色/字色/not-allowed 光标属默认视觉，自绘自理 |
 | readonly | `boolean \| undefined` | 只读 prop 原值；inputAttrs 的原生 readonly（true 才落键）与 showClear 合成消费它；只读仍可选可聚焦，仅不可编辑 |
 | clearable | `boolean \| undefined` | 清除钮开关 prop 原值；实际显隐看 showClear 合成值 |

@@ -9,6 +9,8 @@
 
 ## 代码演示
 
+<Demo path="date-picker/time" title="日期 + 时间" desc="`showTime` 点日期只落草稿并保持面板，底部选时/分/秒后点「确定」提交；默认格式 `YYYY-MM-DD HH:mm:ss`，`disabledTime` 可按日期给出时分秒黑名单。" />
+
 <Demo path="date-picker/basic" title="基础使用" desc="值为毫秒时间戳；clearable、disabled、size、variant、status 均可组合使用。" />
 
 <Demo path="date-picker/pickers" title="五种 picker" desc="首批支持 date、week、month、quarter、year 单选；每种模式的 v-model 仍是周期起点时间戳。" />
@@ -38,6 +40,8 @@
 | disabled | 是否禁用 | `boolean` | `false` |
 | clearable | 是否显示清除按钮 | `boolean` | `false` |
 | inline | 面板内联常驻（无触发器与弹层；`open`/`close` 为空操作） | `boolean` | `false` |
+| showTime | 选择时分秒；点日期不自动提交，需点「确定」 | `boolean` | `false` |
+| disabledTime | 当前草稿日期的时分秒黑名单 | `(date: Dayjs) => { disabledHours?, disabledMinutes?, disabledSeconds? }` | — |
 | format | dayjs 回显格式；不改变 v-model 值 | `string` | 随 picker 变化 |
 | min | 可选下限，按 picker 粒度比较 | `number \| string` | — |
 | max | 可选上限，按 picker 粒度比较 | `number \| string` | — |
@@ -117,7 +121,12 @@
 | focusedDate | `number \| null` | 键盘焦点周期起点，和 hover 分离 |
 | flipped | `boolean` | 面板是否相对触发器上翻 |
 | hasValue | `boolean` | 是否有已选值 |
-| displayText | `string` | 触发器回显文本 |
+| displayText | `string` | 触发器回显文本（showTime 打开中显示草稿） |
+| showTime / draftDate / canConfirmTime | `boolean` / `number \| null` / `boolean` | 时间模式、草稿时间戳、确定可用性 |
+| timePart / updateTimePart | `(unit) => number` / `(unit, value) => void` | 草稿时/分/秒读写 |
+| hours / minutes / seconds | `number[]` | 时间下拉候选 |
+| disabledTime | `KDatePickerDisabledTime` | 当前草稿日期的禁用时分秒 |
+| confirmTime / confirmOn | `() => void` / `KOnPack` | 提交时间模式草稿 |
 | showClear | `boolean` | 清除按钮是否应显示 |
 | titleText | `string` | 面板标题 |
 | weekdays | `string[]` | 周一到周日的文案 |
@@ -227,13 +236,10 @@
 | month | `YYYY-MM` |
 | quarter | `YYYY-[Q]Q` |
 | year | `YYYY` |
+| showTime | `YYYY-MM-DD HH:mm:ss`（可被 `format` 覆盖） |
 
 ### 后续登记
 
-以下能力保留在后续版本，不混入本批单选 picker：
-
-- `RangePicker` 双面板与范围值。
-- `showTime` 时间列、时间步进和日期时间格式。
-- `multiple` 多选与多值回显。
-- 预设 `ranges` 快捷选择。
-- 首批之外的文本输入解析、目录式快捷面板和复杂时区策略。
+- 范围选择已由 [KDateRangePicker](./date-range-picker.md) 独立承接（含 showTime / presets）。
+- 单选剩余：`multiple` 多值、时间步进（minuteStep）、文本输入解析、复杂时区策略。
+- 单值快捷预设 `ranges` 尚未接入（范围组件已有 `presets`）。

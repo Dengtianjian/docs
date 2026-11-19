@@ -134,13 +134,17 @@ export default defineConfig({
               collapsed: false,
               items: [
                 { text: "设计语言", link: "/vue/ui/design/language" },
-                { text: "主题 Token 规格", link: "/vue/ui/design/theme-tokens" }
+                { text: "主题 Token 规格", link: "/vue/ui/design/theme-tokens" },
+                { text: "响应式取值", link: "/vue/ui/design/responsive-values" }
               ]
             },
             {
               text: "playground（矩阵页）",
               collapsed: false,
-              items: [{ text: "组件矩阵页", link: "/vue/ui/playground/matrix" }]
+              items: [
+                  { text: "组件矩阵页", link: "/vue/ui/playground/matrix" },
+                  { text: "响应式演示（临时）", link: "/vue/ui/playground/responsive-form" }
+                ]
             },
             {
               text: "组件（components）",
@@ -156,7 +160,6 @@ export default defineConfig({
                     { text: "KButton 按钮", link: "/vue/ui/components/button" },
                     { text: "KIcon 图标", link: "/vue/ui/components/icon" },
                     { text: "KSpace 间距", link: "/vue/ui/components/space" },
-                    { text: "KControlGroup 控件组", link: "/vue/ui/components/control-group" },
                     { text: "KFlex 弹性布局", link: "/vue/ui/components/flex" },
                     { text: "KDivider 分割线", link: "/vue/ui/components/divider" },
                     { text: "KRow / KCol 栅格", link: "/vue/ui/components/grid" },
@@ -172,6 +175,7 @@ export default defineConfig({
                     { text: "KInput 输入框", link: "/vue/ui/components/input" },
                     { text: "KInputNumber 数值输入", link: "/vue/ui/components/input-number" },
                     { text: "KSelect 选择器", link: "/vue/ui/components/select" },
+                    { text: "KControlGroup 控件组", link: "/vue/ui/components/control-group" },
                     { text: "KCheckbox 复选框", link: "/vue/ui/components/checkbox" },
                     { text: "KRadio 单选框", link: "/vue/ui/components/radio" },
                     { text: "KSwitch 开关", link: "/vue/ui/components/switch" },
@@ -197,7 +201,9 @@ export default defineConfig({
                   collapsed: false,
                   items: [
                     { text: "KDatePicker 日期选择", link: "/vue/ui/components/date-picker" },
+                    { text: "KDateRangePicker 日期范围", link: "/vue/ui/components/date-range-picker" },
                     { text: "KUpload 上传", link: "/vue/ui/components/upload" },
+                    { text: "KImageCropper 图片裁剪", link: "/vue/ui/components/image-cropper" },
                     { text: "KPreview 预览", link: "/vue/ui/components/preview" },
                     { text: "KSortable 拖拽排序", link: "/vue/ui/components/sortable" }
                   ]

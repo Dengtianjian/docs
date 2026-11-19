@@ -56,7 +56,7 @@
 | --- | --- | --- | --- |
 | type | 语义类型 | `'default' \| 'primary' \| 'info' \| 'success' \| 'warning' \| 'danger' \| 'link'` | `'default'` |
 | variant | 外观变体 = 等级四档（基础/次要/次次要/次次次要 = outlined/filled/tonal/text；quiet = text 的灰底交互版；另 dashed 添加占位（无底色）、ghost 透明底档、plain/soft 白底两式、border 隐框档（交互现边框+文字色）；`type=link` 时无效，不落 variant 类名） | `'outlined' \| 'filled' \| 'tonal' \| 'text' \| 'quiet' \| 'dashed' \| 'ghost' \| 'plain' \| 'soft' \| 'border'` | `'outlined'` |
-| size | 尺寸（在 `KButtonGroup` 内缺省走组下发） | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
+| size | 尺寸（在 `KButtonGroup` 内缺省走组下发）；支持断点对象/字符串 | `'xs' \| 'sm' \| 'md' \| 'lg' \| Partial<Record<Breakpoint, Size>> \| string` | `'md'` |
 | shape | 形状 | `'default' \| 'round' \| 'circle' \| 'square'` | `'default'` |
 | loading | 加载中（不可点，宽度保持） | `boolean` | `false` |
 | disabled | 禁用 | `boolean` | `false` |
@@ -98,7 +98,7 @@
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| size | 下发给组内 KButton 的尺寸；子级自传 `size` 优先 | 同 KButton `size` | — |
+| size | 下发给组内 KButton 的尺寸；子级自传 `size` 优先；支持断点对象/字符串 | 同 KButton `size` | — |
 | vertical | 纵排（接壤边转为上下叠压） | `boolean` | `false` |
 
 <CommonProps />
@@ -142,7 +142,7 @@ KButtonGroup Slots：`default` = 组内 KButton 清单；`render` = 自定义渲
 | --- | --- | --- |
 | type | `ButtonType` | 语义类型（`ButtonType` = `'default' \| 'primary' \| 'info' \| 'success' \| 'warning' \| 'danger' \| 'link'`，缺省 `'default'`）；自绘按值取语义色 token（`--k-color-primary/success/…`），`link` 独立于 type×variant 矩阵 |
 | variant | `ButtonVariant` | 外观变体（`ButtonVariant` = `'outlined' \| 'filled' \| 'tonal' \| 'text' \| 'quiet' \| 'dashed' \| 'ghost' \| 'plain' \| 'soft' \| 'border'`，缺省 `'outlined'`）；type×variant 配色矩阵是默认渲染的 CSS 类规则，自绘按两轴状态自行取色 |
-| size | `ButtonSize` | **合并后的尺寸**（`ButtonSize` = `'xs' \| 'sm' \| 'md' \| 'lg'`）：解析链 `prop > KButtonGroup 下发 > 'md'`——组内未自传 size 时这里已是组下发值，自绘直接消费无需再 inject |
+| size | `ButtonSize` | **解析后的尺寸**（响应式对象/字符串按当前断点取值）：解析链 `prop > KButtonGroup 下发 > 'md'`——组内未自传 size 时这里已是组下发值，自绘直接消费无需再 inject |
 | shape | `ButtonShape` | 形状（`ButtonShape` = `'default' \| 'round' \| 'circle' \| 'square'`，缺省 `'default'`）；圆角/等宽内边距视觉自绘（circle/square 默认渲染 padding-x = height/2.75） |
 | loading | `boolean` | 加载中（缺省 `false`）；rootAttrs 已落 `aria-busy` 与 button 原生 disabled，rootOn 已拦截点击；spinner 视觉自绘（可取 `ctx.slots.loading`），默认渲染的「保留宽度防抖动」由自绘自管 |
 | disabled | `boolean` | 禁用 prop 值（缺省 `false`；**不含 loading**，loading 单列）；自绘置灰据此 + loading 两者取或，与 rootAttrs 的原生 disabled 判定一致 |
@@ -176,7 +176,7 @@ KButtonGroup Slots：`default` = 组内 KButton 清单；`render` = 自定义渲
 
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
-| size | `ButtonSize \| undefined` | 组 size prop **原始值**（`'xs' \| 'sm' \| 'md' \| 'lg'`；`undefined` = 未下发，子级各自走 md）。**size 下发（provide/inject）照跑**——headless 组内的默认 KButton 仍按 `prop > 组 > md` 吃下发值，无需自绘接管 |
+| size | `ButtonSize \| undefined` | **解析后的组 size**（响应式对象/字符串按当前断点取值；`undefined` = 未下发，子级各自走 md）。**size 下发（provide/inject）照跑**——headless 组内的默认 KButton 仍按 `prop > 组 > md` 吃下发值，无需自绘接管 |
 | vertical | `boolean` | 纵排（缺省 `false`）；默认渲染切 `flex-direction:column; align-items:stretch`、叠边从左右转上下，自绘按值排布 |
 
 #### 绑定包（spread 到自绘节点才继承）
@@ -195,6 +195,8 @@ KButtonGroup Slots：`default` = 组内 KButton 清单；`render` = 自定义渲
 - 本文深度 = 全库样板（接口 + 部件 + 变量表 + 行为），其余组件照此回填；
 - 等级四档映射 naive（2026-11-17）：基础=`outlined`、次要=`filled`、次次要=`tonal`（新增）、次次次要=`text`。值名当日由 tertiary 改 `tonal`：与 fill 阶梯 token 的 tertiary 撞名歧义，且 outlined/filled/dashed 是观感词族。naive 实测 secondary/tertiary 静置同灰（buttonColor2 .05），我们按 fill 阶梯拆出真档位（6%→4%）；tonal 的 hover/active 走 naive 等差 +4% 的破格值 8%/12%（`color-mix(text-base, transparent 92%/88%)`），语义档同灰底 + `--k-button-c` 彩字（naive tertiary 同款）；等级不单独立演示，收在外观变体矩阵内呈现；
 - 部件变量初值引用 alias token，状态（`:hover`/`:active`/`.is-disabled`）以局部重声明实现，见 [主题 Token 规格 §1.1](../design/theme-tokens.md)；
+- 响应式 `size` 见 [响应式取值演示](../playground/responsive-form.md)。
+
 - ghost/plain/soft 三档（2026-11-17 拍板，三家对照调研）：ghost 进 variant 轴而非 antd/naive 的布尔——variant 天然互斥，避免 ghost×variant 组合爆炸；default×ghost 静置跟 naive（中性边 + 正文字），antd 的白边反色不内置（业务 `styles` 可覆写）；plain = 交互变边框+文字、背景恒容器白（antd default 交互路数），soft = 交互变背景 tint + 文字（vant plain 路数）；soft tint 浓度取 filled 阶梯下移一档（hover 10% / active 16%，落在 filled 静置/ hover 之间不撞档）。**当日改判：soft 去边框**（静置 border transparent 占位保高度，与有框 plain 拉开分工；边框静止的通道随之取消，交互只剩背景+文字）；
 - border 档（2026-11-17 同日新增，用户点名；再调参：交互文字也跟着变）：隐框交互现——静置边框透明（1px 占位不跳版），hover 现 `c 90%up` 边框、文字同式 `c 90%up`，active 边框+文字 `c 75%down`（与 plain 同公式，default 档 c=primary 自然落主色），背景恒静置；语义档静置文字 = `--k-button-c`、default 档 = 正文字（基线）；透明边框占位而非 `border: none`，防 hover 时高度 +2px 跳动；
 - text/quiet 拆分 + dashed 去底（2026-11-17 同日用户拍板）：原 `text` 的 hover/active 灰底（fill-tertiary/secondary）随改名迁给 `quiet`（= antd text 路数），`text` 回归纯文字交互——只变文字色、永不落底（naive text 路数，「text 本来就该没背景」）；**兼容破坏：存量 `variant="text"` 升级后失去灰底反馈，要旧观感改 `quiet`**；default×text hover/active 文字走 c 公式（default 的 c=primary → 落主色浅/深档，与 outlined 同链）；另 default×dashed 静置灰底（原 filled 同款）作废改透明底——dashed 全 type 统一「透明底 + 虚线框」；

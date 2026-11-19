@@ -13,7 +13,7 @@
 
 <Demo path="grid/gutter" title="栅格间距" desc="`gutter` 数字 = 水平间距；`[水平, 垂直]` 二元组。实现 = Row 负 margin + Col 内 padding，垂直走 rowGap。" />
 
-<Demo path="grid/responsive" title="响应式" desc="`span`/`offset`/`gutter` 都支持 `{ xs, sm, md, lg, xl, xxl }` 对象——列宽走预生成断点 class；gutter 由 `useBreakpoint()` 解析成**当前档定值**（列宽流动、gutter 不流动）。拖动窗口宽度观察。" />
+<Demo path="grid/responsive" title="响应式" desc="`span`/`offset`/`gutter` 都支持 `{ xs, sm, md, lg, xl, xxl }` 对象——列宽走预生成断点 class；gutter 也支持字符串 `'xs:8 sm:16 md:24'`，由共享断点解析成**当前档定值**（列宽流动、gutter 不流动）。拖动窗口宽度观察。" />
 
 <Demo path="grid/offset-flex" title="偏移与 flex" desc="`offset` 左偏移格数；`flex` 数字生成 `flex: n 0 0`，字符串原样透传 CSS flex。" />
 
@@ -25,7 +25,7 @@
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| gutter | 栅格间隔（px）；二元组 = `[水平, 垂直]`；对象 = 按断点取定值 | `number \| [number, number] \| Partial<Record<'xs'\|'sm'\|'md'\|'lg'\|'xl'\|'xxl', number \| [number, number]>>` | — |
+| gutter | 栅格间隔（px）；二元组 = `[水平, 垂直]`；对象/字符串 = 按断点取定值 | `number \| [number, number] \| Partial<Record<Breakpoint, number \| [number, number]>> \| string` | — |
 | justify | 水平排列 | `'start' \| 'end' \| 'center' \| 'space-between' \| 'space-around' \| 'space-evenly'` | — |
 | align | 垂直对齐 | `'top' \| 'middle' \| 'bottom' \| 'stretch'` | — |
 | wrap | 允许折行 | `boolean` | `true` |
@@ -65,7 +65,7 @@
 
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
-| gutter | `[number, number]` | 解析后的 `[水平, 垂直]` px 定值：数字 → `[n, 0]`、二元组原样（缺位补 0）、未传 → `[0, 0]`；响应式对象经 `useBreakpoint()` 取当前档、缺档向低档回退（xxl→xl→lg→md→sm→xs）。解析结果**继续 provide 给子 KCol**（headless KRow 的注入照跑，Col 内边距不丢） |
+| gutter | `[number, number]` | 解析后的 `[水平, 垂直]` px 定值：数字 → `[n, 0]`、二元组原样（缺位补 0）、未传 → `[0, 0]`；响应式对象/字符串经共享断点取当前档、缺档向低档回退（xxl→xl→lg→md→sm→xs）。解析结果**继续 provide 给子 KCol**（headless KRow 的注入照跑，Col 内边距不丢） |
 | justify | `'start' \| 'end' \| 'center' \| 'space-between' \| 'space-around' \| 'space-evenly' \| undefined` | 水平排列；`undefined` = 未传。默认渲染走类名映射（`k-row--justify-*` → `justify-content`，start/end → flex-start/flex-end），自绘按值消费 |
 | align | `'top' \| 'middle' \| 'bottom' \| 'stretch' \| undefined` | 垂直对齐；`undefined` = 未传。默认渲染类名映射 `align-items: flex-start/center/flex-end/stretch`（top/middle/bottom），自绘按值消费 |
 | wrap | `boolean` | 允许折行（**缺省 `true`**，与 KFlex 相反）；默认渲染 `false` 时落 `k-row--no-wrap` 类，自绘映射 `flex-wrap` |
@@ -103,6 +103,6 @@
 ## 规格附录（实现决策，面向贡献者）
 
 - **CSS-first**：默认断点下的 288 条列宽/offset class 全部静态预生成（`css/grid.css`，由 `css/gen-grid.mjs` 存档脚本产出），组件运行时零宽度计算；
-- gutter 响应式对象是**登记在案的 JS 例外**：matchMedia 监听 → 当前档取定值，经 `provide/inject`（`K_ROW_INJECTION_KEY`）传给子 Col；SSR 无 matchMedia 时返回保守档 `md`（首帧 gutter 可能与客户端实际档不同、挂载后即刻校正；列宽不受影响，走 CSS 断点）；
+- gutter 响应式对象/字符串是**登记在案的 JS 例外**：全库共享一套 matchMedia 监听 → 当前档取定值，经 `provide/inject`（`K_ROW_INJECTION_KEY`）传给子 Col；SSR 无 matchMedia 时返回保守档 `md`（首帧 gutter 可能与客户端实际档不同、挂载后即刻校正；列宽不受影响，走 CSS 断点）；语法见 [响应式取值](../design/responsive-values.md)；
 - Row 负 margin（`-gutter/2`）+ Col 正 padding（`gutter/2`）实现列间距，垂直行间用 `rowGap`——与 antd 的 margin 补偿法不同，更接近原生 gap 语义；
 - 垂直 gutter 作用于行间（rowGap），不影响单个 Col 高度。

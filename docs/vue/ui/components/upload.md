@@ -9,6 +9,18 @@
 
 ## 代码演示
 
+<Demo path="upload/directory" title="目录上传" desc="`directory` 选择整个文件夹（webkitdirectory），强制多选、列表显示相对路径；maxCount / maxSize 照常生效。" />
+
+<Demo path="upload/paste" title="粘贴上传" desc="`paste` 监听页面 Ctrl/Cmd+V：剪贴板里的文件/截图直接入列，纯文本不拦截。" />
+
+<Demo path="upload/crop" title="图片裁剪" desc="`crop` 选图后弹层裁剪：拖动裁剪框，四角 + 四边中点自由缩放（可裁长方形）；PC 按住 Shift 临时锁比例；下方提供 自由 / 1:1 / 4:3 / 3:4 / 16:9 / 3:2 / 5:4 / 7:5 固定比例与「锁定比例」开关；传 `{ aspectRatio }` 时全程固定比例。" />
+
+<Demo path="upload/chunk" title="分片上传" desc="`chunkSize=256KB` + `chunkConcurrency=2`：`upload` 按片调用（`ctx.chunk` 带 index/start/end），全部成功后 `merge` 汇总；示例生成 1MB 文件演示 4 片。" />
+
+<Demo path="upload/compress" title="图片压缩" desc="`compress` 在入列前用 canvas 缩放到长边 800 / 质量 0.75；示例点按钮生成 1600×1200 图片对比前后体积。" />
+
+<Demo path="upload/concurrency" title="并发上限" desc="`concurrency=2`：同时最多执行 2 个 upload，其余排队；完成一个自动补位（示例实时显示当前/峰值并发）。" />
+
 <Demo path="upload/basic" title="基础使用" desc="text 列表 + mock upload 阶梯进度；maxCount=3、maxSize=2MB、accept 过滤；change / reject 实时回显。" />
 
 <Demo path="upload/drag" title="拖拽上传" desc="drag 开启后根区域整体作为拖放目标；拖入高亮并出现「释放以上传」提示；multiple 多选。" />
@@ -36,7 +48,15 @@
 | v-model:file-list | 文件列表（受控双模） | `KUploadFile[]` | `[]` |
 | listType | 列表形态 | `'text' \| 'picture' \| 'picture-card' \| 'picture-circle'` | `'text'` |
 | accept | 原生 input 的 accept | `string` | — |
+| directory | 目录选择（webkitdirectory），强制多选并显示相对路径 | `boolean` | `false` |
+| paste | 监听页面粘贴事件，文件/图片直接入列 | `boolean` | `false` |
 | multiple | 是否多选；`false` 时一次只取第一个文件 | `boolean` | `false` |
+| concurrency | 并发上限：>0 时最多同时执行 N 个 upload，其余排队；0 = 不限 | `number` | `0` |
+| compress | 图片前置压缩：true 或 `{ maxWidth, maxHeight, quality, type }` | `boolean \| object` | `false` |
+| chunkSize | 分片大小（字节），文件大于该值时按片调用 upload；0 = 关闭 | `number` | `0` |
+| chunkConcurrency | 单文件内分片并发数 | `number` | `3` |
+| merge | 全部分片成功后调用，返回值参与 mapResponse | `(ctx) => unknown \| Promise<unknown>` | — |
+| crop | 图片选后裁剪再入列（true 或 `{ aspectRatio, type, quality }`）；SVG/GIF 跳过 | `boolean \| object` | `false` |
 | maxCount | 列表上限；超出部分 emit reject（`maxCount`） | `number` | — |
 | maxSize | 单文件字节上限；超出 emit reject（`size`） | `number` | — |
 | disabled | 是否禁用（选择、拖放、删除全部停用） | `boolean` | `false` |
@@ -125,6 +145,12 @@
 | maxSize | `number \| undefined` | 单文件字节上限 |
 | disabled | `boolean \| undefined` | 是否禁用 |
 | drag | `boolean \| undefined` | 是否拖放模式 |
+| directory | `boolean \| undefined` | 是否目录选择（自绘 trigger 时用于提示/行为同步） |
+| paste | `boolean \| undefined` | 是否开启页面粘贴监听 |
+| concurrency | `number` | 当前并发上限（0 = 不限） |
+| compress | `boolean \| KUploadCompressOptions` | 当前压缩配置 |
+| chunkSize / chunkConcurrency | `number` | 当前分片配置 |
+| crop | `boolean \| KUploadCropOptions` | 当前裁剪配置 |
 | showActions | `boolean \| undefined` | 是否渲染预览/删除操作栏 |
 | clickToUpload | `boolean \| undefined` | 点缩略图是否改为重新选择替换 |
 | sortable | `boolean \| undefined` | 列表项是否可拖拽换顺序 |
@@ -227,6 +253,39 @@ type KUploadUpload = (options: {
 ### 文件项状态机
 
 `uploading`（初始，percent 0→100）→ `done` 或 `error`；`error` 可 `retry()` 回到 `uploading`；任意状态可 `remove()`（会 abort）。外部传入项若无 `status` 直接视为 `done`。
+
+## 目录与粘贴
+
+- `directory` 只认原生文件夹选择：拖入文件夹不会递归；iOS/部分 WebView 不支持 `webkitdirectory`，降级为普通文件选择。
+- `paste` 是 **document 级监听**，同一页面多个上传组件同时开启会重复收文件；建议只在一个实例开启，或按业务手动调用 `addFiles()`。
+- 两者都走同一套 `addFiles`：maxCount、maxSize、upload 拒绝、progress/change 事件与普通选择完全一致。
+
+## 图片裁剪
+
+- `crop` 在图片入列前打开裁剪弹层（内置 [KImageCropper](./image-cropper.md)）：拖动框移动；自由模式显示 4 角 + 4 边中点（可裁任意长方形），拖动时按住 **Shift** 临时锁定起始比例；裁剪区下方提供 自由 / 1:1 / 4:3 / 3:4 / 16:9 / 3:2 / 5:4 / 7:5 预设与「锁定比例」开关（锁定当前框比例），传 `aspectRatio` 时全程固定比例并只保留四角；支持重置。确定后输出裁剪后的 File，再走压缩 / maxSize / 分片 / upload 全流程。
+- 移动端裁剪弹窗放大到近全屏：裁剪区 `min(36vh,280px)`、8 个控制点命中区扩到约 26px；比例预设横向滚动、锁定开关与 footer 同屏可见；拖动/缩放走 pointer 事件，触屏可直接操作。
+- 多图选择会逐个弹层；取消或关闭不产生文件、不占 maxCount；替换上传同样会走裁剪。
+- SVG/GIF 跳过裁剪；裁剪输出默认沿用原图类型（PNG 保透明，其余 JPEG），可用 `type/quality` 覆盖。
+
+## 分片上传
+
+- `chunkSize>0` 且文件大于该值时，`upload` 会被调用多次，每次 `ctx.chunk = { index, total, start, end, size }`，`ctx.file` 是该片 File；`onProgress` 按分片百分比汇总为整文件进度。
+- 分片失败/返回 `false`/抛错会中止同文件其他分片；外部 abort/删除同样通过共享 signal 中止。单文件分片并发由 `chunkConcurrency` 控制，文件之间的并发仍由 `concurrency` 控制。
+- 全部成功后调用 `merge({ file, signal, chunkCount, responses })`；`responses` 是各片 `onSuccess` 返回值。merge 返回对象会走 `url/thumbUrl/name/size` 映射，返回 false 视为拒绝整文件；未传 merge 时不回传 url。
+- 压缩（`compress`）在切片前完成，分片基于压缩后的 File。
+
+## 图片压缩
+
+- `compress` 在创建列表项前用 canvas 缩放到 `maxWidth/maxHeight`（默认 1920）并按 `quality`（默认 0.85）重编码；非图片、SVG、GIF 跳过，压缩失败或产物更大时保留原图。
+- 默认 PNG 保持 PNG（质量参数无效，只缩尺寸），JPEG/WebP 沿用原类型；可用 `type` 强制输出（如 `image/webp`）。
+- `maxSize` 按**压缩后**体积判断；`upload` 收到的 `file` 也是压缩后的 File，相对路径会保留。
+- 浏览器无 `createImageBitmap`/canvas 时自动降级为原图。
+
+## 并发与队列
+
+- `concurrency>0` 时组件维护 FIFO 队列：达到上限的文件保持 `uploading`/0% 占位，前一个成功、失败或被中止后自动启动下一个。
+- 队列中的文件被删除或 `abort()` 会直接出队；并发上限调大时立即补位，调小不打断已执行请求。
+- 队列只约束 `upload` 的调用时机；重试、手动 `upload(item)` 同样入队。
 
 ### 后续登记
 

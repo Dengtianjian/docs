@@ -14,6 +14,8 @@
 
 <Demo path="space/vertical-wrap" title="方向 / 尺寸 / 折行" desc="`direction=vertical` 纵向；`size` 可传 `[行, 列]` 二元组分别控制 wrap 后的两轴。" />
 
+<Demo path="space/responsive" title="响应式间距" desc="`size` 同时演示字符串 `'xs:8 md:sm lg:lg'` 与对象 `{ xs: 'xs', md: 'md' }`；由共享断点解析为当前档定值，拖动窗口观察。" />
+
 <Demo path="space/separator" title="分隔符" desc="`separator` 模式给子项间插入竖线——此时子项必须是元素节点（文本节点会错位，开发环境 warn），代价是每个子项包一层 span。" />
 
 <Demo path="space/render" title="自定义渲染（headless）" desc="`#render` 插槽自绘菱形分隔条（children 已拍平可直接 v-for）；`render` prop 画胶囊行——间距变量随 rootAttrs 继承，size 解析逻辑照跑。" />
@@ -25,7 +27,7 @@
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | direction | 主轴方向 | `'horizontal' \| 'vertical'` | `'horizontal'` |
-| size | 间距：轴名走尺寸阶梯（4/8/12/16/24），数字直接 px；二元组 = `[纵向间距, 横向间距]` | `'xxs' \| 'xs' \| 'sm' \| 'md' \| 'lg' \| number \| [Size, Size]` | `'sm'` |
+| size | 间距：轴名走尺寸阶梯（4/8/12/16/24），数字直接 px；二元组 = `[纵向间距, 横向间距]`；对象/字符串按断点取值 | `Size \| [Size, Size] \| Partial<Record<Breakpoint, Size \| [Size, Size]>> \| string` | `'sm'` |
 | align | 交叉轴对齐 | `'start' \| 'center' \| 'end' \| 'baseline'` | — |
 | wrap | 允许折行 | `boolean` | `false` |
 | separator | 子项间插入分隔线（见上，有额外 DOM 代价） | `boolean` | `false` |
@@ -79,5 +81,5 @@
 
 - 根 `display:inline-flex; gap: var(--k-space-gap-row) var(--k-space-gap-column)`，**非 separator 模式零额外 DOM**；
 - `separator` 才包子项（`span[data-part=item]` + 伪分隔线元素 `data-part=separator`），此时根自动变 `display:flex`；
-- 尺寸解析在 JS 侧只做「轴名 → var() 引用 / 数字 → px」的映射（`utils/size.ts`），不计算具体像素——保持 CSS-first；
+- 尺寸解析在 JS 侧只做「轴名 → var() 引用 / 数字 → px」的映射（`utils/size.ts`），不计算具体像素——保持 CSS-first；响应式取值见 [响应式取值](../design/responsive-values.md)。
 - 组件源码内零平台判断：移动端触控间距差由 token 阶梯的 mobile 组自动完成。

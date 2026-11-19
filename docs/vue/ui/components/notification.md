@@ -9,13 +9,15 @@
 
 ## 代码演示
 
-<Demo path="notification/basic" title="弹出位置 + 操作区" desc="placement 六方位（top/bottom 水平居中）；actions 操作区（VNode 按钮）；duration=0 常驻走关闭钮。" />
+<Demo path="notification/basic" title="弹出位置 + 操作区" desc="placement 六方位（top/bottom 水平居中）；同一方位的通知共用一个列表，不同方位各自一个列表。actions 操作区（VNode 按钮）；duration=0 常驻走关闭钮。" />
 
-<Demo path="notification/progress" title="倒计时进度条 + 悬停暂停" desc="showProgress 底部进度条与自动关闭同源计时；pauseOnHover（默认开）悬停时计时与进度条同步冻结。" />
+<Demo path="notification/progress" title="倒计时进度条 + 悬停暂停" desc="showProgress 底部进度条与自动关闭同源计时；两个按钮分别对比 pauseOnHover 开启/关闭时，悬停对计时与进度条的影响。" />
 
 <Demo path="notification/update" title="同 key 原地更新" desc="info → warning → success/error 三段式：同 key 不叠条，原位换内容、计时从头、进场动画不重放。" />
 
-<Demo path="notification/scroll" title="滚动容器 + maxCount" desc="条数超出视口列内滚动（卡片保持自然高度不压扁，溢出列显细滚动条并可拖拽）；config({ maxCount }) 超限挤掉最旧一条。差异登记：antd 默认溢出走 stack 收起，本库按滚动实现。" />
+<Demo path="notification/stack" title="堆叠收起" desc="同一方位的通知共用一个列表，默认每列最多堆叠 3 张，较旧卡片藏在后面；鼠标进入列表展开全部，离开后收回。`stackLimit: 0` 关闭堆叠；演示还提供 5s 带进度条的悬停暂停/不暂停与全局暂停开关用于对比。" />
+
+<Demo path="notification/scroll" title="滚动容器 + maxCount" desc="演示关闭堆叠（stackLimit: 0）后的平铺/列内滚动；maxCount 超限挤掉最旧一条。默认 stackLimit=3 时同方位列表会堆叠收起。" />
 
 <Demo path="notification/render" title="自定义渲染（headless，声明式卡片）" desc="双通道：`#render` 自绘 toast 卡（type 驱动强调色，rootOn/onClose 继承 click/close 事件）；`render` prop 自绘 snackbar。仅声明式卡片支持；实例队列的计时/动画由 Holder 驱动，不在 headless 契约内。" />
 
@@ -71,6 +73,7 @@ notification.open(config) → { destroy() }
 notification.info|success|error|warning(config) → { destroy() }
 notification.destroy(key) / destroyAll()
 notification.config(options)   // 实例级全局默认，合入其后每次 open
+notification.getConfig()       // 读取当前全局默认（UI 回显开关状态）
 ```
 
 | config 字段 | 说明 | 默认 |
@@ -79,7 +82,7 @@ notification.config(options)   // 实例级全局默认，合入其后每次 ope
 | actions | 底部操作区 VNode（`btn` 为弃用别名，自动转发） | — |
 | type / icon | 同组件 | — |
 | duration | 自动关闭秒数；`0` / `false` = 常驻 | `4.5` |
-| placement | 六方位 | `'topRight'` |
+| placement | 六方位；同一方位的通知进入同一个列表，不同方位各自一个列表 | `'topRight'` |
 | closable | `false` 隐藏关闭钮；对象 `{ closeIcon, onClose }` 自定义 | `true` |
 | closeIcon | 关闭钮图标；`null` 不渲染 | 内建 X |
 | showProgress / pauseOnHover | 倒计时条 / 悬停暂停（计时与条同步） | `false` / `true` |
@@ -89,7 +92,8 @@ notification.config(options)   // 实例级全局默认，合入其后每次 ope
 | --- | --- |
 | top / bottom | 上下缘距离（px，缺省 `--k-size`），滚动高度上限随之换算 |
 | placement / duration / closeIcon / showProgress / pauseOnHover | 对应默认值 |
-| maxCount | 同列数量上限，超限挤掉最旧一条（直接移除，无退场动画） |
+| maxCount | 同一方位列表数量上限，超限挤掉最旧一条（直接移除，无退场动画） |
+| stackLimit | 同一方位列表堆叠显示上限（默认 3；0 = 关闭堆叠，平铺/滚动） |
 
 ### 语义 DOM
 
@@ -101,19 +105,21 @@ notification.config(options)   // 实例级全局默认，合入其后每次 ope
 | --- | --- |
 | `--k-notification-bg / -radius / -padding` | `--k-color-bg-elevated` / `--k-border-radius-lg` / `--k-size`（16px） |
 | `--k-notification-accent` | 按 type 取语义色（`--k-color-info/success/error/warning`），图标与进度条共用；无 type 走 `--k-color-primary` |
-| 列宽 / 条间隔 / 缘距 | `16×size`（256px）/ `size`（margin 实现，塌陷动画可归零）/ `size` 或 config top/bottom |
-| 滚动 | 列 `max-height: 100vh − 上下缘距 + 留白带`，超出 `overflow-y: auto`；卡片 `flex-shrink: 0` 钉自然高度（flex 列子项默认可压缩，超高会压扁卡片而非溢出）；溢出列加 `is-scrollable`：显细轨滚动条（fill 阶梯色，Modal body 同款）+ 整列恢复 `pointer-events: auto`；未溢出列滚动条隐藏、列 `pointer-events: none` 不挡背后页面。卡片阴影 = `--k-box-shadow`（antd notification 同款三层匀开淡影），留白带按其外溢逐边取（横 36 / 上 28 / 下 46），负 margin 回补卡片视觉缘距 |
+| 列表宽 / 条间隔 / 缘距 | `16×size`（256px）/ `size`（margin 实现，塌陷动画可归零）/ `size` 或 config top/bottom |
+| 滚动 | 列表 `max-height: 100vh − 上下缘距 + 留白带`，超出 `overflow-y: auto`；卡片 `flex-shrink: 0` 钉自然高度（flex 列子项默认可压缩，超高会压扁卡片而非溢出）；溢出列表加 `is-scrollable`：显细轨滚动条（fill 阶梯色，Modal body 同款）+ 恢复 `pointer-events: auto`；未溢出时滚动条隐藏、列表 `pointer-events: none` 不挡背后页面。卡片阴影 = `--k-box-shadow`（antd notification 同款三层匀开淡影），留白带按其外溢逐边取（横 36 / 上 28 / 下 46），负 margin 回补卡片视觉缘距 |
 | z 层级 | `--k-z-index-notification` |
 
 ## 注意事项
 
+- **按方位分列**：同一方位的通知共用一个列表（即使跨演示打开也只有一个），不同方位各自渲染一个列表；堆叠、滚动、悬停暂停都作用在各自方位的列表上。
 - **动画**（对齐 antd v6）：进场从所在边缘滑入（`k-notification-in`，方向随列）；退场高度塌陷——JS 先锁定当前 `height`，`is-closing` 类把 height/margin/padding/opacity 一并过渡归零，后续条目平滑补位，`transitionend(height)` 后真正移除（320ms 兜底，动画关闭的降级主题也能收口）。
-- **滚动 vs stack**：antd 默认溢出走 stack 收起（悬停展开），本库按可滚动列表实现（用户拍板 2026-11-17；antd v6 list 语义本身含滚动区域）。stack 登记为待办。
+- 悬停通知列（包含卡片间隙）会暂停该列所有可暂停通知的倒计时，列内进度条同步冻结（不只鼠标下那张），移出后从剩余时长继续。单条 `pauseOnHover: false` 始终不暂停（不跟全局走）；单条 `true`（默认）随全局开关实时联动——全局关闭立即恢复计时，全局开启时正在悬停的列也会立即暂停。堆叠列悬停同时展开。
+- **堆叠 vs 滚动**：默认每列 stackLimit=3，超出后较旧卡片叠在后方，悬停整列展开并暂停该列计时；`stackLimit: 0` 回退为平铺 + 列内滚动（原 2026-11-17 方案仍可用）。
 - **同 key 更新**：原位替换、换新内部 id 重挂载——计时从头、进场动画抑制（`is-static`），列表位置不动、不叠条。
 - **pauseOnHover**：悬停同时冻结 JS 关闭计时器与 CSS 进度条动画（离开续跑剩余量），二者严格同步。
 - **进度条随卡片圆角**：贴底 2px 直边条由卡片 `overflow: hidden` + 自身圆角统一裁切。别给 track 单独做 bottom radius——2px 高的盒子做 8~12px 半径会被 CSS 半径缩放规则压到 ~1px，裁不出卡片轮廓（底带处轮廓内收可达 5px+）。
-- 实例 API 只在 KApp 之下可用（拍板③：无全局静态）；Holder 出口 Teleport 到 body 并按契约④携带 `scopeClass`/`data-k-theme`。
-- **滚动交互**（2026-11-17 修正）：未溢出列 `pointer-events: none`、卡片 `auto`（不挡背后页面）；Holder 逐列检测 `scrollHeight > clientHeight`（items/config 变化与窗口 resize 时同步），溢出列加 `is-scrollable` 恢复整列交互——滚轮在条间隔/留白带上、滚动条拖拽均生效，细轨滚动条仅此时可见。
+- 实例 API 只在 KApp 之下可用（拍板③：无全局静态）；文档站由主题在最外层挂一个 `component=false` 的 KApp，各演示共享同一份通知队列，所以跨演示打开的同方位通知进入同一个列表。Holder 出口 Teleport 到 body 并按契约④携带 `scopeClass`/`data-k-theme`。
+- **滚动交互**（2026-11-17 修正）：未溢出列表 `pointer-events: none`、卡片 `auto`（不挡背后页面）；Holder 检测 `scrollHeight > clientHeight`（items/config/位置变化与窗口 resize 时同步），溢出时加 `is-scrollable` 恢复交互——滚轮在条间隔/留白带上、滚动条拖拽均生效，细轨滚动条仅此时可见。
 
 ## 自定义渲染（headless）
 

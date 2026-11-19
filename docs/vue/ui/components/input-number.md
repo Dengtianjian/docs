@@ -27,7 +27,8 @@
 | step | 步长；`precision` 缺省跟随其小数位 | `number` | `1` |
 | precision | 显式小数位（失焦格式化） | `number` | 随 step |
 | controls | 右侧步进列开关 | `boolean` | `true` |
-| size / variant / status / placeholder / disabled / readonly / id | 同 [KInput](./input.md)，透传 | — | — |
+| placeholder | 占位文本 | `string` | `'请输入数值'` |
+| size / variant / status / disabled / readonly / id | 同 [KInput](./input.md)，透传 | — | — |
 
 <CommonProps />
 
@@ -79,7 +80,7 @@ Slots：`render` = 自定义渲染作用域插槽（scope 见文末「自定义�
 | max | `number \| undefined` | 上限原值；同上 |
 | step | `number` | 步长（缺省 1）；stepUp/stepDown 的增量，也是 precision 缺省推导源 |
 | precision | `number` | **解析后的小数位**：`precision ?? step 的小数位数`（`String(step)` 小数点后长度，无小数点为 0）；落定格式化 `toFixed(precision)` 补零用它 |
-| placeholder | `string \| undefined` | 占位文本原值；默认渲染透传内层 KInput，自绘自绑 |
+| placeholder | `string` | 占位文本（已应用默认 `'请输入数值'`）；默认渲染透传内层 KInput，自绘自绑 |
 | disabled | `boolean \| undefined` | 禁用 prop 原值；步进守卫（stepBy）与 showStep 合成消费它；自绘输入框需自绑原生 disabled |
 | readonly | `boolean \| undefined` | 只读 prop 原值；步进守卫与 showStep 合成消费它（只读仍可选可聚焦）；自绘输入框需自绑原生 readonly |
 | controls | `boolean` | 步进列开关 prop 原值（缺省 true）；实际显隐看 showStep 合成值；关掉后键盘 ↑↓ 仍可用 |

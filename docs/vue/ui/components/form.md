@@ -22,8 +22,10 @@
 | --- | --- | --- | --- |
 | model | 数据源对象（字段值按 `name` 取） | `Record<string, unknown>` | — |
 | rules | 表级规则：`{ [name]: Rule \| Rule[] }`（async-validator 语义；字段级 `KFormItem rules` 覆盖） | `Record<string, unknown>` | — |
-| layout | `'vertical' \| 'horizontal' \| 'inline'` | — | `'vertical'` |
-| labelWidth / labelAlign / colon | horizontal/inline 标签列 | `number\|string` / `'left'\|'right'` / `boolean` | `100` / `right` / `true` |
+| layout | 布局；支持断点对象/字符串 | `'vertical' \| 'horizontal' \| 'inline' \| Partial<Record<Breakpoint, Layout>> \| string` | `'vertical'` |
+| labelWidth | horizontal/inline 标签宽；支持断点对象/字符串 | `number \| string \| Partial<Record<Breakpoint, number \| string>>` | `100` |
+| labelAlign | 标签对齐；支持断点对象/字符串 | `'left' \| 'right' \| Partial<Record<Breakpoint, 'left' \| 'right'>> \| string` | `'right'` |
+| colon | 标签后冒号；支持断点对象/字符串（字符串值 `true`/`false`） | `boolean \| Partial<Record<Breakpoint, boolean>> \| string` | `true` |
 
 <CommonProps />
 
@@ -70,7 +72,9 @@ Expose：`validate(): Promise<void>`（失败 reject `{errors, values}`）、`re
 
 - **整表校验 = 逐字段 Promise.allSettled 汇总**（校验逻辑全部下沉 FormItem），不存在「表级 schema 与字段独有规则两套回显路径」的分叉。
 - 字段 rules 只在 FormItem 侧合并一次：`props.rules ?? form.rules[name]`。
-- 布局变量链：`--k-form-label-width`（表级 style 注入）→ `--k-form-item-label-width`（字段级覆盖）；gap = `--k-form-gap`(size-lg)。
+- 响应式表单属性（layout / labelWidth / labelAlign / colon）的完整演示见 [响应式取值演示](../playground/responsive-form.md)。
+
+- 布局变量链：`--k-form-label-width`（表级 style 注入）→ `--k-form-item-label-width`（字段级覆盖）；gap = `--k-form-gap`(size-lg)。响应式表单属性（layout / labelWidth / labelAlign / colon）由共享断点解析，语法见 [响应式取值](../design/responsive-values.md)；`model` / `rules` 是数据，不做断点解析。
 - **warningOnly 现状**：async-validator 4.x 的 `warningOnly` 也会走 reject 通道，本实现按「error 才置失败」判定 —— `warningOnly` 规则失败时字段仍计入失败（语义待 P2 复盘拍板，暂按 error 处理并保留规则透传）。
 
 ## 自定义渲染（headless）
@@ -84,7 +88,7 @@ Expose：`validate(): Promise<void>`（失败 reject `{errors, values}`）、`re
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
 | layout | `'vertical' \| 'horizontal' \| 'inline'` | 布局形态（缺省 `'vertical'`）；默认渲染映射 `.k-form--{layout}` 类（纵向列 / 横向标签列 / 横排换行），自绘据此排字段行 |
-| labelWidth | `string` | **归一化后的标签宽 CSS 值**（number → `{n}px`，string 原样；缺省 `'100px'`）；已经变量形式并入 rootAttrs.style，自绘直取此值定标签列宽亦可 |
+| labelWidth | `string` | **解析后的标签宽 CSS 值**（响应式对象/字符串按当前断点取值；number → `{n}px`，string 原样；缺省 `'100px'`）；已经变量形式并入 rootAttrs.style，自绘直取此值定标签列宽亦可 |
 | labelAlign | `'left' \| 'right'` | 标签对齐（缺省 `'right'`）；默认渲染映射 `.k-form--label-{align}` 类，仅 horizontal/inline 有标签列时生效，自绘自映射 |
 | colon | `boolean` | 标签后冒号开关（缺省 true）；经 FORM_KEY 注入为 FormItem scope 的 `colon`，自绘标签行消费 |
 | model | `Record<string, unknown> \| undefined` | 数据源对象原值（字段值按 name 取）；validate 的 finish/finishFailed 回传它的浅拷贝；控件各自 v-model 到 `model.xxx`，KForm 不代管值 |

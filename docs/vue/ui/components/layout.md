@@ -13,6 +13,8 @@
 
 <Demo path="layout/sider" title="左右布局" desc="嵌套一个 `has-sider` 的 KLayout 即得经典后台骨架；Sider 固定宽、Content 自适应并可滚动。" />
 
+<Demo path="layout/responsive-sider" title="响应式 Sider 宽度" desc="`width` 支持对象或字符串 `'xs:140 sm:180 md:208'`，由共享断点解析；拖动窗口宽度观察。" />
+
 <Demo path="layout/render" title="自定义渲染（headless）" desc="五子件各自 headless：高度/宽度变量随 rootAttrs 注入（显式传值才落），骨架视觉全自绘。" />
 
 ## API
@@ -30,7 +32,7 @@
 | 组件 | 属性 | 说明 | 默认值 |
 | --- | --- | --- | --- |
 | KLayoutHeader | height | 高度（px） | 64（CSS 回退） |
-| KLayoutSider | width | 宽度（px） | 208 = 16×13 模度（CSS 回退） |
+| KLayoutSider | width | 宽度（px）；支持断点对象或字符串 | 208 = 16×13 模度（CSS 回退） |
 | KLayoutFooter | height | 高度（px） | 64（CSS 回退） |
 | KLayoutContent | — | 无专属 props，`main` 语义 + `overflow:auto` | — |
 
@@ -99,7 +101,7 @@
 
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
-| width | `number \| undefined` | 宽度 prop 原始值（px）；`undefined` = 未传，走 createTheme（`components.KLayoutSider.width`）→ CSS 回退 `208px`（16×13 模度）。折叠交互不存在（P4 Menu 场景），无相关状态 |
+| width | `number \| undefined` | 解析后的宽度（px）；响应式对象/字符串按当前断点取值，全缺档时为 `undefined`（走 createTheme 组件令牌 → CSS 回退 `208px`）。折叠交互不存在（P4 Menu 场景），无相关状态 |
 
 #### 绑定包（spread 到自绘节点才继承）
 

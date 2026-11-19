@@ -7,9 +7,10 @@ import KSpace from 'kit/vue/ui/components/Space/Space.vue'
 const { notification } = useKApp()!
 
 function burst(n: number) {
+  notification!.config({ stackLimit: 0 })
   for (let i = 1; i <= n; i++) {
     notification!.open({
-      title: `系统通知 ${i}`,
+      title: '系统通知',
       description: `第 ${i} 条消息，用于演示列超出视口高度后在列内滚动。`,
       duration: 60,
     })
@@ -26,8 +27,7 @@ function burst(n: number) {
       <KButton variant="text" type="link" @click="notification!.destroyAll()">清空</KButton>
     </KSpace>
     <KText type="secondary">
-      本库差异登记：antd 默认溢出走 stack 收起（悬停展开），本库按可滚动列表实现（v6 list 语义含滚动区域）；
-      maxCount 超限直接挤掉最旧一条（无退场动画）。
+      本示例关闭堆叠（stackLimit: 0），按可滚动列表实现；默认 stackLimit=3 时同方位的列表会堆叠收起，见上方「堆叠收起」演示。maxCount 超限直接挤掉最旧一条（无退场动画）。
     </KText>
   </KSpace>
 </template>

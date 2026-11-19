@@ -207,6 +207,13 @@ export default defineConfig({
                     { text: "KPreview 预览", link: "/vue/ui/components/preview" },
                     { text: "KSortable 拖拽排序", link: "/vue/ui/components/sortable" }
                   ]
+                },
+                {
+                  text: "数据展示（P3）",
+                  collapsed: false,
+                  items: [
+                    { text: "KTag 标签", link: "/vue/ui/components/tag" }
+                  ]
                 }
               ]
             }

@@ -9,6 +9,8 @@
 
 ## 代码演示
 
+<Demo path="pagination/sizes" title="三档尺寸" desc="`size` 三档：sm / md / lg，页码按钮、总条数与内部选择器同步缩放。" />
+
 <Demo path="pagination/basic" title="基础 / 受控 / 每页条数 / 跳转 / 简单 / 禁用" desc="`v-model:current` + `v-model:page-size` 受控；`show-total` / `show-size-changer` / `show-quick-jumper` 组合；`simple` 只保留前后与页码摘要；`hide-on-single-page` 单页时隐藏；`disabled` 整体禁用。" />
 
 ## API
@@ -27,7 +29,7 @@
 | simple | 简单模式（前后 + 页码摘要） | `boolean` | `false` |
 | disabled | 整体禁用 | `boolean` | `false` |
 | hideOnSinglePage | 只有一页时隐藏 | `boolean` | `false` |
-| size | 尺寸 | `'sm' \| 'md'` | `'md'` |
+| size | 尺寸 | `'sm' \| 'md' \| 'lg'` | `'md'` |
 | classNames / styles | 部件（`root / total / item / active / ellipsis / prev / next / sizeChanger / quickJumper`） | — | — |
 
 <CommonProps />

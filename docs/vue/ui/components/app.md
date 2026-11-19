@@ -5,7 +5,7 @@
 ## 何时使用
 
 - 挂在应用根（antd 同款顺序：`ConfigProvider` 在外、`App` 在内），让页面里的**普通 HTML 文字**也继承 K UI 字体/文字色，而不是只有组件本身有样式；
-- 消息 / 通知 / 确认框等全局反馈（P2b 已落地）以 KApp 为队列宿主：`useKApp().message/notification/modal` 实例 API 只在 KApp 之下存在（拍板③：无全局静态）；
+- 消息 / 通知 / 确认框等全局反馈（P2b 已落地）以 KApp 为队列宿主：`useKApp().message/notification/modal/drawer` 实例 API 只在 KApp 之下存在（拍板③：无全局静态）；
 - 微前端块级隔离：每个块挂一个 KApp，与宿主文字样式互不干扰。
 
 ## 代码演示
@@ -32,7 +32,7 @@
 
 | 函数 | 说明 |
 | --- | --- |
-| `useKApp()` | 返回 `{ root, message?, notification?, modal? }`；未挂 KApp 时为 `undefined`。`message/notification/modal` 为实例 API（详见 [KModal](./modal.md)、[KMessage](./message.md)、[KNotification](./notification.md)），队列 Holder 随 KApp 挂载与销毁 |
+| `useKApp()` | 返回 `{ root, message?, notification?, modal?, drawer? }`；未挂 KApp 时为 `undefined`。`message/notification/modal/drawer` 为实例 API（详见 [KModal](./modal.md)、[KMessage](./message.md)、[KNotification](./notification.md)、[KDrawer](./drawer.md)），队列 Holder 随 KApp 挂载与销毁 |
 
 ## 注意事项
 
@@ -44,6 +44,9 @@
 
 ## 规格附录（实现决策，面向贡献者）
 
-- P1 职责 = ①`.k-app` 文字 token 继承（color/font-family/font-size/line-height 四项）②`root` 元素上下文；P2b 反馈批把 `message/notification/modal` 实例挂进同一 context（不改注入 key），KApp 模板内常驻三个 Holder（队列空时零 DOM）；想绕开 KApp 直接渲染队列，可 `createModalService()` 等工厂自建——工厂本身暂不出 index 门面（公开面 = 实例 API）；
-- 上下文走 `provide/inject`（Symbol key），是组件树注入、不穿 DOM——Teleport 出口组件若需应用根，在 setup 期取 `useKApp()` 即可（注入沿组件父链，不受 teleport DOM 位置影响）；
+- P1 职责 = ①`.k-app` 文字 token 继承（color/font-family/font-size/line-height 四项）②`root` 元素上下文；
+  - P2b 反馈批把 `message/notification/modal` 实例挂进同一 context（不改注入 key），KApp 模板内常驻四个 Holder（队列空时零 DOM）；
+  - 想绕开 KApp 直接渲染队列，可 `createModalService()` 等工厂自建——工厂本身暂不出 index 门面（公开面 = 实例 API）；
+- 上下文走 `provide/inject`（Symbol key），是组件树注入、不穿 DOM；
+  - Teleport 出口组件若需应用根，在 setup 期取 `useKApp()` 即可（注入沿组件父链，不受 teleport DOM 位置影响）；
 - `root` 声明类型是 `HTMLElement`：`component` 传自定义组件时 ref 落组件实例，请传原生标签名。

@@ -5,7 +5,7 @@
 ## 何时使用
 
 - 应用外壳、文档页、设置面板等「头-体-脚 / 左树右表」结构；
-- 纯结构件（flex 骨架 + 背景分层），**不含任何交互逻辑**——Sider 折叠属 P4 Menu 场景，本批不提供（避免半成品交互）。
+- 结构件（flex 骨架 + 背景分层）；Sider 在 P4 起支持 `collapsible` 折叠，并向内部 [KMenu](./menu.md) 自动提供折叠态。
 
 ## 代码演示
 
@@ -33,6 +33,11 @@
 | --- | --- | --- | --- |
 | KLayoutHeader | height | 高度（px） | 64（CSS 回退） |
 | KLayoutSider | width | 宽度（px）；支持断点对象或字符串 | 208 = 16×13 模度（CSS 回退） |
+| KLayoutSider | collapsible | 开启折叠：渲染触发器 + 提供 Sider context | `false` |
+| KLayoutSider | collapsed | 受控折叠态；不传则组件自管 | — |
+| KLayoutSider | defaultCollapsed | 非受控初始折叠态 | `false` |
+| KLayoutSider | collapsedWidth | 折叠宽度 | `64` |
+| KLayoutSider | trigger | 是否显示触发器（`collapsible` 时生效） | `true` |
 | KLayoutFooter | height | 高度（px） | 64（CSS 回退） |
 | KLayoutContent | — | 无专属 props，`main` 语义 + `overflow:auto` | — |
 
@@ -45,9 +50,17 @@
 | 插槽名 | 说明 |
 | --- | --- |
 | default | 五件套（KLayout / Header / Sider / Content / Footer）均为默认插槽放各自内容 |
+| trigger | `KLayoutSider`：折叠触发器，scope `{ collapsed, toggle }`；提供时替代默认按钮 |
 | render | 自定义渲染作用域插槽（五子件各自支持），scope 见文末「自定义渲染」节；提供时整件替换 |
 
-无事件（纯结构件，Sider 折叠留 P4 Menu 场景）。
+### Events
+
+| 组件 | 事件 | 说明 | 参数 |
+| --- | --- | --- | --- |
+| KLayoutSider | collapse | 折叠状态变化 | `collapsed: boolean` |
+| KLayoutSider | update:collapsed | 受控折叠更新 | `collapsed: boolean` |
+
+KLayout / Header / Content / Footer 仍无事件（纯结构件）。
 
 ## 主题定制（部件变量）
 
@@ -55,13 +68,14 @@
 | --- | --- | --- |
 | `--k-layout-header-height` | `64px` | prop 显式传值才落内联；主题层用 `components.KLayoutHeader.height` 覆盖 |
 | `--k-layout-sider-width` | `208px` | 同上（`KLayoutSider.width`） |
+| `--k-layout-sider-collapsed-width` | `64px` | 折叠宽度（`KLayoutSider.collapsedWidth`） |
 | `--k-layout-footer-height` | `64px` | 同上（`KLayoutFooter.height`） |
 
 背景分层：Layout = `--k-color-bg-layout`，Header/Sider/Footer = `--k-color-bg-container`，Content 透明——亮暗下自动成立。
 
 ## 自定义渲染（headless）
 
-双通道 `#render` 插槽（优先）/ `render` prop，通用契约见 [headless 自定义渲染](../headless.md)。五子件各有 scope（入口导出），均含 `rootAttrs` 与 `slots`。纯结构件零行为，无 ref / 动作组；各 scope 逐字段如下（接口没有的组不列）：
+双通道 `#render` 插槽（优先）/ `render` prop，通用契约见 [headless 自定义渲染](../headless.md)。五子件各有 scope（入口导出），均含 `rootAttrs` 与 `slots`；Sider 折叠提供 `toggle` 动作，其余子件零行为。各 scope 逐字段如下（接口没有的组不列）：
 
 **`KLayoutRenderScope`**：
 
@@ -101,13 +115,16 @@
 
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
-| width | `number \| undefined` | 解析后的宽度（px）；响应式对象/字符串按当前断点取值，全缺档时为 `undefined`（走 createTheme 组件令牌 → CSS 回退 `208px`）。折叠交互不存在（P4 Menu 场景），无相关状态 |
+| width | `number \| undefined` | 解析后的宽度（px）；响应式对象/字符串按当前断点取值，全缺档时为 `undefined`（走 createTheme 组件令牌 → CSS 回退 `208px`） |
+| collapsed | `boolean` | 当前折叠态 |
+| collapsible | `boolean` | 是否开启折叠 |
+| toggle | `() => void` | 切换折叠（受控时只发事件） |
 
 #### 绑定包（spread 到自绘节点才继承）
 
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
-| rootAttrs | `Record<string, unknown>` | 根节点：`data-part="root"` + `style`（**显式传 width 才注入** `--k-layout-sider-width: {width}px`，缺省为空对象）。**不含任何 class**——`k-layout-sider` 的 `flex:none; width:var(--k-layout-sider-width, 208px); overflow:auto` 与 `--k-color-bg-container` 背景全自绘；默认渲染根为 `aside` 地标元素；`classNames`/`styles` 只作用于默认渲染 |
+| rootAttrs | `Record<string, unknown>` | 根节点：`data-part="root"` + `style`（**显式传 width / collapsedWidth 才注入** `--k-layout-sider-width` / `--k-layout-sider-collapsed-width`，缺省为空对象）。**不含任何 class**——`k-layout-sider` 的宽度、折叠 transition、`overflow` 与 `--k-color-bg-container` 背景全自绘；默认渲染根为 `aside` 地标元素；`classNames`/`styles` 只作用于默认渲染 |
 
 另有 `slots`（`ReturnType<typeof useSlots>`）：默认渲染的插槽集合（`default` = 侧栏内容），自绘时可按需取用，如 `ctx.slots.default?.()`。
 

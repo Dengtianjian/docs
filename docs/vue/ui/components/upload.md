@@ -114,6 +114,8 @@
 
 ## 注意事项
 
+- 操作项（预览/重试/删除/重新上传/文件名、失败蒙层）均支持 Tab 聚焦与 Enter/Space 触发，并带 aria-label 与 focus-visible 描边。
+
 - **组件不发请求**：不传 `upload` 时文件项直接落 error 并 console.warn；真实上传请用 fetch/axios（`signal` 已接入，删除/卸载自动 abort）。
 - `upload` 的 `onSuccess(response)` 响应映射：`string` 视为 `url`；对象取 `url / thumbUrl / name / size` 四字段合并进文件项。
 - 文件项状态归一：外部传入 `finished` 视为 `done`，缺省状态视为 `done`；`uid` 缺省按 `id` 或序号兜底。

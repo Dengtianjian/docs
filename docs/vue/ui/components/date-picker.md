@@ -19,6 +19,8 @@
 
 <Demo path="date-picker/basic" title="基础使用" desc="值为毫秒时间戳；clearable、disabled、size、variant、status 均可组合使用。" />
 
+<Demo path="date-picker/input" title="手动输入" desc="触发器默认可编辑：按 format / 默认格式严格解析，Enter 或失焦提交；非法或禁用输入回退上一次回显。inputReadonly 可恢复只读。"/>
+
 <Demo path="date-picker/pickers" title="五种 picker" desc="支持 date、week、month、quarter、year 单选；每种模式的 v-model 仍是周期起点时间戳。" />
 
 <Demo path="date-picker/limit" title="范围与禁用" desc="min/max 按 picker 粒度比较；disabledDate 接收当前面板粒度的周期起点；format 只改变回显。" />
@@ -47,6 +49,7 @@
 | clearable | 是否显示清除按钮 | `boolean` | `false` |
 | inline | 面板内联常驻（无触发器与弹层；`open`/`close` 为空操作） | `boolean` | `false` |
 | showTime | 选择时分秒；点日期不自动提交，需点「确定」 | `boolean` | `false` |
+| inputReadonly | 触发器只读；默认允许手动输入并解析 | `boolean` | `false` |
 | minuteStep | 分钟步长（showTime 时生效，取值 1-60） | `number` | `1` |
 | multiple | 多选日期；与 showTime 互斥（多选时隐藏时间列） | `boolean` | `false` |
 | presets | 左侧快捷项 `{ label, value }`，点击提交并关闭 | `KDatePickerPreset[]` | — |
@@ -105,6 +108,7 @@
 - 弹层复用 popupContainer 契约：缺省挂到 body 使用 fixed；传入 HTMLElement 或函数返回 HTMLElement 时使用容器内 absolute。
 - KFormItem 会自动合并 status，并在日期改变、触发器失焦或关闭时参与字段校验。
 - `format` 只影响触发器回显，不影响时间戳的周期语义。
+- **手动输入**：默认可编辑；候选格式 = `format`（若传）+ 默认 picker 格式 + 时间变体（showTime 时 `YYYY-MM-DD HH:mm[:ss]`、`YYYY/MM/DD HH:mm[:ss]`）+ date 的 `YYYY/MM/DD`。严格解析（dayjs strict），命中禁用日期或 min/max 时回退；multiple 强制只读。
 - `minuteStep`：分钟候选按步长生成；打开已有值时向下对齐到最近档位，点「确定」提交对齐后的时间。
 - `multiple`：v-model 为时间戳数组，点格切换选中且面板不关闭，回显按时间升序逗号拼接；「今天」切换当天、「清除」置空数组；与 `showTime` 互斥，多选时时间列隐藏。
 - `presets`：面板左侧列表，`value` 支持时间戳或可解析字符串；点击按当前 picker 粒度提交并关闭，多选模式则置为单个选中值。移动端预设改为顶部横滚行。
@@ -136,6 +140,7 @@
 | flipped | `boolean` | 面板是否相对触发器上翻 |
 | hasValue | `boolean` | 是否有已选值 |
 | displayText | `string` | 触发器回显文本（showTime 打开中显示草稿） |
+| inputText / editing / inputReadonly | `string` / `boolean` / `boolean` | 触发器当前输入文本、是否偏离回显、是否只读；`commitInput()` 可手动提交解析结果 |
 | showTime / draftDate / canConfirmTime | `boolean` / `number \| null` / `boolean` | 时间 UI（multiple 时恒为 false）、草稿时间戳、确定可用性 |
 | timePart / updateTimePart | `(unit) => number` / `(unit, value) => void` | 草稿时/分/秒读写 |
 | hours / minutes / seconds | `number[]` | 时间下拉候选（minutes 已按 minuteStep 过滤） |

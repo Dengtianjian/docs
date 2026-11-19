@@ -9,81 +9,93 @@
 
 ## 代码演示
 
-<Demo path="table/basic" title="基础表格" :desc="['`columns` + `data-source` + `row-key`。', '`align` 控制列对齐，默认按 `dataIndex` 取值展示。']" />
+<Demo path="table/basic" title="基础表格" :desc="['`columns` + `data-source` + `row-key` 即可渲染。', '默认按 `dataIndex` 取值展示；`align` 只作用于表体，表头统一左对齐。']" />
 
 <Demo path="table/sizes" title="三种尺寸" :desc="['`size` 三档：sm 紧凑（8×12）、md 默认（12×16）、lg 宽松（16×20）。', '只影响单元格密度，不影响分页器与空态尺寸。']" />
 
-<Demo path="table/header-group" title="表头分组" :desc="['列的 `children` 生成多级表头：分组列 `colspan` 覆盖叶子数量，叶子列 `rowspan` 补齐层高。', '排序与筛选只挂在叶子列上。']" />
+<Demo path="table/header-group" title="表头分组" :desc="['列的 `children` 生成多级表头：分组列 `colspan` 覆盖叶子数量，叶子列 `rowspan` 补齐层高。', '排序与筛选只挂在叶子列上。', '组合限制：分组跨固定与非固定边界时整组不参与吸边，需把分组整体放在同侧固定区。']" />
 
-<Demo path="table/header-group-sort" title="分组表头 + 排序/筛选 + 滚动" :desc="['多级表头里同时放可排序列与带筛选项的列。', '配合横向滚动、粘性表头、左右固定列，观察滚动时排序图标与固定列的稳定性。']" />
+<Demo path="table/header-group-sort" title="分组表头 + 排序/筛选 + 滚动" :desc="['多级表头里同时放可排序列与带筛选项的列。', '配合横向滚动、粘性表头、左右固定列观察图标与吸附稳定性。', '组合限制：固定列必须连续；分组跨边界时该组退回非吸边。']" />
 
-<Demo path="table/expandable" title="可展开行" :desc="['配合 `#expanded` 插槽出现展开列。', '`v-model:expandedRowKeys` 受控、`defaultExpandAll` 默认全展开、`rowExpandable` 指定行是否可展开，展开内容整行跨列。']" />
+<Demo path="table/expandable" title="可展开行" :desc="['配合 `#expanded` 插槽出现 44px 展开列。', '`v-model:expandedRowKeys` 受控，`defaultExpandAll` 默认全展开，`rowExpandable` 指定可展开行。', '组合限制：固定行不显示展开按钮；树形模式改用首列箭头，不再占独立展开列。']" />
 
-<Demo path="table/expand-component" title="行展开 · 组件渲染" desc="`expandedRender` 返回 `h(组件)`：展开内容是一个真实组件实例，带 props 与本地状态（点击「标记关注」计数递增）。" />
+<Demo path="table/expand-component" title="行展开 · 组件渲染" :desc="['`expandedRender` 返回 `h(组件)`：展开内容是真实组件实例，带 props 与本地状态。', '示例点「标记关注」在组件内部计数。', '某行返回 `undefined` 时回退 `#expanded` 插槽。']" />
 
-<Demo path="table/expand-slot" title="行展开 · 插槽渲染" desc="`#expanded` 插槽拿到 `{ row, index, rowKey }`，可直接用模板写结构化内容；`expandedRender` 对某行返回 `undefined` 时也会回退到这里。" />
+<Demo path="table/expand-slot" title="行展开 · 插槽渲染" :desc="['`#expanded` 插槽拿到 `{ row, index, rowKey }`，可直接用模板写结构化内容。', '与 `expandedRender` 可按行混用：函数优先，`undefined` 回退插槽，`null` 视为空内容。']" />
 
-<Demo path="table/span" title="单元格合并" desc="`spanMethod` 按行与列返回 `rowSpan` / `colSpan`：部门列纵向合并同组行、周会行横向合并三周。合并起点之外的单元格自动不渲染，左右固定列浮层同步同一份合并计划。" />
+<Demo path="table/nested" title="嵌套子表格" :desc="['展开行里再放一张 KTable：子表拥有自己的列、排序、选中态与汇总行。', '父子表的排序与状态互不影响；展开行高度按子表实际内容自适应。', '组合限制：父表启用 `spanMethod` 时展开内容会挂到合并组末尾，子表仍按原始行数据渲染。', '组合限制：子表若再用固定列或虚拟滚动，需要自己的数字 `scroll.x` / `scroll.y`，不要复用父表容器高度。']" />
 
-<Demo path="table/span-basic" title="合并 · 纵向" desc="只有 rowSpan：部门列按连续相同值合并，其余列逐行显示，用于检查行高、行分隔线与斑马纹。" />
+<Demo path="table/tree" title="树形数据" :desc="['`tree` 把 `children` 展开为子行：缩进与箭头在首个可见数据列，不再单独占 44px 展开列。', '展开状态与行详情共用 `expandedRowKeys`；筛选保留命中行祖先链并强制展开。', '组合限制：不与 `spanMethod` 的固定行数合并混用，rowSpan 必须按当前展开后的可见行计算；层级列通常无需纵向合并。', '组合限制：`rowPinning` 只能固定顶层扁平行，固定带子节点的行后子树不再展示；分页切的是可见扁平行，父子可能跨页。']" />
 
-<Demo path="table/span-colspan" title="合并 · 横向" desc="只有 colSpan：里程碑行把两列合成一个说明格，不改变行高。" />
+<Demo path="table/tree-virtual" title="树形 + 虚拟滚动" :desc="['1060 行三级数据同时开启 `tree` 与 `virtual`。', '展开/收起只改变窗口行并重建前缀和，快速滚动主体与固定列不会错行。', '组合限制：同样避开固定行数合并与固定带子节点的行；合并需按可见行计算。']" />
 
-<Demo path="table/span-cross-region" title="合并 · 跨固定区（退回粘性）" desc="合并跨越左固定列与中区时无法用浮层承载，整表退回粘性单元格模式并在 dev 告警；横向滚动观察固定列吸附与可能的漂移。" />
+<Demo path="table/span" title="单元格合并" :desc="['`spanMethod` 按行与列返回 `rowSpan` / `colSpan`，覆盖格自动不再渲染。', '左右固定列浮层与主表共用同一份合并计划。', '组合限制：合并跨越左/右固定区与中区时无法用浮层承载，整表退回粘性单元格模式并在 dev 告警。']" />
 
-<Demo path="table/span-expand-bottom" title="合并 · 展开内容挂在组尾" desc="`expanded-placement=&#39;bottom&#39;`：展开内容追加到所属合并组的末尾整行（跨全部列），不是整表底部；部门合并保持生效。" />
+<Demo path="table/span-basic" title="合并 · 纵向" :desc="['只有 rowSpan：部门列按连续相同值合并。', '其余列逐行显示，用于检查行高、行分隔线与斑马纹。', '组合限制：rowSpan 必须按当前可见行计算，与树形展开、筛选、分页组合时不能写死行数。']" />
 
-<Demo path="table/span-expand-component" title="合并 · 展开（组件渲染）" desc="合并 + `expandedRender` 返回 `h(组件)`：同组两行（成员 2、3）都展开，内容按行序追加到研发部组尾；「标记完成」切换组件内部状态。" />
+<Demo path="table/span-colspan" title="合并 · 横向" :desc="['只有 colSpan：里程碑行把两列合成一个说明格。', '不改变行高，可与虚拟滚动、变量行高叠加。']" />
 
-<Demo path="table/span-expand-slot" title="合并 · 展开（插槽渲染）" desc="合并 + `#expanded` 插槽，未传 `expandedPlacement`：检测到 rowSpan 自动按组尾追加；插槽作用域仍是原始行数据。" />
+<Demo path="table/span-cross-region" title="合并 · 跨固定区（退回粘性）" :desc="['合并起点在左固定列、覆盖到中区时，一张浮层表无法承载跨表单元格。', '整表退回粘性单元格模式并在 dev 告警。', '组合限制：这是降级路径，不推荐混用；固定列的抗抖动与性能会相应回退。']" />
 
-<Demo path="table/span-expand-mixed" title="合并 · 展开（按行混用）" desc="同一张表按行选择渲染方式：成员 2 由 `expandedRender` 返回 `h()` 节点，成员 3 返回组件，成员 5 返回 `undefined` 回退到 `#expanded` 插槽；三块内容各自追加到所属合并组尾部。" />
+<Demo path="table/span-expand-bottom" title="合并 · 展开内容挂在组尾" :desc="['`expanded-placement` 设为 `bottom`：展开内容追加到所属合并组的末尾整行（跨全部列），不是整表底部。', '同一组多行展开按展示顺序追加，部门合并保持生效。', '组合限制：未传 `spanMethod` 时 `bottom` 回退 `inline` 并 dev 告警。']" />
 
-<Demo path="table/span-virtual" title="合并 · 虚拟滚动（colSpan）" desc="400 行 + 虚拟滚动 + 横向合并：colSpan 不改变行高，虚拟窗口保持生效。" />
+<Demo path="table/span-expand-component" title="合并 · 展开（组件渲染）" :desc="['合并 + `expandedRender` 返回 `h(组件)`。', '同组成员 2、3 都展开时，内容按行序追加到研发部组尾。', '「标记完成」切换组件内部状态。']" />
 
-<Demo path="table/span-states" title="合并 · 斑马纹 / 边框 / 固定行" desc="合并与斑马纹、四类边框开关、固定行同时出现：固定行不参与合并，合并格底色跟随起始行。" />
+<Demo path="table/span-expand-slot" title="合并 · 展开（插槽渲染）" :desc="['合并 + `#expanded` 插槽，未显式传 `expandedPlacement`。', '检测到 rowSpan 时自动按组尾追加；插槽作用域仍是原始行数据。']" />
 
-<Demo path="table/column-visibility" title="列显隐" :desc="['`columnSetting` 显示内置「列设置」按钮。', '`v-model:columnVisibility` 可受控。', '`hidden` 静态隐藏，`hideable: false` 锁定列，分组列不可单独隐藏。']" />
+<Demo path="table/span-expand-mixed" title="合并 · 展开（按行混用）" :desc="['同一张表按行选择渲染方式：成员 2 由 `expandedRender` 返回 `h()` 节点，成员 3 返回组件，成员 5 返回 `undefined` 回退插槽。', '三块内容各自追加到所属合并组尾部。']" />
 
-<Demo path="table/ellipsis" title="省略与提示" :desc="['`ellipsis` 单行截断。', '加上 `ellipsisTooltip` 后仅在真实溢出时用 KTooltip 显示全文。', '存在省略列时表格自动切换为固定布局，建议给出列宽。']" />
+<Demo path="table/span-virtual" title="合并 · 虚拟滚动（colSpan）" :desc="['400 行 + 虚拟滚动 + 横向合并（colSpan）。', 'colSpan 不改变行高，虚拟窗口保持生效。']" />
 
-<Demo path="table/sort-filter" title="排序与筛选" :desc="['列 `sortable` 点击表头循环 升序 → 降序 → 取消。', '`filters` 在表头展开多选面板，`filterMultiple=false` 为单选。', '筛选与排序可叠加。']" />
+<Demo path="table/span-states" title="合并 · 斑马纹 / 边框 / 固定行" :desc="['合并与斑马纹、外框/行线/列线、固定行同时出现。', '固定行不参与合并；合并格底色跟随起始行，被覆盖行 hover 不点亮合并格。']" />
 
-<Demo path="table/selection" title="多选" :desc="['`rowSelection` 默认 checkbox 多选，开启当前页全选。', '`getCheckboxProps` 禁用不可选行。', '`onChange` / `selectionChange` 回传 keys 与行数据。']" />
+<Demo path="table/column-visibility" title="列显隐" :desc="['`columnSetting` 显示内置「列设置」按钮。', '`v-model:columnVisibility` 可受控；`hidden` 静态隐藏，`hideable: false` 锁定列。', '组合限制：分组列不可单独隐藏；至少保留一列可见。']" />
 
-<Demo path="table/selection-single" title="单选" :desc="['`rowSelection.type=\'radio\'` 切换为单选列：表头不再出现全选，点击只保留一个 key。', '禁用行同样通过 `getCheckboxProps` 控制。']" />
+<Demo path="table/ellipsis" title="省略与提示" :desc="['`ellipsis` 单行截断。', '加 `ellipsisTooltip` 后仅在真实溢出时用 KTooltip 显示全文。', '组合限制：存在省略列时表格自动切换为固定布局，建议同时给列宽。']" />
 
-<Demo path="table/fixed" title="固定列 + 粘性表头" :desc="['`fixed: \'left\' / \'right\'` 需配合数字 `width`。', '`scroll.x` 横向滚动、`scroll.y` 限制高度并让表头吸顶。']" />
+<Demo path="table/sort-filter" title="排序与筛选" :desc="['列 `sortable` 点击循环：升序 → 降序 → 取消。', '`filters` 在表头展开多选面板，`filterMultiple=false` 为单选。', '排序与筛选可叠加；树形下排序只作用于同级。']" />
 
-<Demo path="table/fixed-stacked" title="堆叠固定列" :desc="['同侧多列按 `width` 依次累加偏移。', '选择列 44px 自动计入左侧偏移。', '固定列需连续，跨列分组不能同时跨固定与非固定边界。']" />
+<Demo path="table/selection" title="多选" :desc="['`rowSelection` 默认 checkbox 多选，开启当前页全选。', '`getCheckboxProps` 禁用不可选行，`selectionChange` 回传 keys 与行数据。', '组合限制：选择只作用于当前页，跨页需受控维护 `selectedRowKeys`；树形选择不级联。']" />
 
-<Demo path="table/pinned-rows" title="固定行堆叠 × 固定列堆叠" :desc="['`rowPinning` 指定 top / bottom 行，与左右固定列同时存在：横向滚动时列堆叠固定、纵向滚动时行堆叠固定。', '固定行不受筛选、排序与分页影响。', '滚动离开原位才出现分隔阴影，回到顶部/底部即消失。']" />
+<Demo path="table/selection-single" title="单选" :desc="['`rowSelection.type` 设为 `radio` 切换单选：表头不再出现全选。', '点击只保留一个 key，禁用行同样通过 `getCheckboxProps` 控制。']" />
 
-<Demo path="table/virtual" title="虚拟滚动（千行）" :desc="['`virtual` 开启后只渲染可视窗口内的行，主体与左右固定列浮层共用同一窗口。', '行高一致时窗口最稳定；出现展开行时自动退回全量渲染。']" />
+<Demo path="table/fixed" title="固定列 + 粘性表头" :desc="['`fixed` 取 `left` / `right`，需配合数字 `width`。', '`scroll.x` 横向滚动，`scroll.y` 限制高度并让表头吸顶。', '组合限制：固定列需与数字 `scroll.x` 搭配，同侧固定列必须连续。']" />
 
-<Demo path="table/virtual-variable" title="虚拟滚动 · 不定高" :desc="['1000 行里混有多行摘要，行高按实测缓存写入前缀和。', '未测量行用 `virtualRowHeight` 估算，测量后自动做滚动锚定，避免内容跳动。']" />
+<Demo path="table/fixed-stacked" title="堆叠固定列" :desc="['同侧多列按 `width` 依次累加偏移。', '选择列 44px 自动计入左侧偏移。', '组合限制：固定列需连续，分组不能同时跨固定与非固定边界。']" />
 
-<Demo path="table/virtual-span" title="虚拟滚动 · 跨行合并" :desc="['1000 行按 4 行一组纵向合并部门列。', '窗口会自动上探到合并起始行、下探到覆盖末行，滚到组中间也不会出现空白列。']" />
+<Demo path="table/pinned-rows" title="固定行堆叠 × 固定列堆叠" :desc="['`rowPinning` 指定 top / bottom 行，可与左右固定列同时存在。', '固定行不受筛选、排序与分页影响，并从分页总数剔除。', '组合限制：树形下只能固定顶层行，固定带子节点的行后子树不再展示。']" />
 
-<Demo path="table/virtual-mixed" title="虚拟滚动 · 不定高 + 合并" :desc="['每组 8 行：部门列 rowSpan、会议行 colSpan，同时含单行与多行内容。', '变量行高与合并窗口扩张同时生效。']" />
+<Demo path="table/virtual" title="虚拟滚动（千行）" :desc="['`virtual` 开启后只渲染可视窗口，主体与左右固定列浮层共用同一窗口。', '行高按实测缓存写入前缀和；展开行同样计入窗口与占位高度。', '组合限制：需要 `scroll.y` 形成固定高度容器；固定行始终渲染、不参与窗口裁剪。']" />
 
-<Demo path="table/virtual-fixed" title="虚拟滚动 + 固定行 / 固定列 / 吸顶表头" :desc="['千行数据使用虚拟滚动，同时开启 `rowPinning`（顶/底固定行）、左右固定列与吸顶表头。', '固定行始终渲染并计入上下占位，主体与浮层共用同一窗口。']" />
+<Demo path="table/virtual-variable" title="虚拟滚动 · 不定高" :desc="['1000 行里混有多行摘要，行高按实测缓存写入前缀和。', '未测量行用 `virtualRowHeight` 估算，测量后自动滚动锚定。', '组合限制：不传 `virtualRowHeight` 时取已测行平均值，滚动条总高随测量逐步收敛。']" />
 
-<Demo path="table/combined" title="综合 · 全能力叠加" desc="80 行、每 4 行一组：部门/组号固定左侧、状态/风险固定右侧，中间 9 列；部门 rowSpan + 组尾里程碑 colSpan、多级表头、顶/底固定行、虚拟滚动与吸顶表头同时开启。组号排序保持整组相邻，进度/评分为组内排序，部门筛选按整组过滤；展开内容追加到组尾，存在展开行期间虚拟滚动自动暂停。" />
+<Demo path="table/virtual-span" title="虚拟滚动 · 跨行合并" :desc="['1000 行按 4 行一组纵向合并部门列。', '窗口自动上探合并起始行、下探覆盖末行，滚到组中间也不会空白。', '组合限制：合并组越大，单窗口渲染行越多（实测 24–32 行）。']" />
 
-<Demo path="table/pagination" title="分页" :desc="['`pagination` 传对象开启底部 KPagination（可配每页条数、跳转、总数）。', '`v-model:current` / `v-model:page-size` 可受控。']" />
+<Demo path="table/virtual-mixed" title="虚拟滚动 · 不定高 + 合并" :desc="['每组 8 行：部门 rowSpan、会议行 colSpan，同时含单行与多行内容。', '变量行高与合并窗口扩张同时生效。']" />
+
+<Demo path="table/virtual-fixed" title="虚拟滚动 + 固定行 / 固定列 / 吸顶表头" :desc="['千行数据使用虚拟滚动，同时开启 `rowPinning`、左右固定列与吸顶表头。', '固定行始终渲染并计入上下占位，主体与浮层共用同一窗口。']" />
+
+<Demo path="table/virtual-expand" title="虚拟滚动 + 展开行" :desc="['千行数据里展开多行详情，展开行高度单独测量后计入虚拟偏移。', '展开/收起重建前缀和；快速滚动时主体与固定列不会错行。', '组合限制：窗口外的展开行按已测平均高度估算。']" />
+
+<Demo path="table/combined" title="综合 · 全能力叠加" :desc="['80 行、每 4 行一组：部门/组号固定左侧，状态/风险固定右侧，中间 9 列。', '部门 rowSpan + 组尾里程碑 colSpan、多级表头、顶/底固定行、虚拟滚动与吸顶表头同时开启。', '组号排序保持整组相邻，进度/评分为组内排序，部门筛选按整组过滤。', '组合限制：跨固定区合并会整表退回粘性；展开内容追加到组尾并计入虚拟窗口。']" />
+
+<Demo path="table/tree-combined" title="综合 · 树形 × 固定列 / 合并 / 虚拟" :desc="['88 行三级树 + 顶/底固定汇总行：固定列、多级表头、吸顶表头与虚拟滚动照常工作。', '「批次」列 rowSpan 按当前可见行实时计算（团队行 + 已展开成员），收起团队或筛选「状态」后合并同步重算。', '里程碑行横向合并任务与备注。', '组合限制：固定行只放扁平汇总行；固定带子节点的行会导致子树不展示。']" />
+
+<Demo path="table/pagination" title="分页" :desc="['`pagination` 传对象开启底部 KPagination（可配每页条数、跳转、总数）。', '`v-model:current` / `v-model:page-size` 可受控。', '组合限制：分页切片作用于当前可见行，树形下父子可能被切到两页。']" />
 
 <Demo path="table/pagination-position" title="分页位置" :desc="['`paginationPosition` 六选一：左上 / 中上 / 右上 / 左下 / 中下 / 右下，默认右下。', '`both` 上下各渲染一份并统一右下对齐。']" />
 
 <Demo path="table/states" title="加载 / 空态 / 斑马纹 / 汇总" :desc="['`loading` 遮罩、`empty-text` 与 `#empty`。', '`striped`、`bordered`、汇总行均可用开关切换。', '`#summary` 渲染表尾汇总。']" />
 
-<Demo path="table/empty" title="自定义空态" desc="`#empty` 插槽接收 `columns`，通常放 KEmpty，并用 `#actions` 提供引导操作。" />
+<Demo path="table/empty" title="自定义空态" :desc="['`#empty` 插槽接收 `columns`，通常放 KEmpty。', '用 `#actions` 提供引导操作。']" />
 
 <Demo path="table/borders" title="边框开关" :desc="['`bordered` 控制外框，`row-borders` 控制行分隔线，`column-borders` 控制列分隔线。', '不传 `column-borders` 时跟随 `bordered`，可组合出仅横向、仅纵向或无边框样式。']" />
 
 ## API
 
 ### Props
+
+基础渲染、边框、尺寸与工具条部件。
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
@@ -98,30 +110,81 @@
 | sticky | 表头吸顶（需配合 `scroll.y`） | `boolean` | `false` |
 | loading | 加载遮罩 | `boolean` | `false` |
 | emptyText | 空态文案 | `string` | `'暂无数据'` |
-| pagination | `false` 不分页；对象开启分页器（`size` 可单独指定分页器尺寸） | `false \| KTablePaginationConfig` | `false` |
-| paginationPosition | 分页器位置，六个角位 + `both` | `'top-left' \| 'top-center' \| 'top-right' \| 'bottom-left' \| 'bottom-center' \| 'bottom-right' \| 'both'` | `'bottom-right'` |
-| rowSelection | 行选择配置 | `KTableRowSelection<T>` | — |
 | scroll | `{ x, y }` 横向滚动宽度 / 纵向高度 | `{ x?: number \| string; y?: number \| string }` | — |
-| virtual | 虚拟滚动（支持变量行高与单元格合并；出现展开行时退回全量渲染） | `boolean` | `false` |
-| virtualRowHeight | 未测量行的估算行高（px）；实测后按真实高度计算 | `number` | — |
-| spanMethod | 单元格合并：按行与列返回 `{ rowSpan, colSpan }`；`rowIndex` 为当前页展示序，`columnIndex` 为可见叶子列序号 | `KTableSpanMethod<T>` | — |
+| classNames | 部件类名<br>（`root / toolbar / columnSetting / wrap / row / filterPanel / loading / pagination`） | `Partial<Record<Part, string>>` | — |
+| styles | 部件内联样式<br>（`root / toolbar / columnSetting / wrap / row / filterPanel / loading / pagination`） | `Partial<Record<Part, CSSProperties>>` | — |
+
+<CommonProps />
+
+#### 行选择
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| rowSelection | 行选择配置，详见下方 `KTableRowSelection` | `KTableRowSelection<T>` | — |
+
+#### 排序与筛选
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
 | sortState | 受控排序；不传走内部状态 | `KTableSortState \| null` | — |
 | filters | 受控筛选；不传走内部状态 | `KTableFilterState` | — |
+
+#### 列设置与显隐
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
 | columnSetting | 显示内置「列设置」按钮 | `boolean` | `false` |
+| v-model:columnVisibility | 列显隐受控表 `{ 列key: boolean }` | `Record<string, boolean>` | `{}` |
+
+#### 展开行
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
 | expandable | 行展开开关；需配合 `#expanded` 插槽 | `boolean` | `true` |
 | defaultExpandAll | 首次挂载时展开全部可展开行 | `boolean` | `false` |
 | rowExpandable | 指定行是否可展开 | `(row) => boolean` | — |
-| expandedPlacement | 展开内容位置：`inline` 紧随该行；`bottom` 追加到所属合并组的末尾整行（跨全部列）。`bottom` 仅在传 `spanMethod` 时生效；检测到 rowSpan 时自动按组尾追加 | `'inline' \| 'bottom'` | `'inline'` |
-| expandedRender | 展开内容渲染函数，返回 VNodeChild（组件 / `h()` / VNode 均可）；对某行返回 `undefined` 时回退 `#expanded` 插槽，返回 `null` 视为空内容 | `(ctx: { row, index, rowKey }) => VNodeChild \| undefined` | — |
-| v-model:expandedRowKeys | 展开行受控 keys | `KTableRowKey[]` | `[]` |
-| v-model:rowPinning | 固定行受控 `{ top: keys[], bottom: keys[] }` | `{ top?: KTableRowKey[]; bottom?: KTableRowKey[] }` | `{}` |
-| v-model:columnVisibility | 列显隐受控表 `{ 列key: boolean }` | `Record<string, boolean>` | `{}` |
+| expandedPlacement | 展开内容位置：<br>`inline` 紧随该行；<br>`bottom` 追加到所属合并组的末尾整行（跨全部列）。<br>`bottom` 仅在传 `spanMethod` 时生效；检测到 rowSpan 时自动按组尾追加 | `'inline' \| 'bottom'` | `'inline'` |
+| expandedRender | 展开内容渲染函数，返回 VNodeChild（组件 / `h()` / VNode 均可）；<br>对某行返回 `undefined` 时回退 `#expanded` 插槽，返回 `null` 视为空内容 | `(ctx: { row, index, rowKey })<br>=> VNodeChild \| undefined` | — |
+| v-model:expandedRowKeys | 展开行 / 树节点受控 keys | `KTableRowKey[]` | `[]` |
+
+#### 树形数据
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| tree | 树形数据：`true` 或 `{ childrenKey, indent }`；<br>展开箭头在首列，展开状态与行详情共用 `expandedRowKeys`。<br>与固定行数合并、固定带子节点的行不兼容，见注意事项 | `boolean \|<br>{ childrenKey?: string; indent?: number }` | `false` |
+
+#### 单元格合并
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| spanMethod | 单元格合并：按行与列返回 `{ rowSpan, colSpan }`；<br>`rowIndex` 为当前页展示序，`columnIndex` 为可见叶子列序号 | `KTableSpanMethod<T>` | — |
+
+#### 固定行与固定列
+
+固定列的 `fixed` / `width` 是列级字段（见 `KTableColumn`），需配合数字 `scroll.x`。
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| v-model:rowPinning | 固定行受控 `{ top: keys[], bottom: keys[] }` | `{ top?: KTableRowKey[];<br>bottom?: KTableRowKey[] }` | `{}` |
+
+#### 虚拟滚动
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| virtual | 虚拟滚动（支持变量行高、单元格合并与展开行） | `boolean` | `false` |
+| virtualThreshold | 启用虚拟滚动的行数阈值 | `number` | `40` |
+| virtualOverscan | 窗口上下各预渲染的行数 | `number` | `6` |
+| virtualBuffer | 滚出当前窗口多少行后才重算窗口 | `number` | `3` |
+| virtualRowHeight | 未测量行的估算行高（px）；<br>实测后按真实高度计算 | `number` | — |
+
+#### 分页
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| pagination | `false` 不分页；对象开启分页器<br>（`size` 可单独指定分页器尺寸） | `false \| KTablePaginationConfig` | `false` |
+| paginationPosition | 分页器位置，六个角位 + `both` | `'top-left' \| 'top-center' \| 'top-right' \|<br>'bottom-left' \| 'bottom-center' \| 'bottom-right' \| 'both'` | `'bottom-right'` |
 | v-model:current | 受控当前页 | `number` | `1` |
 | v-model:page-size | 受控每页条数 | `number` | `10` |
-| classNames | 部件类名（`root / toolbar / columnSetting / wrap / row / filterPanel / loading / pagination`） | `Partial<Record<Part, string>>` | — |
-| styles | 部件内联样式（`root / toolbar / columnSetting / wrap / row / filterPanel / loading / pagination`） | `Partial<Record<Part, CSSProperties>>` | — |
-
-<CommonProps />
 
 ### KTableColumn
 
@@ -130,7 +193,7 @@
 | `key` | 列唯一键（缺省用 `dataIndex`） |
 | `title` | 表头文本（`#header` 插槽优先） |
 | `dataIndex` | 取值路径，支持 `a.b` |
-| `width` | 列宽；固定列必须为数字 `width` |
+| `width` | 列宽；<br>固定列必须为数字 `width` |
 | `minWidth` | 最小列宽 |
 | `align` | `left / center / right` |
 | `fixed` | `'left' \| 'right'` 固定列 |
@@ -138,10 +201,10 @@
 | `filters` | 筛选项 `{ label, value }[]` |
 | `filterMultiple` | 是否多选（默认 `true`） |
 | `filterMethod` | 自定义筛选 `(value, row) => boolean` |
-| `children` | 分组表头子列；有 `children` 的列不渲染数据单元格 |
-| `hidden` | 默认隐藏；仍可在列设置中勾选打开（永久隐藏请配合 `hideable: false`） |
-| `hideable` | 是否允许在列设置中切换，默认 `true`；`false` 锁定 |
-| `ellipsis` | 单元格单行省略（表格自动切为固定布局） |
+| `children` | 分组表头子列；<br>有 `children` 的列不渲染数据单元格 |
+| `hidden` | 默认隐藏；<br>仍可在列设置中勾选打开（永久隐藏请配合 `hideable: false`） |
+| `hideable` | 是否允许在列设置中切换，默认 `true`；<br>`false` 锁定 |
+| `ellipsis` | 单元格单行省略<br>（表格自动切为固定布局） |
 | `ellipsisTooltip` | 只在真实溢出时用 KTooltip 显示全文 |
 | `render` | 单元格渲染 `({ row, value, index, column }) => VNodeChild` |
 | `classNames` | 列级表头/单元格类名，类型 `Partial<Record<Part, string>>` |
@@ -196,12 +259,23 @@
 - 表格根节点与滚动容器不带外边距；分页器与表格之间保留 16px 间距，可经 `--k-table-pagination-gap` 调整（设 0 即贴紧）。
 - **分页位置**按 `paginationPosition` 显式对齐，小屏不再强制居中；`both` 上下两份分页共用同一页状态。
 - **分页器尺寸**跟随表格 `size`：sm→sm、md→md、lg→lg；可用 `pagination.size` 单独覆盖。
-- **可展开行**：展开列固定在最左 44px，选择列自动后移；展开内容整行跨列。固定行不显示展开按钮（固定行与展开暂不组合）。
+- **可展开行**：展开列固定在最左 44px，选择列自动后移；展开内容整行跨列。固定行不显示展开按钮（固定行与展开暂不组合）；树形模式下改为首列内箭头，不再占独立列。
   - 无合并（不传 `spanMethod`）时保持 `inline`：内容紧随展开行；
   - 有合并时：`expandedPlacement="bottom"`（或检测到 `rowSpan` 时自动）把展开内容追加到**所属合并组的末尾整行**（跨全部列），不是整表底部，合并不受影响；同一组多行展开依次追加，分页切换后只保留当前页行的展开内容；
   - `bottom` 在未传 `spanMethod` 时按 `inline` 渲染（dev 告警），非合并表格行为不变；
   - 展开内容可用 `expandedRender`（返回组件 / `h()` / VNode）或 `#expanded` 插槽；渲染函数逐行优先，某行返回 `undefined` 时回退插槽（`null` 视为空内容），可在同一张表里按行混用；两种位置共用同一份内容。
-  - 两种模式在存在展开行时都会关闭虚拟滚动。
+  - 展开内容可以嵌套完整 KTable（见「嵌套子表格」）：父表按子表实际高度测量；子表若再用固定列 / 虚拟滚动，需自带数字 `scroll` 配置，不要复用父表容器高度。
+  - 展开行也纳入虚拟窗口：高度按展开项单独测量并计入所属行的偏移；展开/收起会重建前缀和，窗口外的展开行用已测平均高度估算。
+- **树形数据**：`tree` 读取每行的 `children`（可用 `{ childrenKey, indent }` 改字段与缩进，默认 16px）。
+  - 展开箭头与缩进在**首个可见数据列**，树形模式不再渲染 44px 展开列；行详情仍可用 `#expanded`/`expandedRender`，叶子行会显示详情箭头。
+  - 展开状态沿用 `expandedRowKeys`（与行详情共用）；`defaultExpandAll` 展开所有含子节点的层级。
+  - 筛选为树内过滤：命中行与祖先链保留，祖先强制展开；排序只在**同级**内进行，子树跟随父节点移动。
+  - 其余特性可正常叠加：固定列、吸顶表头、多级表头、虚拟滚动、列显隐、行详情（共用 `expandedRowKeys`）。
+  - **不能混用的组合**：
+    - `spanMethod` 的固定行数合并：`rowSpan` 会按固定行数跨过收起后的分组、吞掉相邻行（实测会丢失下一分组的单元格）。必须按**当前展开后的可见行**计算合并跨度，且层级列通常不需要纵向合并；写法见「综合 · 树形」演示。
+    - `rowPinning` 固定带子节点的行：固定后该节点的子树不再展示（只剩顶层行）。只能固定扁平汇总行或叶子节点。
+    - 按固定行数分页：分页切的是展开后的可见扁平行，父子会被切到两页；需要整棵树翻页时先在业务侧对顶层节点分页。
+  - 选择不级联（父节点勾选不会带上子节点），全选只作用于当前页可见行；排序只作用于同级。
 - **固定行**：`rowPinning` 的行始终按 `dataSource` 顺序展示，不受筛选、排序与分页影响，也从分页总数中剔除；
   - top 从表头下方、bottom 从容器底部按实测行高依次堆叠。
   - 固定行与固定列可同时使用，交叉单元格同时 sticky 两个方向，行堆叠与列堆叠互不影响。
@@ -217,7 +291,8 @@
   - 支持**变量行高**：渲染后测量真实行高写入缓存，按行 key 存储，排序/筛选/换页不失效；测量后做滚动锚定，避免内容跳动；
   - 未测量行的估算高度：显式传 `virtualRowHeight` 时用它；不传时取已测行的平均高度（至少 8 行样本），滚动条总高随测量逐步收敛；
   - 支持**单元格合并**：窗口会自动上探到跨窗口合并格的起始行、下探到覆盖末行，合并格不会因窗口裁切出现空白；
-  - 出现展开行时退回全量渲染；固定行始终渲染、不受窗口影响；
+  - **展开行纳入窗口**：内联展开行与合并组尾展开行都作为窗口项渲染，高度单独测量后计入所属行偏移；展开/收起会重建前缀和；
+  - `virtualThreshold`（默认 40）、`virtualOverscan`（默认 6）、`virtualBuffer`（默认 3 行）可调；固定行始终渲染、不受窗口影响；
   - 千行数据 DOM 行数从 O(n) 降到约 20 行/表。
 - **单元格合并**：`spanMethod` 返回 `{ rowSpan, colSpan }`，起点之外被覆盖的单元格不再渲染；`rowIndex` 是当前页展示序（排序/筛选后），`columnIndex` 只数可见叶子列（展开/选择列不计）。
   - 合并只在同一固定区内有效；跨左右固定区与中区时整表退回粘性单元格模式（dev 告警），固定列的抗抖动与性能相应回退。

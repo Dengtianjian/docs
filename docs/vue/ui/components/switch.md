@@ -10,6 +10,8 @@
 
 <Demo path="switch/basic" title="基础与状态" desc="`v-model` 布尔；三档尺寸 large / medium / small；`checkedChildren/unCheckedChildren` 内嵌文字；`loading` 不可交互 + 把手位 spinner；disabled 态。" />
 
+<Demo path="switch/label" title="开关 + 文字" desc="`label` 或 `#label` 插槽提供外部文字，`labelPosition` 控制文字在左 / 右 / 上 / 下（默认左）；整块可点，禁用态文字同步置灰。" />
+
 <Demo path="switch/render" title="自定义渲染（headless）" desc="双通道：`#render` 自绘方形闸刀（role=switch/aria-checked 语义 + click/keydown 逻辑包继承）；`render` prop 自绘灯泡开关（checked 驱动自绘发光）。" />
 
 ## API
@@ -19,6 +21,8 @@
 | model-value / v-model | 开合态 | `boolean` | `false` |
 | size | 轨道尺寸：large 68×30 / medium 52×26 / small 38×20 | `'large' \| 'medium' \| 'small'` | `'medium'` |
 | checkedChildren / unCheckedChildren | 轨道内嵌文字 | `string` | — |
+| label | 外部文字标签；也可用 `#label` 插槽 | `string` | — |
+| labelPosition | 文字相对开关的位置 | `'left' \| 'right' \| 'top' \| 'bottom'` | `'left'` |
 | disabled / loading | 禁用 / 加载中（不可交互，spinner 在把手位） | `boolean` | `false` |
 | id / name | 原生透传（`button` 元素，name 仅语义） | — | — |
 
@@ -30,7 +34,7 @@
 | --- | --- | --- |
 | change | 开合态变化 | `(checked: boolean)` |
 
-Slots：`render` = 自定义渲染作用域插槽（scope 见文末「自定义渲染」节，提供时整件替换）；内嵌文字走 `checkedChildren/unCheckedChildren` prop。Expose：`focus()`。
+Slots：`render` = 自定义渲染作用域插槽（scope 见文末「自定义渲染」节，提供时整件替换）；`label` = 外部文字内容（优先于 `label` prop）；内嵌文字走 `checkedChildren/unCheckedChildren` prop。Expose：`focus()`。
 
 ### 部件变量
 
@@ -45,6 +49,7 @@ Slots：`render` = 自定义渲染作用域插槽（scope 见文末「自定义�
 
 ## 注意事项
 
+- **开关 + 文字**：提供 `label` 或 `#label` 时外层是 `label` 元素，文字与开关整块可点（`label` 激活转发到内部 button）；不提供文字时外层用 `display: contents` 占位，根节点布局与旧版一致，`classNames.root` / `styles.root` 仍落在 button 上。文字颜色随 disabled 置灰。
 - 触屏（`hover: none`）：伪元素向四周扩 10px 命中区，视觉轨道尺寸不变。
 
 - 原生 `button[role=switch]` + `aria-checked`，Space/Enter 切换（键盘语义零成本，focus 环 = control-outline 同基线）。

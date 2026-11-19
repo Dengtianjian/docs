@@ -51,13 +51,23 @@
 
 <Demo path="table/column-visibility" title="列显隐" :desc="['`columnSetting` 显示内置「列设置」按钮。', '`v-model:columnVisibility` 可受控；`hidden` 静态隐藏，`hideable: false` 锁定列。', '组合限制：分组列不可单独隐藏；至少保留一列可见。']" />
 
+<Demo path="table/column-layout" title="列拖拽 / 列宽拖拽" :desc="['拖动表头左侧抓手换位（同分组内生效）；拖动右边缘改列宽：左拖缩窄、右拖挤右邻列，末列拖动让表格变宽。', '`v-model:columnOrder` / `v-model:columnWidths` 受控；双击表头或右缘把手按容器宽度重新分配列宽（填满表格、消除空隙）；`columnResizable` 会切为固定布局。', '组合限制：固定列在浮层表头里，暂不提供拖拽与拖宽把手；列拖拽不跨分组。']" />
+
 <Demo path="table/ellipsis" title="省略与提示" :desc="['`ellipsis` 单行截断。', '加 `ellipsisTooltip` 后仅在真实溢出时用 KTooltip 显示全文。', '组合限制：存在省略列时表格自动切换为固定布局，建议同时给列宽。']" />
 
 <Demo path="table/sort-filter" title="排序与筛选" :desc="['列 `sortable` 点击循环：升序 → 降序 → 取消。', '`filters` 在表头展开多选面板，`filterMultiple=false` 为单选。', '排序与筛选可叠加；树形下排序只作用于同级。']" />
 
+<Demo path="table/global-filter" title="全局搜索" :desc="['工具条搜索框绑定 `v-model:global-filter`，默认按可见叶子列的文本包含匹配。', '与列筛选、排序、分页叠加；树形下命中行的祖先链同样保留并展开。', '组合限制：自定义匹配用 `globalFilterMethod`；不提供关键字高亮。']" />
+
 <Demo path="table/selection" title="多选" :desc="['`rowSelection` 默认 checkbox 多选，开启当前页全选。', '`getCheckboxProps` 禁用不可选行，`selectionChange` 回传 keys 与行数据。', '组合限制：选择只作用于当前页，跨页需受控维护 `selectedRowKeys`；树形选择不级联。']" />
 
 <Demo path="table/selection-single" title="单选" :desc="['`rowSelection.type` 设为 `radio` 切换单选：表头不再出现全选。', '点击只保留一个 key，禁用行同样通过 `getCheckboxProps` 控制。']" />
+
+<Demo path="table/row-actions" title="行操作" :desc="['列配 `actions` 生成图标按钮，超出 `maxActions` 收进「更多」；`icon` 内置 view / edit / copy / remove / more。', '`#actions` 插槽渲染在按钮之前，与按钮同一 flex 行垂直居中，可放状态标签等。', '`danger`、`disabled`（布尔或按行函数）与 `onClick`；点击不会触发 `rowClick`。', '组合限制：操作列是普通列，固定、宽度、分组规则与其他列一致。']" />
+
+<Demo path="table/row-drag" title="行拖拽" :desc="['按住第一列行抓手拖动，浮层副本跟随指针，蓝色线条标示落位，不插入占位行。', '松手发 `rowReorder`（`from` / `to` 为当前页展示序），业务按需重排 `dataSource`，组件不改数据。', '组合限制：固定行不可拖动；分页 / 排序 / 筛选后按当前展示序返回。']" />
+
+<Demo path="table/cell-edit" title="单元格编辑" :desc="['列配 `editable`，`editTrigger` 决定单击 / 双击 / 手动进入，编辑态走 `v-model:editingCell`。', '默认渲染 KInput：Enter / blur 提交、Esc 取消；提交只发 `cellEdit`，不直接改数据。', '自定义控件用列的 `editRender`；同一时间只编辑一个单元格，固定列浮层与主表共用同一编辑态。']" />
 
 <Demo path="table/fixed" title="固定列 + 粘性表头" :desc="['`fixed` 取 `left` / `right`，需配合数字 `width`。', '`scroll.x` 横向滚动，`scroll.y` 限制高度并让表头吸顶。', '组合限制：固定列需与数字 `scroll.x` 搭配，同侧固定列必须连续。']" />
 
@@ -111,6 +121,9 @@
 | loading | 加载遮罩 | `boolean` | `false` |
 | emptyText | 空态文案 | `string` | `'暂无数据'` |
 | scroll | `{ x, y }` 横向滚动宽度 / 纵向高度 | `{ x?: number \| string; y?: number \| string }` | — |
+| rowDraggable | 行拖拽排序（发 `rowReorder`，不改数据） | `boolean` | `false` |
+| columnDragMode | 列拖拽触发：`handle` 仅抓手 / `press` 表头任意处 | `'handle' \| 'press'` | `'handle'` |
+| rowDragMode | 行拖拽触发：`handle` 仅行抓手 / `press` 按住行任意处 | `'handle' \| 'press'` | `'handle'` |
 | classNames | 部件类名<br>（`root / toolbar / columnSetting / wrap / row / filterPanel / loading / pagination`） | `Partial<Record<Part, string>>` | — |
 | styles | 部件内联样式<br>（`root / toolbar / columnSetting / wrap / row / filterPanel / loading / pagination`） | `Partial<Record<Part, CSSProperties>>` | — |
 
@@ -128,6 +141,10 @@
 | --- | --- | --- | --- |
 | sortState | 受控排序；不传走内部状态 | `KTableSortState \| null` | — |
 | filters | 受控筛选；不传走内部状态 | `KTableFilterState` | — |
+| searchable | 工具条显示全局搜索框 | `boolean` | `false` |
+| searchPlaceholder | 搜索框占位文案 | `string` | `'搜索'` |
+| v-model:globalFilter | 全局搜索关键字；不传走内部状态 | `string` | `''` |
+| globalFilterMethod | 自定义全局匹配 `(row, keyword) => boolean`；缺省按可见叶子列文本包含匹配 | `(row, keyword) => boolean` | — |
 
 #### 列设置与显隐
 
@@ -135,6 +152,10 @@
 | --- | --- | --- | --- |
 | columnSetting | 显示内置「列设置」按钮 | `boolean` | `false` |
 | v-model:columnVisibility | 列显隐受控表 `{ 列key: boolean }` | `Record<string, boolean>` | `{}` |
+| v-model:columnOrder | 列顺序（叶子 key 数组）；不传走内部状态 | `string[]` | `[]` |
+| v-model:columnWidths | 列宽覆盖（叶子 key → px，最小 56）；不传走内部状态 | `Record<string, number>` | `{}` |
+| columnDraggable | 拖动表头调整列顺序（同分组内） | `boolean` | `false` |
+| columnResizable | 拖动表头右边缘调整列宽 | `boolean` | `false` |
 
 #### 展开行
 
@@ -177,6 +198,13 @@
 | virtualBuffer | 滚出当前窗口多少行后才重算窗口 | `number` | `3` |
 | virtualRowHeight | 未测量行的估算行高（px）；<br>实测后按真实高度计算 | `number` | — |
 
+#### 单元格编辑
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| editTrigger | 进入编辑的方式：单击 / 双击 / 手动（只能通过 `v-model:editingCell`） | `'click' \| 'dblclick' \| 'manual'` | `'click'` |
+| v-model:editingCell | 当前编辑单元格 `{ rowKey, columnKey }`；同一时间只编辑一格 | `{ rowKey: KTableRowKey; columnKey: string } \| null` | `null` |
+
 #### 分页
 
 | 属性 | 说明 | 类型 | 默认值 |
@@ -207,6 +235,10 @@
 | `ellipsis` | 单元格单行省略<br>（表格自动切为固定布局） |
 | `ellipsisTooltip` | 只在真实溢出时用 KTooltip 显示全文 |
 | `render` | 单元格渲染 `({ row, value, index, column }) => VNodeChild` |
+| `editable` | 允许进入单元格编辑 |
+| `editRender` | 自定义编辑控件 `({ row, value, index, column, commit, cancel }) => VNodeChild`；缺省渲染 KInput |
+| `actions` | 操作列图标按钮 `{ label, icon?, danger?, disabled?, onClick }[]`；点击不触发 `rowClick` |
+| `maxActions` | 直排按钮数量，超出收进「更多」，默认 `3` |
 | `classNames` | 列级表头/单元格类名，类型 `Partial<Record<Part, string>>` |
 | `styles` | 列级表头/单元格内联样式，类型 `Partial<Record<Part, CSSProperties>>` |
 
@@ -229,6 +261,7 @@
 | expanded | 展开行内容 | `{ row, index, rowKey }` |
 | filter | 工具条左侧筛选区 | `{ columns, visibility }`，`columns` 为叶子列（含 `key`） |
 | toolbar | 工具条右侧操作区（位于内置列设置按钮前） | `{ columns }` |
+| actions | 操作列前置内容，与图标按钮同一行垂直居中 | `{ row, index, column }` |
 
 ### Events
 
@@ -240,6 +273,8 @@
 | rowClick | 行点击 | `row, index, event` |
 | pageChange | 分页变化 | `page, pageSize` |
 | expandChange | 行展开变化 | `keys, row, expanded` |
+| cellEdit | 单元格提交（不直接改数据） | `{ row, column, value, previousValue, rowIndex }` |
+| rowReorder | 行拖拽落位（当前页展示序） | `{ row, from, to }` |
 | update:current | 当前页受控模型更新 | `number` |
 | update:pageSize | 每页条数受控模型更新 | `number` |
 
@@ -281,6 +316,22 @@
   - 固定行与固定列可同时使用，交叉单元格同时 sticky 两个方向，行堆叠与列堆叠互不影响。
 - **阴影随位置消失**：固定列只在 `scrollLeft > 0` / 未到最右时显示边缘阴影；固定行只在顶部/底部仍有滚动余量时显示分隔阴影，回到原位即消失。
 - **分组表头**只支持叶子列排序/筛选；分组跨固定与非固定边界时整组不参与吸边，需把分组整体放在同侧固定区内。
+- **全局搜索**：`searchable` 在工具条显示搜索框，关键字走 `v-model:globalFilter`；
+  - 默认匹配可见叶子列的文本（大小写不敏感），可用 `globalFilterMethod` 自定义；
+  - 与列筛选、排序、分页叠加，树形下命中行的祖先链保留并强制展开；搜索变化会重置到第 1 页。
+- **列顺序与列宽**：`columnOrder` 是叶子 key 数组，按叶子排序后分组跟随首个叶子移动；`columnDragMode` 缺省只允许拖表头抓手（`press` 为表头任意处），拖拽只在同分组内换位。
+  - `columnWidths` 是叶子 key → px（最小 56），拖动右缘时当前列与右邻列互补，末列拖动让表格变宽；双击表头/把手按容器重新分配列宽；`columnResizable` 开启后表格切为固定布局；
+  - 固定列渲染在浮层表头里，暂不提供拖拽与拖宽把手。
+- **单元格编辑**：列配 `editable` 后按 `editTrigger` 进入编辑（click / dblclick / manual），编辑态走 `v-model:editingCell`。
+  - 默认控件是 KInput：Enter 或失焦提交、Esc 取消；`editRender` 可换成 KSelect 等任意控件，通过 `commit` / `cancel` 结束；
+  - 提交只发 `cellEdit({ row, column, value, previousValue, rowIndex })`，不会直接修改 `dataSource`，由业务回写；
+  - 同一时间只编辑一个单元格，固定列浮层与主表共用同一编辑态。
+- **行操作**：列的 `actions` 生成图标按钮（`icon` 内置 view / edit / copy / remove / more），`maxActions` 之外的收进「更多」；`danger` 用危险色，`disabled` 支持布尔或按行函数。
+  - `#actions` 插槽渲染在按钮之前，与按钮同一 flex 行垂直居中，可放状态标签；
+  - 点击操作会阻止冒泡，不触发 `rowClick`；操作列是普通列，固定、宽度与分组规则与其他列一致。
+- **行拖拽**：`rowDraggable` 拖行首列抓手（`rowDragMode="press"` 可改为按住行任意处），浮层副本跟随指针、蓝色线条标示落位，不插入占位行。
+  - 松手发 `rowReorder({ row, from, to })`，索引是当前页展示序，组件不改 `dataSource`；
+  - 固定行不可拖动；表格中有按钮/输入/展开箭头等交互元素时，从这些元素上按下不会开始拖拽。
 - **隐藏列**不会丢失已有排序与筛选状态；
   - `columnVisibility` 缺省为 `{}`，可见性按列 `hidden` 默认值；
   - 显式 `columnVisibility[key]` 优先，可把默认隐藏的列重新打开。

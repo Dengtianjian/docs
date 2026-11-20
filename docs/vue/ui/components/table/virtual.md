@@ -2,7 +2,6 @@
 
 > 大数据量窗口化、变量行高、合并/展开/固定行组合与触底加载。
 
-
 ### 最小用法
 
 ```vue
@@ -18,8 +17,6 @@
 <Demo :title-level="4" path="table/virtual-threshold" title="虚拟滚动 · 阈值切换" :desc="['60 行数据；`virtualThreshold=20` 启用窗口化，切到 1000 则整表渲染，便于对比。', '阈值以下不创建虚拟窗口，行为与普通表一致。']" />
 
 ### 合并与展开
-
-<Demo :title-level="4" path="table/virtual-span" title="虚拟滚动 · 跨行合并" :desc="['1000 行按 4 行一组纵向合并部门列。', '窗口自动上探合并起始行、下探覆盖末行，滚到组中间也不会空白。', '组合限制：合并组越大，单窗口渲染行越多（实测 24–32 行）。']" />
 
 <Demo :title-level="4" path="table/virtual-mixed" title="虚拟滚动 · 不定高 + 合并" :desc="['每组 8 行：部门 rowSpan、会议行 colSpan，同时含单行与多行内容。', '变量行高与合并窗口扩张同时生效。']" />
 

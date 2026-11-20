@@ -2,7 +2,6 @@
 
 > 可展开行、自定义展开内容、嵌套子表格与树形数据。
 
-
 ### 最小用法
 
 ```vue
@@ -20,9 +19,7 @@
 
 <Demo :title-level="4" path="table/expandable" title="可展开行" :desc="['配合 `#expanded` 插槽出现 44px 展开列。', '`v-model:expandedRowKeys` 受控，`rowExpandable` 指定可展开行；下方显示 `expandChange` 事件。', '组合限制：固定行不显示展开按钮；树形模式改用首列箭头，不再占独立展开列。']" />
 
-<Demo :title-level="4" path="table/expand-component" title="行展开 · 组件渲染" :desc="['`expandedRender` 返回 `h(组件)`：展开内容是真实组件实例，带 props 与本地状态。', '示例点「标记关注」在组件内部计数。', '某行返回 `undefined` 时回退 `#expanded` 插槽。']" />
-
-<Demo :title-level="4" path="table/expand-slot" title="行展开 · 插槽渲染" :desc="['`#expanded` 插槽拿到 `{ row, index, rowKey }`，可直接用模板写结构化内容。', '与 `expandedRender` 可按行混用：函数优先，`undefined` 回退插槽，`null` 视为空内容。']" />
+<Demo :title-level="4" path="table/expand-forms" title="展开 · 内容形态" :desc="['`expandedRender` 返回组件（可带本地状态），返回 `undefined` 的行回退 `#expanded` 插槽。', '可在同一张表里按行混用两种形态；`null` 视为空内容。']" />
 
 <Demo :title-level="4" path="table/expand-default" title="展开 · 默认全展开" :desc="['`default-expand-all` 首次挂载时展开全部可展开行。', '树形与行详情都适用；之后仍可用 `v-model:expandedRowKeys` 受控。']" />
 

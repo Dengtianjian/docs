@@ -2,6 +2,7 @@
   <div>
     <p class="hint">
       树形箭头保留在卡片标题里；展开后子行以卡片追加在父卡片下方，缩进随层级保留。
+      多级子树按 16 / 32px 递进缩进，收起中间层时整棵子树一起隐藏。
     </p>
     <KTable
       row-key="id"
@@ -38,7 +39,17 @@ const rows: TeamNode[] = [
     status: '进行中',
     progress: 72,
     children: [
-      { id: 'g1-1', name: '表格重构', owner: '林一', status: '进行中', progress: 80 },
+      {
+        id: 'g1-1',
+        name: '表格重构',
+        owner: '林一',
+        status: '进行中',
+        progress: 80,
+        children: [
+          { id: 'g1-1-1', name: '合并与虚拟', owner: '周舟', status: '进行中', progress: 70 },
+          { id: 'g1-1-2', name: '固定列浮层', owner: '陈默', status: '已完成', progress: 100 },
+        ],
+      },
       { id: 'g1-2', name: '主题生成', owner: '周舟', status: '已完成', progress: 100 },
     ],
   },
@@ -48,14 +59,12 @@ const rows: TeamNode[] = [
     owner: '陈默',
     status: '进行中',
     progress: 45,
-    children: [
-      { id: 'g2-1', name: '订单中心', owner: '陈默', status: '待开始', progress: 20 },
-    ],
+    children: [{ id: 'g2-1', name: '订单中心', owner: '陈默', status: '待开始', progress: 20 }],
   },
   { id: 'g3', name: '设计组', owner: '苏禾', status: '已完成', progress: 100 },
 ]
 
-const expandedKeys = ref<KTableRowKey[]>(['g1'])
+const expandedKeys = ref<KTableRowKey[]>(['g1', 'g1-1'])
 
 const columns: KTableColumn<TeamNode>[] = [
   { key: 'name', dataIndex: 'name', title: '团队 / 项目' },

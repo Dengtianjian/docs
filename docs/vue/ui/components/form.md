@@ -10,7 +10,7 @@
 
 <Demo path="form/basic" title="校验与回显" :desc="['`model` + `rules`（async-validator 规则表）。', '`form.validate()` 整表校验，失败 reject 汇总。', '控件错误态边框自动下发（Input 族消费 FormItem context）。', '自定义 `validator` 走回调式。']" />
 
-<Demo path="form/layout" title="布局" :desc="['`layout=vertical`（缺省）/ `horizontal`（labelWidth 定宽 + labelAlign）/ `inline`（横排紧凑）。', '冒号 `colon` 默认开。']" />
+<Demo path="form/layout" title="布局" :desc="['`layout=vertical`（缺省）/ `horizontal`（labelWidth 定宽 + labelAlign）/ `inline`（横排紧凑）。', 'horizontal / inline 的内容列垂直居中；移动端转纵向后恢复拉伸。', '冒号 `colon` 默认开。']" />
 
 <Demo path="form/a11y" title="分组控件关联" :desc="['RadioGroup / CheckboxGroup 用 aria-labelledby 关联字段标签，Switch 用 label for。', '错误时自动带 aria-describedby 与 aria-invalid。']" />
 

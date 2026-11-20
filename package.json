@@ -7,7 +7,6 @@
     "docs:dev": "vitepress dev --open --host",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview",
-    "blank:dev": "vite --config blank/vite.config.ts",
     "community:dev": "vite --config community/vite.config.ts",
     "community:build": "vite build --config community/vite.config.ts"
   },

@@ -239,7 +239,7 @@ KButton / KButtonGroup 各有 scope（入口导出），逐字段如下（接口
 - R4b 彩字深档（2026-11-17，低评分三分类「只治 A」拍板）：
   - 文字通道不再直接用 `--k-button-c`，改接部件变量 `--k-button-c-text` = `--k-color-N-text-strong`（浅底压黑深档，dark 复用 c；比例见主题 Token 规格 §4.1 表）——静态彩字 9 处、hover/active 表达式 18 处、default×outlined/dashed 2 处全量换；
   - 边框/底色/波纹通道不动，观感链（c 90up/75down 的浅深化）在文字通道改由深档出发，静置彩字格矩阵页实测全 ≥4.5；
-- `iconPlacement` 取 antd v6/naive 同款名（antd 已把 iconPosition 废弃成 iconPlacement），基础值 `start/end` 逻辑方向兼容 RTL；扩展 `top/bottom` 时按钮自动转纵向、取消固定高度；
+- `iconPlacement` 取 antd v6/naive 同款名（antd 已把 iconPosition 废弃成 iconPlacement），基础值 `start/end` 逻辑方向兼容 RTL；扩展 `top/bottom` 时按钮自动转纵向、取消固定高度，上下内边距为 6px；
   - 实现 = DOM 顺序不动、`order` 后移，loading spinner 占图标位；`target` 仅 href 落 `<a>` 时透传。
   - 三家 props 不搬清单及理由：`color/textColor`（违反无裸写色 token 纪律，覆写走部件变量）、loading 对象形态（`#loading` 插槽已覆盖，delay 属业务防抖）、`strong/tag/focusable/keyboard/fadeOnPress/hairline/loading-text/autoInsertSpace/url/to/replace`（或已被插槽/变量覆盖、或属其它组件语义、或移动端专属）；
   - 导航仍按边界走 [KLink](./link.md)。

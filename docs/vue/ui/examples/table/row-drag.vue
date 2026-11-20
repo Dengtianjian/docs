@@ -4,8 +4,12 @@
       拖行首列抓手：拖动中出现浮层副本与蓝色落位线，不插入占位行；松手发
       <code>rowReorder</code>，演示里按 from / to 重排数据。
     </p>
+    <div class="bar">
+      <KSwitch v-model="pressMode" size="sm">按住整行拖动</KSwitch>
+    </div>
     <KTable
       row-draggable
+      :row-drag-mode="pressMode ? 'press' : 'handle'"
       row-key="id"
       :columns="columns"
       :data-source="rows"
@@ -18,6 +22,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import KTable from 'kit/vue/ui/components/Table/Table.vue'
+import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
 import type { KTableColumn } from 'kit/vue/ui'
 
 interface Row {
@@ -34,6 +39,8 @@ const columns: KTableColumn<Row>[] = [
   { key: 'status', dataIndex: 'status', title: '状态', width: 120 },
   { key: 'score', dataIndex: 'score', title: '评分', width: 100, align: 'right' },
 ]
+
+const pressMode = ref(false)
 
 const rows = ref<Row[]>(
   Array.from({ length: 8 }, (_, index) => ({
@@ -55,6 +62,9 @@ function onReorder({ from, to }: { from: number; to: number }) {
 </script>
 
 <style scoped>
+.bar {
+  margin-bottom: 8px;
+}
 .hint {
   margin: 0 0 8px;
   color: var(--k-color-text-secondary);

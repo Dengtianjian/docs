@@ -14,7 +14,7 @@ interface Row {
 }
 
 const columns: KTableColumn<Row>[] = [
-  { key: 'name', dataIndex: 'name', title: '姓名' },
+  { key: 'name', dataIndex: 'name', title: '姓名', minWidth: 120 },
   { key: 'role', dataIndex: 'role', title: '角色' },
   { key: 'score', dataIndex: 'score', title: '评分', align: 'right' },
 ]

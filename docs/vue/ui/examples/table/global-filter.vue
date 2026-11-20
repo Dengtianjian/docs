@@ -1,8 +1,13 @@
 <template>
   <div>
     <p class="hint">
-      工具条搜索框绑定 <code>v-model:global-filter</code>：默认按可见叶子列的文本做包含匹配，命中片段在单元格内高亮，可与列筛选、排序、分页叠加。
+      工具条搜索框绑定 <code>v-model:global-filter</code>：默认按可见叶子列的文本做包含匹配，命中片段在单元格内高亮。
+      “仅匹配姓名”切换 <code>globalFilterMethod</code>，“高亮命中”控制 <code>globalFilterHighlight</code>。
     </p>
+    <div class="bar">
+      <KSwitch v-model="onlyName" size="sm">仅匹配姓名</KSwitch>
+      <KSwitch v-model="highlight" size="sm">高亮命中</KSwitch>
+    </div>
     <KTable
       v-model:global-filter="keyword"
       row-key="id"
@@ -10,6 +15,8 @@
       search-placeholder="搜索姓名 / 团队 / 城市"
       :columns="columns"
       :data-source="rows"
+      :global-filter-method="onlyName ? matchName : undefined"
+      :global-filter-highlight="highlight"
       :pagination="{ pageSize: 8, showSizeChanger: true }"
     />
   </div>
@@ -18,6 +25,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import KTable from 'kit/vue/ui/components/Table/Table.vue'
+import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
 import type { KTableColumn } from 'kit/vue/ui'
 
 interface Row {
@@ -54,9 +62,22 @@ const columns: KTableColumn<Row>[] = [
 ]
 
 const keyword = ref('')
+const onlyName = ref(false)
+const highlight = ref(true)
+
+function matchName(row: Row, value: string) {
+  return row.name.toLowerCase().includes(value.toLowerCase())
+}
 </script>
 
 <style scoped>
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
 .hint {
   margin: 0 0 8px;
   color: var(--k-color-text-secondary);

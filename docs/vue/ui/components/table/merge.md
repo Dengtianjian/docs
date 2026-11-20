@@ -2,6 +2,17 @@
 
 > 行/列合并、固定区内合并、与展开/虚拟滚动的组合，以及跨固定区降级。
 
+
+### 最小用法
+
+```vue
+function spanMethod({ row, columnIndex }) {
+  if (row.groupStart && columnIndex === 0) return { rowSpan: row.groupSize }
+}
+
+<KTable row-key="id" :columns="columns" :data-source="rows" :span-method="spanMethod" />
+```
+
 ### 基础合并
 
 <Demo :title-level="4" path="table/span" title="单元格合并" :desc="['`spanMethod` 按行与列返回 `rowSpan` / `colSpan`，覆盖格自动不再渲染。', '左右固定列浮层与主表共用同一份合并计划。', '组合限制：合并跨越左/右固定区与中区时无法用浮层承载，整表退回粘性单元格模式并在 dev 告警。']" />
@@ -12,15 +23,9 @@
 
 <Demo :title-level="4" path="table/span-fixed-inner" title="合并 · 固定列内横向" :desc="['左固定「部门 + 成员」在同一固定区内 colSpan，同一行中区再合并「任务 + 负责人」。', '合并未跨固定区，整表继续走固定列浮层；横滚时合并格随左固定区一起平移。', '组合限制：合并仍不能跨左右固定区与中区，跨区会退回粘性（见下一条）。']" />
 
-<Demo :title-level="4" path="table/span-cross-region" title="合并 · 跨固定区（退回粘性）" :desc="['合并起点在左固定列、覆盖到中区时，一张浮层表无法承载跨表单元格。', '整表退回粘性单元格模式并在 dev 告警。', '组合限制：这是降级路径，不推荐混用；固定列的抗抖动与性能会相应回退。']" />
-
 ### 合并与展开
 
 <Demo :title-level="4" path="table/span-expand-bottom" title="合并 · 展开内容挂在组尾" :desc="['`expanded-placement` 设为 `bottom`：展开内容追加到所属合并组的末尾整行（跨全部列），不是整表底部。', '同一组多行展开按展示顺序追加，部门合并保持生效。', '组合限制：未传 `spanMethod` 时 `bottom` 回退 `inline` 并 dev 告警。']" />
-
-<Demo :title-level="4" path="table/span-expand-component" title="合并 · 展开（组件渲染）" :desc="['合并 + `expandedRender` 返回 `h(组件)`。', '同组成员 2、3 都展开时，内容按行序追加到研发部组尾。', '「标记完成」切换组件内部状态。']" />
-
-<Demo :title-level="4" path="table/span-expand-slot" title="合并 · 展开（插槽渲染）" :desc="['合并 + `#expanded` 插槽，未显式传 `expandedPlacement`。', '检测到 rowSpan 时自动按组尾追加；插槽作用域仍是原始行数据。']" />
 
 <Demo :title-level="4" path="table/span-expand-mixed" title="合并 · 展开（按行混用）" :desc="['同一张表按行选择渲染方式：成员 2 由 `expandedRender` 返回 `h()` 节点，成员 3 返回组件，成员 5 返回 `undefined` 回退插槽。', '三块内容各自追加到所属合并组尾部。']" />
 

@@ -6,13 +6,16 @@
       :columns="columns"
       :data-source="rows"
       :pagination="{ showSizeChanger: true, showQuickJumper: true, showTotal: true }"
+      @page-change="onPageChange"
+      @update:current="currentModel = $event"
+      @update:page-size="sizeModel = $event"
     />
-    <p class="hint">当前页 {{ page }}，每页 {{ size }} 条</p>
+    <p class="hint">当前页 {{ page }}，每页 {{ size }} 条；最近事件：{{ lastEvent || '—' }}；最近 model 更新：{{ modelEvent || '—' }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import KTable from 'kit/vue/ui/components/Table/Table.vue'
 import type { KTableColumn } from 'kit/vue/ui'
 
@@ -34,6 +37,14 @@ const rows: Row[] = Array.from({ length: 46 }, (_, index) => ({
 
 const page = ref(1)
 const size = ref(10)
+const lastEvent = ref('')
+const currentModel = ref(1)
+const sizeModel = ref(10)
+const modelEvent = computed(() => `update:current=${currentModel.value} / update:page-size=${sizeModel.value}`)
+
+function onPageChange(nextPage: number, nextSize: number) {
+  lastEvent.value = `pageChange(${nextPage}, ${nextSize})`
+}
 </script>
 
 <style scoped>

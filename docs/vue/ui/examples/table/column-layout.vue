@@ -4,11 +4,15 @@
       拖表头抓手换位（同一列可并入别的分组），拖右缘改列宽（挤右邻列，末列加宽表格），双击右缘复位；顺序与宽度分别走
       <code>v-model:column-order</code> / <code>v-model:column-widths</code>，可保存后还原。
     </p>
+    <div class="bar">
+      <KSwitch v-model="pressMode" size="sm">表头任意处拖动</KSwitch>
+    </div>
     <KTable
       v-model:column-order="order"
       v-model:column-widths="widths"
       row-key="id"
       column-draggable
+      :column-drag-mode="pressMode ? 'press' : 'handle'"
       column-resizable
       :columns="columns"
       :data-source="rows"
@@ -26,6 +30,7 @@
 import { computed, ref } from 'vue'
 import KTable from 'kit/vue/ui/components/Table/Table.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
 import type { KTableColumn } from 'kit/vue/ui'
 
 interface Row {
@@ -84,6 +89,9 @@ function reset() {
   border-radius: 4px;
   background: var(--k-color-fill-tertiary);
   font-size: 11px;
+}
+.bar {
+  margin-bottom: 8px;
 }
 .ops {
   display: flex;

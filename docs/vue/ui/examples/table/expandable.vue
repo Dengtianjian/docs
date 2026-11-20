@@ -1,18 +1,22 @@
 <template>
-  <KTable
-    v-model:expanded-row-keys="expanded"
-    :columns="columns"
-    :data-source="rows"
-    :row-expandable="row => !row.noDetail"
-  >
-    <template #expanded="{ row }">
-      <div class="detail">
-        <span>邮箱：{{ row.email }}</span>
-        <span>城市：{{ row.city }}</span>
-        <span>评分：{{ row.score }}</span>
-      </div>
-    </template>
-  </KTable>
+  <div>
+    <KTable
+      v-model:expanded-row-keys="expanded"
+      :columns="columns"
+      :data-source="rows"
+      :row-expandable="row => !row.noDetail"
+      @expand-change="onExpandChange"
+    >
+      <template #expanded="{ row }">
+        <div class="detail">
+          <span>邮箱：{{ row.email }}</span>
+          <span>城市：{{ row.city }}</span>
+          <span>评分：{{ row.score }}</span>
+        </div>
+      </template>
+    </KTable>
+    <p class="log">最近展开事件：{{ lastExpand || '—' }}</p>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -39,6 +43,11 @@ const columns: KTableColumn<Row>[] = [
 ]
 
 const expanded = ref<KTableRowKey[]>([2])
+const lastExpand = ref('')
+
+function onExpandChange(keys: KTableRowKey[], row: Row, open: boolean) {
+  lastExpand.value = `${row.name} ${open ? '展开' : '收起'}（当前 ${keys.length} 行）`
+}
 
 const rows: Row[] = Array.from({ length: 6 }, (_, index) => ({
   id: index + 1,
@@ -59,5 +68,10 @@ const rows: Row[] = Array.from({ length: 6 }, (_, index) => ({
   gap: 8px 24px;
   color: var(--k-color-text-secondary);
   font-size: var(--k-font-size-sm);
+}
+.log {
+  margin: 8px 0 0;
+  color: var(--k-color-text-secondary);
+  font-size: 12px;
 }
 </style>

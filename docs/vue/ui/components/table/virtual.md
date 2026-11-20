@@ -2,11 +2,20 @@
 
 > 大数据量窗口化、变量行高、合并/展开/固定行组合与触底加载。
 
+
+### 最小用法
+
+```vue
+<KTable virtual row-key="id" :columns="columns" :data-source="rows" :scroll="{ y: 420 }" :pagination="false" />
+```
+
 ### 基础虚拟
 
 <Demo :title-level="4" path="table/virtual" title="虚拟滚动（千行）" :desc="['`virtual` 开启后只渲染可视窗口，主体与左右固定列浮层共用同一窗口。', '行高按实测缓存写入前缀和；展开行同样计入窗口与占位高度。', '组合限制：需要 `scroll.y` 形成固定高度容器；固定行始终渲染、不参与窗口裁剪。']" />
 
-<Demo :title-level="4" path="table/virtual-variable" title="虚拟滚动 · 不定高" :desc="['1000 行里混有多行摘要，行高按实测缓存写入前缀和。', '未测量行用 `virtualRowHeight` 估算，测量后自动滚动锚定。', '组合限制：不传 `virtualRowHeight` 时取已测行平均值，滚动条总高随测量逐步收敛。']" />
+<Demo :title-level="4" path="table/virtual-variable" title="虚拟滚动 · 不定高" :desc="['1000 行里混有多行摘要，行高按实测缓存写入前缀和。', '未测量行用 `virtualRowHeight=56` 估算，并显式设置 `virtualOverscan=8`、`virtualBuffer=4`。', '组合限制：不传 `virtualRowHeight` 时取已测行平均值，滚动条总高随测量逐步收敛。']" />
+
+<Demo :title-level="4" path="table/virtual-threshold" title="虚拟滚动 · 阈值切换" :desc="['60 行数据；`virtualThreshold=20` 启用窗口化，切到 1000 则整表渲染，便于对比。', '阈值以下不创建虚拟窗口，行为与普通表一致。']" />
 
 ### 合并与展开
 
@@ -19,10 +28,6 @@
 ### 固定行与综合
 
 <Demo :title-level="4" path="table/virtual-fixed" title="虚拟滚动 + 固定行 / 固定列 / 吸顶表头" :desc="['千行数据使用虚拟滚动，同时开启 `rowPinning`、左右固定列与吸顶表头。', '固定行始终渲染并计入上下占位，主体与浮层共用同一窗口。']" />
-
-<Demo :title-level="4" path="table/combined" title="综合 · 全能力叠加" :desc="['80 行、每 4 行一组：部门/组号固定左侧，状态/风险固定右侧，中间 9 列。', '部门 rowSpan + 组尾里程碑 colSpan、多级表头、顶/底固定行、虚拟滚动与吸顶表头同时开启。', '组号排序保持整组相邻，进度/评分为组内排序，部门筛选按整组过滤。', '组合限制：跨固定区合并会整表退回粘性；展开内容追加到组尾并计入虚拟窗口。']" />
-
-<Demo :title-level="4" path="table/tree-combined" title="综合 · 树形 × 固定列 / 合并 / 虚拟" :desc="['88 行三级树 + 顶/底固定汇总行：固定列、多级表头、吸顶表头与虚拟滚动照常工作。', '「批次」列 rowSpan 按当前可见行实时计算（团队行 + 已展开成员），收起团队或筛选「状态」后合并同步重算。', '里程碑行横向合并任务与备注。', '组合限制：固定行只放扁平汇总行；固定带子节点的行会导致子树不展示。']" />
 
 ### 触底加载
 

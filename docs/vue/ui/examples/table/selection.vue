@@ -1,7 +1,7 @@
 <template>
   <div>
-    <KTable :columns="columns" :data-source="rows" :row-selection="selection" @selection-change="onSelection" />
-    <p class="hint">已选：{{ selected.join('、') || '无' }}</p>
+    <KTable :columns="columns" :data-source="rows" :row-selection="selection" @selection-change="onSelection" @row-click="onRowClick" />
+    <p class="hint">已选：{{ selected.join('、') || '无' }}；最近点击：{{ lastClick || '—' }}</p>
   </div>
 </template>
 
@@ -27,6 +27,7 @@ const rows: Row[] = [
   { id: 4, name: '赵六', role: '测试' },
 ]
 const selected = ref<Array<string | number>>([])
+const lastClick = ref('')
 
 const selection = {
   getCheckboxProps: (row: Row) => ({ disabled: row.id === 4 }),
@@ -37,6 +38,10 @@ const selection = {
 
 function onSelection(keys: Array<string | number>) {
   selected.value = keys
+}
+
+function onRowClick(row: Row, index: number) {
+  lastClick.value = `第 ${index + 1} 行 · ${row.name}`
 }
 </script>
 

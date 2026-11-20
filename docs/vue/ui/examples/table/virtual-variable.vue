@@ -2,7 +2,8 @@
   <div>
     <p class="hint">
       1000 行不定高：每 5 行有一段多行摘要，行高从 48px 到 90px 不等。虚拟滚动按实测高度计算窗口与占位，
-      滚动时只渲染可视行，滚动条总高与真实内容一致。
+      滚动时只渲染可视行，滚动条总高与真实内容一致。未测量行按 <code>virtualRowHeight=56</code> 估算，
+      overscan 8 行、缓冲 4 行。
     </p>
     <KTable
       class="variable-demo"
@@ -10,6 +11,9 @@
       :data-source="rows"
       virtual
       sticky
+      :virtual-row-height="56"
+      :virtual-overscan="8"
+      :virtual-buffer="4"
       :scroll="{ x: 760, y: 360 }"
       :pagination="false"
     />

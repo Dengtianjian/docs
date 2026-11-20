@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg">
+  <KSpace direction="vertical" size="lg" style="width: 100%">
     <KSteps :current="current">
       <KStep title="提交申请" description="2026-11-19 10:20" />
       <KStep title="审核中" description="预计 1 个工作日" />

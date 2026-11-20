@@ -72,6 +72,7 @@
 - `segmented` 默认关闭，打开后只影响分隔线，不改变内边距；actions 栏始终带顶边线。
 - 分隔线与描边使用 `--k-color-border-secondary`，比常规边框更浅。
 - `hoverShadow` 只加阴影、不改边框；`hoverable` 在 outlined 下会同时加深边框。
+- `header` 与 `body` 的视觉间距等于 body 内边距：header 下边距与 body 上边距不删，只对相邻 body 施加负 margin 抵消 header 下边距，因此 header / body 各自四边仍对称。
 - actions 子项由 Card 渲染为 KButton（default × quiet），自带键盘聚焦与 focus-visible；波纹默认关闭，需要时给 `KCardAction` 传 `wave`。
 - 子项只放文本/图标，不要再嵌套按钮。
 - 需要按钮样式或属性时改用 `KCardAction`，它内部就是 KButton：`type` / `variant` / `disabled` / `@click` / `aria-label` 等按 KButton 语义使用，原生 type 走 `nativeType`。例：`<KCardAction type="primary" variant="text" @click="onEdit">编辑</KCardAction>`。

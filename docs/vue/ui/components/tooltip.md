@@ -9,13 +9,15 @@
 
 ## 代码演示
 
-<Demo path="tooltip/basic" title="方位 / 触发 / 受控" desc="12 方位（top 系/bottom 系/left 系/right 系 ± 对齐后缀）；trigger 支持 hover/focus/click 组合；v-model:open 受控；#trigger 包触发元素、默认插槽放富内容（content/title prop 兜底）；空内容不弹泡。" />
+<Demo path="tooltip/basic" title="方位 / 触发 / 受控" :desc="['12 方位（top 系/bottom 系/left 系/right 系 ± 对齐后缀）。', 'trigger 支持 hover/focus/click 组合。', 'v-model:open 受控。', '#trigger 包触发元素、默认插槽放富内容（content/title prop 兜底）。', '空内容不弹泡。']" />
 
-<Demo path="tooltip/placements" title="12 方位全览" desc="四主方位 ± 对齐后缀共 12 个，逐位悬停查看；箭头逐位跟随触发器中心（贴边方位不钉边中点）。" />
+<Demo path="tooltip/sizes" title="三档尺寸" :desc="['`size` 支持 `sm` / `md` / `lg`，字号、内边距与最大宽度同步缩放。', '只影响气泡，触发器尺寸由业务控件决定。']" />
 
-<Demo path="tooltip/container" title="弹层容器契约" desc="popup-container 指定挂载盒：气泡 absolute 进容器文档流，随内容滚动、被盒边界裁切（Select/Popover/Popconfirm 同语义）；缺省 body 仍 fixed + scroll 跟随。" />
+<Demo path="tooltip/placements" title="12 方位全览" :desc="['四主方位 ± 对齐后缀共 12 个，逐位悬停查看。', '箭头逐位跟随触发器中心（贴边方位不钉边中点）。']" />
 
-<Demo path="tooltip/render" title="自定义渲染（headless）" desc="`#render` 插槽 / `render` prop 整件替换：触发器与气泡全自绘，ref/attrs/on 绑定包散播后延迟、定位、翻转、主题、受控逻辑照跑。" />
+<Demo path="tooltip/container" title="弹层容器契约" :desc="['popup-container 指定挂载盒：气泡 absolute 进容器文档流，随内容滚动、被盒边界裁切（Select/Popover/Popconfirm 同语义）。', '缺省 body 仍 fixed + scroll 跟随。']" />
+
+<Demo path="tooltip/render" title="自定义渲染（headless）" desc="`#render` 插槽 / `render` prop 整件替换：触发器与气泡全自绘，ref/attrs/on 绑定包散播后延迟、定位、翻转、主题、受控逻辑照常生效。" />
 
 ## API
 
@@ -25,10 +27,12 @@
 | title | 提示内容别名（antd 同名兼容；优先级低于 `content`） | `string \| VNode` | — |
 | placement | 方位（主侧放不下且对侧放得下时自动翻转，翻转结果写回 `data-placement`） | `KOverlayPlacement`（12 方位） | `'top'` |
 | trigger | 触发方式，可组合 | `'hover' \| 'focus' \| 'click'` 或数组 | `['hover','focus']` |
-| mouseEnterDelay / mouseLeaveDelay | 出/入延迟（秒；leave 容差留出移入弹层的时间） | `number` | `0.1 / 0.1` |
+| mouseEnterDelay | 移入延迟（秒） | `number` | `0.1` |
+| mouseLeaveDelay | 移出延迟（秒；leave 容差留出移入弹层的时间） | `number` | `0.1` |
 | open / v-model:open | 受控开合 | `boolean` | — |
 | disabled | 禁用弹出 | `boolean` | `false` |
 | arrow | 显示箭头 | `boolean` | `true` |
+| size | 气泡尺寸：字号、内边距、最大宽度同步缩放 | `'sm' \| 'md' \| 'lg'` | `'md'` |
 
 <CommonProps />
 
@@ -53,19 +57,27 @@
 | --- | --- |
 | `--k-tooltip-bg` | `--k-color-bg-spotlight`（压暗提示底，antd 同款语义） |
 | `--k-tooltip-color` | `--k-color-text-light-solid` |
-| `--k-tooltip-radius / -padding / -font-size` | `border-radius` / `xs size`（8px 16px） / `font-size-sm` |
+| `--k-tooltip-radius / -padding / -font-size` | `border-radius` / 随 size 档 / 随 size 档（sm/md/lg = 12/14/16px） |
 | `--k-tooltip-arrow-size` | `8px` 常数（等腰直角三角形半对角，外露 ≈5.7px 略探过 gap 贴住触发器） |
 
 ## 注意事项
 
 - 触屏（`hover: none`）下未显式传 `trigger` 时默认改为 `click` 触发，避免 hover 语义在移动端失效；显式 `trigger` 仍完全按传入值执行。
 
-- **插槽语义与内容通道**（2026-11-18 改判 naive 同款，破坏性）：`#trigger` 包触发元素、**默认插槽 = 显示内容**；内容优先级 默认插槽 > `content` prop > `title` prop（`title` 为 antd 同名兼容别名）；旧 `#content`/`#title` 插槽别名已删。各通道皆空时不弹空泡（hover/focus/click 均静默）。
+- **插槽语义与内容通道**（2026-11-18 改判 naive 同款，破坏性）：`#trigger` 包触发元素、**默认插槽 = 显示内容**。
+  - 内容优先级 默认插槽 > `content` prop > `title` prop（`title` 为 antd 同名兼容别名）。
+  - 旧 `#content`/`#title` 插槽别名已删。
+  - 各通道皆空时不弹空泡（hover/focus/click 均静默）。
 
-- **箭头指向**（2026-11-17 修正）：主方位弹层居中对齐、箭头天然在边中点；八个贴边方位弹层错位摆放，旧「箭头钉在边中点」会指空。现由基座 `useOverlayPosition` 输出 `--k-overlay-arrow-offset`（弹层本地主轴 px，按触发器中心计算并 clamp 进限位 `arrowKeepout`=半盒+圆角余量），CSS 只管换侧与形状。坑：限位别用 CSS `clamp()`——百分比与 px 混算在 left/top 上不生效，必须在 JS 端算。
-- **进出场动画**（2026-11-17 补退场）：`Transition` 驱动——进场 `k-tooltip-zoom`（0.8→1 + 淡入），退场 `k-tooltip-zoom-out`（1→0.8 + 淡出），时长 `--k-motion-duration-fast`；退场期间节点保留播完再移除，中途重 hover 可打断回放。
+- **箭头指向**（2026-11-17 修正）：主方位弹层居中对齐、箭头天然在边中点；八个贴边方位弹层错位摆放，旧「箭头钉在边中点」会指空。
+  - 现由基座 `useOverlayPosition` 输出 `--k-overlay-arrow-offset`（弹层本地主轴 px，按触发器中心计算并 clamp 进限位 `arrowKeepout`=半盒+圆角余量），CSS 只管换侧与形状。
+  - 坑：限位别用 CSS `clamp()`——百分比与 px 混算在 left/top 上不生效，必须在 JS 端算。
+- **进出场动画**（2026-11-17 补退场）：`Transition` 驱动——进场 `k-tooltip-zoom`（0.8→1 + 淡入），退场 `k-tooltip-zoom-out`（1→0.8 + 淡出），时长 `--k-motion-duration-fast`。
+  - 退场期间节点保留播完再移除，中途重 hover 可打断回放。
 
-- 弹层 `Teleport` 出口走 popupContainer 契约（ConfigProvider 职责④）：缺省 body = `position: fixed` + scroll/resize 跟随；指定容器 = `absolute` 进容器文档流（随内容滚、被裁切）；z `--k-z-index-popup-base`，`scopeClass`/`data-k-theme` 随出口节点走。
+- 弹层 `Teleport` 出口走 popupContainer 契约（ConfigProvider 职责④）：缺省 body = `position: fixed` + scroll/resize 跟随。
+  - 指定容器 = `absolute` 进容器文档流（随内容滚、被裁切）。
+  - z `--k-z-index-popup-base`，`scopeClass`/`data-k-theme` 随出口节点走。
 - 定位/外点关闭/Esc 走共用基座 `composables/usePopup.ts`（`utils/overlay.ts` 纯函数算位），与 KPopover/KPopconfirm 同源；KSelect 的自有定位暂不并轨（宽度贴触发器等专属语义）。
 - 触发元素放 `#trigger` 插槽，外包一层 `span.k-tooltip__trigger`（inline-block），事件绑在这层；焦点语义保持留在触发元素上。
 - 弹层显示时触发层带 `aria-describedby` 指向弹层 id（`role="tooltip"`），读屏在焦点触发时可朗读提示内容；隐藏时移除关联，避免指向空节点。
@@ -83,6 +95,7 @@
 | hasContent | `boolean` | 是否有内容：默认插槽存在或 `content ?? title` 非空任一成立；为 false 时 hover/focus/click 均不弹空泡 |
 | placement | `KOverlayPlacement` | **翻转后的实际方位**（基座 `useOverlayPosition` 的 actualPlacement，与 `popupAttrs['data-placement']` 同值；12 方位联合类型）；只在首选侧放不下且对侧放得下时翻转 |
 | content | `string \| VNode \| undefined` | `content ?? title` prop 通道内容（`title` 为 antd 同名兼容别名，优先级低于 `content`）；默认插槽内容优先，经 `slots.default` 取 |
+| size | `KTooltipSize` | 尺寸档（`sm / md / lg`）；默认渲染据此缩放字号、内边距与最大宽度 |
 
 #### ref 与出口
 

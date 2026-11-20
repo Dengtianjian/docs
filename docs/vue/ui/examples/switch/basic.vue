@@ -1,11 +1,11 @@
 <template>
-  <KSpace size="lg" align="center">
-    <KSwitch v-model="on" size="large" />
-    <KSwitch v-model="on" />
-    <KSwitch v-model="on" size="small" />
-    <KSwitch v-model="off" checked-children="开" un-checked-children="关" />
-    <KSwitch v-model="loading" loading />
-    <KSwitch disabled :model-value="false" />
+  <KSpace size="lg" align="center" wrap>
+    <KSwitch v-model="on" size="lg" label="大号" />
+    <KSwitch v-model="on" label="默认" />
+    <KSwitch v-model="on" size="sm" label="小号" />
+    <KSwitch v-model="off" checked-children="开" un-checked-children="关" label="内嵌文字" />
+    <KSwitch v-model="loading" loading label="加载中" />
+    <KSwitch disabled :model-value="false" label="禁用" />
   </KSpace>
 </template>
 

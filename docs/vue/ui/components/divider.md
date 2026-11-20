@@ -9,11 +9,11 @@
 
 ## 代码演示
 
-<Demo path="divider/horizontal" title="水平分割线" desc="缺省纯线；有默认插槽内容时左右出线、文字居中；`orientation` 调文字位置，`plain` 用常规字重，`dashed` 虚线。" />
+<Demo path="divider/horizontal" title="水平分割线" :desc="['缺省为纯线；有默认插槽内容时左右出线、文字居中。', '`orientation` 调文字位置，`plain` 用常规字重，`dashed` 虚线。']" />
 
 <Demo path="divider/vertical" title="纵向分割线" desc="`type=vertical` 与相邻文本基线对齐，常见于操作列、面包屑式行内分隔。" />
 
-<Demo path="divider/render" title="自定义渲染（headless）" desc="外观不合需求但逻辑合适时，`#render` 插槽或 `render` prop 整件替换视觉输出；scope 给状态与语义绑定包，自绘节点散播即继承。" />
+<Demo path="divider/render" title="自定义渲染（headless）" :desc="['外观不合需求但逻辑合适时，`#render` 插槽或 `render` prop 整件替换视觉输出。', 'scope 给状态与语义绑定包，自绘节点散播即继承。']" />
 
 ## API
 
@@ -52,7 +52,9 @@
 
 ## 自定义渲染（headless）
 
-提供 `#render` 作用域插槽（优先）或 `render` 闭包 prop 任一，组件**整件视觉输出被替换**（默认线/文字结构不再渲染），只保留逻辑与语义。两条通道收到同一份 scope = `KDividerRenderScope`（入口导出）。通用契约见 [headless 自定义渲染](../headless.md)。静态件零行为，无 ref / 动作组，仅状态与绑定包两组：
+提供 `#render` 作用域插槽（优先）或 `render` 闭包 prop 任一，组件**整件视觉输出被替换**（默认线/文字结构不再渲染），只保留逻辑与语义。两条通道收到同一份 scope = `KDividerRenderScope`（入口导出）。
+
+通用契约见 [headless 自定义渲染](../headless.md)。静态件零行为，无 ref / 动作组，仅状态与绑定包两组：
 
 #### 状态（只读快照）
 
@@ -72,7 +74,9 @@
 
 另有 `slots`（`ReturnType<typeof useSlots>`）：默认渲染的插槽集合（`default` = 内嵌文字），自绘时可按需取用，如 `ctx.hasText && ctx.slots.default?.()`。
 
-契约：**绑定包散播才继承逻辑**。`render` prop 走 `h()` 时 attrs 直接展开即可（Divider 无事件包）。`classNames` / `styles` 只作用于默认渲染。**render prop 闭包产物在组件子作用域渲染，不带调用方 `<style scoped>` 的 data-v 属性**——该通道的自绘样式须全局（专属前缀命名）或内联；`#render` 插槽通道在调用方作用域编译，scoped 照常生效。
+契约：**绑定包散播才继承逻辑**。`render` prop 走 `h()` 时 attrs 直接展开即可（Divider 无事件包）。`classNames` / `styles` 只作用于默认渲染。
+
+**render prop 闭包产物在组件子作用域渲染，不带调用方 `<style scoped>` 的 data-v 属性**——该通道的自绘样式须全局（专属前缀命名）或内联；`#render` 插槽通道在调用方作用域编译，scoped 照常生效。
 
 ```vue
 <KDivider dashed>

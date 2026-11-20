@@ -11,6 +11,8 @@
 
 <Demo path="dropdown/basic" title="基础 / 图标 / 分组 / 危险项" :desc="['`items` 提供 `key`、`label`、`icon`、`disabled`、`danger`、`divided`。', '`trigger=&quot;click&quot;` 点按开合；`select` 返回 key 与原 item。', '`danger` 红色危险项；`divided` 在本项前加分隔线。']" />
 
+<Demo path="dropdown/sizes" title="三档尺寸" :desc="['`size` 支持 `sm` / `md` / `lg`，同步调整选项行高、字号与最小宽度；横向内边距统一 8px。', '`size` 只影响弹层；触发器尺寸由业务控件自行决定，示例用同档位按钮对照。', '内容区统一 4px 内边距，md 选项行高 32px。']" />
+
 <Demo path="dropdown/triggers" title="触发方式 / 对齐位置" :desc="['`trigger` 支持 `hover` / `click` / `contextmenu`，也可传数组组合。', '`placement` 走通用 12 方位；空间不足自动翻转。', '触屏设备缺省由 hover 改为 click。']" />
 
 <Demo path="dropdown/custom" title="自定义菜单项 / 受控开合" :desc="['`#item` 作用域插槽自定义每项内容，scope 提供 `item`、`index`。', '`v-model:open` 受控开合；`#trigger` 放任意触发元素。', '`menu-label` 提供菜单的 a11y 名称。']" />
@@ -30,6 +32,7 @@
 | disabled | 禁用触发 | `boolean` | `false` |
 | closeOnSelect | 选中后关闭 | `boolean` | `true` |
 | menuLabel | 菜单的 `aria-label` | `string` | — |
+| size | 菜单尺寸（只影响弹层） | `'sm' \| 'md' \| 'lg'` | `'md'` |
 | classNames | 部件类名（`trigger / root / item / label / icon / divider / danger`） | `Partial<Record<Part, string>>` | — |
 | styles | 部件内联样式（同上） | `Partial<Record<Part, CSSProperties>>` | — |
 

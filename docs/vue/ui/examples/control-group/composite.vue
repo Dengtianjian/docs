@@ -22,7 +22,7 @@
         <KRadio v-model="mode" value="auto">自动</KRadio>
       </KControlGroupItem>
       <KControlGroupItem>
-        <KSwitch v-model="autoSave" size="small" />
+        <KSwitch v-model="autoSave" size="sm" />
       </KControlGroupItem>
       <KControlGroupItem>单位：件</KControlGroupItem>
       <KButton>保存</KButton>

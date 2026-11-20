@@ -9,9 +9,11 @@
 
 ## 代码演示
 
-<Demo path="message/basic" title="message" desc="四类型 + loading；时长秒、0 常驻；同 key 复更新（loading→success 不叠条）；destroyAll。" />
+<Demo path="message/basic" title="message" :desc="['四类型 + loading。', '时长秒、0 常驻。', '同 key 复更新（loading→success 不叠条）。', 'destroyAll。']" />
 
-<Demo path="message/render" title="自定义内容（render + classNames）" desc="render 只替换图标与正文，外层 k-message 的队列、role、计时与关闭回调仍由 Holder 提供；classNames/styles 逐部件覆盖。" />
+<Demo path="message/sizes" title="三档尺寸" :desc="['`size` 支持 `sm` / `md` / `lg`，字号、内边距与图标同步缩放。', '尺寸按单条消息配置，不影响队列其它消息。']" />
+
+<Demo path="message/render" title="自定义内容（render + classNames）" :desc="['render 只替换图标与正文，外层 k-message 的队列、role、计时与关闭回调仍由 Holder 提供。', 'classNames/styles 逐部件覆盖。']" />
 
 ## API
 
@@ -38,9 +40,11 @@ message.destroy(key) / message.destroyAll()
 | content | 文本或 VNode | — |
 | duration | 自动关闭秒数，`0` = 常驻 | `3` |
 | type | 图标类型；icon 可覆盖、`null` 去图标 | `'info'` |
+| size | 尺寸：字号、内边距、图标同步缩放 | `'md'` |
 | key | 同 key 复用同一条（内容/类型原地更新） | — |
-| render | 自定义图标+正文：`({ content, type, icon, close }) => VNodeChild`；外层队列/role/计时不变 | — |
-| classNames / styles | 部件覆盖：`root / icon / content` | — |
+| render | 自定义图标+正文：`({ content, type, icon, size, close }) => VNodeChild`；外层队列/role/计时不变 | — |
+| classNames | 部件类名覆盖：`root / icon / content` | — |
+| styles | 部件样式覆盖：`root / icon / content` | — |
 | onClose | 该条销毁时回调 | — |
 
 ### 部件变量
@@ -49,7 +53,7 @@ message.destroy(key) / message.destroyAll()
 | --- | --- |
 | `--k-message-bg` | `--k-color-bg-elevated` |
 | `--k-message-radius` | `--k-border-radius-lg` |
-| `--k-message-pad` | `--k-size-sm --k-size`（12px 16px） |
+| `--k-message-pad / -font-size / -icon-size` | 随 size 档（sm 8×12 / md 12×16 / lg 16×20；字号 12/14/16） |
 | z 层级 | `--k-z-index-message` |
 | 图标着色 | 类型语义色 `--k-color-success/error/warning/info` |
 

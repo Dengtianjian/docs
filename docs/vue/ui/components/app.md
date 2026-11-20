@@ -10,7 +10,7 @@
 
 ## 代码演示
 
-<Demo path="app/basic" title="基础用法" desc="默认渲染 `div.k-app`；`component` 可换根标签（如 `main`），`false` 则只保留上下文不渲染包裹层。" />
+<Demo path="app/basic" title="基础用法" :desc="['默认渲染 `div.k-app`。', '`component` 可换根标签（如 `main`），`false` 则只保留上下文不渲染包裹层。']" />
 
 ## API
 

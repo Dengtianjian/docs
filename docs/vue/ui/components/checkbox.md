@@ -8,11 +8,11 @@
 
 ## 代码演示
 
-<Demo path="checkbox/basic" title="基础与半选" desc="`v-model` 布尔；`indeterminate` 半选视觉（状态由调用方管理，antd 同语义）；禁用三态。" />
+<Demo path="checkbox/basic" title="基础与半选" :desc="['`v-model` 布尔。', '`indeterminate` 半选视觉（状态由调用方管理，antd 同语义）。', '禁用态覆盖选中、未选与半选。']" />
 
-<Demo path="checkbox/group" title="复选组" desc="KCheckboxGroup 两形态：`options` 自渲染 或 默认插槽手写子件（`:value` 对上组 model）；共用同一 context，`disabled` 组级下发。" />
+<Demo path="checkbox/group" title="复选组" :desc="['KCheckboxGroup 两形态：`options` 自渲染 或 默认插槽手写子件（`:value` 对上组 model）。', '共用同一 context，`disabled` 组级下发。']" />
 
-<Demo path="checkbox/render" title="自定义渲染（headless）" desc="三件齐演：KCheckbox `#render` 自绘 chip（隐藏原生 input 继承勾选逻辑）；`render` prop 自绘卡片；KCheckboxGroup `#render` 直消费 options/values/toggle 自绘多选段。" />
+<Demo path="checkbox/render" title="自定义渲染（headless）" :desc="['三件齐演：KCheckbox `#render` 自绘 chip（隐藏原生 input 继承勾选逻辑）。', '`render` prop 自绘卡片。', 'KCheckboxGroup `#render` 直消费 options/values/toggle 自绘多选段。']" />
 
 ## API
 
@@ -23,7 +23,10 @@
 | model-value / v-model | 勾选态（standalone） | `boolean` | `false` |
 | value | 组模式选项值（组内消费 context，不配 v-model） | `string \| number` | — |
 | indeterminate | 半选视觉 | `boolean` | `false` |
-| disabled / required / name / id | 原生透传（name 仅 standalone） | — | — |
+| disabled | 原生 disabled 透传 | `boolean` | — |
+| required | 原生 required 透传 | `boolean` | — |
+| name | 原生 name 透传（仅 standalone） | `string` | — |
+| id | 原生 id 透传 | `string` | — |
 
 <CommonProps />
 
@@ -33,7 +36,8 @@
 | --- | --- |
 | v-model | `(string \| number)[]` |
 | options | `Array<string \| {label, value, disabled?}>`；不传 = 插槽形态 |
-| disabled / id | 组级禁用下发 / 组根节点 id（缺省取 FormItem 自动 id） |
+| disabled | 组级禁用下发 |
+| id | 组根节点 id（缺省取 FormItem 自动 id） |
 
 <CommonProps />
 

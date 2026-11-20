@@ -3,6 +3,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { kitPlugin } from 'kit/vue/vite-plugin'
+import { isolateVpDoc } from './isolate-vp-doc'
 
 /**
  * 扫描 docs/php/api 生成「一个类一篇」的侧边栏
@@ -84,6 +85,11 @@ export default defineConfig({
   ignoreDeadLinks: true,
   vite: {
     plugins: [kitPlugin()],
+    css: {
+      postcss: {
+        plugins: [isolateVpDoc()],
+      },
+    },
   },
   head: [
     [
@@ -115,6 +121,8 @@ export default defineConfig({
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    // 右侧目录：h2 分节 + h3 模块（Demo 标题也是 h3，按文档里的模块列出）
+    outline: [2, 3],
     nav: [
       { text: 'Vue', link: '/vue/index' },
       { text: '组件库', link: '/vue/ui/index' },
@@ -212,9 +220,14 @@ export default defineConfig({
                   text: "数据展示（P3）",
                   collapsed: false,
                   items: [
+                    { text: "KTable 表格", link: "/vue/ui/components/table" },
+                    { text: "KPagination 分页", link: "/vue/ui/components/pagination" },
+                    { text: "KVirtualList 虚拟列表", link: "/vue/ui/components/virtual-list" },
                     { text: "KTag 标签", link: "/vue/ui/components/tag" },
                     { text: "KBadge 徽标", link: "/vue/ui/components/badge" },
-                    { text: "KCard 卡片", link: "/vue/ui/components/card" }
+                    { text: "KCard 卡片", link: "/vue/ui/components/card" },
+                    { text: "KEmpty 空状态", link: "/vue/ui/components/empty" },
+                    { text: "KSkeleton 骨架屏", link: "/vue/ui/components/skeleton" }
                   ]
                 },
                 {
@@ -232,6 +245,29 @@ export default defineConfig({
                     { text: "KDrawer 抽屉", link: "/vue/ui/components/drawer" },
                     { text: "KNavBar 顶部导航", link: "/vue/ui/components/navbar" },
                     { text: "KTabBar 底部导航", link: "/vue/ui/components/tabbar" }
+                  ]
+                },
+                {
+                  text: "反馈补充（P5）",
+                  collapsed: false,
+                  items: [
+                    { text: "KProgress 进度条", link: "/vue/ui/components/progress" },
+                    { text: "KResult 结果页", link: "/vue/ui/components/result" }
+                  ]
+                },
+                {
+                  text: "表单补充（P5）",
+                  collapsed: false,
+                  items: [
+                    { text: "KRate 评分", link: "/vue/ui/components/rate" },
+                    { text: "KSlider 滑动输入", link: "/vue/ui/components/slider" },
+                    { text: "KMentions 提及", link: "/vue/ui/components/mentions" },
+                    { text: "KAutoComplete 自动完成", link: "/vue/ui/components/autocomplete" },
+                    { text: "KTimePicker 时间选择", link: "/vue/ui/components/timepicker" },
+                    { text: "KCascader 级联选择", link: "/vue/ui/components/cascader" },
+                    { text: "KTreeSelect 树选择", link: "/vue/ui/components/treeselect" },
+                    { text: "KTransfer 穿梭框", link: "/vue/ui/components/transfer" },
+                    { text: "KColorPicker 颜色选择", link: "/vue/ui/components/colorpicker" }
                   ]
                 }
               ]

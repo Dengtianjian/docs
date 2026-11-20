@@ -29,7 +29,7 @@ token 规格（实现层）：数值与派生 —— "--k-color-split: color-mix
 - **色板**：12 套基础色板降级为静态工具产物（`getColorPalette()`，token 规格 §4.6），组件运行时只消费 6 组语义色的 CSS 表达式派生；
 - **色彩模型**：antd 的 HSB 偏好落地为 **oklab 插值**（感知均匀、纯 CSS 可派生），视觉差异列入校准轮（§9 D1）。
 
-### 1.2 中性色（数值与 antd 完全对齐）
+### 1.2 中性色（antd 基线，低段整体调浅）
 
 | 角色 | 亮色 | 暗色 | token |
 | --- | --- | --- | --- |
@@ -37,9 +37,9 @@ token 规格（实现层）：数值与派生 —— "--k-color-split: color-mix
 | 二级文本 | `#000000A6`（α0.65） | `#FFFFFFA6` | `colorTextSecondary` |
 | 三级/占位 | `#00000073`（α0.45） | `#FFFFFF73` | `colorTextTertiary` |
 | 禁用文本 | `#00000040`（α0.25） | `#FFFFFF40` | `colorTextQuaternary` |
-| 一级边框 | `#D9D9D9` | `#424242` | `colorBorder` |
-| 分割线 | `#05050514`（α0.08，独立破格档：0.06 淡 / 0.15 重） | `#FDFDFD14` | `colorSplit` |
-| 布局背景 | `#F5F5F5` | `#000000` | `colorBgLayout` |
+| 一级边框 | `#E1E2E5`（8% 灰 + 2% 主色） | `#25272B` | `colorBorder` |
+| 分割线 | `#0505050F`（α0.06，随边框降档） | `#FDFDFD0F` | `colorSplit` |
+| 布局背景 | `#F4F6F9`（2% 灰 + 2% 主色） | `#1B1C20` | `colorBgLayout` |
 
 实现走 `color-mix(…, transparent α)`（token 规格 §4.2，与 antd rgba 方案同构）；`colorBorder` 为实色初始值，可被 tinted neutral 覆盖（§9 D2）。
 
@@ -95,23 +95,23 @@ token 规格（实现层）：数值与派生 —— "--k-color-split: color-mix
 
 ## 5. 尺寸与圆角
 
-- 控件高度：PC 30/34/38/42 四档（默认 38 = lg 42 的 90%）；移动端 36/40/**44**/52（触达最小 44，token 规格 §5.4、§8.2）；
+- 控件高度：PC 26/30/34/38 四档（默认 34 = lg 38 的 89%）；移动端 36/40/**44**/52（触达最小 44，token 规格 §5.4、§8.2）；
 - 圆角：基数 6 派生阶梯（none/xs/sm/base/lg/xl/full，token 规格 §5.2）；默认 antd 系 6px 风格，移动端整体升一档（8px）；圆形仅头像/图标按钮/胶囊标签（`shape` 轴表达，不开自由值）。
 
 ---
 
 ## 6. 阴影
 
-参考 antd spec [shadow-cn]，数值全文采纳：
+参考 antd spec [shadow-cn]，2026-11-20 全局调浅约 40%：
 
 - **四层高度模型**：0 层无阴影（输入框等贴合面）→ 1 层低（hover 临时悬浮）→ 2 层中（展开跟随：下拉/气泡）→ 3 层高（独立：对话框/抽屉/通知）；**z-index 档位与阴影档位强制一一对应**（token 规格 §5.5 映射表）；
 - **三层叠加柔和阴影**（alias 初值）：
 
 | token | 亮色初值 | 组件消费方 |
 | --- | --- | --- |
-| `--k-box-shadow`（1-down） | `0 1px 2px -2px rgba(0,0,0,.16), 0 3px 6px 0 rgba(0,0,0,.12), 0 5px 12px 4px rgba(0,0,0,.09)` | Select/Menu 弹层、Card hover |
-| `--k-box-shadow-secondary`（2） | `0 3px 6px -4px rgba(0,0,0,.12), 0 6px 16px 0 rgba(0,0,0,.08), 0 9px 28px 8px rgba(0,0,0,.05)` | Dropdown、Popover、Drawer |
-| `--k-box-shadow-tertiary`（3） | `0 6px 16px -8px rgba(0,0,0,.08), 0 9px 28px 0 rgba(0,0,0,.05), 0 12px 48px 16px rgba(0,0,0,.03)` | Modal、Notification |
+| `--k-box-shadow`（1-down） | `0 6px 16px 0 rgba(0,0,0,.05), 0 3px 6px -4px rgba(0,0,0,.08), 0 9px 28px 8px rgba(0,0,0,.03)` | Select/Menu 弹层、Card hover |
+| `--k-box-shadow-secondary`（2） | `0 1px 2px -2px rgba(0,0,0,.10), 0 3px 6px 0 rgba(0,0,0,.07), 0 5px 12px 4px rgba(0,0,0,.05)` | Dropdown、Popover、Drawer |
+| `--k-box-shadow-tertiary`（3） | `0 3px 6px -4px rgba(0,0,0,.08), 0 6px 16px 0 rgba(0,0,0,.05), 0 9px 28px 8px rgba(0,0,0,.03)` | Modal、Notification |
 
 - **方向语义**：向下=常规浮层；向上=底部导航/工具栏（各档含 up/left/right 变体，rgba 同表换符号）；向左/右=侧栏、固定列表格列；
 - 暗色：α 上调一档（token 基线补丁），不走 Material 描边海拔路线（§9 D3）。
@@ -149,7 +149,7 @@ token 规格（实现层）：数值与派生 —— "--k-color-split: color-mix
 | # | 议题 | antd 方案 | K UI 决策 | 理由 |
 | --- | --- | --- | --- | --- |
 | D1 | 色彩模型 | HSB + 调色板算法 | oklab（CSS `color-mix`） | 感知均匀、纯 CSS 派生免 JS；差异列入校准轮 |
-| D2 | 边框色 | 实色 `#D9D9D9` | 实色为初始值，允许 tinted neutral 染色 | tint=0 时与 antd 同值，默认 0.04 |
+| D2 | 边框色 | `#E1E2E5`（8% 灰 + 2% 主色） | antd `#D9D9D9` 为基线，低段整体调浅 | tint=0 回到纯灰 8%，默认 0.02 |
 | D3 | 暗色层次 | 阴影加深 + 暗段色板 | 同（不走 Material 描边/海拔） | 与亮色同一层级语言 |
 | D4 | 数字缩写 | K/M | 万/亿，可配 | 中文语境 |
 | D5 | 12 套基础色板 | 全量提供 | 6 组语义 + 静态色板工具 | 组件不需要 12 色；可视化色板后置 |

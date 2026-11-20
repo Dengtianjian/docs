@@ -9,17 +9,17 @@
 
 ## 代码演示
 
-<Demo path="preview/basic" title="多图画廊" desc="items 传图片列表；点缩略图从对应张打开；←/→ 切换、+/− 缩放、0 复位、Esc 关闭；工具栏百分比可点复位。" />
+<Demo path="preview/basic" title="多图画廊" :desc="['items 传图片列表。', '点缩略图从对应张打开。', '←/→ 切换、+/− 缩放、0 复位、Esc 关闭。', '工具栏百分比可点复位。']" />
 
 <Demo path="preview/slots" title="自定义内容（#item）" desc="#item 插槽按业务字段/type 接管当前内容渲染（示例：PDF 占位卡），切换、缩放、键盘与开合仍由组件提供。" />
 
-<Demo path="preview/media" title="缩略图 + 视频 + 自定义 PDF" desc="多图默认出现底部缩略图条；后缀自动识别 image/video/pdf；视频内置播放器手动播放；注册 renderers.pdf 后覆盖内置 PDF 渲染，演示类型覆盖优先级。" />
+<Demo path="preview/media" title="缩略图 + 视频 + 自定义 PDF" :desc="['多图默认出现底部缩略图条。', '后缀自动识别 image/video/pdf。', '视频内置播放器手动播放。', '注册 renderers.pdf 后覆盖内置 PDF 渲染，演示类型覆盖优先级。']" />
 
-<Demo path="preview/builtin" title="内置音频 / PDF / Office" desc="audio 内置播放器；pdf 用浏览器内置阅读器嵌入并附新窗口入口；Office 文档（doc/docx/xls/xlsx/ppt/pptx）展示文件卡与打开原文件，不在页面内解析。" />
+<Demo path="preview/builtin" title="内置音频 / PDF / Office" :desc="['audio 内置播放器。', 'pdf 用浏览器内置阅读器嵌入并附新窗口入口。', 'Office 文档（doc/docx/xls/xlsx/ppt/pptx）展示文件卡与打开原文件，不在页面内解析。']" />
 
-<Demo path="preview/resolve" title="resolveType 类型判定" desc="items 携带业务字段 kind；resolveType 优先于后缀推断，把 data:image 的合同项判成 pdf 并命中 renderers.pdf，演示自定义类型决策链路。" />
+<Demo path="preview/resolve" title="resolveType 类型判定" :desc="['items 携带业务字段 kind。', 'resolveType 优先于后缀推断，把 data:image 的合同项判成 pdf 并命中 renderers.pdf，演示自定义类型决策链路。']" />
 
-<Demo path="preview/states" title="加载 / 失败 / 缩略图兜底" desc="缩略图地址无效时退回名称占位；大图或视频加载失败显示错误卡（重新加载 / 打开原文件）；单张慢速大图演示微光骨架，多图中的远程大图可观察加载态。" />
+<Demo path="preview/states" title="加载 / 失败 / 缩略图兜底" :desc="['缩略图地址无效时退回名称占位。', '大图或视频加载失败显示错误卡（重新加载 / 打开原文件）。', '单张慢速大图演示微光骨架，多图中的远程大图可观察加载态。']" />
 
 ## API
 
@@ -68,8 +68,10 @@
 
 | 方法 | 说明 |
 | --- | --- |
-| `open()` / `close()` | 打开 / 关闭 |
-| `next()` / `prev()` | 下一张 / 上一张（到边界为无操作） |
+| `open()` | 打开 |
+| `close()` | 关闭 |
+| `next()` | 下一张（到边界为无操作） |
+| `prev()` | 上一张（到边界为无操作） |
 | `setCurrent(index)` | 跳转到指定序号（越界自动收敛） |
 | `setScale(scale)` | 直接设定缩放（按 minScale/maxScale 收敛） |
 | `rotateBy(delta)` | 按角度旋转（90° 步进常用） |
@@ -93,12 +95,22 @@
 - 滚轮在舞台内缩放（阻止页面滚动）；**触屏手势**：双指捏合缩放、放大后单指拖动平移、单指左右滑切换上一张/下一张（滑动阈值 50px、垂直位移 <40px）。舞台 `touch-action: none`，复位/切换图片会清空平移。
 - 遮罩恒定深色（与 KModal mask 同款破格登记），不随主题反相；控件白字半透明。
 - 层级走 `--k-z-index-modal`；ConfigProvider 的 scoped 主题类会随遮罩根节点输出，token 链不断。
-- **缩略图**：`items.length > 1` 且 `thumbnails` 为真时显示底部横滚条；点击切换，当前项自动滚到中间；`thumbnail` 缺省时图片取 `src`、视频取 `poster`，都没有或加载失败则显示名称/类型占位；移动端缩略项 44px 命中。带缩略图时工具栏与计数器自动上移。缩略条可横向滚动，左右边缘按滚动位置渐隐提示。
-- **媒体加载态**：图片加载中显示微光骨架 + 半透明图，视频/音频加载中显示居中 spinner，加载失败显示错误卡（文件名 + 重新加载 + 打开原文件）；切换项或关闭会重置状态，重新加载走 key 重建元素。PDF/Office/自定义类型不进入媒体加载态。
+- **缩略图**：`items.length > 1` 且 `thumbnails` 为真时显示底部横滚条。
+  - 点击切换，当前项自动滚到中间。
+  - `thumbnail` 缺省时图片取 `src`、视频取 `poster`，都没有或加载失败则显示名称/类型占位。
+  - 移动端缩略项 44px 命中。
+  - 带缩略图时工具栏与计数器自动上移。
+  - 缩略条可横向滚动，左右边缘按滚动位置渐隐提示。
+- **媒体加载态**：图片加载中显示微光骨架 + 半透明图，视频/音频加载中显示居中 spinner，加载失败显示错误卡（文件名 + 重新加载 + 打开原文件）。
+  - 切换项或关闭会重置状态，重新加载走 key 重建元素。
+  - PDF/Office/自定义类型不进入媒体加载态。
 - **相邻预加载**：打开或切换后，预取前后各 2 项的图片（data URI 除外），已预取地址不重复请求。
-- **视频 / 音频**：内置 `<video controls playsinline>` 与 `<audio controls>`，均不自动播放；切换项或关闭预览时自动 `pause()`。非图片类型不启用缩放旋转、滚轮与捏合手势，工具栏隐藏；`←/→` 切换与 Esc 关闭照常。
+- **视频 / 音频**：内置 `<video controls playsinline>` 与 `<audio controls>`，均不自动播放；切换项或关闭预览时自动 `pause()`。
+  - 非图片类型不启用缩放旋转、滚轮与捏合手势，工具栏隐藏；`←/→` 切换与 Esc 关闭照常。
 - **PDF**：`<iframe>` 嵌入浏览器内置阅读器，右上角提供「新窗口打开」；嵌入策略受浏览器与文件源响应头影响，无法内嵌时请用新窗口入口或自定义 `renderers.pdf`。
-- **类型与渲染器**：类型判定与渲染优先级见上文；`renderers` 可覆盖内置 image/video/audio/pdf/office，`#item` 插槽优先级最高。未命中渲染器时显示统一兜底卡（文件名 + 说明 + 打开原文件）；媒体加载失败另有重新加载。
+- **类型与渲染器**：类型判定与渲染优先级见上文。
+  - `renderers` 可覆盖内置 image/video/audio/pdf/office，`#item` 插槽优先级最高。
+  - 未命中渲染器时显示统一兜底卡（文件名 + 说明 + 打开原文件）；媒体加载失败另有重新加载。
 - headless 模式不渲染 Teleport/Transition，自绘时需自行 Teleport 并绑定 `rootOn`（键盘）与各动作包。
 
 ## 自定义渲染（headless）
@@ -115,7 +127,8 @@
 | current | `number` | 当前序号（已收敛到合法范围） |
 | currentItem | `KPreviewItem \| null` | 当前项 |
 | scale | `number` | 当前缩放 |
-| panX / panY | `number` | 放大后的平移偏移（px） |
+| panX | `number` | 放大后的水平平移偏移（px） |
+| panY | `number` | 放大后的垂直平移偏移（px） |
 | isPannable | `boolean` | 当前是否可拖拽平移（图片且 scale > 1） |
 | rotate | `number` | 旋转累计角度（可持续累加，不取模） |
 | flipX | `boolean` | 是否水平翻转 |
@@ -142,11 +155,14 @@
 | rootOn | `KOnPack` | keydown：切图 / 缩放 / Esc |
 | maskOn | `KOnPack` | 遮罩点击关闭（受 maskClosable 约束） |
 | stageOn | `KOnPack` | wheel：滚轮缩放（已 preventDefault） |
-| prevOn / nextOn | `KOnPack` | 上一张 / 下一张 |
+| prevOn | `KOnPack` | 上一张 |
+| nextOn | `KOnPack` | 下一张 |
 | closeOn | `KOnPack` | 关闭 |
-| zoomInOn / zoomOutOn | `KOnPack` | ×1.25 / ×0.8 |
+| zoomInOn | `KOnPack` | ×1.25 |
+| zoomOutOn | `KOnPack` | ×0.8 |
 | resetOn | `KOnPack` | 复位全部变换（缩放/旋转/翻转） |
-| rotateLeftOn / rotateRightOn | `KOnPack` | 逆 / 顺时针旋转 90° |
+| rotateLeftOn | `KOnPack` | 逆时针旋转 90° |
+| rotateRightOn | `KOnPack` | 顺时针旋转 90° |
 | flipOn | `KOnPack` | 水平翻转切换 |
 | imageAttrs | `Record<string, unknown>` | src / alt / draggable=false |
 | imageStyle | `CSSProperties` | `transform: translate(panX, panY) scale(...) rotate(...deg) scaleX(±1)` |
@@ -158,7 +174,8 @@
 | setOpen | `(v: boolean) => void` | 开合（含滚动锁/焦点/监听副作用） |
 | close | `() => void` | 关闭并 emit close |
 | setCurrent | `(index: number) => void` | 跳转并 emit change |
-| next / prev | `() => void` | 相邻切换（边界无操作） |
+| next | `() => void` | 下一张（边界无操作） |
+| prev | `() => void` | 上一张（边界无操作） |
 | zoomBy | `(factor: number) => void` | 乘性缩放 |
 | setScale | `(scale: number) => void` | 绝对缩放（收敛到 min/max） |
 | rotateBy | `(delta: number) => void` | 旋转（角度累加，转满 360° 继续转不归零） |

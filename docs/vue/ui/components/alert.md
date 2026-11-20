@@ -8,9 +8,11 @@
 
 ## 代码演示
 
-<Demo path="alert/basic" title="类型 / 描述 / 可关闭 / 操作区" desc="四类型语义色链（bg/border/icon 三件套随 type）；description 触发加粗标题形态；closable、action 插槽、banner、showIcon=false。" />
+<Demo path="alert/basic" title="类型 / 描述 / 可关闭 / 操作区" :desc="['四类型语义色链（bg/border/icon 三件套随 type）。', 'description 触发加粗标题形态。', 'closable、action 插槽、banner、showIcon=false。']" />
 
-<Demo path="alert/render" title="自定义渲染（headless）" desc="双通道：`#render` 自绘语义左缘条（type 驱动强调色，onClose 继承关闭）；`render` prop 自绘紧凑横条。关闭后整件消失（visible 门照跑）。" />
+<Demo path="alert/sizes" title="三档尺寸" :desc="['`size` 支持 `sm` / `md` / `lg`，字号、内边距、图标与关闭钮同步缩放。', '标题与描述始终保持主次层级。']" />
+
+<Demo path="alert/render" title="自定义渲染（headless）" :desc="['双通道：`#render` 自绘语义左缘条（type 驱动强调色，onClose 继承关闭）。', '`render` prop 自绘紧凑横条。', '关闭后整件消失（仍受 `visible` 控制）。']" />
 
 ## API
 
@@ -18,11 +20,12 @@
 | --- | --- | --- | --- |
 | type | 语义类型 | `'info' \| 'success' \| 'warning' \| 'error'` | `'info'` |
 | message | 主文案（`title` 插槽优先） | `string \| VNode` | — |
-| description | 辅助描述（`description` 插槽优先；有值时标题加粗、图标升档） | `string \| VNode` | — |
+| description | 辅助描述（`description` 插槽优先；有值时标题 14px/600、描述 12px 次要色，图标升档） | `string \| VNode` | — |
 | showIcon | 显示类型图标（`icon` 插槽 / icon prop 覆盖；prop 传 `null` 强制无图标） | `boolean` | `true` |
 | closable | 显示关闭 X | `boolean` | `false` |
 | open / v-model:open | 受控开合（关闭钮发 `update:open=false` + 自隐） | `boolean` | `true` |
 | banner | 贴边通告条（直角 + 去左右边框） | `boolean` | `false` |
+| size | 尺寸：字号、内边距、图标与关闭钮同步缩放 | `'sm' \| 'md' \| 'lg'` | `'md'` |
 
 <CommonProps />
 
@@ -73,6 +76,7 @@
 | message | `string \| VNode \| undefined` | 主文案 prop 通道；默认渲染 `title` 插槽优先，自绘取 `slots.title` 后以它兜底 |
 | description | `string \| VNode \| undefined` | 辅助描述 prop 通道（`description` 插槽优先）；有值时默认渲染标题加粗、图标升档（`k-alert--with-description`），自绘自行判断该形态 |
 | showIcon | `boolean` | 是否显示类型图标；默认渲染还受 `icon` prop 约束（传 `null` 强制无图标——该 prop 不在 scope 内），自绘画图标可取 `slots.icon` 或按 type 自绘 |
+| size | `KAlertSize` | 尺寸档（`sm / md / lg`）；默认渲染据此缩放字号、内边距、图标与关闭钮，自绘可映射自己的规格 |
 | closable | `boolean` | 是否应渲染关闭 X；自绘关闭钮据此显隐并绑 `onClose` |
 | banner | `boolean` | 贴边通告条标记（默认渲染直角 + 去左右边框）；自绘映射自己的贴边样式 |
 | visible | `boolean` | 开合合成态：受控（原始 vnode props 含 `open` 键）取 `props.open`，否则取内部开合态；**整件输出门控**——为 false 时 `#render` 插槽 / `render` prop 整体不渲染（关闭后整件消失），自绘内部无需再做 v-if |

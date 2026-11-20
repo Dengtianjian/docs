@@ -8,11 +8,11 @@
 
 ## 代码演示
 
-<Demo path="radio/basic" title="基础与组" desc="KRadioGroup `options` 自渲染 / 插槽手写两形态（同 Checkbox 路数）；model 单值。" />
+<Demo path="radio/basic" title="基础与组" :desc="['KRadioGroup `options` 自渲染 / 插槽手写两形态（与 Checkbox 一致）。', 'model 单值。']" />
 
-<Demo path="radio/button" title="按钮形态" desc="`shape=button`：段拼接（首末圆角、选中段主色描边主色字并抬 z-index 压相邻边）；键盘方向键走原生 radio 组语义。" />
+<Demo path="radio/button" title="按钮形态" :desc="['`shape=button`：段拼接（首末圆角、选中段主色描边主色字并抬 z-index 压相邻边）。', '键盘方向键走原生 radio 组语义。']" />
 
-<Demo path="radio/render" title="自定义渲染（headless）" desc="KRadioGroup `#render` 直消费 options/value/select 自绘套餐卡（role=radiogroup 语义继承）；KRadio `render` prop 自绘方案瓦片（原生 radio 语义包 + change 逻辑包继承）。" />
+<Demo path="radio/render" title="自定义渲染（headless）" :desc="['KRadioGroup `#render` 直消费 options/value/select 自绘套餐卡（role=radiogroup 语义继承）。', 'KRadio `render` prop 自绘方案瓦片（原生 radio 语义包 + change 逻辑包继承）。']" />
 
 ## API
 
@@ -22,7 +22,9 @@
 | --- | --- | --- | --- |
 | model-value / v-model | standalone 时存「选中值」，与 `:value` 相等即选中 | `string \| number` | — |
 | value | 选项值（组模式必配对；standalone 配 v-model 也可） | `string \| number` | — |
-| disabled / name / id | 原生透传 | — | — |
+| disabled | 原生 disabled 透传 | `boolean` | — |
+| name | 原生 name 透传 | `string` | — |
+| id | 原生 id 透传 | `string` | — |
 
 <CommonProps />
 
@@ -33,7 +35,9 @@
 | v-model | `string \| number` |
 | options | `Array<string \| {label, value, disabled?}>` |
 | shape | `'circle'`（缺省）\| `'button'` |
-| disabled / name / id | 组级下发 / 原生 name（同组互斥由 context 收敛）/ 组根节点 id（缺省取 FormItem 自动 id） |
+| disabled | 组级禁用下发 |
+| name | 原生 name（同组互斥由 context 收敛） |
+| id | 组根节点 id（缺省取 FormItem 自动 id） |
 
 <CommonProps />
 

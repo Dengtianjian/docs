@@ -9,11 +9,11 @@
 
 ## 代码演示
 
-<Demo path="layout/top" title="上下布局" desc="Header / Content / Footer 纵向堆叠；Content 是 flex:auto 的滚动容器。" />
+<Demo path="layout/top" title="上下布局" :desc="['Header / Content / Footer 纵向堆叠。', 'Content 是 flex:auto 的滚动容器。']" />
 
-<Demo path="layout/sider" title="左右布局" desc="嵌套一个 `has-sider` 的 KLayout 即得经典后台骨架；Sider 固定宽、Content 自适应并可滚动。" />
+<Demo path="layout/sider" title="左右布局" :desc="['嵌套一个 `has-sider` 的 KLayout 即得经典后台骨架。', 'Sider 固定宽、Content 自适应并可滚动。']" />
 
-<Demo path="layout/responsive-sider" title="响应式 Sider 宽度" desc="`width` 支持对象或字符串 `'xs:140 sm:180 md:208'`，由共享断点解析；拖动窗口宽度观察。" />
+<Demo path="layout/responsive-sider" title="响应式 Sider 宽度" :desc="['`width` 支持对象或字符串 `\'xs:140 sm:180 md:208\'`，由共享断点解析。', '拖动窗口宽度观察。']" />
 
 <Demo path="layout/render" title="自定义渲染（headless）" desc="五子件各自 headless：高度/宽度变量随 rootAttrs 注入（显式传值才落），骨架视觉全自绘。" />
 

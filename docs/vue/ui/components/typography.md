@@ -4,20 +4,21 @@
 
 ## 何时使用
 
-- 一切文字渲染走这组组件，**禁止业务直接写色/写字重**——颜色只取文本 α 四级、字重只取 base/strong/heading 三档，全由 token 驱动；确需自定义色值时用 KText 的 `color`/`gradient` 属性，不要在业务里裸写内联样式；
+- 一切文字渲染走这组组件，**禁止业务直接写色/写字重**——颜色只取文本 α 四级、字重只取 base/strong/heading 三档，全由 token 驱动；
+  - 确需自定义色值时用 KText 的 `color`/`gradient` 属性，不要在业务里裸写内联样式；
 - copyable/ellipsis/editable 等高级交互本批**不做**（P2 后评估），单行省略先行以 utility 类 `.k-ellipsis` 提供。
 
 ## 代码演示
 
-<Demo path="typography/title" title="标题与段落" desc="`level` 1~5 直接映射 `h1~h5`；字号走 heading 阶（seed fontSize × 固定倍率），改 seed 全档联动。" />
+<Demo path="typography/title" title="标题与段落" :desc="['`level` 1~5 直接映射 `h1~h5`。', '字号走 heading 阶（seed fontSize × 固定倍率），改 seed 全档联动。']" />
 
 <Demo path="typography/text-types" title="文本层级" desc="`type` 即层级语义：default/secondary/tertiary/disabled 对应文本不透明度 88/65/45/25% 四级。" />
 
 <Demo path="typography/text-marks" title="行内标记" desc="strong/code/mark/delete/underline 各自映射语义元素（b/code/mark/del/u），可组合嵌套。" />
 
-<Demo path="typography/text-color" title="文字颜色与渐变" desc="`color` 收任意 CSS 色值（内联生效，压过 type 层级色）；`gradient` 缺省为主色浅→深渐变（hover→active 档），传字符串可自定义色标。" />
+<Demo path="typography/text-color" title="文字颜色与渐变" :desc="['`color` 收任意 CSS 色值（内联生效，压过 type 层级色）。', '`gradient` 缺省为主色浅→深渐变（hover→active 档），传字符串可自定义色标。']" />
 
-<Demo path="typography/render" title="自定义渲染（headless）" desc="Title 派生标签（h3）继承、Text 渐变解析随 rootStyle 继承（background-clip 自绘）、Paragraph 语义继承；默认插槽内容经 `ctx.slots.default` 取回。" />
+<Demo path="typography/render" title="自定义渲染（headless）" :desc="['Title 派生标签（h3）继承、Text 渐变解析随 rootStyle 继承（background-clip 自绘）、Paragraph 语义继承。', '默认插槽内容经 `ctx.slots.default` 取回。']" />
 
 ## API
 
@@ -74,7 +75,9 @@
 
 ## 自定义渲染（headless）
 
-双通道 `#render` 插槽（优先）/ `render` prop，通用契约见 [headless 自定义渲染](../headless.md)。三件各有 scope（入口导出），均含 `rootAttrs` 与 `slots`（默认插槽内容经 `ctx.slots.default` 取回）。零行为纯样式件，无 ref / 动作组；各 scope 逐字段如下（接口没有的组不列）：
+双通道 `#render` 插槽（优先）/ `render` prop，通用契约见 [headless 自定义渲染](../headless.md)。
+
+三件各有 scope（入口导出），均含 `rootAttrs` 与 `slots`（默认插槽内容经 `ctx.slots.default` 取回）。零行为纯样式件，无 ref / 动作组；各 scope 逐字段如下（接口没有的组不列）：
 
 **`KTitleRenderScope`**：
 

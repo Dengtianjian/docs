@@ -14,7 +14,7 @@
 
 <Demo path="flex/vertical" title="纵向" desc="`vertical` 一列堆叠，`gap` 控节奏。" />
 
-<Demo path="flex/wrap" title="折行" desc="`wrap` + `gap`：标签云形态。`gap` 支持 `[行, 列]` 二元组分别控制两轴。" />
+<Demo path="flex/wrap" title="折行" :desc="['`wrap` + `gap`：标签云形态。', '`gap` 支持 `[行, 列]` 二元组分别控制两轴。']" />
 
 <Demo path="flex/render" title="自定义渲染（headless）" desc="`#render` 自绘信息带：gap 解析变量随 rootAttrs 继承，justify/align 作为状态由自绘视觉消费。" />
 

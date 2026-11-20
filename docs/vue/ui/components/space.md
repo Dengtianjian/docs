@@ -10,15 +10,15 @@
 
 ## 代码演示
 
-<Demo path="space/basic" title="基础" desc="缺省水平方向、sm 档间距（8px）。间距走原生 `gap`，不给子项包多余 DOM。" />
+<Demo path="space/basic" title="基础" :desc="['缺省水平方向、sm 档间距（8px）。', '间距走原生 `gap`，不给子项包多余 DOM。']" />
 
-<Demo path="space/vertical-wrap" title="方向 / 尺寸 / 折行" desc="`direction=vertical` 纵向；`size` 可传 `[行, 列]` 二元组分别控制 wrap 后的两轴。" />
+<Demo path="space/vertical-wrap" title="方向 / 尺寸 / 折行" :desc="['`direction=vertical` 纵向。', '`size` 可传 `[行, 列]` 二元组分别控制 wrap 后的两轴。']" />
 
-<Demo path="space/responsive" title="响应式间距" desc="`size` 同时演示字符串 `'xs:8 md:sm lg:lg'` 与对象 `{ xs: 'xs', md: 'md' }`；由共享断点解析为当前档定值，拖动窗口观察。" />
+<Demo path="space/responsive" title="响应式间距" :desc="['`size` 同时演示字符串 `\'xs:8 md:sm lg:lg\'` 与对象 `{ xs: \'xs\', md: \'md\' }`。', '由共享断点解析为当前档定值，拖动窗口观察。']" />
 
-<Demo path="space/separator" title="分隔符" desc="`separator` 模式给子项间插入竖线——此时子项必须是元素节点（文本节点会错位，开发环境 warn），代价是每个子项包一层 span。" />
+<Demo path="space/separator" title="分隔符" :desc="['`separator` 模式在子项间插入竖线。', '此时子项必须是元素节点（文本节点会错位，开发环境 warn），代价是每个子项包一层 span。']" />
 
-<Demo path="space/render" title="自定义渲染（headless）" desc="`#render` 插槽自绘菱形分隔条（children 已拍平可直接 v-for）；`render` prop 画胶囊行——间距变量随 rootAttrs 继承，size 解析逻辑照跑。" />
+<Demo path="space/render" title="自定义渲染（headless）" :desc="['`#render` 插槽自绘菱形分隔条（children 已拍平可直接 v-for）。', '`render` prop 画胶囊行——间距变量随 rootAttrs 继承，size 解析逻辑照常生效。']" />
 
 ## API
 

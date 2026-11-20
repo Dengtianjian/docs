@@ -9,15 +9,15 @@
 
 ## 代码演示
 
-<Demo path="date-range-picker/basic" title="基础范围选择" desc="`v-model` 为 `[开始时间戳, 结束时间戳]`；先点起点再点终点，第二次点击自动排序并关闭；hover 预览区间。" />
+<Demo path="date-range-picker/basic" title="基础范围选择" :desc="['`v-model` 为 `[开始时间戳, 结束时间戳]`。', '先点起点再点终点，第二次点击自动排序并关闭。', 'hover 预览区间。']" />
 
-<Demo path="date-range-picker/limits" title="范围限制与禁用" desc="`min` / `max` 限定可选区间；`disabledDate` 按日期禁用（示例禁用周末）。" />
+<Demo path="date-range-picker/limits" title="范围限制与禁用" :desc="['`min` / `max` 限定可选区间。', '`disabledDate` 按日期禁用（示例禁用周末）。']" />
 
-<Demo path="date-range-picker/presets" title="快捷预设" desc="`presets` 为 `{ label, value: [start, end] }[]`；点击左侧预设直接提交并关闭，当前区间匹配时高亮。" />
+<Demo path="date-range-picker/presets" title="快捷预设" :desc="['`presets` 为 `{ label, value: [start, end] }[]`。', '点击左侧预设直接提交并关闭，当前区间匹配时高亮。']" />
 
-<Demo path="date-range-picker/time" title="日期 + 时间" desc="`showTime` 开启时分秒：默认起 00:00:00、止 23:59:59；面板底部可分别调整两端时间，点「确定」提交。" />
+<Demo path="date-range-picker/time" title="日期 + 时间" :desc="['`showTime` 开启时分秒：默认起 00:00:00、止 23:59:59。', '面板底部可分别调整两端时间，点「确定」提交。']" />
 
-<Demo path="date-range-picker/render" title="自定义渲染（headless）" desc="`#render` 自绘极简范围选择：触发输入、预设、双月网格全部自绘；开合、起止选择、hover 预览、快捷提交、清空由 scope 绑定包继承。" />
+<Demo path="date-range-picker/render" title="自定义渲染（headless）" :desc="['`#render` 自绘极简范围选择：触发输入、预设、双月网格全部自绘。', '开合、起止选择、hover 预览、快捷提交、清空由 scope 绑定包继承。']" />
 
 ## API
 
@@ -31,11 +31,13 @@
 | status | 校验态 | `'error' \| 'warning'` | — |
 | disabled | 禁用 | `boolean` | `false` |
 | clearable | 显示清除钮（有值且非禁用） | `boolean` | `false` |
-| startPlaceholder / endPlaceholder | 起止占位文案 | `string` | `'开始日期'` / `'结束日期'` |
+| startPlaceholder | 起点占位文案 | `string` | `'开始日期'` |
+| endPlaceholder | 终点占位文案 | `string` | `'结束日期'` |
 | showTime | 选择时分秒；开启后第二次点日期不自动关闭，需点「确定」提交 | `boolean` | `false` |
 | presets | 快捷区间列表（常量时间戳；点击直接提交） | `{ label: string; value: [number, number] }[]` | — |
 | format | 展示格式（dayjs format） | `string` | 日期 `'YYYY-MM-DD'`；showTime 时 `'YYYY-MM-DD HH:mm:ss'` |
-| min / max | 可选范围下/上限（时间戳或可解析字符串），按天比较 | `number \| string` | — |
+| min | 可选范围下限（时间戳或可解析字符串），按天比较 | `number \| string` | — |
+| max | 可选范围上限（时间戳或可解析字符串），按天比较 | `number \| string` | — |
 | disabledDate | 禁用判定（入参 = 当天 0 点 Dayjs） | `(date: Dayjs) => boolean` | — |
 | id | 根 id 前缀（起止输入为 `${id}-start` / `${id}-end`） | `string` | — |
 
@@ -48,14 +50,17 @@
 | --- | --- | --- |
 | change | 区间提交（第二次点击）或清空 | `[number, number] \| null` |
 | clear | 点击清除钮 | — |
-| focus / blur | 起止输入聚焦 / 失焦 | `FocusEvent` |
+| focus | 起止输入聚焦 | `FocusEvent` |
+| blur | 起止输入失焦 | `FocusEvent` |
 
 ### Expose
 
 | 方法 | 说明 |
 | --- | --- |
-| `focus()` / `blur()` | 聚焦 / 失焦起点输入 |
-| `open()` / `close()` | 打开 / 关闭面板 |
+| `focus()` | 聚焦起点输入 |
+| `blur()` | 失焦起点输入 |
+| `open()` | 打开面板 |
+| `close()` | 关闭面板 |
 | `clear()` | 清空区间 |
 
 ## 自定义渲染（headless）
@@ -64,17 +69,48 @@
 
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
-| open / value / startText / endText | — | 开合、已提交区间、两端展示文本 |
-| draftStart / draftEnd / hoverTs / activeEdge | — | 选择中的草稿与当前编辑端 |
-| leftView / rightView / leftTitle / rightTitle / leftRows / rightRows | — | 双月视图与单元格 |
-| presets / canCommit / showTime | — | 预设清单、确定可用性、时间态 |
-| rootEl / popupEl | `Ref<HTMLElement \| null>` | 自绘根/面板 ref（必须绑定，点外关闭与焦点判定依赖） |
-| rootAttrs / rootOn | — | 根 `data-part` 与 keydown/focusout |
-| triggerAttrs(edge) / triggerOn(edge) | — | 起止输入语义包与 focus/blur/click |
-| panelAttrs / cellAttrs(cell) / cellOn(cell) | — | 弹层、单元格 data-* 状态与 click/mouseenter |
-| prevOn / nextOn / clearOn / confirmOn / presetOn(preset) | — | 翻月、清空、确定、预设动作包 |
-| timePart / updateTimePart / hours / minutes | — | showTime 自绘时间选择 |
-| openAt / close / commit / clear / shiftMonth / applyPreset / pick | — | 命令式动作 |
+| open | — | 弹层开合 |
+| value | — | 已提交区间 |
+| startText | — | 起点展示文本 |
+| endText | — | 终点展示文本 |
+| draftStart | — | 选择中的起点草稿 |
+| draftEnd | — | 选择中的终点草稿 |
+| hoverTs | — | hover 预览的时间戳 |
+| activeEdge | — | 当前编辑端 |
+| leftView | — | 左月视图 |
+| rightView | — | 右月视图 |
+| leftTitle | — | 左月标题 |
+| rightTitle | — | 右月标题 |
+| leftRows | — | 左月单元格行 |
+| rightRows | — | 右月单元格行 |
+| presets | — | 预设清单 |
+| canCommit | — | 确定可用性 |
+| showTime | — | 时间态 |
+| rootEl | `Ref<HTMLElement \| null>` | 自绘根 ref（必须绑定，点外关闭与焦点判定依赖） |
+| popupEl | `Ref<HTMLElement \| null>` | 自绘面板 ref（必须绑定，点外关闭与焦点判定依赖） |
+| rootAttrs | — | 根 `data-part` |
+| rootOn | — | 根 keydown/focusout |
+| triggerAttrs(edge) | — | 起止输入语义包 |
+| triggerOn(edge) | — | 起止输入 focus/blur/click |
+| panelAttrs | — | 弹层属性 |
+| cellAttrs(cell) | — | 单元格 data-* 状态 |
+| cellOn(cell) | — | 单元格 click/mouseenter |
+| prevOn | — | 翻月：上一月动作包 |
+| nextOn | — | 翻月：下一月动作包 |
+| clearOn | — | 清空动作包 |
+| confirmOn | — | 确定动作包 |
+| presetOn(preset) | — | 预设动作包 |
+| timePart | — | showTime 模式的时/分/秒读 |
+| updateTimePart | — | showTime 模式的时/分/秒写 |
+| hours | — | showTime 模式的小时候选 |
+| minutes | — | showTime 模式的分钟候选 |
+| openAt | — | 命令式动作：打开 |
+| close | — | 命令式动作：关闭 |
+| commit | — | 命令式动作：提交 |
+| clear | — | 命令式动作：清空 |
+| shiftMonth | — | 命令式动作：翻月 |
+| applyPreset | — | 命令式动作：应用预设 |
+| pick | — | 命令式动作：选值 |
 
 注意：定位、Teleport、过渡动画与可访问视觉不在包内；自绘需自行定位。`render` prop 走 `h()` 时样式须全局或内联。
 

@@ -8,13 +8,13 @@
 
 ## 代码演示
 
-<Demo path="form/basic" title="校验与回显" desc="`model` + `rules`（async-validator 规则表）；`form.validate()` 整表校验，失败 reject 汇总；控件错误态边框自动下发（Input 族消费 FormItem context）；自定义 `validator` 走回调式。" />
+<Demo path="form/basic" title="校验与回显" :desc="['`model` + `rules`（async-validator 规则表）。', '`form.validate()` 整表校验，失败 reject 汇总。', '控件错误态边框自动下发（Input 族消费 FormItem context）。', '自定义 `validator` 走回调式。']" />
 
-<Demo path="form/layout" title="布局" desc="`layout=vertical`（缺省）/ `horizontal`（labelWidth 定宽 + labelAlign）/ `inline`（横排紧凑）；冒号 `colon` 默认开。" />
+<Demo path="form/layout" title="布局" :desc="['`layout=vertical`（缺省）/ `horizontal`（labelWidth 定宽 + labelAlign）/ `inline`（横排紧凑）。', '冒号 `colon` 默认开。']" />
 
-<Demo path="form/a11y" title="分组控件关联" desc="RadioGroup / CheckboxGroup 用 aria-labelledby 关联字段标签，Switch 用 label for；错误时自动带 aria-describedby 与 aria-invalid。" />
+<Demo path="form/a11y" title="分组控件关联" :desc="['RadioGroup / CheckboxGroup 用 aria-labelledby 关联字段标签，Switch 用 label for。', '错误时自动带 aria-describedby 与 aria-invalid。']" />
 
-<Demo path="form/render" title="自定义渲染（headless）" desc="Form / FormItem 双层 `#render`：自绘卡片表单 + 字段行——字段注册、整表校验（submit 拦截）、错误回显、控件 status 注入全照跑；validate/resetFields 动作直消费。" />
+<Demo path="form/render" title="自定义渲染（headless）" :desc="['Form / FormItem 双层 `#render`：自绘卡片表单 + 字段行——字段注册、整表校验（submit 拦截）、错误回显、控件 status 注入照常生效。', 'validate/resetFields 动作直消费。']" />
 
 ## API
 
@@ -55,7 +55,9 @@ Expose：`validate(): Promise<void>`（失败 reject `{errors, values}`）、`re
 | 属性 | 说明 |
 | --- | --- |
 | name | 字段名（注册进表；取值 `model[name]`、匹配 `rules[name]`） |
-| label / rules / required | 标签 / 字段级规则覆盖 / 无规则也显星号 |
+| label | 标签（`#label` 插槽优先） |
+| rules | 字段级规则覆盖（优先于表级 `rules[name]`） |
+| required | 无规则也显星号 |
 | validateTrigger | `'blur' \| 'change' \| 'both'`（缺省 both；规则级 `trigger` 数组同样生效） |
 | extra | 常驻帮助文案（无错误时替代错误行显示；`#extra` 插槽优先） |
 | warningOnly | 规则对象里 `warningOnly: true` → 错误按 `status=warning` 下发（不判失败）※见注意事项 |
@@ -71,13 +73,18 @@ Expose：`validate(): Promise<void>`（失败 reject `{errors, values}`）、`re
 ## 注意事项
 
 - 移动端（≤767px）：横向/内联表单自动改为标签在上、控件通栏，不再使用固定 100px 标签宽。
-- **标签与错误关联**：FormItem 自动生成控件 id 并经 `FORM_ITEM_KEY` 下发，控件（Input/InputNumber/Select/DatePicker/DateRangePicker/Checkbox/Radio/Switch）自动绑定 `id`；RadioGroup/CheckboxGroup 由组根节点绑定 `id` 并用 `aria-labelledby` 关联标签；标签 `for` 指向它（自定义触发器不是 labelable 元素时，点标签会兜底 `focus()`）。有 `error`/`extra` 时控件自动带 `aria-describedby` 指向帮助文案，错误态带 `aria-invalid="true"`，错误文案 `role="alert"`；校验通过后自动移除。
+- **标签与错误关联**：FormItem 自动生成控件 id 并经 `FORM_ITEM_KEY` 下发，控件（Input/InputNumber/Select/DatePicker/DateRangePicker/Checkbox/Radio/Switch）自动绑定 `id`；
+  - RadioGroup/CheckboxGroup 由组根节点绑定 `id` 并用 `aria-labelledby` 关联标签；
+  - 标签 `for` 指向它（自定义触发器不是 labelable 元素时，点标签会兜底 `focus()`）。
+  - 有 `error`/`extra` 时控件自动带 `aria-describedby` 指向帮助文案，错误态带 `aria-invalid="true"`，错误文案 `role="alert"`；校验通过后自动移除。
 
 - **整表校验 = 逐字段 Promise.allSettled 汇总**（校验逻辑全部下沉 FormItem），不存在「表级 schema 与字段独有规则两套回显路径」的分叉。
 - 字段 rules 只在 FormItem 侧合并一次：`props.rules ?? form.rules[name]`。
 - 响应式表单属性（layout / labelWidth / labelAlign / colon）的完整演示见 [响应式取值演示](../playground/responsive-form.md)。
 
-- 布局变量链：`--k-form-label-width`（表级 style 注入）→ `--k-form-item-label-width`（字段级覆盖）；gap = `--k-form-gap`(size-lg)。响应式表单属性（layout / labelWidth / labelAlign / colon）由共享断点解析，语法见 [响应式取值](../design/responsive-values.md)；`model` / `rules` 是数据，不做断点解析。
+- 布局变量链：`--k-form-label-width`（表级 style 注入）→ `--k-form-item-label-width`（字段级覆盖）；gap = `--k-form-gap`(size-lg)。
+  - 响应式表单属性（layout / labelWidth / labelAlign / colon）由共享断点解析，语法见 [响应式取值](../design/responsive-values.md)；
+  - `model` / `rules` 是数据，不做断点解析。
 - **warningOnly 现状**：async-validator 4.x 的 `warningOnly` 也会走 reject 通道，本实现按「error 才置失败」判定 —— `warningOnly` 规则失败时字段仍计入失败（语义待 P2 复盘拍板，暂按 error 处理并保留规则透传）。
 
 ## 自定义渲染（headless）
@@ -129,7 +136,9 @@ Expose：`validate(): Promise<void>`（失败 reject `{errors, values}`）、`re
 | validating | `boolean` | 本字段校验进行中（runValidate 进入置 true、finally 置 false）；自绘字段级 loading 消费 |
 | extra | `string \| undefined` | 常驻帮助文案原值；默认渲染仅无错误时显示（`#extra` 插槽优先），自绘按 `error ? error : (slots.extra ?? extra)` 排 |
 | colon | `boolean` | **表级 colon 注入值**（非本件 prop）；自绘标签行据此补冒号 |
-| controlId / labelId / helpId | `string` | 自动生成的控件 id / 标签 id / 帮助文案 id；自绘标签用 `:id="ctx.labelId" :for="ctx.controlId"`、分组控件用 `aria-labelledby="ctx.labelId"`、错误行用 `:id="ctx.helpId"` |
+| controlId | `string` | 自动生成的控件 id；自绘标签用 `:for="ctx.controlId"` |
+| labelId | `string` | 自动生成的标签 id；自绘标签用 `:id="ctx.labelId"`、分组控件用 `aria-labelledby="ctx.labelId"` |
+| helpId | `string` | 自动生成的帮助文案 id；错误行用 `:id="ctx.helpId"` |
 | describedBy | `string \| undefined` | 有 error/extra 时的 helpId；自绘控件绑 `aria-describedby` 用 |
 | invalid | `boolean` | 当前是否错误（`status === 'error'`）；自绘控件绑 `aria-invalid` 用 |
 
@@ -152,5 +161,6 @@ headless 下字段注册与控件注入照跑：自绘 FormItem 内放默认 KIn
 
 ## 规格附录
 
-- 2026-11-17：依赖声明 = kit `package.json` dependencies `async-validator: ^4.2.5`（此前 kit 运行时依赖为零；tiptap 系属 packages/editor，与 ui 无涉）。安装形态：包级 `packages/vue/ui/node_modules/async-validator`（kit 根 node_modules 属主 root 不可写，node 解析自 importer 向上命中包级目录）。
+- 2026-11-17：依赖声明 = kit `package.json` dependencies `async-validator: ^4.2.5`（此前 kit 运行时依赖为零；tiptap 系属 packages/editor，与 ui 无涉）。
+  - 安装形态：包级 `packages/vue/ui/node_modules/async-validator`（kit 根 node_modules 属主 root 不可写，node 解析自 importer 向上命中包级目录）。
 - 留后批：表单级 disabled/size 下发、嵌套字段路径（`a.b.c` name 解析）、`validateFirst`、动态增删 FormItem 的自动重校验。

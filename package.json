@@ -6,7 +6,10 @@
   "scripts": {
     "docs:dev": "vitepress dev --open --host",
     "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
+    "docs:preview": "vitepress preview",
+    "blank:dev": "vite --config blank/vite.config.ts",
+    "community:dev": "vite --config community/vite.config.ts",
+    "community:build": "vite build --config community/vite.config.ts"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +17,9 @@
   "description": "",
   "devDependencies": {
     "@shikijs/transformers": "^4.6.0",
+    "@vitejs/plugin-vue": "5.2.4",
     "shiki": "^4.6.0",
+    "vite": "5.4.21",
     "vitepress": "^1.6.4"
   },
   "dependencies": {

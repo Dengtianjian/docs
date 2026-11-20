@@ -74,7 +74,7 @@
 | `colorLink` | `var(--k-color-primary)` | 链接色，同上 |
 | `colorTextBase` | `#000000` | 文字基准色 |
 | `colorBgBase` | `#ffffff` | 容器基准底色（dark 下为 `#141414`） |
-| `neutralTint` | `0.04` | 中性色染色比（§4.3），0 = 纯灰 |
+| `neutralTint` | `0.02` | 中性色染色比（§4.3），0 = 纯灰 |
 | `fontFamily` | `system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif` | 直接透传 |
 | `fontFamilyCode` | `"SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace` | 直接透传 |
 | `fontSize` | `14` | 基准字号（px），派生全部字号/行高阶梯 |
@@ -83,7 +83,7 @@
 | `lineWidth` | `1` | 基准描边宽 |
 | `sizeUnit` | `4` | 间距基数（px），派生 size/padding/margin 阶梯 |
 | `sizeStep` | `4` | 间距步长系数 |
-| `controlHeight` | `32` | 基准控件高，派生高度阶梯 |
+| `controlHeight` | `34` | 基准控件高，派生高度阶梯 |
 | `motionUnit` | `0.1` | 动效时长基数（s），派生 fast/mid/slow |
 | `zIndexPopupBase` | `1000` | 浮层层级基数 |
 
@@ -182,6 +182,7 @@ colorTextLightSolid= #fff（dark 下由 §7 换为压暗方向字色；实底彩
 ```
 
 消费方：`colorBgLayout = neutral-2`、`colorBorder = neutral-4`、`colorBorderSecondary = neutral-3`、滚动条/分割线。
+2026-11-20 低段调浅：gray-1..4 = 1% / 2% / 4% / 8%（原 3% / 5% / 7% / 15%），`neutralTint` 0.04→0.02，分割线 α0.08→0.06。
 改主色 → 全页灰调联动；`neutralTint: 0` 回到 antd 纯灰观感。
 
 ### 4.4 主色光晕 / 投影
@@ -252,12 +253,14 @@ borderRadiusFull = 999px
 `sizeXXS 4 | sizeXS 8 | sizeSM 12 | size 16 | sizeMD 20 | sizeLG 24 | sizeXL 32 | sizeXXL 48`。
 Alias 同名映射 `padding*` / `margin*`；`wireframe` 预留模式下 XXS→2、XS→4。
 
+弹层统一契约（2026-11-20，参考 Radix Select / Dropdown）：`--k-popup-padding = 4px`、`--k-popup-item-height-sm/md/lg = 28/32/36px`、`--k-popup-item-padding-x = 8px`；标题 `14px / 600`、描述 `12px / 次要色`。
+
 ### 5.4 控件高度
 
 ```
 controlHeightXS = max(20, controlHeight - 8)   controlHeightSM = max(24, controlHeight - 4)
 controlHeightBase = controlHeight              controlHeightLG = controlHeight + 4
-// 桌面 seed = 38 → xs30 / sm34 / md38 / lg42；移动端 md=44、lg 保留 52
+// 桌面 seed = 34 → xs26 / sm30 / md34 / lg38；移动端 md=44、lg 保留 52
 ```
 
 ### 5.5 动效与 zIndex
@@ -338,7 +341,7 @@ xs <576 | sm ≥576 | md ≥768 | lg ≥992 | xl ≥1200 | xxl ≥1600
 
 | Token | pc → mobile | 理由 |
 | --- | --- | --- |
-| `controlHeight*` | 32 → **44**（xs28/sm36/lg52） | 触达最小尺寸 44px |
+| `controlHeight*` | 34 → **44**（xs36/sm40/lg52） | 触达最小尺寸 44px |
 | `inputFontSize` | 新增 alias = **16** | iOS 聚焦防自动缩放 |
 | `padding` / `paddingLG` | 16→12 / 24→16 | 屏宽收窄密度 |
 | `borderRadius` | 6 → 8 | 移动端观感 |
@@ -457,7 +460,7 @@ export const buttonTokens = {
 | --- | --- | --- |
 | 1 | §4.1 mix 百分比与 antd 观感的差距 | **已关闭（2026-11-17 R4）**：Active 85→75（按压可见度）；矩阵页三态徽章全矩阵实测后 hover 90up/active 75down 维持，唯一改档见 #4。R4b（2026-11-17）追加：语义彩字低对比不再挂账——A 类浅底彩字走 `color<N>TextStrong` 深档别名修复（§4.1 表）。R4c（2026-11-17 当日撤销）：B 类彩底白字曾翻深字被用户观感否决——定论「seed 用户定的，库不硬修」，维持妥协登记，机制已回滚 |
 | 2 | 默认 `default.css` 发表达式还是终值 | **已定：表达式**（子树级亮暗与局部联动的前提，§7）；`--static` 仅作旧环境兼容出口 |
-| 3 | tinted neutral 默认 `neutralTint` | 0.04 |
+| 3 | tinted neutral 默认 `neutralTint` | 0.02 |
 | 4 | 暗色基准色提亮幅度（§7-1 的 85%） | **已定（2026-11-17 R4）：85%→92%（白 15%→8%）**，对比度矩阵页单测实锤：15% 时 dark 实底链白字 hover/active 13 格红线（<3），8% 向 antd dark 同档；darkSeedVariant/drift-check 同步 |
 | 5 | `lg` 断点 992（antd）vs 1024（naive-ui） | 992 |
 | 6 | 组件变量是否公开承诺稳定 | 承诺稳定，改算 API break，逐组件版本化 |

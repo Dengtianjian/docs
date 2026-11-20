@@ -53,6 +53,28 @@
 
 <Demo path="table/column-layout" title="列拖拽 / 列宽拖拽" :desc="['拖动表头左侧抓手换位（同分组内生效）；拖动右边缘改列宽：左拖缩窄、右拖挤右邻列，末列拖动让表格变宽。', '`v-model:columnOrder` / `v-model:columnWidths` 受控；双击表头或右缘把手按容器宽度重新分配列宽（填满表格、消除空隙）；`columnResizable` 会切为固定布局。', '组合限制：固定列在浮层表头里，暂不提供拖拽与拖宽把手；列拖拽不跨分组。']" />
 
+<Demo path="table/bottom-scrollbar" title="吸底横向滚动条" :desc="['`bottomScrollbar` 在表格下方渲染常驻横向滚动条，拖动条或滚动表体双向同步。', '页面继续下滚时滚动条贴在视口底部，宽表不用滚到表尾才能横向拖动；固定列与浮层照常工作。', '组合限制：只在表格真实横向溢出时出现；卡片模式不渲染；设了 `scroll.y` 时不额外渲染，使用容器底部的原生横向条。']" />
+
+<Demo path="table/header-position" title="表头位置 · 顶部 / 底部" :desc="['`headerPosition` 控制表头渲染在数据行上方还是下方；表头在底部时汇总行仍在其上方。', '`sticky` 跟随位置：表头在底部时吸在滚动容器底部，多级表头整块悬浮。', '组合限制：卡片模式不渲染表头；表头沉底依赖表格行组渲染顺序，分页器仍固定在表格外。']" />
+
+<Demo path="table/header-bottom-combo" title="表头沉底 · 交互与组合" :desc="['底部表头叠加多级表头、左右固定列、选择/展开列、固定行、汇总行、排序/筛选与列拖宽。', '筛选面板在底部表头下改为向上展开；选择/展开列的整组表头贴住容器底部。', '组合限制：固定列仍在浮层表头里，不提供拖拽/拖宽；卡片模式不渲染表头。']" />
+
+<Demo path="table/page-sticky" title="页面级吸顶表头" :desc="['`pageSticky` 在页面滚动时把表头吸在视口顶部，不需要 `scroll.y`。', '`pageStickyOffset` 可避开站点顶栏；多级表头整块吸顶。', '组合限制：依赖 CSS sticky，表头到页面根之间若有 `overflow: hidden` 祖先会被阻断（`overflow: clip` 不阻断；自定义滚动容器则吸在该容器顶部）；检测到 `scroll.x` / `scroll.y` 时忽略并 dev 告警（`scroll.y` 请用 `sticky`）。']" />
+
+<Demo path="table/page-sticky-bottom" title="页面级悬浮 · 底部表头" :desc="['表头沉底后再开 `pageSticky`：页面滚动时表头贴在视口最底部，默认不留间距；需要间距时用 `pageStickyOffset`（按底边计算）。', '不需要 `scroll.y`；多级表头整块悬浮，汇总行保留在表头上方。', '组合限制：与顶部吸顶相同，要求没有 `scroll.x` / `scroll.y`；祖先 `overflow: hidden` 会阻断。']" />
+
+<Demo path="table/load-more" title="滚动到底加载" :desc="['滚动到距底部 `reachEndThreshold`（默认 40）时发一次 `reachEnd`，离开阈值两倍后重新武装。', '`loadingMore` 为 true 时不再触发，加载指示以胶囊悬浮在表格内部底边上方，与底边保留间距；数据追加后自动重新武装。', '组合限制：需要 `scroll.y` 形成内部滚动；卡片模式与无内部滚动时不会触发。']" />
+
+<Demo path="table/stacked" title="响应式卡片堆叠" :desc="['`stackBreakpoint` 按视口断点自动切卡片（档位或像素），`stacked` 可手动强制。', '卡片字段自动生成：第一个非副标题列作标题，其余「标签：值」；列上 `stack: false` 隐藏、`stack: title / subtitle` 指定标题与副标题。', '选择、展开详情、行操作、单元格编辑与 `rowClick` 在卡片内继续可用；展开内容渲染在卡片内部；`#card` 插槽可整体替换卡片主体。', '组合限制：卡片模式不渲染表头，列筛选入口不可用（工具条搜索仍生效）；列宽 / 列拖拽、行拖拽、单元格合并与虚拟滚动在卡片下不适用，固定行按普通卡片显示。']" />
+
+<Demo path="table/stacked-tree" title="卡片 · 树形" :desc="['树形与卡片叠加：箭头保留在标题里，子行展开后以卡片接在父卡片下方，子卡按层级缩进。', '组合限制：固定带子节点的行、按固定行数合并仍不适用，与表格模式的树形限制一致。']" />
+
+<Demo path="table/stacked-tree-nested" title="卡片 · 多级子树" :desc="['四级子树演示：每层子卡按 16 / 32 / 48px 递进缩进，箭头保留在标题内。', '收起中间层会隐藏整棵子树；展开/收起只重建卡片列表，不影响其他分支。', '组合限制：卡片模式不启用虚拟滚动，超大子树建议配合分页或按层懒加载。']" />
+
+<Demo path="table/stacked-expanded" title="卡片 · 展开自定义详情" :desc="['`expandedRender` 返回自定义组件，展开区渲染商品明细、收货地址与交互按钮。', '展开内容在卡片内部、字段之后、操作之前；组件内部状态随该卡片的展开实例保留。', '组合限制：自定义内容高度按内容自适应，卡片模式下不参与虚拟滚动。']" />
+
+<Demo path="table/stacked-custom" title="卡片 · 自定义内容" :desc="['`#card` 插槽整体替换卡片主体，可自由排版金额、状态与操作。', '选择与展开控件由表格渲染在插槽上方，交互状态与表格模式共用。']" />
+
 <Demo path="table/ellipsis" title="省略与提示" :desc="['`ellipsis` 单行截断。', '加 `ellipsisTooltip` 后仅在真实溢出时用 KTooltip 显示全文。', '组合限制：存在省略列时表格自动切换为固定布局，建议同时给列宽。']" />
 
 <Demo path="table/sort-filter" title="排序与筛选" :desc="['列 `sortable` 点击循环：升序 → 降序 → 取消。', '`filters` 在表头展开多选面板，`filterMultiple=false` 为单选。', '排序与筛选可叠加；树形下排序只作用于同级。']" />
@@ -124,8 +146,8 @@
 | rowDraggable | 行拖拽排序（发 `rowReorder`，不改数据） | `boolean` | `false` |
 | columnDragMode | 列拖拽触发：`handle` 仅抓手 / `press` 表头任意处 | `'handle' \| 'press'` | `'handle'` |
 | rowDragMode | 行拖拽触发：`handle` 仅行抓手 / `press` 按住行任意处 | `'handle' \| 'press'` | `'handle'` |
-| classNames | 部件类名<br>（`root / toolbar / columnSetting / wrap / row / filterPanel / loading / pagination`） | `Partial<Record<Part, string>>` | — |
-| styles | 部件内联样式<br>（`root / toolbar / columnSetting / wrap / row / filterPanel / loading / pagination`） | `Partial<Record<Part, CSSProperties>>` | — |
+| classNames | 部件类名<br>（`root / toolbar / columnSetting / wrap / row / filterPanel / loading / stack / scrollbar / loadMore / pagination`） | `Partial<Record<Part, string>>` | — |
+| styles | 部件内联样式<br>（`root / toolbar / columnSetting / wrap / row / filterPanel / loading / stack / scrollbar / loadMore / pagination`） | `Partial<Record<Part, CSSProperties>>` | — |
 
 <CommonProps />
 
@@ -157,6 +179,13 @@
 | columnDraggable | 拖动表头调整列顺序（同分组内） | `boolean` | `false` |
 | columnResizable | 拖动表头右边缘调整列宽 | `boolean` | `false` |
 
+#### 响应式卡片
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| stacked | 强制卡片模式，优先级高于断点 | `boolean` | `false` |
+| stackBreakpoint | 视口低于该断点时自动切卡片：<br>档位（`xs / sm / md / lg / xl / xxl`）或像素值 | `KBreakpoint \| number` | — |
+
 #### 展开行
 
 | 属性 | 说明 | 类型 | 默认值 |
@@ -187,6 +216,32 @@
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | v-model:rowPinning | 固定行受控 `{ top: keys[], bottom: keys[] }` | `{ top?: KTableRowKey[];<br>bottom?: KTableRowKey[] }` | `{}` |
+
+#### 吸底横向滚动条
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| bottomScrollbar | 表格下方常驻横向滚动条：<br>与表体双向同步，页面滚动时吸在视口底部 | `boolean` | `false` |
+
+#### 表头位置
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| headerPosition | 表头渲染在数据行上方还是下方；<br>底部表头配合 `sticky` / `pageSticky` 悬浮在底部，<br>筛选面板改为向上展开 | `'top' \| 'bottom'` | `'top'` |
+
+#### 页面级吸顶
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| pageSticky | 页面滚动时表头吸顶；表头在底部时改为吸在视口底部；<br>要求没有 `scroll.x` / `scroll.y` | `boolean` | `false` |
+| pageStickyOffset | 吸附偏移：数字按 px，字符串原样；<br>可避开站点顶栏或底栏 | `number \| string` | `0` |
+
+#### 触底加载
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| reachEndThreshold | 距底部多少 px 触发 `reachEnd` | `number` | `40` |
+| loadingMore | 加载中：不再触发 `reachEnd`，并在表格内部底边上方悬浮加载指示 | `boolean` | `false` |
 
 #### 虚拟滚动
 
@@ -239,6 +294,7 @@
 | `editRender` | 自定义编辑控件 `({ row, value, index, column, commit, cancel }) => VNodeChild`；缺省渲染 KInput |
 | `actions` | 操作列图标按钮 `{ label, icon?, danger?, disabled?, onClick }[]`；点击不触发 `rowClick` |
 | `maxActions` | 直排按钮数量，超出收进「更多」，默认 `3` |
+| `stack` | 卡片模式字段：`false` 隐藏；<br>`'title'` / `'subtitle'` 指定标题与副标题；<br>缺省第一个非副标题列作标题、其余为键值字段 | `false \| 'title' \| 'subtitle'` |
 | `classNames` | 列级表头/单元格类名，类型 `Partial<Record<Part, string>>` |
 | `styles` | 列级表头/单元格内联样式，类型 `Partial<Record<Part, CSSProperties>>` |
 
@@ -262,6 +318,7 @@
 | filter | 工具条左侧筛选区 | `{ columns, visibility }`，`columns` 为叶子列（含 `key`） |
 | toolbar | 工具条右侧操作区（位于内置列设置按钮前） | `{ columns }` |
 | actions | 操作列前置内容，与图标按钮同一行垂直居中 | `{ row, index, column }` |
+| card | 卡片模式下整体替换卡片主体（选择、展开控件仍由表格渲染） | `{ row, index, entry, columns }` |
 
 ### Events
 
@@ -275,6 +332,7 @@
 | expandChange | 行展开变化 | `keys, row, expanded` |
 | cellEdit | 单元格提交（不直接改数据） | `{ row, column, value, previousValue, rowIndex }` |
 | rowReorder | 行拖拽落位（当前页展示序） | `{ row, from, to }` |
+| reachEnd | 内部滚动接近底部（阈值内只触发一次） | `distance: number` |
 | update:current | 当前页受控模型更新 | `number` |
 | update:pageSize | 每页条数受控模型更新 | `number` |
 
@@ -285,13 +343,15 @@
   - 浮层用滚动驱动动画（`animation-timeline: scroll()`）做平移吸附并独立合成，快速滚动也不会抖动；不支持滚动驱动动画的浏览器退回 `position: sticky`。
   - 有左侧固定列时，展开/选择列也一并放进左浮层（主表不再保留粘性单元格），没有左侧固定列时仍按 sticky 吸边；分组跨固定与非固定边界时退回单元格 sticky。
   - 列宽与偏移会冻结为**整数像素**，容器尺寸或列显隐变化时自动重新分配，百分比列宽不参与冻结。
-- **粘性表头**只在 `scroll.y` 形成内部滚动时生效；未限高时页面滚动不会吸顶。
+- **表头沉底**：`headerPosition="bottom"` 时整组表头渲染在数据行之后，汇总行排在其上方；`sticky` 让表头吸在容器底部并按行补 `bottom` 偏移，选择/展开列跨整组表头直接贴底；筛选面板自动向上展开；固定行底部堆叠会让出表头高度，加载指示也会抬到表头上方。
+- **粘性表头**：`sticky` 只在 `scroll.y` 形成内部滚动时生效；`headerPosition="bottom"` 时改为吸在容器底部，固定行自动让出表头高度。页面滚动吸顶改用 `pageSticky`（要求没有 `scroll.x` / `scroll.y`，偏移用 `pageStickyOffset`，底部表头则吸在视口底部），检测到内部滚动会忽略并 dev 告警；祖先若是 `overflow: hidden` 会阻断吸顶（改成 `overflow: clip` 可保留裁剪又不阻断）；存在自定义滚动容器时吸在该容器边缘。
 - 排序为单列、客户端排序；筛选默认取单元格值与选项相等，复杂条件用 `filterMethod`。
 - 行选择默认作用于**当前页**；多选全选只增删当前页可选行，跨页选择需受控维护 `selectedRowKeys`；单选模式表头无全选，`selectedRowKeys` 始终只保留最后一个选中项。
 - 表头排序使用真实按钮，`th` 输出 `aria-sort`；加载态表格 `aria-busy`，空态由 KEmpty 提供描述。
 - 表头文字统一左对齐；列 `align` 只影响表体单元格（如数值列右对齐），表头不会跟着偏移。
 - 边框三层独立控制：`bordered` 管外框/圆角，`rowBorders` 管横向分隔线，`columnBorders` 管纵向分隔线；`columnBorders` 缺省跟随 `bordered` 保持旧行为。
 - 表格根节点与滚动容器不带外边距；分页器与表格之间保留 16px 间距，可经 `--k-table-pagination-gap` 调整（设 0 即贴紧）。
+- **触底加载**：设置 `scroll.y` 后，滚动到距底部 `reachEndThreshold`（默认 40px）发一次 `reachEnd`，离开阈值两倍后重新武装；`loadingMore` 为 true 时不再触发，加载指示悬浮在表格内部底边上方（与底边留 12px 间距，底部表头悬浮时自动让位）；`dataSource` 追加后自动重新武装。
 - **分页位置**按 `paginationPosition` 显式对齐，小屏不再强制居中；`both` 上下两份分页共用同一页状态。
 - **分页器尺寸**跟随表格 `size`：sm→sm、md→md、lg→lg；可用 `pagination.size` 单独覆盖。
 - **可展开行**：展开列固定在最左 44px，选择列自动后移；展开内容整行跨列。固定行不显示展开按钮（固定行与展开暂不组合）；树形模式下改为首列内箭头，不再占独立列。
@@ -325,13 +385,21 @@
 - **单元格编辑**：列配 `editable` 后按 `editTrigger` 进入编辑（click / dblclick / manual），编辑态走 `v-model:editingCell`。
   - 默认控件是 KInput：Enter 或失焦提交、Esc 取消；`editRender` 可换成 KSelect 等任意控件，通过 `commit` / `cancel` 结束；
   - 提交只发 `cellEdit({ row, column, value, previousValue, rowIndex })`，不会直接修改 `dataSource`，由业务回写；
-  - 同一时间只编辑一个单元格，固定列浮层与主表共用同一编辑态。
+  - 同一时间只编辑一个单元格，固定列浮层与主表共用同一编辑态；
+  - 存在 `editable` 列时，表体行最低高度统一按默认编辑控件（KInput sm，跟随 `--k-control-height-sm`）加单元格上下 padding 预留，进入/退出编辑不改变行高；自定义 `editRender` 更高时仍会撑高该行。
 - **行操作**：列的 `actions` 生成图标按钮（`icon` 内置 view / edit / copy / remove / more），`maxActions` 之外的收进「更多」；`danger` 用危险色，`disabled` 支持布尔或按行函数。
   - `#actions` 插槽渲染在按钮之前，与按钮同一 flex 行垂直居中，可放状态标签；
   - 点击操作会阻止冒泡，不触发 `rowClick`；操作列是普通列，固定、宽度与分组规则与其他列一致。
 - **行拖拽**：`rowDraggable` 拖行首列抓手（`rowDragMode="press"` 可改为按住行任意处），浮层副本跟随指针、蓝色线条标示落位，不插入占位行。
   - 松手发 `rowReorder({ row, from, to })`，索引是当前页展示序，组件不改 `dataSource`；
   - 固定行不可拖动；表格中有按钮/输入/展开箭头等交互元素时，从这些元素上按下不会开始拖拽。
+- **吸底横向滚动条**：`bottomScrollbar` 在表格下方渲染一条独立轨道与拖拽拇指，仅在真实横向溢出时出现；拖动拇指、点击轨道或滚动表体都会双向同步。
+  - 表格跨越视口时改为 `position: fixed` 固定在视口底部，整表进入视口后回到表格下方；固定列浮层与主表同步滑动。
+  - 仅在未设 `scroll.y`、且真实横向溢出时渲染，并用 `scrollbar-width: none` 隐藏原生滚动条；设了 `scroll.y` 时原生条本来就固定在容器底，不再额外渲染；卡片模式不渲染该条。
+- **响应式卡片**：`stackBreakpoint` 按视口断点自动切换（档位或像素），`stacked` 可强制开启，二者同时存在时以 `stacked` 为准。
+  - 卡片字段由可见叶子列生成：第一个非副标题列作标题，其余列按「标签：值」网格排列；树形子卡按层级缩进，标题内不再重复缩进；`stack: false` 隐藏、`stack: 'title'` / `'subtitle'` 指定标题与副标题，树形首列即使被隐藏也会回到标题以保留展开箭头；
+  - 选择、展开详情、行操作、单元格编辑与 `rowClick` 在卡片内继续可用；展开内容追加在所属卡片内部，`#card="{ row, index, entry, columns }"` 可整体替换卡片主体（展开内容仍追加在插槽之后），选择与展开控件仍由表格渲染；
+  - 卡片下不渲染表头，因此列筛选面板不可用（工具条搜索、受控排序/筛选照常生效）；列宽/列拖拽、行拖拽、单元格合并与虚拟滚动不适用，固定行按普通卡片显示，分页照常切片。
 - **隐藏列**不会丢失已有排序与筛选状态；
   - `columnVisibility` 缺省为 `{}`，可见性按列 `hidden` 默认值；
   - 显式 `columnVisibility[key]` 优先，可把默认隐藏的列重新打开。

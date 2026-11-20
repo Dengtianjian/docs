@@ -8,11 +8,13 @@
 
 ## 代码演示
 
-<Demo path="popconfirm/basic" title="基础 / 危险操作 / 异步 onOk" desc="confirm/cancel 事件回传原生点击；ok-loading 期间确定钮转圈不即关，收尾（true→false）自动收起；danger 确定钮走 KButton type=danger；默认插槽可整块覆盖文案区。" />
+<Demo path="popconfirm/basic" title="基础 / 危险操作 / 异步 onOk" :desc="['confirm/cancel 事件回传原生点击。', 'ok-loading 期间确定钮转圈不即关，收尾（true→false）自动收起。', 'danger 确定钮走 KButton type=danger。', '默认插槽可整块覆盖文案区。']" />
 
-<Demo path="popconfirm/placements" title="12 方位" desc="与 KTooltip/KPopover 共用 utils/overlay 基座，12 方位 + 自动翻转全覆盖；箭头逐位跟随触发器中心。" />
+<Demo path="popconfirm/sizes" title="三档尺寸" :desc="['`size` 支持 `sm` / `md` / `lg`，标题 16/18/20、描述 14/16/18，内边距 12/16/20。', '实心图标固定 22px，图文间距 5px；标题不加粗。', '文案到操作区固定 16px；内置按钮 sm/md 用 xs，lg 用 md。']" />
 
-<Demo path="popconfirm/render" title="自定义渲染（headless）" desc="双通道：`#render` 自绘危险确认卡（okLoading 异步收尾 true→false 自动关照跑）；`render` prop 自绘内联确认条（confirm/cancel 事件继承）。" />
+<Demo path="popconfirm/placements" title="12 方位" :desc="['与 KTooltip/KPopover 共用 utils/overlay 基座，12 方位 + 自动翻转全覆盖。', '箭头逐位跟随触发器中心。']" />
+
+<Demo path="popconfirm/render" title="自定义渲染（headless）" :desc="['双通道：`#render` 自绘危险确认卡（okLoading 异步收尾 true→false 自动关闭，逻辑照常生效）。', '`render` prop 自绘内联确认条（confirm/cancel 事件继承）。']" />
 
 ## API
 
@@ -21,10 +23,15 @@
 | title | 提示文案（默认插槽整块优先，其次 `title` 插槽） | `string` | — |
 | description | 辅助说明（`description` 插槽优先） | `string` | — |
 | icon | 消息前行图标 | `'warning' \| 'info'` | `'warning'` |
-| okText / cancelText | 按钮文案 | `string` | `确定 / 取消` |
+| okText | 确定钮文案 | `string` | `确定` |
+| cancelText | 取消钮文案 | `string` | `取消` |
 | okType | 确定钮类型 | `'primary' \| 'danger'` | `'primary'` |
 | okLoading | 确定钮 loading：点确定不即关，`true→false` 收尾时自动关（受控 `open` 时同样发 `openChange`） | `boolean` | `false` |
-| placement / open / v-model:open / disabled / arrow | 同 [KPopover](./popover.md) | — | `'top'` |
+| placement | 方位（12 方位 + 自动翻转，同 [KPopover](./popover.md)） | `KOverlayPlacement` | `'top'` |
+| open / v-model:open | 受控开合 | `boolean` | — |
+| disabled | 禁用弹出 | `boolean` | `false` |
+| arrow | 显示箭头 | `boolean` | `true` |
+| size | 卡片尺寸：字号、内边距、图标与内置按钮同步缩放 | `'sm' \| 'md' \| 'lg'` | `'md'` |
 
 <CommonProps />
 
@@ -51,18 +58,23 @@
 
 | 变量 | 初值 |
 | --- | --- |
-| `--k-popconfirm-bg / -radius / -padding` | `bg-elevated` / `border-radius-lg` / `size`（16px） |
+| `--k-popconfirm-bg / -radius / -padding` | `bg-elevated` / `border-radius-lg` / 随 size 档（sm/md/lg = 12/16/20px）；标题 sm/md/lg = 16/18/20，描述 14/16/18；`--k-popconfirm-icon-size = 22px`、`--k-popconfirm-gap = 5px`、`--k-popconfirm-action-gap = 16px`；内置按钮 sm/md = xs、lg = md |
 | `--k-popconfirm-min-width / -max-width` | `13×size / 24×size` |
 | 图标着色 | `--k-color-warning` / `--k-color-info`（随 `icon`） |
 
 ## 注意事项
 
 - 移动端（≤767px）：气泡最大宽度收为 `100vw - 24px`，避免超出屏幕。
+- 默认图标为实心圆 + 镂空 warning / info 符号，容器固定 22px，图文间距 5px；标题常规字重，靠字号与描述区分层级。
+- 文案区到操作区固定 16px；按钮 sm/md 用 xs、lg 用 md。
 
 - **插槽语义**（2026-11-18 改判 naive 同款，破坏性）：`#trigger` 包触发元素、**默认插槽 = 消息文案整块**（覆盖 title/description 文案区）；无默认插槽时 `#title`/`#description` 部件插槽与同名 prop 照旧。
 
-- **箭头指向**（2026-11-17 修正）：主方位弹层居中对齐、箭头天然在边中点；八个贴边方位弹层错位摆放，旧「箭头钉在边中点」会指空。现由基座 `useOverlayPosition` 输出 `--k-overlay-arrow-offset`（弹层本地主轴 px，按触发器中心计算并 clamp 进限位 `arrowKeepout`=半盒+圆角余量），CSS 只管换侧与形状。坑：限位别用 CSS `clamp()`——百分比与 px 混算在 left/top 上不生效，必须在 JS 端算。
-- **箭头与进出场**（2026-11-17）：箭头 `--k-popconfirm-arrow-size: 8px`（同 KPopover）；`Transition` 驱动进场 `k-popconfirm-zoom` / 退场 `k-popconfirm-zoom-out`（0.85 缩放 + 淡入淡出，`--k-motion-duration-fast`），退场播完才移除节点。
+- **箭头指向**（2026-11-17 修正）：主方位弹层居中对齐、箭头天然在边中点；八个贴边方位弹层错位摆放，旧「箭头钉在边中点」会指空。
+  - 现由基座 `useOverlayPosition` 输出 `--k-overlay-arrow-offset`（弹层本地主轴 px，按触发器中心计算并 clamp 进限位 `arrowKeepout`=半盒+圆角余量），CSS 只管换侧与形状。
+  - 坑：限位别用 CSS `clamp()`——百分比与 px 混算在 left/top 上不生效，必须在 JS 端算。
+- **箭头与进出场**（2026-11-17）：箭头 `--k-popconfirm-arrow-size: 8px`（同 KPopover）。
+  - `Transition` 驱动进场 `k-popconfirm-zoom` / 退场 `k-popconfirm-zoom-out`（0.85 缩放 + 淡入淡出，`--k-motion-duration-fast`），退场播完才移除节点。
 
 - 触发固定为 click（确认语义不该 hover 误触）；外点/Esc = 取消路径（发 `openChange(false)`，不发 `cancel`，与 antd 一致）。
 - 弹层复用 `usePopup` 基座与出口契约，同 [KTooltip](./tooltip.md)。
@@ -80,6 +92,7 @@
 | placement | `KOverlayPlacement` | **翻转后的实际方位**（基座 `useOverlayPosition` 的 actualPlacement，与 `popupAttrs['data-placement']` 同值；12 方位联合类型）；只在首选侧放不下且对侧放得下时翻转 |
 | title | `string \| undefined` | 提示文案 prop 通道；默认插槽整块优先，其次 `title` 插槽（经 `slots.title` 取），最后落到它 |
 | description | `string \| undefined` | 辅助说明 prop 通道（`description` 插槽优先，经 `slots.description` 取；仅无默认插槽时生效） |
+| size | `KPopconfirmSize` | 尺寸档（`sm / md / lg`）；默认渲染据此缩放字号、内边距、图标与内置按钮 |
 | icon | `'warning' \| 'info'` | 消息前行图标语义（默认 `'warning'` 感叹圈）；默认渲染着色 `--k-color-warning / -info`，自绘按它画图标或取色 |
 | okText | `string` | 确定钮文案（默认 `'确定'`） |
 | cancelText | `string` | 取消钮文案（默认 `'取消'`） |

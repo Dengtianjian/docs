@@ -9,7 +9,7 @@
 
 ## 代码演示
 
-<Demo path="input/fluid" title="自适应容器宽度" desc="不设固定宽度：输入框、文本域默认 100% 跟随容器；移动端控件高 44px、字号 16px（防 iOS 聚焦缩放），清除钮常显并扩大命中区。" />
+<Demo path="input/fluid" title="自适应容器宽度" :desc="['不设固定宽度：输入框、文本域默认 100% 跟随容器。', '移动端控件高 44px、字号 16px（防 iOS 聚焦缩放），清除钮常显并扩大命中区。']" />
 
 <Demo path="input/textarea" title="多行输入" desc="`type=textarea` 渲染原生 textarea，`rows` 控制行数、可纵向缩放。" />
 
@@ -17,27 +17,27 @@
 
 <Demo path="input/autosize-range" title="自适应高度范围" desc="`{ minRows, maxRows }` 限定高度区间，超出 maxRows 出内部滚动。" />
 
-<Demo path="input/password" title="密码框" desc="`type=password` 默认带明暗文切换，切换保持焦点与光标；`showPassword=false` 关闭，`passwordVisibleChange` 监听状态。" />
+<Demo path="input/password" title="密码框" :desc="['`type=password` 默认带明暗文切换，切换保持焦点与光标。', '`showPassword=false` 关闭，`passwordVisibleChange` 监听状态。']" />
 
 <Demo path="input/loading" title="加载状态" desc="`loading` 在后缀显示旋转图标并标记 `aria-busy`，不锁定输入。" />
 
 <Demo path="input/passive" title="被动激活" desc="`passivelyActivated`：点击外壳空白或前后缀区域也聚焦输入框。" />
 
-<Demo path="input/basic" title="基础使用" desc="`v-model` 双向绑定；`clearable` 悬浮/聚焦时出清除钮；`disabled / readonly` 两态；`type` 原生透传。" />
+<Demo path="input/basic" title="基础使用" :desc="['`v-model` 双向绑定。', '`clearable` 悬浮/聚焦时出清除钮。', '`disabled / readonly` 两态。', '`type` 原生透传。']" />
 
-<Demo path="input/status" title="校验状态" desc="`status=error/warning`：边框+聚焦圈整体换语义色（focus 环取语义色 25% 淡底，非主色圈）。KForm 批将由表单自动下发，本组件先支持手动指定。" />
+<Demo path="input/status" title="校验状态" :desc="['`status=error/warning`：边框+聚焦圈整体换语义色（focus 环取语义色 25% 淡底，非主色圈）。', 'KForm 批将由表单自动下发，本组件先支持手动指定。']" />
 
-<Demo path="input/sizes" title="尺寸与形态" desc="`size` 四档走 controlHeight 阶梯；`variant` 四档：outlined（缺省带框）/ filled 灰底无框 / borderless 全透明 / underlined 仅底部边框（hover/focus 只变底线颜色、无聚焦圈）。" />
+<Demo path="input/sizes" title="尺寸与形态" :desc="['`size` 四档走 controlHeight 阶梯。', '`variant` 四档：outlined（缺省带框）/ filled 灰底无框 / borderless 全透明 / underlined 仅底部边框（hover/focus 只变底线颜色、无聚焦圈）。']" />
 
-<Demo path="input/count" title="字数统计" desc="`maxlength` 限长 + `showCount` 计数；无 `maxlength` 时仅显示当前字数。" />
+<Demo path="input/count" title="字数统计" :desc="['`maxlength` 限长 + `showCount` 计数。', '无 `maxlength` 时仅显示当前字数。']" />
 
-<Demo path="input/count-overflow" title="计数超限" desc="输入侧仍由原生 `maxlength` 拦截；程序化写入超过上限时，`showCount` 计数标红（无需额外开关）。" />
+<Demo path="input/count-overflow" title="计数超限" :desc="['输入侧仍由原生 `maxlength` 拦截。', '程序化写入超过上限时，`showCount` 计数标红（无需额外开关）。']" />
 
-<Demo path="input/addon" title="组合标签" desc="`addonBefore / addonAfter` 在外壳内左右贴边，与输入框共用边框和聚焦圈；纯文本可直接传 prop，自定义内容用同名插槽。四档 size 与 disabled 均适配。" />
+<Demo path="input/addon" title="组合标签" :desc="['`addonBefore / addonAfter` 在外壳内左右贴边，与输入框共用边框和聚焦圈。', '纯文本可直接传 prop，自定义内容用同名插槽。', '四档 size 与 disabled 均适配。']" />
 
-<Demo path="input/prefix-suffix" title="前后缀" desc="`#prefix / #suffix` 插槽（示例图标 = @vicons/tabler）；清除钮与计数自动落进后缀区，顺序 = 插槽内容 → 清除 → 计数。" />
+<Demo path="input/prefix-suffix" title="前后缀" :desc="['`#prefix / #suffix` 插槽（示例图标 = @vicons/tabler）。', '清除钮与计数自动落进后缀区，顺序 = 插槽内容 → 清除 → 计数。']" />
 
-<Demo path="input/render" title="自定义渲染（headless）" desc="双通道：`#render` 自绘墨线输入（focused 驱动底线渐变，showClear/onClear 继承清除逻辑）；`render` prop 自绘胶囊搜索框（inputAttrs/inputOn 全逻辑包继承）。" />
+<Demo path="input/render" title="自定义渲染（headless）" :desc="['双通道：`#render` 自绘墨线输入（focused 驱动底线渐变，showClear/onClear 继承清除逻辑）。', '`render` prop 自绘胶囊搜索框（inputAttrs/inputOn 全逻辑包继承）。']" />
 
 ## API
 
@@ -60,12 +60,17 @@
 | showPassword | type=password 时显示明文切换按钮 | `boolean` | `true` |
 | type | 控件类型（含 textarea） | `'text' \| 'password' \| 'textarea' \| 'search' \| 'email' \| 'tel' \| 'url' \| 'number'` | `'text'` |
 | placeholder | 占位文本 | `string` | textarea `'请输入内容'`；其余 `'请输入'` |
-| disabled / readonly | 禁用 / 只读 | `boolean` | `false` |
+| disabled | 禁用 | `boolean` | `false` |
+| readonly | 只读 | `boolean` | `false` |
 | clearable | 显示清除钮（有值且非禁用/只读，悬浮或聚焦时可见） | `boolean` | `false` |
 | maxlength | 原生最大长度 | `number \| string` | — |
 | showCount | 字数统计；超过 `maxlength` 时计数标红 | `boolean` | `false` |
-| addonBefore / addonAfter | 前置 / 后置组合标签（纯文本；插槽优先） | `string \| number` | — |
-| autofocus / autocomplete / id / name | 原生属性透传 | — | — |
+| addonBefore | 前置组合标签（纯文本；插槽优先） | `string \| number` | — |
+| addonAfter | 后置组合标签（纯文本；插槽优先） | `string \| number` | — |
+| autofocus | 原生 autofocus 透传（挂载即聚焦） | `boolean` | — |
+| autocomplete | 原生 autocomplete 透传（浏览器自动填充提示） | `string` | — |
+| id | 原生 id 透传（label for 关联） | `string` | — |
+| name | 原生 name 透传（表单提交字段名） | `string` | — |
 
 <CommonProps />
 
@@ -73,15 +78,18 @@
 
 | 插槽名 | 说明 |
 | --- | --- |
-| prefix / suffix | 前缀 / 后缀内容（图标、文本、开关均可） |
-| addonBefore / addonAfter | 组合标签内容（贴外壳左右边缘，与输入框共用边框）；优先于同名 prop |
+| prefix | 前缀内容（图标、文本、开关均可） |
+| suffix | 后缀内容（图标、文本、开关均可） |
+| addonBefore | 前置组合标签内容（贴外壳左边缘，与输入框共用边框）；优先于同名 prop |
+| addonAfter | 后置组合标签内容（贴外壳右边缘，与输入框共用边框）；优先于同名 prop |
 | render | 自定义渲染作用域插槽，scope 见文末「自定义渲染」节；提供时整件替换 |
 
 ### Events
 
 | 事件名 | 说明 | 参数 |
 | --- | --- | --- |
-| focus / blur | 聚焦 / 失焦 | `FocusEvent` |
+| focus | 聚焦 | `FocusEvent` |
+| blur | 失焦 | `FocusEvent` |
 | change | 原生 change（失焦提交） | `Event` |
 | clear | 点击清除钮后触发 | — |
 | passwordVisibleChange | 密码明暗文切换 | `visible: boolean` |
@@ -91,7 +99,9 @@
 | 方法/属性 | 说明 |
 | --- | --- |
 | `inputEl` | 原生 input/textarea 元素引用 |
-| `focus()` / `blur()` / `select()` | 编程式聚焦 / 失焦 / 全选（`activate`/`deactivate` 为 focus/blur 别名） |
+| `focus()` | 编程式聚焦（`activate` 为别名） |
+| `blur()` | 编程式失焦（`deactivate` 为别名） |
+| `select()` | 编程式全选 |
 
 ## 主题定制（部件变量）
 
@@ -157,7 +167,8 @@
 | showCount | `boolean \| undefined` | 字数统计开关 prop 原值；默认渲染在后缀区画 `当前字数 / maxlength`（无上限只显当前字数），超限标红 |
 | countLength | `number` | 当前字数（与原生 `maxlength` 同口径）；默认渲染与 overCount 共用 |
 | overCount | `boolean` | `showCount && 数字 maxlength && countLength > maxlength`；超限标红的唯一判据 |
-| addonBefore / addonAfter | `string \| number \| undefined` | 组合标签文本 prop 原值（插槽内容不进 scope）；默认渲染贴外壳左右边缘，自绘可自行排版 |
+| addonBefore | `string \| number \| undefined` | 前置组合标签文本 prop 原值（插槽内容不进 scope）；默认渲染贴外壳左侧边缘，自绘可自行排版 |
+| addonAfter | `string \| number \| undefined` | 后置组合标签文本 prop 原值（插槽内容不进 scope）；默认渲染贴外壳右侧边缘，自绘可自行排版 |
 | id | `string \| undefined` | 原生 id 原值；已并入 inputAttrs，外部 label for 关联无需单独消费 |
 | name | `string \| undefined` | 原生 name 原值；已并入 inputAttrs |
 | value | `string` | 当前绑定值（v-model，缺省 `''`）；已并入 inputAttrs.value 受控回写 DOM；自绘计数/占位判断直接用它 |

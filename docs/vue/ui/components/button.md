@@ -7,33 +7,43 @@
 ## 何时使用
 
 - 标记一个（或一组）可立即触发的操作，如提交、确认、取消；
-- 语义选 `type`（primary = 页面主行动，最多一个；danger = 破坏性操作），外观浓度选 `variant`（等级四档：outlined 基础 / filled 次要 / tonal 次次要 / text 次次次要；quiet = text 的灰底交互版；dashed 添加占位（无底色）；ghost 彩色/复杂底图；plain/soft 白底两式（plain 有框 / soft 无边框）；border 隐框交互现边框+文字）；
+- 语义选 `type`（primary = 页面主行动，最多一个；danger = 破坏性操作），外观浓度选 `variant`：
+  - 等级四档：outlined 基础 / filled 次要 / tonal 次次要 / text 次次次要；
+  - quiet = text 的灰底交互版；
+  - dashed 添加占位（无底色）；
+  - ghost 彩色/复杂底图；
+  - plain/soft 白底两式（plain 有框 / soft 无边框）；
+  - border 隐框交互现边框+文字；
 - 跳转请直接用 `href`（渲染为 `<a>`，可被浏览器右键新开）或路由场景用 [KLink](./link.md)。
 
 ## 代码演示
 
 <Demo path="button/types" title="语义类型" desc="`type` 轴：default / primary / info / success / warning / danger / link。" />
 
-<Demo path="button/variants" title="外观变体" desc="`variant` 轴与 `type` 正交，十种外观 × 语义色全矩阵；等级四档（基础/次要/次次要/次次次要 = outlined/filled/tonal/text）+ quiet（text 的灰底交互版）+ dashed（无底色虚线框）+ ghost（透明底，彩色/复杂底图用）+ plain/soft（白底：plain 有框、交互变边框+文字；soft 无边框、交互变背景 tint+文字）+ border（隐框：静置边框透明，交互现边框色+文字色）。" />
+<Demo path="button/variants" title="外观变体" :desc="['`variant` 轴与 `type` 正交，十种外观 × 语义色全矩阵。', '等级四档：基础 outlined / 次要 filled / 次次要 tonal / 次次次要 text。', 'quiet 是 text 的灰底交互版；dashed 无底色虚线框；ghost 透明底，适合彩色或复杂底图。', 'plain 有框，交互变边框 + 文字；soft 无边框，交互变背景 tint + 文字。', 'border 隐框：静置边框透明，交互现边框色 + 文字色。']" />
 
 <Demo path="button/sizes" title="尺寸" desc="`size` 轴走控件高度阶梯（30/34/38/42），移动端 token 组自动升到 44px 触控高度。" />
 
-<Demo path="button/shapes" title="形状" desc="`shape` 轴：round 全圆角；circle / square 用于 icon-only，circle 需配 `aria-label`。" />
+<Demo path="button/shapes" title="形状" :desc="['`shape` 轴：round 全圆角。', 'circle / square 用于 icon-only，circle 需配 `aria-label`。']" />
 
-<Demo path="button/states" title="加载与禁用" desc="`loading` 期间不可点且保留宽度防抖动；`disabled` 走原生 disabled（href 场景落 aria-disabled）。" />
+<Demo path="button/states" title="加载与禁用" :desc="['`loading` 期间不可点且保留宽度防抖动。', '`disabled` 走原生 disabled（href 场景落 aria-disabled）。']" />
 
 <Demo path="button/block" title="块级按钮" desc="`block` 撑满容器宽，常用于移动端与窄卡片。" />
 
-<Demo path="button/icon" title="图标" desc="`icon` prop 注入组件，或 `#icon` 插槽直接放 svg；`#loading` 插槽可自定义加载指示。" />
+<Demo path="button/icon" title="图标" :desc="['`icon` prop 注入组件，或 `#icon` 插槽直接放 svg。', '`#loading` 插槽可自定义加载指示。']" />
 
-<Demo path="button/icon-placement" title="图标位置" desc="`iconPlacement` 缺省 start（文字前），end 落文字后；loading  spinner 占图标位一并后移。" />
+<Demo path="button/icon-placement" title="图标位置" :desc="['`iconPlacement` 缺省 start（文字前），end 落文字后。', 'loading  spinner 占图标位一并后移。']" />
+
+<Demo path="button/icon-positions" title="图标位置矩阵" :desc="['`iconPlacement` 支持 `start / end / top / bottom`；上下位按钮转纵向、自动增高。', '无文字时用 circle / square，必须配 `aria-label`。', 'loading 会占用图标位，并跟随 `iconPlacement` 移到对应位置。']" />
 
 <Demo path="button/href" title="链接按钮" desc="有 `href` 时渲染 `<a>`（`target` 透传）；`type=link` 是无框文本按钮，独立于 type×variant 矩阵。" />
 
-<Demo path="button/group" title="按钮组" desc="`KButtonGroup` 接壤成组：叠边 -1px、首尾留外侧半径；`size` 下发（子级自传优先）、`vertical` 纵排。" />
+<Demo path="button/group" title="按钮组" :desc="['`KButtonGroup` 接壤成组：叠边 -1px、首尾留外侧半径。', '`size` 下发（子级自传优先）、`vertical` 纵排。']" />
 
 ::: tip App 端按压形态已拍板（2026-11-17，走 antd-mobile 实况）
-真触屏（`@media (hover: none)`）下 KButton 自动：**关波纹 → `::before` 黑 8% 遮罩（0.15s 过渡），active 底色加深照常叠加**；桌面窄窗口不受影响仍走波纹。源码查证记录：antd-mobile 并非整体降 opacity（那是 disabled .4），其实况也是遮罩；vant 为灰 #e8e8e8 10% 遮罩，未采用。参数对照（决策存档）：
+真触屏（`@media (hover: none)`）下 KButton 自动：**关波纹 → `::before` 黑 8% 遮罩（0.15s 过渡），active 底色加深照常叠加**；桌面窄窗口不受影响仍走波纹。
+
+源码查证记录：antd-mobile 并非整体降 opacity（那是 disabled .4），其实况也是遮罩；vant 为灰 #e8e8e8 10% 遮罩，未采用。参数对照（决策存档）：
 | 形态 | 机制 | 参数 |
 | --- | --- | --- |
 | A 桌面（现状） | antd Wave 波纹 + active 底色加深 | 0.6s 自定参，触屏让位给 B |
@@ -42,11 +52,11 @@
 | D opacity | 按压整体降透明度（iOS 原生味） | .65 / .15s，未落地候选 |
 :::
 
-<Demo path="button/mobile-press" title="按压形态对比（决策存档）" desc="B 已落库：触屏按住即库真实行为；A 为桌面窄窗表现，C/D 仍是 demo 模拟。" />
+<Demo path="button/mobile-press" title="按压形态对比（决策存档）" :desc="['B 已落库：触屏按住即库真实行为。', 'A 为桌面窄窗表现，C/D 仍是 demo 模拟。']" />
 
-<Demo path="button/render-group" title="按钮组自定义渲染（headless）" desc="KButtonGroup `#render` 自绘胶囊接壤组：role=group 语义继承，size 下发（provide）照跑——组内默认 KButton 仍吃 sm 档。" />
+<Demo path="button/render-group" title="按钮组自定义渲染（headless）" desc="KButtonGroup `#render` 自绘胶囊接壤组：role=group 语义与 size 下发（provide）都继承，组内默认 KButton 仍取 sm 档。" />
 
-<Demo path="button/render" title="按钮自定义渲染（headless）" desc="KButton 双通道：`#render` 自绘票券按钮（rootAttrs/rootOn 继承 click 拦截与语义）；`render` prop 自绘标签按钮（tag 派生 a/button）。" />
+<Demo path="button/render" title="按钮自定义渲染（headless）" :desc="['KButton 双通道：`#render` 自绘票券按钮（rootAttrs/rootOn 继承 click 拦截与语义）。', '`render` prop 自绘标签按钮（tag 派生 a/button）。']" />
 
 ## API
 
@@ -64,8 +74,8 @@
 | href | 有值则渲染 `<a>` | `string` | — |
 | target | 外链打开方式（仅 `href` 渲染 `<a>` 时透传） | `string` | — |
 | icon | 图标组件（也可用 `#icon` 插槽） | `Component \| null` | `null` |
-| iconPlacement | 图标位置（loading 占同位） | `'start' \| 'end'` | `'start'` |
-| wave | 点击波纹开关；缺省跟随 Provider（`wave.disabled` / `defaults.KButton.wave`），显式传值强制开/关 | `boolean` | — |
+| iconPlacement | 图标位置（loading 占同位；top/bottom 转纵向并自动增高） | `'start' \| 'end' \| 'top' \| 'bottom'` | `'start'` |
+| wave | 点击波纹开关；缺省跟随 Provider（`wave.disabled` / `defaults.KButton.wave`），显式传值强制开/关；`variant=text` 与 `type=link` 恒无波纹 | `boolean` | — |
 | nativeType | 原生 type 属性 | `'button' \| 'submit' \| 'reset'` | `'button'` |
 
 <CommonProps />
@@ -128,11 +138,16 @@ KButtonGroup Slots：`default` = 组内 KButton 清单；`render` = 自定义渲
 
 - `variant=text` 时 `shape` 无意义，按 default 渲染；`shape=circle` 要求 icon-only，带文字会在开发环境告警；
 - 图标按钮无文字时必须给 `aria-label`（无障碍要求）；
-- 按下反馈 = active 态颜色加深（25%，2026-11-17 按压观感校准）+ 点击波纹（对齐 antd v5 Wave，`--k-button-wave-color` 可调）；系统「减弱动态效果」（`prefers-reduced-motion`）下波纹自动关闭；App 端（真触屏，`@media (hover: none)`）波纹换 antd-mobile 式黑 8% `::before` 遮罩（2026-11-17 拍板）；不做缩放/位移，回弹类动效请业务二开。
+- 按下反馈 = active 态颜色加深（25%，2026-11-17 按压观感校准）+ 点击波纹（对齐 antd v5 Wave，`--k-button-wave-color` 可调）；
+  - 系统「减弱动态效果」（`prefers-reduced-motion`）下波纹自动关闭；
+  - App 端（真触屏，`@media (hover: none)`）波纹换 antd-mobile 式黑 8% `::before` 遮罩（2026-11-17 拍板）；
+  - 不做缩放/位移，回弹类动效请业务二开。
 
 ## 自定义渲染（headless）
 
-双通道 `#render` 插槽（优先）/ `render` prop，通用契约见 [headless 自定义渲染](../headless.md)。KButton / KButtonGroup 各有 scope（入口导出），逐字段如下（接口没有的组不列；click 动作经 rootOn 绑定包暴露，无独立动作函数组）：
+双通道 `#render` 插槽（优先）/ `render` prop，通用契约见 [headless 自定义渲染](../headless.md)。
+
+KButton / KButtonGroup 各有 scope（入口导出），逐字段如下（接口没有的组不列；click 动作经 rootOn 绑定包暴露，无独立动作函数组）：
 
 **`KButtonRenderScope`**：
 
@@ -150,7 +165,7 @@ KButtonGroup Slots：`default` = 组内 KButton 清单；`render` = 自定义渲
 | href | `string \| undefined` | 链接地址；有值 → tag 为 `'a'`（已进 rootAttrs），可被浏览器右键新开；无值 = 按钮形态 |
 | target | `string \| undefined` | 外链打开方式原始值；仅 tag 为 `'a'` 时进 rootAttrs（button 形态不落） |
 | icon | `Component \| null` | 图标组件 prop（缺省 `null`）；自绘可交给 KIcon 或 `<component :is>` 渲染，也可用 `ctx.slots.icon` |
-| iconPlacement | `'start' \| 'end'` | 图标位置（缺省 `'start'`）；默认渲染 DOM 顺序不动、`order` 后移（RTL 安全），loading spinner 占图标同位——自绘自行排布 |
+| iconPlacement | `'start' \| 'end' \| 'top' \| 'bottom'` | 图标位置（缺省 `'start'`）；默认渲染 DOM 顺序不动、`order` 后移（RTL 安全），上下位改用纵向 flex，loading spinner 占图标同位——自绘自行排布 |
 | nativeType | `'button' \| 'submit' \| 'reset'` | 原生 type（缺省 `'button'`）；仅 tag 为 `'button'` 时进 rootAttrs，表单提交/重置语义由此继承 |
 | tag | `'a' \| 'button'` | 派生标签：有 `href` → `'a'`，否则 `'button'`；自绘可 `<component :is="ctx.tag">` 直接消费，与 rootAttrs 的条件键严格一致 |
 | hasIcon | `boolean` | 是否有图标 = `icon` prop 非空 **或** `#icon` 插槽存在；自绘据此决定是否画图标位（icon-only 判定还须结合 default 插槽有无） |
@@ -191,18 +206,43 @@ KButtonGroup Slots：`default` = 组内 KButton 清单；`render` = 自定义渲
 
 ## 规格附录（实现决策，面向贡献者）
 
-- `type=link` 是独立 type 不进矩阵（视觉规则 §1.1 品牌色克制）；实现上 `type=link` 时 **variant 类名不落**，hover/active 只变文字色（浅化/深化，无背景反馈，对齐 antd link）；`danger` 占用 type 轴（antd 的 `danger` 布尔被吸收）；
+- `type=link` 是独立 type 不进矩阵（视觉规则 §1.1 品牌色克制）；
+  - 实现上 `type=link` 时 **variant 类名不落**，hover/active 只变文字色（浅化/深化，无背景反馈，对齐 antd link）；
+  - `danger` 占用 type 轴（antd 的 `danger` 布尔被吸收）；
 - 本文深度 = 全库样板（接口 + 部件 + 变量表 + 行为），其余组件照此回填；
-- 等级四档映射 naive（2026-11-17）：基础=`outlined`、次要=`filled`、次次要=`tonal`（新增）、次次次要=`text`。值名当日由 tertiary 改 `tonal`：与 fill 阶梯 token 的 tertiary 撞名歧义，且 outlined/filled/dashed 是观感词族。naive 实测 secondary/tertiary 静置同灰（buttonColor2 .05），我们按 fill 阶梯拆出真档位（6%→4%）；tonal 的 hover/active 走 naive 等差 +4% 的破格值 8%/12%（`color-mix(text-base, transparent 92%/88%)`），语义档同灰底 + `--k-button-c` 彩字（naive tertiary 同款）；等级不单独立演示，收在外观变体矩阵内呈现；
+- 等级四档映射 naive（2026-11-17）：基础=`outlined`、次要=`filled`、次次要=`tonal`（新增）、次次次要=`text`。
+  - 值名当日由 tertiary 改 `tonal`：与 fill 阶梯 token 的 tertiary 撞名歧义，且 outlined/filled/dashed 是观感词族；
+  - naive 实测 secondary/tertiary 静置同灰（buttonColor2 .05），我们按 fill 阶梯拆出真档位（6%→4%）；
+  - tonal 的 hover/active 走 naive 等差 +4% 的破格值 8%/12%（`color-mix(text-base, transparent 92%/88%)`），语义档同灰底 + `--k-button-c` 彩字（naive tertiary 同款）；
+  - 等级不单独立演示，收在外观变体矩阵内呈现；
 - 部件变量初值引用 alias token，状态（`:hover`/`:active`/`.is-disabled`）以局部重声明实现，见 [主题 Token 规格 §1.1](../design/theme-tokens.md)；
 - 响应式 `size` 见 [响应式取值演示](../playground/responsive-form.md)。
 
-- ghost/plain/soft 三档（2026-11-17 拍板，三家对照调研）：ghost 进 variant 轴而非 antd/naive 的布尔——variant 天然互斥，避免 ghost×variant 组合爆炸；default×ghost 静置跟 naive（中性边 + 正文字），antd 的白边反色不内置（业务 `styles` 可覆写）；plain = 交互变边框+文字、背景恒容器白（antd default 交互路数），soft = 交互变背景 tint + 文字（vant plain 路数）；soft tint 浓度取 filled 阶梯下移一档（hover 10% / active 16%，落在 filled 静置/ hover 之间不撞档）。**当日改判：soft 去边框**（静置 border transparent 占位保高度，与有框 plain 拉开分工；边框静止的通道随之取消，交互只剩背景+文字）；
-- border 档（2026-11-17 同日新增，用户点名；再调参：交互文字也跟着变）：隐框交互现——静置边框透明（1px 占位不跳版），hover 现 `c 90%up` 边框、文字同式 `c 90%up`，active 边框+文字 `c 75%down`（与 plain 同公式，default 档 c=primary 自然落主色），背景恒静置；语义档静置文字 = `--k-button-c`、default 档 = 正文字（基线）；透明边框占位而非 `border: none`，防 hover 时高度 +2px 跳动；
-- text/quiet 拆分 + dashed 去底（2026-11-17 同日用户拍板）：原 `text` 的 hover/active 灰底（fill-tertiary/secondary）随改名迁给 `quiet`（= antd text 路数），`text` 回归纯文字交互——只变文字色、永不落底（naive text 路数，「text 本来就该没背景」）；**兼容破坏：存量 `variant="text"` 升级后失去灰底反馈，要旧观感改 `quiet`**；default×text hover/active 文字走 c 公式（default 的 c=primary → 落主色浅/深档，与 outlined 同链）；另 default×dashed 静置灰底（原 filled 同款）作废改透明底——dashed 全 type 统一「透明底 + 虚线框」；
-- KButtonGroup（2026-11-17）：走 naive 路线非 antd「Space 顶替」路线——接壤体验（-1px 叠边、首尾外侧半径、hover/focus z-index 抬升防邻钮压边）Space 给不了；size 经 provide/inject 下发、子级自传优先（`props.size ?? 组 ?? md`，size 缺省因此从 withDefaults 移到解析链）；
-- R4b 彩字深档（2026-11-17，低评分三分类「只治 A」拍板）：文字通道不再直接用 `--k-button-c`，改接部件变量 `--k-button-c-text` = `--k-color-N-text-strong`（浅底压黑深档，dark 复用 c；比例见主题 Token 规格 §4.1 表）——静态彩字 9 处、hover/active 表达式 18 处、default×outlined/dashed 2 处全量换；边框/底色/波纹通道不动，观感链（c 90up/75down 的浅深化）在文字通道改由深档出发，静置彩字格矩阵页实测全 ≥4.5；
-- `iconPlacement` 取 antd v6/naive 同款名（antd 已把 iconPosition 废弃成 iconPlacement），值 `start/end` 逻辑方向兼容 RTL；实现 = DOM 顺序不动、`order` 后移，loading spinner 占图标位；`target` 仅 href 落 `<a>` 时透传。三家 props 不搬清单及理由：`color/textColor`（违反无裸写色 token 纪律，覆写走部件变量）、loading 对象形态（`#loading` 插槽已覆盖，delay 属业务防抖）、`strong/tag/focusable/keyboard/fadeOnPress/hairline/loading-text/autoInsertSpace/url/to/replace`（或已被插槽/变量覆盖、或属其它组件语义、或移动端专属）；导航仍按边界走 [KLink](./link.md)。
+- ghost/plain/soft 三档（2026-11-17 拍板，三家对照调研）：
+  - ghost 进 variant 轴而非 antd/naive 的布尔——variant 天然互斥，避免 ghost×variant 组合爆炸；
+  - default×ghost 静置跟 naive（中性边 + 正文字），antd 的白边反色不内置（业务 `styles` 可覆写）；
+  - plain = 交互变边框+文字、背景恒容器白（antd default 交互路数），soft = 交互变背景 tint + 文字（vant plain 路数）；
+  - soft tint 浓度取 filled 阶梯下移一档（hover 10% / active 16%，落在 filled 静置/ hover 之间不撞档）。
+  - **当日改判：soft 去边框**（静置 border transparent 占位保高度，与有框 plain 拉开分工；边框静止的通道随之取消，交互只剩背景+文字）；
+- border 档（2026-11-17 同日新增，用户点名；再调参：交互文字也跟着变）：隐框交互现——静置边框透明（1px 占位不跳版）；
+  - hover 现 `c 90%up` 边框、文字同式 `c 90%up`；
+  - active 边框+文字 `c 75%down`（与 plain 同公式，default 档 c=primary 自然落主色），背景恒静置；
+  - 语义档静置文字 = `--k-button-c`、default 档 = 正文字（基线）；
+  - 透明边框占位而非 `border: none`，防 hover 时高度 +2px 跳动；
+- text/quiet 拆分 + dashed 去底（2026-11-17 同日用户拍板）：
+  - 原 `text` 的 hover/active 灰底（fill-tertiary/secondary）随改名迁给 `quiet`（= antd text 路数），`text` 回归纯文字交互——只变文字色、永不落底（naive text 路数，「text 本来就该没背景」）；
+  - **兼容破坏：存量 `variant="text"` 升级后失去灰底反馈，要旧观感改 `quiet`**；
+  - default×text hover/active 文字走 c 公式（default 的 c=primary → 落主色浅/深档，与 outlined 同链）；
+  - 另 default×dashed 静置灰底（原 filled 同款）作废改透明底——dashed 全 type 统一「透明底 + 虚线框」；
+- KButtonGroup（2026-11-17）：走 naive 路线非 antd「Space 顶替」路线——接壤体验（-1px 叠边、首尾外侧半径、hover/focus z-index 抬升防邻钮压边）Space 给不了；
+  - size 经 provide/inject 下发、子级自传优先（`props.size ?? 组 ?? md`，size 缺省因此从 withDefaults 移到解析链）；
+- R4b 彩字深档（2026-11-17，低评分三分类「只治 A」拍板）：
+  - 文字通道不再直接用 `--k-button-c`，改接部件变量 `--k-button-c-text` = `--k-color-N-text-strong`（浅底压黑深档，dark 复用 c；比例见主题 Token 规格 §4.1 表）——静态彩字 9 处、hover/active 表达式 18 处、default×outlined/dashed 2 处全量换；
+  - 边框/底色/波纹通道不动，观感链（c 90up/75down 的浅深化）在文字通道改由深档出发，静置彩字格矩阵页实测全 ≥4.5；
+- `iconPlacement` 取 antd v6/naive 同款名（antd 已把 iconPosition 废弃成 iconPlacement），基础值 `start/end` 逻辑方向兼容 RTL；扩展 `top/bottom` 时按钮自动转纵向、取消固定高度；
+  - 实现 = DOM 顺序不动、`order` 后移，loading spinner 占图标位；`target` 仅 href 落 `<a>` 时透传。
+  - 三家 props 不搬清单及理由：`color/textColor`（违反无裸写色 token 纪律，覆写走部件变量）、loading 对象形态（`#loading` 插槽已覆盖，delay 属业务防抖）、`strong/tag/focusable/keyboard/fadeOnPress/hairline/loading-text/autoInsertSpace/url/to/replace`（或已被插槽/变量覆盖、或属其它组件语义、或移动端专属）；
+  - 导航仍按边界走 [KLink](./link.md)。
 - 语义 DOM 契约（DOM 结构即公开 API）：
 
 ```html
@@ -214,5 +254,16 @@ KButtonGroup Slots：`default` = 组内 KButton 清单；`render` = 自定义渲
 </button>
 ```
 
-- **点击波纹（2026-11-17 拍板，推翻早前「不做涟漪」决策；同日调参放慢）**：click 时挂 `k-button--waving` 类播放一次性 `box-shadow` 扩散动画（0 → 4px（35% 保持帧，避免出发即淡）→ 6.4px，0.6s `--k-motion-ease-wave`；antd v5 Wave 同形态但用户「太快」由 0.4s 放慢；同日再缩宽至 80%（用户「宽度有点大」）），animationend 不再摘类（类常驻无害，动画结束样式自然回落）；连点重启动画 = DOM 摘类→`void offsetWidth` 强制重排→挂类（2026-11-17 修复：早前 `waving` ref + `nextTick` 摘挂在 Vue 同帧批处理下不产生真实绘制，连点波纹时有时无）。`disabled/loading` 不触发；动画期间 `box-shadow` 压过 `:focus-visible` 描边（antd 同款冲突）；波纹色跟主题（2026-11-17 用户「filled/tonal 等波纹与按钮颜色不一致」改判）：实底/灰底/浅底档（filled/tonal/soft/quiet）= 当前 `--k-button-bg` 60% 透明——var 间接引用即时解析，hover/active 换底波纹自动跟随；透明底档仍走 `--k-button-c` 24% 字色；
-- **波纹开关（2026-11-17，抄 antd 双通道）**：全局 = [KConfigProvider](./config-provider.md) `:wave="{ disabled: true }"`（antd ConfigProvider.wave 同款形态，嵌套 Provider 子覆盖父）；实例 = `KButton wave` prop（显式传值强制开/关）；合并链 `wave prop > defaults.KButton.wave > !wave.disabled > 开`（defaults 通道顺带走 config-provider 的组件默认值机制）；`prefers-reduced-motion` 关闭条款独立并存，不受开关影响；**App 端形态豁免（2026-11-17 拍板）**：`@media (hover: none)` 触屏下波纹动画强制 `none`、改 `::before` 黑 8% 遮罩（0.15s，`:active` 触发，disabled 不响应），属平台形态差异、不受 wave 开关影响；
+- **点击波纹（2026-11-17 拍板，推翻早前「不做涟漪」决策；同日调参放慢）**：
+  - click 时挂 `k-button--waving` 类播放一次性 `box-shadow` 扩散动画（0 → 4px（35% 保持帧，避免出发即淡）→ 6.4px，0.6s `--k-motion-ease-wave`；antd v5 Wave 同形态但用户「太快」由 0.4s 放慢；同日再缩宽至 80%（用户「宽度有点大」）），animationend 不再摘类（类常驻无害，动画结束样式自然回落）；
+  - 连点重启动画 = DOM 摘类→`void offsetWidth` 强制重排→挂类（2026-11-17 修复：早前 `waving` ref + `nextTick` 摘挂在 Vue 同帧批处理下不产生真实绘制，连点波纹时有时无）。
+  - `disabled/loading` 不触发；动画期间 `box-shadow` 压过 `:focus-visible` 描边（antd 同款冲突）；
+  - 波纹色跟主题（2026-11-17 用户「filled/tonal 等波纹与按钮颜色不一致」改判）：实底/灰底/浅底档（filled/tonal/soft/quiet）= 当前 `--k-button-bg` 60% 透明——var 间接引用即时解析，hover/active 换底波纹自动跟随；
+  - 透明底档仍走 `--k-button-c` 24% 字色；
+- **波纹开关（2026-11-17，抄 antd 双通道）**：
+  - 全局 = [KConfigProvider](./config-provider.md) `:wave="{ disabled: true }"`（antd ConfigProvider.wave 同款形态，嵌套 Provider 子覆盖父）；
+  - 实例 = `KButton wave` prop（显式传值强制开/关）；
+  - 合并链 `wave prop > defaults.KButton.wave > !wave.disabled > 开`（defaults 通道顺带走 config-provider 的组件默认值机制）；
+  - `variant=text` / `type=link` 纯文字通道直接关闭波纹（即使显式传 `wave=true` 也不播放）；
+  - `prefers-reduced-motion` 关闭条款独立并存，不受开关影响；
+  - **App 端形态豁免（2026-11-17 拍板）**：`@media (hover: none)` 触屏下波纹动画强制 `none`、改 `::before` 黑 8% 遮罩（0.15s，`:active` 触发，disabled 不响应），属平台形态差异、不受 wave 开关影响；

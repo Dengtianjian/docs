@@ -13,11 +13,11 @@
     </KModal>
     <KSpace size="xs" align="center">
       <span style="color: var(--k-color-text-secondary)">可拖拽</span>
-      <KSwitch v-model="draggable" size="small" />
+      <KSwitch v-model="draggable" size="sm" />
     </KSpace>
     <KSpace size="xs" align="center">
       <span style="color: var(--k-color-text-secondary)">显示遮罩</span>
-      <KSwitch v-model="mask" size="small" />
+      <KSwitch v-model="mask" size="sm" />
     </KSpace>
   </KSpace>
 </template>

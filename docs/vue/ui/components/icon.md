@@ -5,15 +5,16 @@
 ## 何时使用
 
 - 需要以 `1em` 跟随上下文字号/颜色渲染 svg 图标的场合；
-- **推荐图标集已定稿（Q1，2026-11-17）= `@vicons/tabler`**（Tabler 1500+ 图标经 vicons 编译的 Vue3 组件，MIT，`1em × 1em + currentColor`，与本件契约天然吻合）；`component` 注入模式保持不变——业务仍可换任意图标方案（其它 vicons 集合、svg 组件、iconfont、unplugin-icons 皆可）；
+- **推荐图标集已定稿（Q1，2026-11-17）= `@vicons/tabler`**（Tabler 1500+ 图标经 vicons 编译的 Vue3 组件，MIT，`1em × 1em + currentColor`，与本件契约天然吻合）；
+  - `component` 注入模式保持不变——业务仍可换任意图标方案（其它 vicons 集合、svg 组件、iconfont、unplugin-icons 皆可）；
 
 ## 代码演示
 
-<Demo path="icon/sizes" title="尺寸与颜色" desc="轴名 xs/sm/md/lg 映射图标尺寸阶梯（14/16/24/32px），数字 = 直接 px；`currentColor` 继承父级文字颜色。" />
+<Demo path="icon/sizes" title="尺寸与颜色" :desc="['轴名 xs/sm/md/lg 映射图标尺寸阶梯（14/16/24/32px），数字 = 直接 px。', '`currentColor` 继承父级文字颜色。']" />
 
-<Demo path="icon/spin" title="旋转" desc="`spin` 走 `motionDurationSlow` linear 动画；`label` 决定读屏语义——有则 `role=img` + aria-label，无则 `aria-hidden` 视为装饰件。" />
+<Demo path="icon/spin" title="旋转" :desc="['`spin` 走 `motionDurationSlow` linear 动画。', '`label` 决定读屏语义——有则 `role=img` + aria-label，无则 `aria-hidden` 视为装饰件。']" />
 
-<Demo path="icon/render" title="自定义渲染（headless）" desc="`#render` 自绘图标盒（label→role=img 语义继承）；`render` prop 画旋转徽章（spin 状态驱动自绘动画，数字 size 随 rootAttrs）。" />
+<Demo path="icon/render" title="自定义渲染（headless）" :desc="['`#render` 自绘图标盒（label→role=img 语义继承）。', '`render` prop 画旋转徽章（spin 状态驱动自绘动画，数字 size 随 rootAttrs）。']" />
 
 ## API
 
@@ -52,7 +53,9 @@
 
 ## 自定义渲染（headless）
 
-双通道 `#render` 插槽（优先）/ `render` prop，通用契约见 [headless 自定义渲染](../headless.md)。scope = `KIconRenderScope`（入口导出）。静态件零行为，无 ref / 动作组，仅状态与绑定包两组：
+双通道 `#render` 插槽（优先）/ `render` prop，通用契约见 [headless 自定义渲染](../headless.md)。scope = `KIconRenderScope`（入口导出）。
+
+静态件零行为，无 ref / 动作组，仅状态与绑定包两组：
 
 #### 状态（只读快照）
 
@@ -75,6 +78,7 @@
 
 ## 规格附录（实现决策，面向贡献者）
 
-- 图标集选型（Q1）已定 = **@vicons/tabler**：官方 React 版 @ant-design/icons 不适用 Vue，antd 同源 Vue 端口为可选项但未选；容器 + `component` 注入模式不变，业务自带 svg 始终支持；
+- 图标集选型（Q1）已定 = **@vicons/tabler**：官方 React 版 @ant-design/icons 不适用 Vue，antd 同源 Vue 端口为可选项但未选；
+  - 容器 + `component` 注入模式不变，业务自带 svg 始终支持；
 - `spin` 动画类 `k-icon-spin`，时长取 `--k-motion-duration-slow`、linear；
 - a11y 约定：可交互组合件（如 KButton icon-only）自己负责 `aria-label`，KIcon 保持装饰性缺省。

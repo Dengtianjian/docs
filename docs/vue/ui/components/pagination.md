@@ -11,7 +11,7 @@
 
 <Demo path="pagination/sizes" title="三档尺寸" desc="`size` 三档：sm / md / lg，页码按钮、总条数与内部选择器同步缩放。" />
 
-<Demo path="pagination/basic" title="基础 / 受控 / 每页条数 / 跳转 / 简单 / 禁用" desc="`v-model:current` + `v-model:page-size` 受控；`show-total` / `show-size-changer` / `show-quick-jumper` 组合；`simple` 只保留前后与页码摘要；`hide-on-single-page` 单页时隐藏；`disabled` 整体禁用。" />
+<Demo path="pagination/basic" title="基础 / 受控 / 每页条数 / 跳转 / 简单 / 禁用" :desc="['`v-model:current` + `v-model:page-size` 受控。', '`show-total` / `show-size-changer` / `show-quick-jumper` 组合。', '`simple` 只保留前后与页码摘要。', '`hide-on-single-page` 单页时隐藏。', '`disabled` 整体禁用。']" />
 
 ## API
 
@@ -30,7 +30,8 @@
 | disabled | 整体禁用 | `boolean` | `false` |
 | hideOnSinglePage | 只有一页时隐藏 | `boolean` | `false` |
 | size | 尺寸 | `'sm' \| 'md' \| 'lg'` | `'md'` |
-| classNames / styles | 部件（`root / total / item / active / ellipsis / prev / next / sizeChanger / quickJumper`） | — | — |
+| classNames | 部件类名（`root / total / item / active / ellipsis / prev / next / sizeChanger / quickJumper`） | `Partial<Record<Part, string>>` | — |
+| styles | 部件内联样式（`root / total / item / active / ellipsis / prev / next / sizeChanger / quickJumper`） | `Partial<Record<Part, CSSProperties>>` | — |
 
 <CommonProps />
 
@@ -39,7 +40,8 @@
 | 事件 | 说明 | 参数 |
 | --- | --- | --- |
 | change | 页码或每页条数变化 | `page: number, pageSize: number` |
-| update:current / update:pageSize | 受控模型更新 | `number` |
+| update:current | 当前页受控模型更新 | `number` |
+| update:pageSize | 每页条数受控模型更新 | `number` |
 
 ## 注意事项
 

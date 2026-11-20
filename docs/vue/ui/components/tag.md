@@ -58,13 +58,14 @@
 | 变量 | 说明 |
 | --- | --- |
 | `--k-tag-height` / `--k-tag-padding-x` | 高度与左右内边距（sm / md / lg = 12 / 16 / 20） |
-| `--k-tag-line-height` | 文字行高（默认 1.4，容纳 g / j / p 下伸部） |
+| `--k-tag-line-height` | 文字行高（默认 1.4，容纳 g / j / p 下伸部；内容额外下移 0.08em 做视觉居中） |
 | `--k-tag-base-bg` / `--k-tag-base-border` / `--k-tag-base-color` | 语义基准色，`type` 或 `color` 负责声明 |
 | `--k-tag-bg` / `--k-tag-border` / `--k-tag-color` | 最终外观色，由 `variant` 从基准色推导 |
 
 ## 注意事项
 
 - 关闭按钮带 `aria-label="关闭标签"`；业务侧移除标签后请把焦点落到相邻标签或列表容器。
+- 文本保留 1.4 行高避免字母下伸部被裁切，再用 `translateY(0.08em)` 做视觉垂直居中。
 - `closable` 只发事件，不自行隐藏；受控列表请从数据源删除。
 - **外观与语义分离**：`color` 同时承担预设状态与十六进制色值，`variant` 决定外观（filled / outlined / dashed / borderless）；`primary` 保留为 `processing` 的同色别名。
 - **自定义颜色**：`color` 传 `#rgb` / `#rrggbb` 时按 `variant` 推导；按 `variant` 推导三色——filled 背景 12% / 边框 30%，outlined 与 dashed 透明底 + 55% 描边，borderless 背景 10% 无边框；文字用原色，浅色模式下自动加深保证对比度。

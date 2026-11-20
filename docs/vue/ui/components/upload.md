@@ -9,35 +9,35 @@
 
 ## 代码演示
 
-<Demo path="upload/directory" title="目录上传" desc="`directory` 选择整个文件夹（webkitdirectory），强制多选、列表显示相对路径；maxCount / maxSize 照常生效。" />
+<Demo path="upload/directory" title="目录上传" :desc="['`directory` 选择整个文件夹（webkitdirectory），强制多选、列表显示相对路径。', 'maxCount / maxSize 照常生效。']" />
 
 <Demo path="upload/paste" title="粘贴上传" desc="`paste` 监听页面 Ctrl/Cmd+V：剪贴板里的文件/截图直接入列，纯文本不拦截。" />
 
-<Demo path="upload/crop" title="图片裁剪" desc="`crop` 选图后弹层裁剪：拖动裁剪框，四角 + 四边中点自由缩放（可裁长方形）；PC 按住 Shift 临时锁比例；下方提供 自由 / 1:1 / 4:3 / 3:4 / 16:9 / 3:2 / 5:4 / 7:5 固定比例与「锁定比例」开关；传 `{ aspectRatio }` 时全程固定比例。" />
+<Demo path="upload/crop" title="图片裁剪" :desc="['`crop` 选图后弹层裁剪：拖动裁剪框，四角 + 四边中点自由缩放（可裁长方形）。', 'PC 按住 Shift 临时锁比例。', '下方提供 自由 / 1:1 / 4:3 / 3:4 / 16:9 / 3:2 / 5:4 / 7:5 固定比例与「锁定比例」开关。', '传 `{ aspectRatio }` 时全程固定比例。']" />
 
-<Demo path="upload/chunk" title="分片上传" desc="`chunkSize=256KB` + `chunkConcurrency=2`：`upload` 按片调用（`ctx.chunk` 带 index/start/end），全部成功后 `merge` 汇总；示例生成 1MB 文件演示 4 片。" />
+<Demo path="upload/chunk" title="分片上传" :desc="['`chunkSize=256KB` + `chunkConcurrency=2`：`upload` 按片调用（`ctx.chunk` 带 index/start/end），全部成功后 `merge` 汇总。', '示例生成 1MB 文件演示 4 片。']" />
 
-<Demo path="upload/compress" title="图片压缩" desc="`compress` 在入列前用 canvas 缩放到长边 800 / 质量 0.75；示例点按钮生成 1600×1200 图片对比前后体积。" />
+<Demo path="upload/compress" title="图片压缩" :desc="['`compress` 在入列前用 canvas 缩放到长边 800 / 质量 0.75。', '示例点按钮生成 1600×1200 图片对比前后体积。']" />
 
-<Demo path="upload/concurrency" title="并发上限" desc="`concurrency=2`：同时最多执行 2 个 upload，其余排队；完成一个自动补位（示例实时显示当前/峰值并发）。" />
+<Demo path="upload/concurrency" title="并发上限" :desc="['`concurrency=2`：同时最多执行 2 个 upload，其余排队。', '完成一个自动补位（示例实时显示当前/峰值并发）。']" />
 
-<Demo path="upload/basic" title="基础使用" desc="text 列表 + mock upload 阶梯进度；maxCount=3、maxSize=2MB、accept 过滤；change / reject 实时回显。" />
+<Demo path="upload/basic" title="基础使用" :desc="['text 列表 + mock upload 阶梯进度。', 'maxCount=3、maxSize=2MB、accept 过滤。', 'change / reject 实时回显。']" />
 
-<Demo path="upload/drag" title="拖拽上传" desc="drag 开启后根区域整体作为拖放目标；拖入高亮并出现「释放以上传」提示；multiple 多选。" />
+<Demo path="upload/drag" title="拖拽上传" :desc="['drag 开启后根区域整体作为拖放目标。', '拖入高亮并出现「释放以上传」提示。', 'multiple 多选。']" />
 
-<Demo path="upload/picture" title="图片列表（picture）" desc="缩略图优先 thumbUrl、其次 url；新上传图片无 url 时用本地 raw 对象 URL 即时出图。" />
+<Demo path="upload/picture" title="图片列表（picture）" :desc="['缩略图优先 thumbUrl、其次 url。', '新上传图片无 url 时用本地 raw 对象 URL 即时出图。']" />
 
-<Demo path="upload/picture-card" title="卡片墙（picture-card）" desc="hover 出现黑底白色图标的「预览 / 删除」操作蒙层（图标按钮，title 提示）；点图片或预览打开内置 KPreview 画廊（全部图片可切换、缩放）；到达 maxCount 后「+」块消失。" />
+<Demo path="upload/picture-card" title="卡片墙（picture-card）" :desc="['hover 出现黑底白色图标的「预览 / 删除」操作蒙层（图标按钮，title 提示）。', '点图片或预览打开内置 KPreview 画廊（全部图片可切换、缩放）。', '到达 maxCount 后「+」块消失。']" />
 
-<Demo path="upload/picture-circle" title="圆形卡片墙（picture-circle）" desc="方形卡片的圆形变体：卡片与「+」块同尺寸正圆，蒙层与上传/失败遮罩随圆裁切；sortable、clickToUpload 等能力与 picture-card 一致。" />
+<Demo path="upload/picture-circle" title="圆形卡片墙（picture-circle）" :desc="['方形卡片的圆形变体：卡片与「+」块同尺寸正圆，蒙层与上传/失败遮罩随圆裁切。', 'sortable、clickToUpload 等能力与 picture-card 一致。']" />
 
-<Demo path="upload/compact" title="精简操作 / 点击重传" desc="showActions=false 隐藏 hover 操作栏；clickToUpload：卡片墙 hover 显示黑底白色图标蒙层，图片列表与文件列表 hover 行尾出现与删除同款的「重新上传」图标按钮；点选文件后原位替换（change reason=replace）。" />
+<Demo path="upload/compact" title="精简操作 / 点击重传" :desc="['showActions=false 隐藏 hover 操作栏。', 'clickToUpload：卡片墙 hover 显示黑底白色图标蒙层，图片列表与文件列表 hover 行尾出现与删除同款的「重新上传」图标按钮。', '点选文件后原位替换（change reason=replace）。']" />
 
-<Demo path="upload/states" title="失败重试 / 拒绝 / 删除拦截" desc="失败项显示「上传失败」与重试；upload 返回 false 同步拒绝、Promise&lt;false&gt; 异步拒绝；remove 返回 false 异步拦截删除。" />
+<Demo path="upload/states" title="失败重试 / 拒绝 / 删除拦截" :desc="['失败项显示「上传失败」与重试。', 'upload 返回 false 同步拒绝、Promise&lt;false&gt; 异步拒绝。', 'remove 返回 false 异步拦截删除。']" />
 
-<Demo path="upload/sortable" title="拖拽排序" desc="sortable 开启后列表项可拖拽换顺序（原生 HTML5 DnD）；行内上/下半区决定插在目标前/后，与拖文件进根区域互不干扰；change 的 reason 为 move。" />
+<Demo path="upload/sortable" title="拖拽排序" :desc="['sortable 开启后列表项可拖拽换顺序（原生 HTML5 DnD）。', '行内上/下半区决定插在目标前/后，与拖文件进根区域互不干扰。', 'change 的 reason 为 move。']" />
 
-<Demo path="upload/render" title="自定义渲染（headless）" desc="#render 整件替换：暗色清单 + 自绘进度条；选文件、拖放、状态机、重试、删除逻辑由绑定包继承。" />
+<Demo path="upload/render" title="自定义渲染（headless）" :desc="['#render 整件替换：暗色清单 + 自绘进度条。', '选文件、拖放、状态机、重试、删除逻辑由绑定包继承。']" />
 
 ## API
 
@@ -125,10 +125,21 @@
 - 预览：图片（按 `raw.type` 或扩展名判定）走内置 KPreview 画廊——从当前张打开，可左右切换列表中全部图片并缩放；非图片有 `url` 时新窗口打开。
 - 本地预览对象 URL 在删除与组件卸载时自动 `revokeObjectURL`。
 - 默认模板交互动画：新增项进场（淡入 + 位移/缩放）、删除退场（列表绝对定位 + 其余项 FLIP 上移）、排序用 TransitionGroup 的 move 过渡（0.22s）、失败态抖动一次；图片预览动画由 KPreview 承担（淡入 + 方向滑动）。动画只作用于默认模板，headless 自绘请自行处理。
-- `clickToUpload`：缩略图点击改为打开文件选择，选中后**原位替换**——复用 uid 保住列表位置，先 abort 旧请求并回收旧对象 URL，再走完整管线（maxSize / upload），change reason 为 `replace`；替换不占 `maxCount` 名额。开启后预览改走「预览」按钮或文件名；**卡片墙 hover 操作蒙层统一为黑底（65%）白色大图标**（预览 / 删除 / 重新上传 同款，仅图标、`title` / `aria-label` 提示），**图片列表与文件列表 hover 只在行尾出现与删除同款的「重新上传」图标按钮**（text 无缩略图，按钮是唯一入口），不覆盖整行也不撑高行。
+- `clickToUpload`：缩略图点击改为打开文件选择，选中后**原位替换**——复用 uid 保住列表位置，先 abort 旧请求并回收旧对象 URL，再走完整管线（maxSize / upload），change reason 为 `replace`。
+  - 替换不占 `maxCount` 名额。
+  - 开启后预览改走「预览」按钮或文件名。
+  - **卡片墙 hover 操作蒙层统一为黑底（65%）白色大图标**（预览 / 删除 / 重新上传 同款，仅图标、`title` / `aria-label` 提示）。
+  - **图片列表与文件列表 hover 只在行尾出现与删除同款的「重新上传」图标按钮**（text 无缩略图，按钮是唯一入口），不覆盖整行也不撑高行。
 - `showActions=false` 隐藏 hover 操作栏（picture-card 的预览/删除、列表的删除）；error 项的「重试」始终保留。
-- 触屏（`hover: none`）：卡片操作栏改为常显底部小按钮（不再依赖 hover），列表的「重新上传」按钮常显。**触屏排序**：按住 `sortable` 项约 250ms 激活，之后移动即实时让位；列表按纵向中点、卡片墙按横向中点判定落点，松手换序。可拖项 `touch-action: none`（同类库取舍），页面滚动请从列表空隙/空白处发起；卡片上的预览/删除/重传按钮区域不触发长按排序。
-- `sortable` 使用原生 HTML5 拖拽：文件项 `draggable`，拖拽源半透明；**列表在拖动经过相邻项中点时，中间行实时上/下让位（0.18s transform 过渡，距离 = 行高 + 行距）**，目标行仍描上/下边；松手后按落位重排并走 TransitionGroup FLIP（0.22s）。卡片墙按横向中点描左/右边、落位后 FLIP。与 `drag`（文件拖进根区域）互不干扰（排序拖拽带 `text/plain`，文件拖拽带 `Files`）。
+- 触屏（`hover: none`）：卡片操作栏改为常显底部小按钮（不再依赖 hover），列表的「重新上传」按钮常显。
+  - **触屏排序**：按住 `sortable` 项约 250ms 激活，之后移动即实时让位；列表按纵向中点、卡片墙按横向中点判定落点，松手换序。
+  - 可拖项 `touch-action: none`（同类库取舍），页面滚动请从列表空隙/空白处发起。
+  - 卡片上的预览/删除/重传按钮区域不触发长按排序。
+- `sortable` 使用原生 HTML5 拖拽：文件项 `draggable`，拖拽源半透明。
+  - **列表在拖动经过相邻项中点时，中间行实时上/下让位（0.18s transform 过渡，距离 = 行高 + 行距）**，目标行仍描上/下边。
+  - 松手后按落位重排并走 TransitionGroup FLIP（0.22s）。
+  - 卡片墙按横向中点描左/右边、落位后 FLIP。
+  - 与 `drag`（文件拖进根区域）互不干扰（排序拖拽带 `text/plain`，文件拖拽带 `Files`）。
 - headless 模式不渲染预览器（KPreview）与默认 input，需绑定 `inputEl` / `inputAttrs` / `inputOn`，预览可自行接 `preview` 事件。
 
 ## 自定义渲染（headless）
@@ -151,7 +162,8 @@
 | paste | `boolean \| undefined` | 是否开启页面粘贴监听 |
 | concurrency | `number` | 当前并发上限（0 = 不限） |
 | compress | `boolean \| KUploadCompressOptions` | 当前压缩配置 |
-| chunkSize / chunkConcurrency | `number` | 当前分片配置 |
+| chunkSize | `number` | 当前分片大小 |
+| chunkConcurrency | `number` | 当前单文件内分片并发数 |
 | crop | `boolean \| KUploadCropOptions` | 当前裁剪配置 |
 | showActions | `boolean \| undefined` | 是否渲染预览/删除操作栏 |
 | clickToUpload | `boolean \| undefined` | 点缩略图是否改为重新选择替换 |
@@ -264,7 +276,11 @@ type KUploadUpload = (options: {
 
 ## 图片裁剪
 
-- `crop` 在图片入列前打开裁剪弹层（内置 [KImageCropper](./image-cropper.md)）：拖动框移动；自由模式显示 4 角 + 4 边中点（可裁任意长方形），拖动时按住 **Shift** 临时锁定起始比例；裁剪区下方提供 自由 / 1:1 / 4:3 / 3:4 / 16:9 / 3:2 / 5:4 / 7:5 预设与「锁定比例」开关（锁定当前框比例），传 `aspectRatio` 时全程固定比例并只保留四角；支持重置。确定后输出裁剪后的 File，再走压缩 / maxSize / 分片 / upload 全流程。
+- `crop` 在图片入列前打开裁剪弹层（内置 [KImageCropper](./image-cropper.md)）：拖动框移动。
+  - 自由模式显示 4 角 + 4 边中点（可裁任意长方形），拖动时按住 **Shift** 临时锁定起始比例。
+  - 裁剪区下方提供 自由 / 1:1 / 4:3 / 3:4 / 16:9 / 3:2 / 5:4 / 7:5 预设与「锁定比例」开关（锁定当前框比例），传 `aspectRatio` 时全程固定比例并只保留四角。
+  - 支持重置。
+  - 确定后输出裁剪后的 File，再走压缩 / maxSize / 分片 / upload 全流程。
 - 移动端裁剪弹窗放大到近全屏：裁剪区 `min(36vh,280px)`、8 个控制点命中区扩到约 26px；比例预设横向滚动、锁定开关与 footer 同屏可见；拖动/缩放走 pointer 事件，触屏可直接操作。
 - 多图选择会逐个弹层；取消或关闭不产生文件、不占 maxCount；替换上传同样会走裁剪。
 - SVG/GIF 跳过裁剪；裁剪输出默认沿用原图类型（PNG 保透明，其余 JPEG），可用 `type/quality` 覆盖。

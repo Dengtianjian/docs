@@ -9,13 +9,13 @@
 
 ## 代码演示
 
-<Demo path="control-group/basic" title="横向拼接" desc="输入、选择、按钮顺序拼接：相邻控件共享 1px 边框并压边，首尾保留圆角、中间直角；hover / 聚焦项自动抬层盖住邻边。" />
+<Demo path="control-group/basic" title="横向拼接" :desc="['输入、选择、按钮顺序拼接：相邻控件共享 1px 边框并压边，首尾保留圆角、中间直角。', 'hover / 聚焦项自动抬层盖住邻边。']" />
 
-<Demo path="control-group/block" title="通栏等分" desc="`block`：宽度 100%，子项 `flex: 1` 等分拉伸；适合搜索条、筛选栏。" />
+<Demo path="control-group/block" title="通栏等分" :desc="['`block`：宽度 100%，子项 `flex: 1` 等分拉伸。', '适合搜索条、筛选栏。']" />
 
-<Demo path="control-group/vertical" title="纵向拼接" desc="`vertical`：子项上下拼接、压边，首尾保留圆角；适合窄栏表单。" />
+<Demo path="control-group/vertical" title="纵向拼接" :desc="['`vertical`：子项上下拼接、压边，首尾保留圆角。', '适合窄栏表单。']" />
 
-<Demo path="control-group/composite" title="复合控件" desc="InputNumber、Select、按钮型 RadioGroup 的边缘圆角会透传到各自内部视觉壳；Checkbox/Radio/Switch 等无边框控件用 KControlGroupItem 补输入框同款外壳，也可直接放文字。" />
+<Demo path="control-group/composite" title="复合控件" :desc="['InputNumber、Select、按钮型 RadioGroup 的边缘圆角会透传到各自内部视觉壳。', 'Checkbox/Radio/Switch 等无边框控件用 KControlGroupItem 补输入框同款外壳，也可直接放文字。']" />
 
 ## API
 
@@ -40,7 +40,8 @@
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| classNames / styles | 根节点类名/内联样式覆盖 | `{ root?: string }` / `{ root?: CSSProperties }` | — |
+| classNames | 根节点类名覆盖（部件：`root`） | `Partial<Record<Part, string>>` | — |
+| styles | 根节点内联样式覆盖（部件：`root`） | `Partial<Record<Part, CSSProperties>>` | — |
 | render | 自定义渲染闭包（`#render` 插槽优先） | `KRenderFn` | — |
 
 | 插槽 | 说明 |

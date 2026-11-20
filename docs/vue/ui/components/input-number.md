@@ -8,13 +8,13 @@
 
 ## 代码演示
 
-<Demo path="input-number/basic" title="基础使用" desc="`v-model` 绑 `number | null`（空串 = null）；disabled 态不显步进列。" />
+<Demo path="input-number/basic" title="基础使用" :desc="['`v-model` 绑 `number | null`（空串 = null）。', 'disabled 态不显步进列。']" />
 
-<Demo path="input-number/step" title="步进与限幅" desc="`step` 步进（小数 step 自动推 precision）；`min/max` 在失焦与步进时限幅；`controls=false` 收起步进列（键盘 ↑↓ 仍可用）。" />
+<Demo path="input-number/step" title="步进与限幅" :desc="['`step` 步进（小数 step 自动推 precision）。', '`min/max` 在失焦与步进时限幅。', '`controls=false` 收起步进列（键盘 ↑↓ 仍可用）。']" />
 
-<Demo path="input-number/precision" title="精度与状态" desc="`precision` 显式小数位（失焦补零格式化）；`status` / `size` / `variant` 透传 KInput 同轴。" />
+<Demo path="input-number/precision" title="精度与状态" :desc="['`precision` 显式小数位（失焦补零格式化）。', '`status` / `size` / `variant` 透传 KInput 同轴。']" />
 
-<Demo path="input-number/render" title="自定义渲染（headless）" desc="双通道：`#render` 自绘数量步进器（stepUp/stepDown/setText/onBlur/onKeydown 全逻辑继承）；`render` prop 自绘温度计（step 0.5 小数步进 + 限幅照跑）。" />
+<Demo path="input-number/render" title="自定义渲染（headless）" :desc="['双通道：`#render` 自绘数量步进器（stepUp/stepDown/setText/onBlur/onKeydown 全逻辑继承）。', '`render` prop 自绘温度计（step 0.5 小数步进 + 限幅照常生效）。']" />
 
 ## API
 
@@ -23,12 +23,18 @@
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | model-value / v-model | 绑定数值，空值 = `null` | `number \| null` | `null` |
-| min / max | 限幅（失焦与步进时收敛；打字中途不拦截） | `number` | — |
+| min | 下限（失焦与步进时收敛；打字中途不拦截） | `number` | — |
+| max | 上限（失焦与步进时收敛；打字中途不拦截） | `number` | — |
 | step | 步长；`precision` 缺省跟随其小数位 | `number` | `1` |
 | precision | 显式小数位（失焦格式化） | `number` | 随 step |
 | controls | 右侧步进列开关 | `boolean` | `true` |
 | placeholder | 占位文本 | `string` | `'请输入数值'` |
-| size / variant / status / disabled / readonly / id | 同 [KInput](./input.md)，透传 | — | — |
+| size | 同 [KInput](./input.md) 对应项，透传 | — | — |
+| variant | 同 [KInput](./input.md) 对应项，透传 | — | — |
+| status | 同 [KInput](./input.md) 对应项，透传 | — | — |
+| disabled | 同 [KInput](./input.md) 对应项，透传 | — | — |
+| readonly | 同 [KInput](./input.md) 对应项，透传 | — | — |
+| id | 同 [KInput](./input.md) 对应项，透传 | — | — |
 
 <CommonProps />
 
@@ -59,7 +65,8 @@ Slots：`render` = 自定义渲染作用域插槽（scope 见文末「自定义�
 
 - 触屏（`hover: none`）：步进按钮纵向命中区不足 44px，默认收起步进列，改用数字键盘（`inputmode=decimal`）输入。
 
-- **组合实现**：步进列绝对定位在组合壳右侧，`.k-input-number--controls` 时给内层输入框加右内边距让位（特异性 (0,2,0) 压过 KInput 基线，不改 KInput 源码）；输入框 hover/focus 边框与聚焦圈全由 KInput 承担。
+- **组合实现**：步进列绝对定位在组合壳右侧，`.k-input-number--controls` 时给内层输入框加右内边距让位（特异性 (0,2,0) 压过 KInput 基线，不改 KInput 源码）；
+  - 输入框 hover/focus 边框与聚焦圈全由 KInput 承担。
 - **文本态/数值态分离**：打字中间态（`-`、`1.`）不回填输入框；`min/max` 限幅与 `precision` 格式化只在失焦与步进落定发生（antd 同语义）。
 - 步进钮 `mousedown.prevent` + 回焦输入框：点击不丢焦点、不触发表单提交；`tabindex="-1"` 不进 Tab 序列。
 - 浮点残差：步进结果先 `toFixed(max(precision,10))` 归位再限幅（0.1+0.2 类问题）。

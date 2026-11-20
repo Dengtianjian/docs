@@ -101,7 +101,7 @@ h('button', { ...ctx.controlAttrs, ...onProps(ctx.controlOn) }, '…')
 
 ## 覆盖表
 
-全部视觉组件支持 headless（`render` prop + `#render` 插槽双通道）。App / ConfigProvider 为逻辑提供者，message / notification 的**实例 API** 为服务驱动，无 headless 契约（声明式卡片 `KNotification` 本身支持，见下表）。
+除 P3 表格族（KTable / KPagination / KVirtualList / KEmpty / KSkeleton）按「部级 `classNames/styles` + 插槽 + 列 `render`」交付外，其余视觉组件支持 headless 双通道（`render` prop + `#render` 插槽）。App / ConfigProvider 为逻辑提供者，message / notification 的**实例 API** 为服务驱动，无 headless 契约（声明式卡片 `KNotification` 本身支持，见下表）。
 
 | 组件 | scope 类型 | 关键绑定包 / 动作 |
 | --- | --- | --- |
@@ -129,6 +129,11 @@ h('button', { ...ctx.controlAttrs, ...onProps(ctx.controlOn) }, '…')
 | KAlert | `KAlertRenderScope` | `rootAttrs`（alert 语义）、`onClose`、banner / 类型状态 |
 | KSpin | `KSpinRenderScope` | `rootAttrs / nestedAttrs / indicatorAttrs` + delay 收敛态（包裹模式 inert 逻辑） |
 | KNotification（声明式卡片） | `KNotificationRenderScope` | `rootAttrs / rootOn`、`onClose`、type / 进度条状态 |
+| KTag | `KTagRenderScope` | `rootAttrs`、`onClose`、type / size 状态 |
+| KBadge | `KBadgeRenderScope` | `rootAttrs`、count / status / 可见性派生 |
+| KCard | `KCardRenderScope` | `rootAttrs` + title / loading / hoverable 状态 |
+| KTable / KPagination / KVirtualList | —（P3 部级契约） | `classNames/styles` 部件 + 插槽；Table 另有列 `render`，无整件替换 |
+| KEmpty / KSkeleton | —（P3 部级契约） | `classNames/styles` 部件 + 插槽 |
 
 入口导出：`KRenderFn` / `KOnPack` / `onProps` + 上表全部 scope 类型（`kit/vue/ui`）。
 
@@ -138,7 +143,7 @@ headless 的两种典型用法：消费者把绑定包封装成**自有设计系
 
 ### 封装自有组件（消费者向）
 
-<Demo path="headless/my-select" title="自有组件 MySelect：下划线选择器" desc="一个可复用的自有组件：内部消费 KSelect headless 绑定包，对外只暴露自己的 props（accent 换肤）/ 事件（v-model / change）。开合、键盘导航、点外关闭、定位翻转、禁用拦截全部继承，业务侧不感知 KSelect 的存在。" />
+<Demo path="headless/my-select" title="自有组件 MySelect：下划线选择器" :desc="['一个可复用的自有组件：内部消费 KSelect headless 绑定包，对外只暴露自己的 props（accent 换肤）/ 事件（v-model / change）。', '开合、键盘导航、点外关闭、定位翻转、禁用拦截全部继承，业务侧无需了解 KSelect 的内部实现。']" />
 
 组件核心（完整源码 `examples/headless/_MySelect.vue`，演示「查看代码」是使用侧）：
 
@@ -183,7 +188,7 @@ const emit = defineEmits<{ 'update:modelValue': [v: string | number | null] }>()
 
 ### 让自己的组件支持 headless（贡献者向）
 
-<Demo path="headless/like-button" title="从零接线：LikeButton 点赞钮" desc="用 useCustomRender 基座给自有组件接上双通道：默认视觉（心形 + 派生计数 + 点赞动画）、#render 插槽自绘收藏书签、render prop 自绘纯文本点赞——三形态共用同一份逻辑（受控双模 + toggle + aria-pressed + Enter/Space 键盘）。" />
+<Demo path="headless/like-button" title="从零接线：LikeButton 点赞钮" :desc="['用 useCustomRender 基座给自有组件接上双通道。', '默认视觉：心形 + 派生计数 + 点赞动画。', '`#render` 插槽自绘收藏书签。', '`render` prop 自绘纯文本点赞。', '三形态共用同一份逻辑：受控双模 + toggle + aria-pressed + Enter/Space 键盘。']" />
 
 接线核心（完整源码 `examples/headless/_LikeButton.vue`）：
 

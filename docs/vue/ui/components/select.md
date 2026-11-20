@@ -8,21 +8,21 @@
 
 ## 代码演示
 
-<Demo path="select/basic" title="基础使用" desc="`options` 清单（`{label,value,disabled}`）；`allow-clear` 悬浮出清除钮；disabled 项弹层内不可点。" />
+<Demo path="select/basic" title="基础使用" :desc="['`options` 清单（`{label,value,disabled}`）。', '`allow-clear` 悬浮出清除钮。', 'disabled 项弹层内不可点。']" />
 
-<Demo path="select/multiple" title="多选" desc="`mode=multiple`，model 为数组；选中项以标签回显、可单个移除；Backspace 删尾标签；弹层保持展开直到外点/Esc。" />
+<Demo path="select/multiple" title="多选" :desc="['`mode=multiple`，model 为数组。', '选中项以标签回显、可单个移除。', 'Backspace 删尾标签。', '弹层保持展开直到外点/Esc。']" />
 
-<Demo path="select/filter" title="过滤 / 输入创建选项" desc="`filterable` 触发器内嵌输入框（单选替换回显、多选跟在标签后），本地按 label 不区分大小写过滤；`filter` 自定义匹配；`tag` 回车把输入值创建为选项；`search` 事件实时抛输入。" />
+<Demo path="select/filter" title="过滤 / 输入创建选项" :desc="['`filterable` 触发器内嵌输入框（单选替换回显、多选跟在标签后），本地按 label 不区分大小写过滤。', '`filter` 自定义匹配。', '`tag` 回车把输入值创建为选项。', '`search` 事件实时抛输入。']" />
 
-<Demo path="select/group" title="分组 / 隐藏已选 / 前后缀" desc="`options` 混排 `{type:'group',label,children}` 与散选项；`hide-selected` 菜单隐藏已选（组空整组消失）；`#prefix` / `#suffix` 插槽（箭头保留）。" />
+<Demo path="select/group" title="分组 / 隐藏已选 / 前后缀" :desc="['`options` 混排 `{type:\'group\',label,children}` 与散选项。', '`hide-selected` 菜单隐藏已选（组空整组消失）。', '`#prefix` / `#suffix` 插槽（箭头保留）。']" />
 
-<Demo path="select/max-tag" title="最大标签数" desc="`max-tag-count` 数字 = 固定保留个数；`responsive` = ResizeObserver 实测触发器宽度自适应收敛；溢出 +N 标签悬停 Tooltip 列剩余项；`#label` 插槽改标签回显。" />
+<Demo path="select/max-tag" title="最大标签数" :desc="['`max-tag-count` 数字 = 固定保留个数。', '`responsive` = ResizeObserver 实测触发器宽度自适应收敛。', '溢出 +N 标签悬停 Tooltip 列剩余项。', '`#label` 插槽改标签回显。']" />
 
-<Demo path="select/slots" title="菜单插槽 / 滚动事件" desc="`#header` / `#footer` 不随列表滚；`#option` 自绘行（scope：option/selected/active）；`#empty` 带 pattern；`#label` 改选中回显；列表 `scroll` 事件实时抛出。" />
+<Demo path="select/slots" title="菜单插槽 / 滚动事件" :desc="['`#header` / `#footer` 不随列表滚。', '`#option` 自绘行（scope：option/selected/active）。', '`#empty` 带 pattern。', '`#label` 改选中回显。', '列表 `scroll` 事件实时抛出。']" />
 
-<Demo path="select/popup-container" title="弹层容器（契约首验）" desc="`KConfigProvider :popup-container` 指定挂载盒：弹层 absolute 进容器文档流，随内容滚动、被盒边界裁切；scoped 主题下出口节点自带作用域类，token 链不断。" />
+<Demo path="select/popup-container" title="弹层容器（契约首验）" :desc="['`KConfigProvider :popup-container` 指定挂载盒：弹层 absolute 进容器文档流，随内容滚动、被盒边界裁切。', 'scoped 主题下出口节点自带作用域类，token 链不断。']" />
 
-<Demo path="select/render" title="自定义渲染（headless）" desc="`#render` 插槽 / `render` prop 整件替换：下划线触发器 + 深色面板全自绘；开合、键盘导航、点外关闭、定位翻转、禁用项逻辑由绑定包继承。" />
+<Demo path="select/render" title="自定义渲染（headless）" :desc="['`#render` 插槽 / `render` prop 整件替换：下划线触发器 + 深色面板全自绘。', '开合、键盘导航、点外关闭、定位翻转、禁用项逻辑由绑定包继承。']" />
 
 ## API
 
@@ -39,8 +39,12 @@
 | tag | 输入值可创建为选项（需 filterable）；Enter 无高亮项时创建并选中 | `boolean` | `false` |
 | maxTagCount | 多选标签折叠：数字 = 保留个数；`'responsive'` = 按触发器宽度实测 | `number \| 'responsive'` | — |
 | hideSelected | 菜单隐藏已选中项 | `boolean` | `false` |
-| size / variant / status | 同 [KInput](./input.md) 三轴（触发器视觉同源） | — | — |
-| disabled / allowClear / id | 同 KInput 语义（filterable 时 id 落输入框） | — | — |
+| size | 同 [KInput](./input.md) 尺寸轴（触发器视觉同源） | — | — |
+| variant | 同 [KInput](./input.md) 样式轴（触发器视觉同源） | — | — |
+| status | 同 [KInput](./input.md) 校验态轴（触发器视觉同源） | — | — |
+| disabled | 同 KInput 语义（整件禁用） | — | — |
+| allowClear | 同 KInput 语义（有值时悬浮出清除钮） | — | — |
+| id | 同 KInput 语义（filterable 时 id 落输入框） | — | — |
 
 <CommonProps />
 
@@ -49,7 +53,8 @@
 | 事件名 | 说明 | 回调参数 |
 | --- | --- | --- |
 | change | 选中值变化（多选为数组） | `(value: string \| number \| (string\|number)[] \| null)` |
-| focus / blur | 触发件（filterable = 输入框）聚焦/失焦 | `(e: FocusEvent)` |
+| focus | 触发件（filterable = 输入框）聚焦 | `(e: FocusEvent)` |
+| blur | 触发件（filterable = 输入框）失焦 | `(e: FocusEvent)` |
 | search | 过滤输入变化 | `(pattern: string)` |
 | scroll | 选项列表滚动 | `(e: Event)` |
 
@@ -57,10 +62,12 @@
 
 | 插槽 | 说明 | 作用域参数 |
 | --- | --- | --- |
-| prefix / suffix | 触发器前/后缀（suffix 在清除钮与箭头之前） | — |
+| prefix | 触发器前缀 | — |
+| suffix | 触发器后缀（在清除钮与箭头之前） | — |
 | label | 选中回显（单选整行 / 多选每个标签） | `{ option: KSelectOption \| null, value }` |
 | option | 菜单行自绘（替换默认 label + 勾选） | `{ option, selected, active }` |
-| header / footer | 菜单头/脚，不随列表滚动 | — |
+| header | 菜单头，不随列表滚动 | — |
+| footer | 菜单脚，不随列表滚动 | — |
 | empty | 空菜单（过滤无匹配时 pattern 非空） | `{ pattern }` |
 | render | 自定义渲染作用域插槽，scope 见文末「自定义渲染」节；提供时整件替换 | `KSelectRenderScope` |
 
@@ -74,14 +81,19 @@ Expose：`focus() / blur() / open() / close()`。
 | `--k-select-hover-border-color / -focus-border-color / outline(-width)` | primary-hover / primary / control-outline |
 | `--k-select-tag-bg / -radius` | `fill-tertiary` / `border-radius-sm` |
 | 弹层 | bg `--k-color-bg-elevated`、影 `--k-box-shadow-secondary`、层级 `--k-z-index-dropdown` |
-| 选项行 | 行高 = 触发器高 − 4（`--k-select-height` 由 JS 随弹层注入）；水平内边距 12；xs/sm 档字号 `font-size-sm`，其余消费根级 `--k-input-font-size` |
+| 选项行 | 紧凑弹层档：md 行高 32px（sm/xs 28、lg 36）；内容区四边 4px，选项水平内边距 8px；字号与弹层档一致：sm/xs 12、md 14、lg 16 |
 | 选项态 | active 行 `fill-tertiary`；选中 `primary-bg` 底 + 主色字（active+选中 `primary-bg-hover`） |
 
 ## 注意事项
 
 - **弹层定位**：锚触发框下沿（间距 4px = `--k-size-xxs` 同步常数），宽度贴触发器；下方溢出视口自动上翻，展开动画随之镜像（顶→底 scaleY 展开 / 上翻时底→顶收合，进出场都有）。
-- **popupContainer 契约（2026-11-17 改判，antd getPopupContainer 同款）**：缺省 body = `fixed` + scroll（capture）/resize 跟随；指定元素 = `absolute` 进容器文档流（坐标 = 视口坐标 − 容器原点 − border + 容器 scroll；随内容滚、被容器 overflow 裁切；static 容器自动补 `relative`；翻转仍按视口判定）。Select/Tooltip/Popover/Popconfirm 四件同语义（`usePopupFrame` 基座）。
-- **焦点模型**：非 filterable 焦点恒留 `role=combobox` 触发件；filterable 焦点在输入框（combobox 语义随输入框），弹层靠 `aria-activedescendant` 指示活动项；↑↓ 移动、Enter 选中（tag 模式无高亮项时创建）、Esc 关闭、多选 Backspace 空输入删尾标签；IME 组合期间不响应 Enter。
+- **popupContainer 契约（2026-11-17 改判，antd getPopupContainer 同款）**：缺省 body = `fixed` + scroll（capture）/resize 跟随。
+  - 指定元素 = `absolute` 进容器文档流（坐标 = 视口坐标 − 容器原点 − border + 容器 scroll；随内容滚、被容器 overflow 裁切；static 容器自动补 `relative`；翻转仍按视口判定）。
+  - Select/Tooltip/Popover/Popconfirm 四件同语义（`usePopupFrame` 基座）。
+- **焦点模型**：非 filterable 焦点恒留 `role=combobox` 触发件。
+  - filterable 焦点在输入框（combobox 语义随输入框），弹层靠 `aria-activedescendant` 指示活动项。
+  - ↑↓ 移动、Enter 选中（tag 模式无高亮项时创建）、Esc 关闭、多选 Backspace 空输入删尾标签。
+  - IME 组合期间不响应 Enter。
 - **maxTagCount responsive**：两遍实测（先全渲染量标签宽，再扣输入框与 +N 探针宽收敛），ResizeObserver 跟触发器尺寸；+N 无溢出时退为隐藏探针保留可测宽度（探针必须 `display: inline-flex` 覆写通用 `.is-hidden` 的 `display:none`，否则量宽为 0 收敛多算一档）。
 - **多选换行撑高**：触发器 `min-height` + 内容 `flex-wrap`，标签换行自动撑大盒高；多选模式控制框带 4px 垂直内边距（`--k-size-xxs`），换行行不贴边框；+N 的 KTooltip 触发层 flex 化消除 inline 基线 strut（否则单行被撑大 3px）。
 - 外点关闭用 `pointerdown` capture 判定（含弹层内与触发区内不关）；Tab 焦点离开触发区/弹层亦关。

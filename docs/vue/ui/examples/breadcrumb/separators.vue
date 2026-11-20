@@ -14,7 +14,12 @@
       <KBreadcrumbItem href="#api">首页</KBreadcrumbItem>
       <KBreadcrumbItem href="#api">组件</KBreadcrumbItem>
       <KBreadcrumbItem disabled>禁用项</KBreadcrumbItem>
-      <KBreadcrumbItem separator="|" current>当前页</KBreadcrumbItem>
+      <KBreadcrumbItem current>当前页</KBreadcrumbItem>
+    </KBreadcrumb>
+    <KBreadcrumb>
+      <KBreadcrumbItem href="#api">首页</KBreadcrumbItem>
+      <KBreadcrumbItem href="#api" separator="›">组件</KBreadcrumbItem>
+      <KBreadcrumbItem current>单项覆盖</KBreadcrumbItem>
     </KBreadcrumb>
   </KSpace>
 </template>

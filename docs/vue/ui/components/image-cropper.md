@@ -9,7 +9,7 @@
 
 ## 代码演示
 
-<Demo path="image-cropper/basic" title="内联裁剪面板" desc="面板直接嵌入文档流：`file` 传入待裁图片，拖动框与 8 个控制点裁剪，确定后 `confirm` 回传 File；点取消清空。" />
+<Demo path="image-cropper/basic" title="内联裁剪面板" :desc="['面板直接嵌入文档流：`file` 传入待裁图片，拖动框与 8 个控制点裁剪。', '确定后 `confirm` 回传 File；取消则清空选择。']" />
 
 ## API
 
@@ -21,7 +21,8 @@
 | aspectRatio | 固定宽高比；不传 = 自由裁剪（可用比例预设/锁定） | `number` | — |
 | type | 输出 MIME；缺省沿用原图（PNG 保透明，其余 JPEG） | `string` | — |
 | quality | 输出质量 0~1 | `number` | `0.92` |
-| classNames / styles | 语义部件覆盖：`root / alert / stage / box / handle / toolbar / ratios / footer` | `Partial<Record<KImageCropperPart, string \| CSSProperties>>` | — |
+| classNames | 语义部件的类名覆盖：`root / alert / stage / box / handle / toolbar / ratios / footer` | `Partial<Record<KImageCropperPart, string>>` | — |
+| styles | 语义部件的内联样式覆盖：`root / alert / stage / box / handle / toolbar / ratios / footer` | `Partial<Record<KImageCropperPart, CSSProperties>>` | — |
 
 ### Events
 

@@ -10,13 +10,13 @@
 
 ## 代码演示
 
-<Demo path="link/basic" title="类型与下划线" desc="`underline` 支持 always/hover/never；`disabled` 渲染为 span + aria-disabled。" />
+<Demo path="link/basic" title="类型与下划线" :desc="['`underline` 支持 always/hover/never。', '`disabled` 渲染为 span + aria-disabled。']" />
 
 <Demo path="link/colors" title="取色五态" desc="链接链 / 正文字色→链接色 / 主色链 / 正文字色→主色 / 自定义 `color`（hover/active 自动派生），每态交互都变色。" />
 
 <Demo path="link/external" title="外链" desc="`external` 自动补 `target=_blank` + `rel=noopener noreferrer`，不依赖调用方自觉。" />
 
-<Demo path="link/render" title="自定义渲染（headless）" desc="双通道：`#render` 自绘墨线链接（派生 tag + href/aria-disabled 语义继承，disabled→span 照跑）；`render` prop 自绘外链胶囊（external rel/target + color 三态变量继承）。" />
+<Demo path="link/render" title="自定义渲染（headless）" :desc="['双通道：`#render` 自绘墨线链接（派生 tag + href/aria-disabled 语义继承，disabled→span 照常生效）。', '`render` prop 自绘外链胶囊（external rel/target + color 三态变量继承）。']" />
 
 ## API
 
@@ -59,7 +59,9 @@
 
 ## 自定义渲染（headless）
 
-双通道 `#render` 插槽（优先）/ `render` prop，提供时**整件视觉输出被替换**（标签、色链、下划线时机全自绘）；script 逻辑照跑，**绑定包散播到自绘节点才继承**。通用契约见 [headless 自定义渲染](../headless.md)。scope = `KLinkRenderScope`（入口导出），字段分组逐项如下（本件无状态动作——导航走 `to`/`href` 原生行为，不派发 click，故无动作组）。
+双通道 `#render` 插槽（优先）/ `render` prop，提供时**整件视觉输出被替换**（标签、色链、下划线时机全自绘）；script 逻辑照跑，**绑定包散播到自绘节点才继承**。通用契约见 [headless 自定义渲染](../headless.md)。
+
+scope = `KLinkRenderScope`（入口导出），字段分组逐项如下（本件无状态动作——导航走 `to`/`href` 原生行为，不派发 click，故无动作组）。
 
 #### 状态（只读快照）
 
@@ -94,7 +96,8 @@
 
 - 取色五态为自有设计（2026-11-17 增强）：`link/subtle/primary/subtle-primary/color`，每态 hover/active 均有变色；
 - 三变量 `--k-link-color/-hover/-active` 承载全部档位，纯变量实现；`color` prop 只 inline 落三变量（不落 color 本身，否则压死状态类规则）；
-- 改判记录：browser 两档（静置 `color: revert` 走 UA 色）当日废弃——用户拍板静置改正文字色（subtle 系）。留档备用结论：CSS 宽关键字 `revert` 经 `var()` 代入在 WebKit 按无效值处理（实测落继承色而非 UA 蓝），若再需要 UA 色须直接声明 + `:not()` 让位清单（防复合特异度压死交互态）；
+- 改判记录：browser 两档（静置 `color: revert` 走 UA 色）当日废弃——用户拍板静置改正文字色（subtle 系）。
+  - 留档备用结论：CSS 宽关键字 `revert` 经 `var()` 代入在 WebKit 按无效值处理（实测落继承色而非 UA 蓝），若再需要 UA 色须直接声明 + `:not()` 让位清单（防复合特异度压死交互态）；
 - 类型链覆盖须双类名 `.k-link.k-link--xxx`（0,2,0）：基线 `.k-link:is(a)` = (0,1,1) 压过单类名——旧 `default/secondary` 在 `<a>` 上不生效即此因，已一并修复；
 - 兼容变更：旧 `type=primary`（= 链接色链）语义由缺省值 `link` 承载；`primary` 改为主色链——缺省主题 seed link = 主色，两链同值，旧写法观感不变；
 - 色链只开三档（color/hover/active），语义全在 link 色系（seed 缺省 = 主色，可独立于按钮改链接色）；

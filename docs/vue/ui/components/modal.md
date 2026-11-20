@@ -8,15 +8,17 @@
 
 ## 代码演示
 
-<Demo path="modal/basic" title="声明式（#trigger + 自管/受控）" desc="#trigger 点击即开；不传 open = 自管开合（X / 蒙层 / Esc 即关），传 v-model:open = 受控（trigger 只发 update:open）；center 落位、width、footer 纯插槽驱动。" />
+<Demo path="modal/basic" title="声明式（#trigger + 自管/受控）" :desc="['#trigger 点击即开。', '不传 open = 自管开合（X / 蒙层 / Esc 即关），传 v-model:open = 受控（trigger 只发 update:open）。', 'center 落位、width、footer 纯插槽驱动。']" />
 
-<Demo path="modal/placement" title="九宫格屏幕落位" desc="`placement` 九值控制弹窗打开后停在视口哪一格（缘距：上/下 80、左/右 24、center 20）；zoom 动画原点仍走点击自动记录，与落位互不干涉；另附 `--k-modal-transform-origin` 动画原点 CSS 通道。" />
+<Demo path="modal/sizes" title="三档尺寸 / header-body 配重" :desc="['`size` 支持 `sm` / `md` / `lg`，标题、正文、四周边距与关闭钮同步缩放。', 'header 下边距与 body 上边距用一个视觉间距统一，header/body/footer 各段内边距保持对称。']" />
 
-<Demo path="modal/draggable" title="拖拽 / 无遮罩 / 内容滚动" desc="`draggable` 按住标题栏拖动；`mask=false` 不压暗背景；长内容在 body 内滚动，标题与页脚固定。" />
+<Demo path="modal/placement" title="九宫格屏幕落位" :desc="['`placement` 九值控制弹窗打开后停在视口哪一格（缘距：上/下 80、左/右 24、center 20）。', 'zoom 动画原点仍走点击自动记录，与落位互不干涉。', '另附 `--k-modal-transform-origin` 动画原点 CSS 通道。']" />
 
-<Demo path="modal/functional" title="实例 API：功能弹窗" desc="useKApp().modal：open + info/success/error/warning（类型图标）；不预设按钮，关闭统一 X / 蒙层 / Esc 触发 onClose；需要操作钮时在内容里自绘（handle.destroy 关闭）；draggable/mask/placement 同样可配。" />
+<Demo path="modal/draggable" title="拖拽 / 无遮罩 / 内容滚动" :desc="['`draggable` 按住标题栏拖动。', '`mask=false` 不压暗背景。', '长内容在 body 内滚动，标题与页脚固定。']" />
 
-<Demo path="modal/render" title="自定义渲染（headless）" desc="双通道：`#render` 自绘拖拽面板（headerOn 拖拽链 + translate 位移 + 原点变量全继承）；`render` prop 自绘居中 sheets。滚动锁/Esc/蒙层关闭/焦点移入照跑。" />
+<Demo path="modal/functional" title="实例 API：功能弹窗" :desc="['useKApp().modal：open + info/success/error/warning（类型图标）。', '不预设按钮，关闭统一 X / 蒙层 / Esc 触发 onClose。', '需要操作钮时在内容里自绘（handle.destroy 关闭）。', 'draggable/mask/placement 同样可配。']" />
+
+<Demo path="modal/render" title="自定义渲染（headless）" :desc="['双通道：`#render` 自绘拖拽面板（headerOn 拖拽链 + translate 位移 + 原点变量全继承）。', '`render` prop 自绘居中 sheets。', '滚动锁、Esc、蒙层关闭与焦点移入照常生效。']" />
 
 ## API
 
@@ -25,11 +27,15 @@
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | open / v-model:open | 开合：不传 = 组件自管（trigger 点击开、X/蒙层/Esc 关）；传 = 受控（组件自身交互只发事件不自动改值） | `boolean` | `false`（自管初始关） |
-| title / content | 标题（支持 VNode）/ 默认插槽为空时的内容 | `string \| VNode` | — |
+| title | 标题（支持 VNode） | `string \| VNode` | — |
+| content | 默认插槽为空时的内容 | `string \| VNode` | — |
 | icon | 标题前行图标（功能型弹窗用） | `string \| VNode` | — |
 | width | 数值按 px，也可传 CSS 宽度串 | `number \| string` | `520` |
+| size | 弹窗尺寸：标题、正文、边距与关闭钮同步缩放 | `'sm' \| 'md' \| 'lg'` | `'md'` |
 | placement | 九宫格屏幕落位：弹窗打开后停在视口哪一格（缘距沿用 wrap 留白：上/下排 80、左/右列 24、center 四边 20；取代旧 `centered`） | `'top-left' \| 'top' \| 'top-right' \| 'left' \| 'center' \| 'right' \| 'bottom-left' \| 'bottom' \| 'bottom-right'` | `'top'` |
-| mask / maskClosable / keyboard | 蒙层 / 点蒙层关 / Esc 关 | `boolean` | `true` |
+| mask | 蒙层 | `boolean` | `true` |
+| maskClosable | 点蒙层关 | `boolean` | `true` |
+| keyboard | Esc 关 | `boolean` | `true` |
 | closable | 右上关闭 X | `boolean` | `true` |
 | draggable | 按住标题栏拖拽移动弹窗（naive 同款） | `boolean` | `false` |
 | source | 动画原点覆盖元素（优先级：`source` > 最近 pointerdown 自动记录 > 中心缩放；与落位无关） | `Element` | — |
@@ -70,7 +76,7 @@ modal.open(props) / modal.info|success|error|warning(props) → { destroy() }
 modal.destroyAll()
 ```
 
-`props = KModalFuncProps`：`title/content/icon/width/mask/maskClosable/keyboard/draggable/placement/source/onClose/afterClose`。
+`props = KModalFuncProps`：`title/content/icon/width/size/mask/maskClosable/keyboard/draggable/placement/source/onClose/afterClose`。
 
 - **不预设按钮**：弹窗只有标题 + 内容 + 右上 X，关闭统一走 X / 蒙层 / Esc（`maskClosable`/`keyboard` 默认开），触发 `onClose`，退场播完触发 `afterClose`。需要操作钮时在 `content`（VNode）里自绘，点它调 `handle.destroy()` 关闭。
 - 功能型 = 类型图标（info/success/error/warning）+ 标题 + 内容；`open` 无图标；`icon` 传 `null` 关闭图标、传 VNode 自定义。
@@ -82,7 +88,8 @@ modal.destroyAll()
 | --- | --- |
 | `--k-modal-bg` | `--k-color-bg-elevated` |
 | `--k-modal-radius` | `--k-border-radius-lg` |
-| `--k-modal-padding / -header-pad-x` | `calc(var(--k-size-lg) + var(--k-size-xxs))`（28px，头/底纵向） / `--k-size-lg`（24px，横向） |
+| `--k-modal-pad-y / -pad-x / -header-gap` | `20px / 24px / 12px`（md）；sm/lg 分别 16/20/8 与 24/32/16；body 用负 margin 抵消 header/footer 间距，保证各段四边对称 |
+| `--k-modal-title-size / -body-size / -close-size` | `16px / 14px / 14px`（md）；随 size 档同步缩放 |
 | `--k-modal-mask-bg` | `rgb(0 0 0 / 45%)` —— 破格登记常数（遮罩语义 = 压暗，恒定黑不随主题反相，`--k-color-split` 同款先例） |
 | `--k-modal-transform-origin` | `50% 50%` —— 动画原点统一通道：pointer 记录写内联，业务 CSS 覆写即自定义任意原点（与屏幕落位无关） |
 | `--k-modal-max-height` | 上/下排 `calc(100vh - var(--k-size) * 10)` / 中排（left/center/right）`calc(100vh - var(--k-size-md) * 2)` —— dialog 限高（= 视口 − wrap 上下留白 80×2 / 20×2），超出由 body 内滚 |
@@ -90,19 +97,37 @@ modal.destroyAll()
 
 ## 注意事项
 
-- **插槽语义与开合模型**（2026-11-18 改判 naive 同款）：`#trigger` 包触发元素、点击即开，默认插槽 = 对话框内容（照旧）；**不传 `open` = 组件自管开合**（X/蒙层/Esc 即关），传 `open` = 受控照旧（trigger 与关闭交互都只发 `update:open`/`close`）。zoom 动画原点自动取 trigger 点击处。
+- **插槽语义与开合模型**（2026-11-18 改判 naive 同款）：`#trigger` 包触发元素、点击即开，默认插槽 = 对话框内容（照旧）。
+  - **不传 `open` = 组件自管开合**（X/蒙层/Esc 即关），传 `open` = 受控照旧（trigger 与关闭交互都只发 `update:open`/`close`）。
+  - zoom 动画原点自动取 trigger 点击处。
 
-- **不预设按钮 · open/close 对称**：弹窗不自带确定/取消钮，footer 纯 `#footer` 插槽驱动（不传插槽就不渲染页脚区域）。关闭统一走右上 X / 蒙层 / Esc，声明式发 `close` 事件、实例 API 触发 `onClose`——与 `open` 命名对称。需要操作钮时由业务在 footer 插槽或 `content` 里自绘。
-- **原点缩放**（自动记录 + CSS 变量双通道）：dialog 挂载帧先 `visibility:hidden`，取触发源算 `transform-origin` 后放行 zoom 动画——弹窗从触发元素方向胀出；程序化打开（无新鲜点击）回落中心。实例 API 在点击处理器里调用，天然吃到自动通道。缩放幅度 0.3→1。业务 CSS 覆写 `--k-modal-transform-origin`（或 `styles.dialog`）可自定义任意动画原点（如 `20% 80%`）。
-- **九宫格屏幕落位**（2026-11-17 改判，取代旧 `centered` 与误建的 `transformOrigin` prop）：`placement` 九值 = 弹窗打开后停在视口哪一格，wrap 用 flex `justify-content`（纵）× `align-items`（横）九宫格对齐；缘距沿用 wrap 留白（上/下排 80、左/右列 24、center 四边 20），中排限高换档 `100vh−40`、其余 `100vh−160`。落位写根节点 `data-placement`，业务 CSS 可按属性覆写对齐；**落位与动画原点互不干涉**（原点仍走自动 pointer 链）。
-- **拖拽**（naive `draggable` 同款）：开启后整个标题栏是把手（`cursor: grab`），按住拖动移动弹窗；位移走独立 `translate` 属性，与 zoom 的 `transform: scale` 复合不冲突。关闭 X 区域不启动拖拽；重开自动回位。触屏经 pointer capture + `touch-action: none` 同样可拖。
+- **不预设按钮 · open/close 对称**：弹窗不自带确定/取消钮，footer 纯 `#footer` 插槽驱动（不传插槽就不渲染页脚区域）。
+  - 关闭统一走右上 X / 蒙层 / Esc，声明式发 `close` 事件、实例 API 触发 `onClose`——与 `open` 命名对称。
+  - 需要操作钮时由业务在 footer 插槽或 `content` 里自绘；footer 按钮请按 `size` 选择同档 KButton。
+- **header / body / footer 配重**：body 用负 margin 抵消 header 下边距与 footer 上边距，视觉段间距恒等于 `--k-modal-pad-y`；header、body、footer 各自四边内边距仍对称，避免 header 头重、body 局促。
+- **原点缩放**（自动记录 + CSS 变量双通道）：dialog 挂载帧先 `visibility:hidden`，取触发源算 `transform-origin` 后放行 zoom 动画——弹窗从触发元素方向胀出；程序化打开（无新鲜点击）回落中心。
+  - 实例 API 在点击处理器里调用，天然吃到自动通道。
+  - 缩放幅度 0.3→1。
+  - 业务 CSS 覆写 `--k-modal-transform-origin`（或 `styles.dialog`）可自定义任意动画原点（如 `20% 80%`）。
+- **九宫格屏幕落位**（2026-11-17 改判，取代旧 `centered` 与误建的 `transformOrigin` prop）：`placement` 九值 = 弹窗打开后停在视口哪一格，wrap 用 flex `justify-content`（纵）× `align-items`（横）九宫格对齐。
+  - 缘距沿用 wrap 留白（上/下排 80、左/右列 24、center 四边 20），中排限高换档 `100vh−40`、其余 `100vh−160`。
+  - 落位写根节点 `data-placement`，业务 CSS 可按属性覆写对齐。
+  - **落位与动画原点互不干涉**（原点仍走自动 pointer 链）。
+- **拖拽**（naive `draggable` 同款）：开启后整个标题栏是把手（`cursor: grab`），按住拖动移动弹窗；位移走独立 `translate` 属性，与 zoom 的 `transform: scale` 复合不冲突。
+  - 关闭 X 区域不启动拖拽；重开自动回位。
+  - 触屏经 pointer capture + `touch-action: none` 同样可拖。
 - **无遮罩**：`mask=false` 去掉压暗蒙层，背景保持原样；wrap 仍拦截点击（点空白经 `maskClosable` 可关），滚动锁定等模态语义不变。
-- **内容滚动**：dialog 限高 `--k-modal-max-height`（视口 − wrap 留白），超高时 **body 内部滚动**、标题/页脚固定（flex 列 + `min-height:0` + `overflow-y:auto`）；滚动条细轨 fill 阶梯色，`overscroll-behavior: contain` 不把滚动链传给背后页面。短内容不受影响。
-- **进出场动画**（补退场）：`Transition` 挂在 root——进/退场 root 整体淡入淡出（`k-modal-fade-in/out`，时长 `--k-motion-duration-mid`；Transition 只读根节点动画判结束，子节点动画不算数），dialog 叠加 `k-modal-zoom`（0.3→1）/ `k-modal-zoom-out`（1→0.3）。退场期间 `is-zoomed` 保持真（否则 visibility 门会立刻藏掉 dialog），`after-leave` 才复位并发 `afterClose`；命令式 Holder 据此在退场播完后才真正出队（`closing` 标记）。
+- **内容滚动**：dialog 限高 `--k-modal-max-height`（视口 − wrap 留白），超高时 **body 内部滚动**、标题/页脚固定（flex 列 + `min-height:0` + `overflow-y:auto`）。
+  - 滚动条细轨 fill 阶梯色，`overscroll-behavior: contain` 不把滚动链传给背后页面。
+  - 短内容不受影响。
+- **进出场动画**（补退场）：`Transition` 挂在 root——进/退场 root 整体淡入淡出（`k-modal-fade-in/out`，时长 `--k-motion-duration-mid`；Transition 只读根节点动画判结束，子节点动画不算数），dialog 叠加 `k-modal-zoom`（0.3→1）/ `k-modal-zoom-out`（1→0.3）。
+  - 退场期间 `is-zoomed` 保持真（否则 visibility 门会立刻藏掉 dialog），`after-leave` 才复位并发 `afterClose`。
+  - 命令式 Holder 据此在退场播完后才真正出队（`closing` 标记）。
 
 - 出口优先级：KApp root → ConfigProvider popupContainer → body；scoped Provider 下出口节点自带 `k-config-provider + scopeClass` 与 `data-k-theme`（契约④）。
 - 打开时 `body` 滚动锁定（模块级计数，多模态叠层只由最后一个释放）。
-- **焦点管理（focus trap）**：打开时记录原焦点并把焦点移入 dialog——优先 `[autofocus]`/`[data-autofocus]`，其次正文第一个可聚焦元素，再次 footer，最后 dialog 本身；Tab / Shift+Tab 在 dialog 内循环。退场结束后焦点还原到打开前元素（已卸载则跳过）。
+- **焦点管理（focus trap）**：打开时记录原焦点并把焦点移入 dialog——优先 `[autofocus]`/`[data-autofocus]`，其次正文第一个可聚焦元素，再次 footer，最后 dialog 本身；Tab / Shift+Tab 在 dialog 内循环。
+  - 退场结束后焦点还原到打开前元素（已卸载则跳过）。
 - **叠层**：Esc 与 Tab 圈定只由最上层弹窗响应（模块级打开栈），关闭上层后焦点回到下层；dialog 带 `aria-modal="true"` + `aria-labelledby`（指向标题）。
 
 ## 自定义渲染（headless）
@@ -118,6 +143,7 @@ modal.destroyAll()
 | content | `string \| VNode \| undefined` | 内容 prop 通道（默认插槽为空时的回退，命令式服务用；自绘经 `slots.default` 取） |
 | icon | `string \| VNode \| undefined` | 标题前行图标（功能型弹窗用）；自绘自行渲染 |
 | width | `string` | **归一化后的 CSS 宽度值**（number prop 转 `${n}px`，字符串原样）；已经进 dialogAttrs.style，也可单独消费 |
+| size | `KModalSize` | 尺寸档（`sm / md / lg`）；默认渲染据此缩放标题、正文、边距与关闭钮 |
 | placement | `KModalPlacement` | 九宫格屏幕落位（`'top-left' \| 'top' \| 'top-right' \| 'left' \| 'center' \| 'right' \| 'bottom-left' \| 'bottom' \| 'bottom-right'`）；写进 rootAttrs 的 `data-placement`，落位 CSS（wrap flex 对齐 + 缘距 + 限高换档）由自绘自理 |
 | mask | `boolean` | 是否应渲染压暗蒙层；false 时不画蒙层，但 wrap 外点判定与滚动锁等模态语义不变 |
 | maskClosable | `boolean` | 点蒙层/空白是否关闭；wrapOn 的外点路径内部据此守卫 |

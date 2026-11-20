@@ -9,15 +9,15 @@
 
 ## 代码演示
 
-<Demo path="grid/basic" title="基础栅格" desc="`span` 按 24 分。列宽 class（`k-col-{n}`、百分比宽度）在构建期全量生成进 `css/grid.css`。" />
+<Demo path="grid/basic" title="基础栅格" :desc="['`span` 按 24 分。', '列宽 class（`k-col-{n}`、百分比宽度）在构建期全量生成进 `css/grid.css`。']" />
 
-<Demo path="grid/gutter" title="栅格间距" desc="`gutter` 数字 = 水平间距；`[水平, 垂直]` 二元组。实现 = Row 负 margin + Col 内 padding，垂直走 rowGap。" />
+<Demo path="grid/gutter" title="栅格间距" :desc="['`gutter` 数字 = 水平间距。', '`[水平, 垂直]` 二元组。', '实现 = Row 负 margin + Col 内 padding，垂直走 rowGap。']" />
 
-<Demo path="grid/responsive" title="响应式" desc="`span`/`offset`/`gutter` 都支持 `{ xs, sm, md, lg, xl, xxl }` 对象——列宽走预生成断点 class；gutter 也支持字符串 `'xs:8 sm:16 md:24'`，由共享断点解析成**当前档定值**（列宽流动、gutter 不流动）。拖动窗口宽度观察。" />
+<Demo path="grid/responsive" title="响应式" :desc="['`span`/`offset`/`gutter` 都支持 `{ xs, sm, md, lg, xl, xxl }` 对象——列宽走预生成断点 class。', 'gutter 也支持字符串 `\'xs:8 sm:16 md:24\'`，由共享断点解析成**当前档定值**（列宽流动、gutter 不流动）。', '拖动窗口宽度观察。']" />
 
-<Demo path="grid/offset-flex" title="偏移与 flex" desc="`offset` 左偏移格数；`flex` 数字生成 `flex: n 0 0`，字符串原样透传 CSS flex。" />
+<Demo path="grid/offset-flex" title="偏移与 flex" :desc="['`offset` 左偏移格数。', '`flex` 数字生成 `flex: n 0 0`，字符串原样透传 CSS flex。']" />
 
-<Demo path="grid/render" title="自定义渲染（headless）" desc="Row/Col 各自 headless：gutter 负外边距 + provide 注入照跑，Col 内边距随 rootAttrs 继承；列宽百分比由 span 自绘。" />
+<Demo path="grid/render" title="自定义渲染（headless）" :desc="['Row/Col 各自 headless：gutter 负外边距 + provide 注入照常生效，Col 内边距随 rootAttrs 继承。', '列宽百分比由 span 自绘。']" />
 
 ## API
 
@@ -103,6 +103,8 @@
 ## 规格附录（实现决策，面向贡献者）
 
 - **CSS-first**：默认断点下的 288 条列宽/offset class 全部静态预生成（`css/grid.css`，由 `css/gen-grid.mjs` 存档脚本产出），组件运行时零宽度计算；
-- gutter 响应式对象/字符串是**登记在案的 JS 例外**：全库共享一套 matchMedia 监听 → 当前档取定值，经 `provide/inject`（`K_ROW_INJECTION_KEY`）传给子 Col；SSR 无 matchMedia 时返回保守档 `md`（首帧 gutter 可能与客户端实际档不同、挂载后即刻校正；列宽不受影响，走 CSS 断点）；语法见 [响应式取值](../design/responsive-values.md)；
+- gutter 响应式对象/字符串是**登记在案的 JS 例外**：全库共享一套 matchMedia 监听 → 当前档取定值，经 `provide/inject`（`K_ROW_INJECTION_KEY`）传给子 Col；
+  - SSR 无 matchMedia 时返回保守档 `md`（首帧 gutter 可能与客户端实际档不同、挂载后即刻校正；列宽不受影响，走 CSS 断点）；
+  - 语法见 [响应式取值](../design/responsive-values.md)；
 - Row 负 margin（`-gutter/2`）+ Col 正 padding（`gutter/2`）实现列间距，垂直行间用 `rowGap`——与 antd 的 margin 补偿法不同，更接近原生 gap 语义；
 - 垂直 gutter 作用于行间（rowGap），不影响单个 Col 高度。

@@ -10,10 +10,33 @@ const props = defineProps<{
   /** 相对 docs/vue/ui/examples/ 的路径（不含 .vue），如 button/types */
   path: string;
   title?: string;
-  desc?: string;
+  /** 说明：字符串或按段落拆分的数组；支持行内代码、加粗 */
+  desc?: string | string[];
   /** 行高亮（VitePress 围栏风格）："2,4-6"；与源码内 // [!code hl] 标记可叠加 */
   lines?: string;
 }>();
+
+const escapeHtml = (text: string) =>
+  text.replace(/[&<>"']/g, (ch) => `&#${ch.charCodeAt(0)};`);
+
+/** 仅放行文档内写的行内代码与加粗，其余一律转义 */
+function renderInline(text: string) {
+  return text
+    .split(/(`[^`]+`)/g)
+    .map((part) => {
+      if (part.length > 2 && part.startsWith("`") && part.endsWith("`")) {
+        return `<code>${escapeHtml(part.slice(1, -1))}</code>`;
+      }
+      return escapeHtml(part).replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    })
+    .join("");
+}
+
+const descBlocks = computed(() => {
+  const desc = props.desc;
+  const blocks = Array.isArray(desc) ? desc : desc ? [desc] : [];
+  return blocks.filter(Boolean).map(renderInline);
+});
 
 const loaders = import.meta.glob("../../docs/vue/ui/examples/**/*.vue");
 const sources = import.meta.glob("../../docs/vue/ui/examples/**/*.vue", {
@@ -23,6 +46,9 @@ const sources = import.meta.glob("../../docs/vue/ui/examples/**/*.vue", {
 }) as Record<string, string>;
 
 const key = computed(() => `../../docs/vue/ui/examples/${props.path}.vue`);
+const demoTitleId = computed(
+  () => `demo-${props.path.replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-|-$/g, "")}`,
+);
 const demo = computed(() => {
   const loader = loaders[key.value];
   return loader ? defineAsyncComponent(loader as never) : null;
@@ -101,8 +127,10 @@ async function copy() {
 <template>
   <section class="k-doc-demo">
     <header v-if="title || desc" class="k-doc-demo__head">
-      <h4 v-if="title" class="k-doc-demo__title">{{ title }}</h4>
-      <p v-if="desc" class="k-doc-demo__desc">{{ desc }}</p>
+      <h3 v-if="title" :id="demoTitleId" class="k-doc-demo__title">{{ title }}</h3>
+      <div v-if="descBlocks.length" class="k-doc-demo__desc">
+        <p v-for="(block, index) in descBlocks" :key="index" v-html="block"></p>
+      </div>
     </header>
     <div class="k-doc-demo__preview">
       <component :is="demo" v-if="demo" />
@@ -138,6 +166,8 @@ async function copy() {
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
   overflow: hidden;
+  /* clip 不建立滚动容器，页面级 sticky 表头可以贴住视口 */
+  overflow: clip;
 }
 .k-doc-demo__head {
   padding: 16px 20px 0;
@@ -148,12 +178,19 @@ async function copy() {
   font-weight: 600;
   line-height: 24px;
   letter-spacing: -0.02em;
+  scroll-margin-top: 88px;
 }
 .k-doc-demo__desc {
   margin: 6px 0 0;
   font-size: 14px;
   line-height: 24px;
   color: var(--vp-c-text-2);
+}
+.k-doc-demo__desc p {
+  margin: 0;
+}
+.k-doc-demo__desc p + p {
+  margin-top: 4px;
 }
 .k-doc-demo__preview {
   padding: 24px 20px;

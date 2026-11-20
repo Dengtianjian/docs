@@ -8,9 +8,9 @@
 
 ## 代码演示
 
-<Demo path="spin/basic" title="三档尺寸 / tip / 包裹模式" desc="独立用法与包裹用法（内容压暗 + inert 禁交互）；spinning=false 整体不渲染指示器。" />
+<Demo path="spin/basic" title="三档尺寸 / tip / 包裹模式" :desc="['独立用法与包裹用法（内容压暗 + inert 禁交互）。', 'spinning=false 整体不渲染指示器。']" />
 
-<Demo path="spin/render" title="自定义渲染（headless）" desc="双通道：`#render` 自绘包裹遮罩（nestedAttrs 继承 inert/aria-busy，delay 收敛态照跑）；`render` prop 自绘三点脉冲。" />
+<Demo path="spin/render" title="自定义渲染（headless）" :desc="['双通道：`#render` 自绘包裹遮罩（nestedAttrs 继承 inert/aria-busy，delay 收敛态照常生效）。', '`render` prop 自绘三点脉冲。']" />
 
 ## API
 
@@ -50,7 +50,9 @@
 
 ## 自定义渲染（headless）
 
-双通道 `#render` 插槽（优先）/ `render` prop，通用契约见 [headless 自定义渲染](../headless.md)。scope = `KSpinRenderScope`（入口导出），字段逐组如下（纯状态指示件：只有状态 + 绑定包，无 ref/出口与动作组；headless 分支不受 spinning 门控，收起/展示由自绘消费 `spinning` 自理）。
+双通道 `#render` 插槽（优先）/ `render` prop，通用契约见 [headless 自定义渲染](../headless.md)。
+
+scope = `KSpinRenderScope`（入口导出），字段逐组如下（纯状态指示件：只有状态 + 绑定包，无 ref/出口与动作组；headless 分支不受 spinning 门控，收起/展示由自绘消费 `spinning` 自理）。
 
 #### 状态（只读快照）
 

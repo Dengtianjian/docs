@@ -8,11 +8,13 @@
 
 ## 代码演示
 
-<Demo path="popover/basic" title="触发 / closable / 插槽" desc="hover 容差移入不消失；click + closable 卡片；#trigger 包触发元素，#title 部件插槽 + 默认插槽内容区放任意结构。" />
+<Demo path="popover/basic" title="触发 / closable / 插槽" :desc="['hover 容差移入不消失。', 'click + closable 卡片。', '#trigger 包触发元素，#title 部件插槽 + 默认插槽内容区放任意结构。']" />
 
-<Demo path="popover/placements" title="12 方位" desc="top/bottom/left/right 四主方位 ± Top/Bottom 对齐后缀 = 12 方位，主侧放不下且对侧放得下才翻转；箭头逐位跟随触发器中心（贴边方位不钉边中点）。" />
+<Demo path="popover/sizes" title="三档尺寸" :desc="['`size` 支持 `sm` / `md` / `lg`，字号、内边距、标题与关闭钮同步缩放。', '只影响弹层，触发器尺寸由业务控件决定。']" />
 
-<Demo path="popover/render" title="自定义渲染（headless）" desc="双通道：`#render` 自绘快捷菜单（click 触发，Teleport/定位/外点关闭全继承）；`render` prop 自绘墨线气泡（hover 延迟链照跑）。" />
+<Demo path="popover/placements" title="12 方位" :desc="['top/bottom/left/right 四主方位 ± Top/Bottom 对齐后缀 = 12 方位，主侧放不下且对侧放得下才翻转。', '箭头逐位跟随触发器中心（贴边方位不钉边中点）。']" />
+
+<Demo path="popover/render" title="自定义渲染（headless）" :desc="['双通道：`#render` 自绘快捷菜单（click 触发，Teleport/定位/外点关闭全继承）。', '`render` prop 自绘墨线气泡（hover 延迟链照常生效）。']" />
 
 ## API
 
@@ -22,9 +24,13 @@
 | content | 内容（默认插槽优先） | `string` | — |
 | placement | 方位（同 KTooltip，12 方位 + 自动翻转） | `KOverlayPlacement` | `'top'` |
 | trigger | 触发方式 | `'hover' \| 'focus' \| 'click'` 或数组 | `['hover','focus']` |
-| mouseEnterDelay / mouseLeaveDelay | 出/入延迟（秒） | `number` | `0.1 / 0.1` |
+| mouseEnterDelay | 移入延迟（秒） | `number` | `0.1` |
+| mouseLeaveDelay | 移出延迟（秒） | `number` | `0.1` |
 | open / v-model:open | 受控开合 | `boolean` | — |
-| disabled / arrow / closable | 禁用 / 箭头 / 右上关闭 X | `boolean` | `false / true / false` |
+| disabled | 禁用弹出 | `boolean` | `false` |
+| arrow | 箭头 | `boolean` | `true` |
+| closable | 右上关闭 X | `boolean` | `false` |
+| size | 卡片尺寸：字号、内边距、标题与关闭钮同步缩放 | `'sm' \| 'md' \| 'lg'` | `'md'` |
 
 <CommonProps />
 
@@ -49,7 +55,7 @@
 | 变量 | 初值 |
 | --- | --- |
 | `--k-popover-bg` | `--k-color-bg-elevated`（弹层卡面标准底） |
-| `--k-popover-radius / -padding` | `border-radius-lg` / `size`（16px） |
+| `--k-popover-radius / -padding` | `border-radius-lg` / 随 size 档（sm/md/lg = 8/12/16px）；标题与关闭钮同步缩放 |
 | `--k-popover-min-width / -max-width` | `15×size / 40×size` |
 | `--k-popover-arrow-size` | `8px` 常数 |
 
@@ -59,7 +65,9 @@
 
 - **插槽语义**（2026-11-18 改判 naive 同款，破坏性）：`#trigger` 包触发元素、**默认插槽 = 内容区**；旧 `#content` 插槽别名已删（`content` prop 保留兜底）；`#title` 为卡片标题部件插槽，照旧。
 
-- **箭头指向**（2026-11-17 修正）：主方位弹层居中对齐、箭头天然在边中点；八个贴边方位弹层错位摆放，旧「箭头钉在边中点」会指空。现由基座 `useOverlayPosition` 输出 `--k-overlay-arrow-offset`（弹层本地主轴 px，按触发器中心计算并 clamp 进限位 `arrowKeepout`=半盒+圆角余量），CSS 只管换侧与形状。坑：限位别用 CSS `clamp()`——百分比与 px 混算在 left/top 上不生效，必须在 JS 端算。
+- **箭头指向**（2026-11-17 修正）：主方位弹层居中对齐、箭头天然在边中点；八个贴边方位弹层错位摆放，旧「箭头钉在边中点」会指空。
+  - 现由基座 `useOverlayPosition` 输出 `--k-overlay-arrow-offset`（弹层本地主轴 px，按触发器中心计算并 clamp 进限位 `arrowKeepout`=半盒+圆角余量），CSS 只管换侧与形状。
+  - 坑：限位别用 CSS `clamp()`——百分比与 px 混算在 left/top 上不生效，必须在 JS 端算。
 - **进出场动画**（2026-11-17 补退场）：`Transition` 驱动——进场 `k-popover-zoom`（0.85→1 + 淡入），退场 `k-popover-zoom-out` 反向，时长 `--k-motion-duration-fast`；退场播完才移除节点。
 
 - 与 [KTooltip](./tooltip.md) 共用 `usePopupHost/useOverlayPosition/usePopupDismiss` 基座；出口契约、翻转语义见 tooltip 页注意事项。
@@ -79,6 +87,7 @@
 | placement | `KOverlayPlacement` | **翻转后的实际方位**（基座 `useOverlayPosition` 的 actualPlacement，与 `popupAttrs['data-placement']` 同值；12 方位联合类型）；只在首选侧放不下且对侧放得下时翻转 |
 | title | `string \| undefined` | 卡片标题 prop 通道（`title` 插槽优先，经 `slots.title` 取）；有标题或标题插槽时默认渲染才画标题行 |
 | content | `string \| undefined` | 内容 prop 通道（默认插槽优先，经 `slots.default` 取，可放任意结构） |
+| size | `KPopoverSize` | 尺寸档（`sm / md / lg`）；默认渲染据此缩放字号、内边距、标题与关闭钮 |
 | closable | `boolean` | 是否应渲染右上关闭 X；自绘关闭钮据此显隐，点击走 `setOpen(false)`（受控同样只发事件） |
 | arrow | `boolean` | 是否应渲染箭头；箭头节点与形状自绘（可消费 style 里的 `--k-overlay-arrow-offset` 偏移变量） |
 

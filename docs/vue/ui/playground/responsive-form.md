@@ -66,7 +66,7 @@ onBeforeUnmount(() => {
 
 `layout` / `labelWidth` / `labelAlign` / `colon` 四属性同时响应式；当前断点读数在演示内。
 
-<Demo path="form/responsive-label" title="KForm 四属性响应式" desc="字符串写法：`layout=&quot;xs:vertical md:horizontal&quot;`、`labelWidth=&quot;xs:72 sm:88 md:100 lg:120&quot;`、`labelAlign=&quot;xs:left md:right&quot;`、`colon=&quot;xs:false md:true&quot;`。" />
+<Demo path="form/responsive-label" title="KForm 四属性响应式" :desc="['字符串写法：属性值按断点前缀分段。', '`layout`：`&quot;xs:vertical md:horizontal&quot;`。', '`labelWidth`：`&quot;xs:72 sm:88 md:100 lg:120&quot;`。', '`labelAlign`：`&quot;xs:left md:right&quot;`。', '`colon`：`&quot;xs:false md:true&quot;`。']" />
 
 对象写法等价：
 
@@ -98,13 +98,13 @@ const width = useResponsiveValue<number>(() => ({ xs: 140, md: 240, lg: 300 }))
 const padding = useResponsiveValue<string>(() => 'xs:8px md:16px lg:24px')
 ```
 
-<Demo path="responsive/composable" title="组合式函数取值" desc="卡片宽度/内边距走 useResponsiveValue；返回值为 ComputedRef，已按当前断点缓存。" />
+<Demo path="responsive/composable" title="组合式函数取值" :desc="['卡片宽度/内边距走 useResponsiveValue。', '返回值为 ComputedRef，已按当前断点缓存。']" />
 
 ## KButton
 
 `size` 支持断点对象/字符串；KButtonGroup 的 `size` 同样可响应式，并下发给组内按钮（子级自传优先）。
 
-<Demo path="button/responsive-size" title="按钮尺寸响应式" desc="单个按钮字符串/对象写法 + 按钮组统一下发；当前断点由顶部模拟器控制。" />
+<Demo path="button/responsive-size" title="按钮尺寸响应式" :desc="['单个按钮字符串/对象写法 + 按钮组统一下发。', '当前断点由顶部模拟器控制。']" />
 
 ## KRow
 

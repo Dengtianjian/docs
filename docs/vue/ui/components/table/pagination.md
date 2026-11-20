@@ -24,9 +24,9 @@
 
 ## API
 
-<!--@include: /vue/ui/components/table/_api/props-pagination.md-->
-<!--@include: /vue/ui/components/table/_api/events-core.md-->
+<!--@include: ./_api/props-pagination.md-->
+<!--@include: ./_api/events-core.md-->
 
 ## 注意事项
 
-<!--@include: /vue/ui/components/table/_api/notes-pagination.md-->
+<!--@include: ./_api/notes-pagination.md-->

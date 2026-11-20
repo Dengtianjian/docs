@@ -29,12 +29,12 @@
 
 ## API
 
-<!--@include: /vue/ui/components/table/_api/slots-layout.md-->
-<!--@include: /vue/ui/components/table/_api/slots-columns.md-->
-<!--@include: /vue/ui/components/table/_api/slots-toolbar.md-->
-<!--@include: /vue/ui/components/table/_api/slots-rows.md-->
-<!--@include: /vue/ui/components/table/_api/slots-actions.md-->
-<!--@include: /vue/ui/components/table/_api/slots-card.md-->
+<!--@include: ./_api/slots-layout.md-->
+<!--@include: ./_api/slots-columns.md-->
+<!--@include: ./_api/slots-toolbar.md-->
+<!--@include: ./_api/slots-rows.md-->
+<!--@include: ./_api/slots-actions.md-->
+<!--@include: ./_api/slots-card.md-->
 
 ## 注意事项
 

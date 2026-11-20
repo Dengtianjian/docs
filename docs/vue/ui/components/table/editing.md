@@ -27,10 +27,10 @@ const columns = [
 
 ## API
 
-<!--@include: /vue/ui/components/table/_api/props-interaction.md-->
-<!--@include: /vue/ui/components/table/_api/column-fields.md-->
-<!--@include: /vue/ui/components/table/_api/events-interaction.md-->
+<!--@include: ./_api/props-interaction.md-->
+<!--@include: ./_api/column-fields.md-->
+<!--@include: ./_api/events-interaction.md-->
 
 ## 注意事项
 
-<!--@include: /vue/ui/components/table/_api/notes-editing.md-->
+<!--@include: ./_api/notes-editing.md-->

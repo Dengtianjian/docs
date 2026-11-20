@@ -5,19 +5,24 @@
       row-key="id"
       searchable
       column-setting
+      bottom-scrollbar
       :columns="columns"
       :data-source="rows"
       :pagination="{ pageSize: 3 }"
+      :scroll="{ x: 880 }"
       :class-names="{
         root: 'parts-root',
         row: 'parts-row',
         header: 'parts-header',
+        columnSetting: 'parts-column-setting',
+        wrap: 'parts-wrap',
         toolbar: 'parts-toolbar',
         filterPanel: 'parts-filter',
         pagination: 'parts-pagination',
+        scrollbar: 'parts-scrollbar',
         footer: 'parts-footer',
       }"
-      :styles="{ root: { borderRadius: '12px' }, pagination: { paddingTop: '8px' } }"
+      :styles="{ root: { borderRadius: '12px' }, pagination: { paddingTop: '8px' }, wrap: { paddingBottom: '2px' } }"
     >
       <template #header>
         <span class="parts-header-text">页眉插槽 · classNames.header</span>
@@ -27,8 +32,8 @@
       </template>
     </KTable>
     <p class="hint">
-      覆盖 `root / row / header / toolbar / filterPanel / pagination / footer` 与列级 `classNames.cell`、`styles.cell`；
-      其余部件（`columnSetting / wrap / loading / stack / scrollbar / loadMore / fixedLayer`）按需加类即可。
+      覆盖 `root / row / header / toolbar / columnSetting / wrap / filterPanel / pagination / scrollbar / footer` 与列级 `classNames.cell`、`styles.cell`；
+      `loading / stack / loadMore` 见同页「部件样式 · 卡片 / 加载」。
     </p>
   </div>
 </template>
@@ -45,17 +50,19 @@ interface Row {
 }
 
 const columns: KTableColumn<Row>[] = [
-  { key: 'name', dataIndex: 'name', title: '姓名', classNames: { cell: 'parts-cell' } },
+  { key: 'name', dataIndex: 'name', title: '姓名', width: 180, classNames: { cell: 'parts-cell' } },
   {
     key: 'team',
     dataIndex: 'team',
     title: '团队',
+    width: 160,
     filters: ['前端', '后端', '设计'].map(value => ({ label: value, value })),
   },
   {
     key: 'score',
     dataIndex: 'score',
     title: '评分',
+    width: 120,
     align: 'right',
     styles: { cell: { fontWeight: 600 } },
   },
@@ -87,6 +94,12 @@ const rows: Row[] = [
 .parts-demo :deep(.parts-toolbar) {
   background-color: color-mix(in oklab, var(--k-color-primary) 3%, var(--k-color-bg-container));
 }
+.parts-demo :deep(.parts-scrollbar) {
+  background-color: color-mix(in oklab, var(--k-color-primary) 8%, var(--k-color-bg-container));
+}
+.parts-demo :deep(.parts-wrap) {
+  background-color: color-mix(in oklab, var(--k-color-primary) 2%, var(--k-color-bg-container));
+}
 .parts-demo :deep(.parts-footer) {
   color: var(--k-color-text-secondary);
 }
@@ -95,5 +108,10 @@ const rows: Row[] = [
   display: block;
   padding: 6px 16px;
   font-size: 12px;
+}
+</style>
+<style>
+.parts-column-setting {
+  border: 1px solid var(--k-color-primary);
 }
 </style>

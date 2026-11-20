@@ -24,9 +24,9 @@ const columns = [
 
 ## API
 
-<!--@include: /vue/ui/components/table/_api/props-sort-filter.md-->
-<!--@include: /vue/ui/components/table/_api/events-core.md-->
+<!--@include: ./_api/props-sort-filter.md-->
+<!--@include: ./_api/events-core.md-->
 
 ## 注意事项
 
-<!--@include: /vue/ui/components/table/_api/notes-sort-filter.md-->
+<!--@include: ./_api/notes-sort-filter.md-->

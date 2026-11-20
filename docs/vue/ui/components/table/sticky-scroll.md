@@ -25,8 +25,8 @@
 
 ## API
 
-<!--@include: /vue/ui/components/table/_api/props-sticky-scroll.md-->
+<!--@include: ./_api/props-sticky-scroll.md-->
 
 ## 注意事项
 
-<!--@include: /vue/ui/components/table/_api/notes-sticky-scroll.md-->
+<!--@include: ./_api/notes-sticky-scroll.md-->

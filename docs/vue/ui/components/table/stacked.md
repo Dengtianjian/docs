@@ -12,6 +12,15 @@
 <KTable stack-breakpoint="md" row-key="id" :columns="columns" :data-source="rows" />
 ```
 
+::: warning 卡片模式不支持的表格能力
+- 单元格合并（`spanMethod`）
+- 列宽调整、列拖拽（`columnResizable` / `columnDraggable`）
+- 行拖拽（`rowDraggable`）
+- 表头内的列筛选面板（改用工具条「筛选」）
+
+需要这些能力时请切回表格模式（不使用 `stacked` / `stackBreakpoint`）。
+:::
+
 ### 基础卡片
 
 <Demo :title-level="4" path="table/stacked" title="响应式卡片堆叠" :desc="['`stackBreakpoint` 按视口断点自动切卡片（档位或像素），`stacked` 可手动强制。', '卡片字段自动生成：第一个非副标题列作标题，其余「标签：值」；列上 `stack: false` 隐藏、`stack: title / subtitle` 指定标题与副标题。', '选择、展开详情、行操作、单元格编辑与 `rowClick` 在卡片内继续可用；展开内容渲染在卡片内部；`#card` 插槽可整体替换卡片主体。', '组合限制：卡片模式不渲染表头，列筛选收进工具条「筛选」；列宽 / 列拖拽、行拖拽、单元格合并在卡片下不适用，固定行按普通卡片显示；`virtual` 可用（需 `scroll.y` 形成内部滚动）。']" />
@@ -30,9 +39,9 @@
 
 ## API
 
-<!--@include: /vue/ui/components/table/_api/props-stacked.md-->
-<!--@include: /vue/ui/components/table/_api/slots-card.md-->
+<!--@include: ./_api/props-stacked.md-->
+<!--@include: ./_api/slots-card.md-->
 
 ## 注意事项
 
-<!--@include: /vue/ui/components/table/_api/notes-stacked.md-->
+<!--@include: ./_api/notes-stacked.md-->

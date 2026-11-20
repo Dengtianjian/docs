@@ -32,9 +32,9 @@
 
 ## API
 
-<!--@include: /vue/ui/components/table/_api/props-virtual.md-->
-<!--@include: /vue/ui/components/table/_api/events-virtual.md-->
+<!--@include: ./_api/props-virtual.md-->
+<!--@include: ./_api/events-virtual.md-->
 
 ## 注意事项
 
-<!--@include: /vue/ui/components/table/_api/notes-virtual.md-->
+<!--@include: ./_api/notes-virtual.md-->

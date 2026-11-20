@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress'
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 import { kitPlugin } from 'kit/vue/vite-plugin'
 import { isolateVpDoc } from './isolate-vp-doc'
 
@@ -25,24 +25,6 @@ const directoryLabels: Record<string, string> = {
 
 // API 侧边栏最大目录深度：第 4 层以上的叶子目录不再建组，平铺合并到第 4 层并加「目录路径 ·」前缀
 const MAX_API_DEPTH = 4
-
-/**
- * Markdown 片段包含：`<!--@include: /vue/ui/components/table/_api/props.md-->`
- * 路径相对 docs 根目录，支持递归；片段目录用 srcExclude 排除，不生成独立页面。
- */
-const docsRoot = path.resolve(process.cwd(), 'docs')
-const INCLUDE_RE = /<!--\s*@include:\s*([^\s]+)\s*-->/g
-function expandMarkdownIncludes(source: string, depth = 0): string {
-  if (depth > 6) return source
-  return source.replace(INCLUDE_RE, (_, target: string) => {
-    const file = path.resolve(docsRoot, target.replace(/^\//, ''))
-    try {
-      return `\n${expandMarkdownIncludes(fs.readFileSync(file, 'utf8'), depth + 1)}\n`
-    } catch (error) {
-      return `\n> 找不到片段：${target}（${file}）\n`
-    }
-  })
-}
 
 function buildApiSidebar(dir: string, urlBase: string, depth = 0): any[] {
   if (!fs.existsSync(dir)) return []
@@ -120,11 +102,6 @@ export default defineConfig({
     ]
   ],
   markdown: {
-    config(md) {
-      md.core.ruler.before('normalize', 'k-markdown-include', state => {
-        state.src = expandMarkdownIncludes(state.src)
-      })
-    },
     container: {
       tipLabel: '提示',
       warningLabel: '警告',

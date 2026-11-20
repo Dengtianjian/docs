@@ -37,8 +37,8 @@ function spanMethod({ row, columnIndex }) {
 
 ## API
 
-<!--@include: /vue/ui/components/table/_api/props-span.md-->
+<!--@include: ./_api/props-span.md-->
 
 ## 注意事项
 
-<!--@include: /vue/ui/components/table/_api/notes-span.md-->
+<!--@include: ./_api/notes-span.md-->

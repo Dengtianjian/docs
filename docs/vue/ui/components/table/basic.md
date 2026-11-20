@@ -25,13 +25,19 @@
 
 <Demo :title-level="4" path="table/empty" title="自定义空态" :desc="['`#empty` 插槽接收 `columns`，通常放 KEmpty。', '用 `#actions` 提供引导操作。']" />
 
-<Demo :title-level="4" path="table/parts-styling" title="部件样式 · classNames / styles" :desc="['覆盖 `root / row / header / toolbar / filterPanel / pagination / footer` 及列级 `classNames.cell`、`styles.cell`。', '部件名与 API 的 `Part` 列表一致；样式可以是类名或内联对象。']" />
+### 部件样式
+
+<Demo :title-level="4" path="table/parts-styling" title="部件样式 · 表格与工具条" :desc="['覆盖 `root / row / header / toolbar / columnSetting / wrap / filterPanel / pagination / scrollbar / footer` 及列级 `classNames.cell`、`styles.cell`。', '打开「列设置」和筛选面板可看到对应部件类名生效。']" />
+
+<Demo :title-level="4" path="table/parts-card" title="部件样式 · 卡片" :desc="['`classNames.stack` / `styles.stack` 作用于卡片列表容器。']" />
+
+<Demo :title-level="4" path="table/parts-loading" title="部件样式 · 加载" :desc="['开关切换 `loading` 与 `loadingMore`，对应 `classNames.loading / loadMore`。']" />
 
 ## API
 
-<!--@include: /vue/ui/components/table/_api/props-core.md-->
-<!--@include: /vue/ui/components/table/_api/events-core.md-->
+<!--@include: ./_api/props-core.md-->
+<!--@include: ./_api/events-core.md-->
 
 ## 注意事项
 
-<!--@include: /vue/ui/components/table/_api/notes-basic.md-->
+<!--@include: ./_api/notes-basic.md-->

@@ -26,9 +26,9 @@ const selection = {
 
 ## API
 
-<!--@include: /vue/ui/components/table/_api/props-selection.md-->
-<!--@include: /vue/ui/components/table/_api/events-selection.md-->
+<!--@include: ./_api/props-selection.md-->
+<!--@include: ./_api/events-selection.md-->
 
 ## 注意事项
 
-<!--@include: /vue/ui/components/table/_api/notes-selection.md-->
+<!--@include: ./_api/notes-selection.md-->

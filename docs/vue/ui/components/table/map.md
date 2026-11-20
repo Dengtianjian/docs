@@ -19,7 +19,7 @@
 | 列显隐、列顺序、列宽 | [列设置与拖拽](/vue/ui/components/table/columns) | `columnSetting / columnDraggable / columnResizable` |
 | 多选、单选、跨页全选 | [行选择](/vue/ui/components/table/selection) | `rowSelection`、`selectAllScope` |
 | 行操作、行拖拽、单元格编辑 | [操作与编辑](/vue/ui/components/table/editing) | 列 `actions / editable`、`rowDraggable` |
-| 窄屏改卡片 | [响应式卡片](/vue/ui/components/table/stacked) | `stacked / stackBreakpoint`、`#card` |
+| 窄屏改卡片 | [响应式卡片](/vue/ui/components/table/stacked) | `stacked / stackBreakpoint`、`#card`；不支持合并/列拖拽/行拖拽 |
 
 ### 推荐阅读顺序
 

@@ -24,8 +24,8 @@ const columns = [
 
 ## API
 
-<!--@include: /vue/ui/components/table/_api/column-fields.md-->
+<!--@include: ./_api/column-fields.md-->
 
 ## 注意事项
 
-<!--@include: /vue/ui/components/table/_api/notes-fixed-columns.md-->
+<!--@include: ./_api/notes-fixed-columns.md-->

@@ -35,10 +35,10 @@
 
 ## API
 
-<!--@include: /vue/ui/components/table/_api/props-expand.md-->
-<!--@include: /vue/ui/components/table/_api/slots-rows.md-->
-<!--@include: /vue/ui/components/table/_api/events-rows.md-->
+<!--@include: ./_api/props-expand.md-->
+<!--@include: ./_api/slots-rows.md-->
+<!--@include: ./_api/events-rows.md-->
 
 ## 注意事项
 
-<!--@include: /vue/ui/components/table/_api/notes-rows.md-->
+<!--@include: ./_api/notes-rows.md-->

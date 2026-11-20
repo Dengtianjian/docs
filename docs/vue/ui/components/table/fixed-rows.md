@@ -21,8 +21,8 @@
 
 ## API
 
-<!--@include: /vue/ui/components/table/_api/props-fixed-rows.md-->
+<!--@include: ./_api/props-fixed-rows.md-->
 
 ## 注意事项
 
-<!--@include: /vue/ui/components/table/_api/notes-fixed-rows.md-->
+<!--@include: ./_api/notes-fixed-rows.md-->

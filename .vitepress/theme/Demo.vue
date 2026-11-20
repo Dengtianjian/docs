@@ -1,20 +1,33 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, ref, shallowRef, watch } from "vue";
+import {
+  computed,
+  defineAsyncComponent,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  shallowRef,
+  watch,
+} from "vue";
 import {
   transformerMetaHighlight,
   transformerNotationFocus,
   transformerNotationHighlight,
 } from "@shikijs/transformers";
 
-const props = defineProps<{
-  /** 相对 docs/vue/ui/examples/ 的路径（不含 .vue），如 button/types */
-  path: string;
-  title?: string;
-  /** 说明：字符串或按段落拆分的数组；支持行内代码、加粗 */
-  desc?: string | string[];
-  /** 行高亮（VitePress 围栏风格）："2,4-6"；与源码内 // [!code hl] 标记可叠加 */
-  lines?: string;
-}>();
+const props = withDefaults(
+  defineProps<{
+    /** 相对 docs/vue/ui/examples/ 的路径（不含 .vue），如 button/types */
+    path: string;
+    title?: string;
+    /** 说明：字符串或按段落拆分的数组；支持行内代码、加粗 */
+    desc?: string | string[];
+    /** 行高亮（VitePress 围栏风格）："2,4-6"；与源码内 // [!code hl] 标记可叠加 */
+    lines?: string;
+    /** 标题层级：默认 h3 进入右侧目录；长文档可传 4 让演示不占目录 */
+    titleLevel?: 3 | 4;
+  }>(),
+  { titleLevel: 3 },
+);
 
 const escapeHtml = (text: string) =>
   text.replace(/[&<>"']/g, (ch) => `&#${ch.charCodeAt(0)};`);
@@ -39,11 +52,11 @@ const descBlocks = computed(() => {
 });
 
 const loaders = import.meta.glob("../../docs/vue/ui/examples/**/*.vue");
-const sources = import.meta.glob("../../docs/vue/ui/examples/**/*.vue", {
+/** 源码按需加载：点「查看代码 / 复制代码」时才拉取，避免首屏打包所有示例 */
+const sourceLoaders = import.meta.glob("../../docs/vue/ui/examples/**/*.vue", {
   query: "?raw",
   import: "default",
-  eager: true,
-}) as Record<string, string>;
+}) as Record<string, () => Promise<string>>;
 
 const key = computed(() => `../../docs/vue/ui/examples/${props.path}.vue`);
 const demoTitleId = computed(
@@ -53,15 +66,52 @@ const demo = computed(() => {
   const loader = loaders[key.value];
   return loader ? defineAsyncComponent(loader as never) : null;
 });
-const source = computed(() => sources[key.value] ?? "");
+const source = ref("");
+let sourcePending: Promise<void> | null = null;
+async function ensureSource() {
+  if (source.value) return;
+  if (!sourcePending) {
+    const loader = sourceLoaders[key.value];
+    sourcePending = loader
+      ? loader().then((text) => {
+          source.value = text;
+        })
+      : Promise.resolve();
+  }
+  await sourcePending;
+}
+
+/** 未进入视口不挂载演示，首屏只挂当前屏幕附近的表 */
+const sectionEl = ref<HTMLElement | null>(null);
+const demoMounted = ref(false);
+let observer: IntersectionObserver | null = null;
+onMounted(() => {
+  if (typeof IntersectionObserver === "undefined") {
+    demoMounted.value = true;
+    return;
+  }
+  observer = new IntersectionObserver(
+    (entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        demoMounted.value = true;
+        observer?.disconnect();
+        observer = null;
+      }
+    },
+    { rootMargin: "800px 0px" },
+  );
+  if (sectionEl.value) observer.observe(sectionEl.value);
+});
+onBeforeUnmount(() => observer?.disconnect());
 
 const showCode = ref(false);
 const copied = ref(false);
 const codeHtml = shallowRef("");
 
-// 首次展开时懒加载 shiki 高亮；未就绪前模板回退纯文本 pre
+// 首次展开时懒加载源码与 shiki 高亮；未就绪前模板回退纯文本 pre
 watch(showCode, async (on) => {
   if (!on || codeHtml.value) return;
+  await ensureSource();
   const { codeToHtml } = await import("shiki");
   codeHtml.value = await codeToHtml(source.value, {
     lang: "vue",
@@ -107,6 +157,7 @@ const blockLinesTransformer = {
 };
 
 async function copy() {
+  await ensureSource();
   try {
     await navigator.clipboard.writeText(source.value);
   } catch {
@@ -125,15 +176,21 @@ async function copy() {
 </script>
 
 <template>
-  <section class="k-doc-demo">
+  <section ref="sectionEl" class="k-doc-demo">
     <header v-if="title || desc" class="k-doc-demo__head">
-      <h3 v-if="title" :id="demoTitleId" class="k-doc-demo__title">{{ title }}</h3>
+      <component
+        :is="`h${titleLevel}`"
+        v-if="title"
+        :id="demoTitleId"
+        class="k-doc-demo__title"
+      >{{ title }}</component>
       <div v-if="descBlocks.length" class="k-doc-demo__desc">
         <p v-for="(block, index) in descBlocks" :key="index" v-html="block"></p>
       </div>
     </header>
     <div class="k-doc-demo__preview">
-      <component :is="demo" v-if="demo" />
+      <component :is="demo" v-if="demo && demoMounted" />
+      <div v-else-if="demo" class="k-doc-demo__pending" aria-hidden="true"></div>
       <p v-else class="k-doc-demo__missing">示例不存在：{{ path }}</p>
     </div>
     <footer class="k-doc-demo__bar">
@@ -195,6 +252,9 @@ async function copy() {
 .k-doc-demo__preview {
   padding: 24px 20px;
   border-bottom: 1px solid var(--vp-c-divider);
+}
+.k-doc-demo__pending {
+  min-height: 140px;
 }
 .k-doc-demo__missing {
   margin: 0;

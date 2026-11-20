@@ -1,0 +1,5 @@
+- 表头排序使用真实按钮，`th` 输出 `aria-sort`；加载态表格 `aria-busy`，空态由 KEmpty 提供描述。
+- 表头文字统一左对齐；列 `align` 只影响表体单元格（如数值列右对齐），表头不会跟着偏移。
+- 边框三层独立控制：`bordered` 管外框/圆角，`rowBorders` 管横向分隔线，`columnBorders` 管纵向分隔线；`columnBorders` 缺省跟随 `bordered` 保持旧行为。
+- 表格根节点与滚动容器不带外边距；分页器与表格之间保留 16px 间距，可经 `--k-table-pagination-gap` 调整（设 0 即贴紧）。
+- **省略**依赖 `table-layout: fixed`，表格中存在任一 `ellipsis` 列时自动切换；未给列宽时浏览器会平均分配剩余宽度。

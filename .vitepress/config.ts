@@ -26,6 +26,24 @@ const directoryLabels: Record<string, string> = {
 // API 侧边栏最大目录深度：第 4 层以上的叶子目录不再建组，平铺合并到第 4 层并加「目录路径 ·」前缀
 const MAX_API_DEPTH = 4
 
+/**
+ * Markdown 片段包含：`<!--@include: /vue/ui/components/table/_api/props.md-->`
+ * 路径相对 docs 根目录，支持递归；片段目录用 srcExclude 排除，不生成独立页面。
+ */
+const docsRoot = path.resolve(process.cwd(), 'docs')
+const INCLUDE_RE = /<!--\s*@include:\s*([^\s]+)\s*-->/g
+function expandMarkdownIncludes(source: string, depth = 0): string {
+  if (depth > 6) return source
+  return source.replace(INCLUDE_RE, (_, target: string) => {
+    const file = path.resolve(docsRoot, target.replace(/^\//, ''))
+    try {
+      return `\n${expandMarkdownIncludes(fs.readFileSync(file, 'utf8'), depth + 1)}\n`
+    } catch (error) {
+      return `\n> 找不到片段：${target}（${file}）\n`
+    }
+  })
+}
+
 function buildApiSidebar(dir: string, urlBase: string, depth = 0): any[] {
   if (!fs.existsSync(dir)) return []
 
@@ -79,6 +97,7 @@ const apiSidebar = buildApiSidebar(fileURLToPath(new URL('../docs/php/api', impo
 export default defineConfig({
   title: "如意技术库文档",
   lang: 'zh-Hans',
+  srcExclude: ['**/_api/**'],
   description: "如意技术库文档",
   lastUpdated: true,
   srcDir: "docs",
@@ -101,6 +120,11 @@ export default defineConfig({
     ]
   ],
   markdown: {
+    config(md) {
+      md.core.ruler.before('normalize', 'k-markdown-include', state => {
+        state.src = expandMarkdownIncludes(state.src)
+      })
+    },
     container: {
       tipLabel: '提示',
       warningLabel: '警告',
@@ -121,7 +145,7 @@ export default defineConfig({
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    // 右侧目录：h2 分节 + h3 模块（Demo 标题也是 h3，按文档里的模块列出）
+    // 右侧目录：h2 分节 + h3 模块；Demo 标题默认 h3，长文档可传 title-level=4 不占目录
     outline: [2, 3],
     nav: [
       { text: 'Vue', link: '/vue/index' },
@@ -219,7 +243,18 @@ export default defineConfig({
                   text: "数据展示（P3）",
                   collapsed: false,
                   items: [
-                    { text: "KTable 表格", link: "/vue/ui/components/table" },
+                    { text: "KTable 表格", link: "/vue/ui/components/table", collapsed: true, items: [
+                      { text: "概览", link: "/vue/ui/components/table" },
+                      { text: "基础与外观", link: "/vue/ui/components/table/basic" },
+                      { text: "排序、筛选与分页", link: "/vue/ui/components/table/sort-filter" },
+                      { text: "展开与树形", link: "/vue/ui/components/table/rows" },
+                      { text: "单元格合并", link: "/vue/ui/components/table/merge" },
+                      { text: "固定列与固定行", link: "/vue/ui/components/table/fixed" },
+                      { text: "虚拟滚动", link: "/vue/ui/components/table/virtual" },
+                      { text: "列设置与拖拽", link: "/vue/ui/components/table/columns" },
+                      { text: "选择与编辑", link: "/vue/ui/components/table/interaction" },
+                      { text: "响应式卡片", link: "/vue/ui/components/table/stacked" }
+                    ] },
                     { text: "KPagination 分页", link: "/vue/ui/components/pagination" },
                     { text: "KVirtualList 虚拟列表", link: "/vue/ui/components/virtual-list" },
                     { text: "KTag 标签", link: "/vue/ui/components/tag" },

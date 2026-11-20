@@ -31,9 +31,10 @@
 | [响应式卡片](/vue/ui/components/table/stacked) | 断点卡片、卡片树、卡片虚拟化、自定义内容 |
 | [边界与组合](/vue/ui/components/table/edge-cases) | 合并降级、综合大表与高级变体 |
 
-## 基础示例
+## 入门入口
 
-<Demo :title-level="4" path="table/basic" title="基础表格" :desc="['`columns` + `data-source` + `row-key` 即可渲染。', '默认按 `dataIndex` 取值展示；`align` 只作用于表体，表头统一左对齐。']" />
+- [快速上手](/vue/ui/components/table/quick-start)
+- [Prop / Slot 速查](/vue/ui/components/table/props)
 
 ## API 与注意事项
 

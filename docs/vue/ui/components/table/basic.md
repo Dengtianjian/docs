@@ -25,7 +25,7 @@
 
 <Demo :title-level="4" path="table/empty" title="自定义空态" :desc="['`#empty` 插槽接收 `columns`，通常放 KEmpty。', '用 `#actions` 提供引导操作。']" />
 
-<Demo :title-level="4" path="table/parts-styling" title="部件样式 · classNames / styles" :desc="['表格级 `classNames.root / row`、列级 `classNames.cell` 与 `styles.cell` 一起使用。', '部件名与 API 的 `Part` 列表一致；样式可以是类名或内联对象。']" />
+<Demo :title-level="4" path="table/parts-styling" title="部件样式 · classNames / styles" :desc="['覆盖 `root / row / header / toolbar / filterPanel / pagination / footer` 及列级 `classNames.cell`、`styles.cell`。', '部件名与 API 的 `Part` 列表一致；样式可以是类名或内联对象。']" />
 
 ## API
 

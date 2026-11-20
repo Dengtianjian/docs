@@ -243,7 +243,7 @@ export default defineConfig({
                   text: "数据展示（P3）",
                   collapsed: false,
                   items: [
-                    { text: "KTable 表格", link: "/vue/ui/components/table", collapsed: true, items: [
+                    { text: "KTable 表格", link: "/vue/ui/components/table", collapsed: false, items: [
                       { text: "概览", link: "/vue/ui/components/table" },
                       { text: "快速上手", link: "/vue/ui/components/table/quick-start" },
                       { text: "功能地图", link: "/vue/ui/components/table/map" },

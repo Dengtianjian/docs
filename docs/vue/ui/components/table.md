@@ -69,13 +69,15 @@
 
 <Demo path="table/load-more" title="滚动到底加载" :desc="['滚动到距底部 `reachEndThreshold`（默认 40）时发一次 `reachEnd`，离开阈值两倍后重新武装。', '`loadingMore` 为 true 时不再触发，加载指示以胶囊悬浮在表格内部底边上方，与底边保留间距；数据追加后自动重新武装。', '组合限制：需要 `scroll.y` 形成内部滚动；卡片模式与无内部滚动时不会触发。']" />
 
-<Demo path="table/stacked" title="响应式卡片堆叠" :desc="['`stackBreakpoint` 按视口断点自动切卡片（档位或像素），`stacked` 可手动强制。', '卡片字段自动生成：第一个非副标题列作标题，其余「标签：值」；列上 `stack: false` 隐藏、`stack: title / subtitle` 指定标题与副标题。', '选择、展开详情、行操作、单元格编辑与 `rowClick` 在卡片内继续可用；展开内容渲染在卡片内部；`#card` 插槽可整体替换卡片主体。', '组合限制：卡片模式不渲染表头，列筛选入口不可用（工具条搜索仍生效）；列宽 / 列拖拽、行拖拽、单元格合并与虚拟滚动在卡片下不适用，固定行按普通卡片显示。']" />
+<Demo path="table/stacked" title="响应式卡片堆叠" :desc="['`stackBreakpoint` 按视口断点自动切卡片（档位或像素），`stacked` 可手动强制。', '卡片字段自动生成：第一个非副标题列作标题，其余「标签：值」；列上 `stack: false` 隐藏、`stack: title / subtitle` 指定标题与副标题。', '选择、展开详情、行操作、单元格编辑与 `rowClick` 在卡片内继续可用；展开内容渲染在卡片内部；`#card` 插槽可整体替换卡片主体。', '组合限制：卡片模式不渲染表头，列筛选收进工具条「筛选」；列宽 / 列拖拽、行拖拽、单元格合并在卡片下不适用，固定行按普通卡片显示；`virtual` 可用（需 `scroll.y` 形成内部滚动）。']" />
+
+<Demo path="table/stacked-virtual" title="卡片 · 大列表虚拟化" :desc="['400 张卡片同时开启 `stacked` 与 `virtual`：按实测卡片高度做前缀和，只渲染可视窗口。', '卡片高度差异来自备注换行；测量后自动锚定滚动位置，长短卡片混排不跳动。', '工具条「筛选」汇总所有可筛选列，卡片模式无需表头即可筛选。', '组合限制：同样需要 `scroll.y` 形成固定高度容器；阈值沿用 `virtualThreshold`，固定行按普通卡片参与窗口。']" />
 
 <Demo path="table/stacked-tree" title="卡片 · 树形" :desc="['树形与卡片叠加：箭头保留在标题里，子行展开后以卡片接在父卡片下方，子卡按层级缩进。', '组合限制：固定带子节点的行、按固定行数合并仍不适用，与表格模式的树形限制一致。']" />
 
-<Demo path="table/stacked-tree-nested" title="卡片 · 多级子树" :desc="['四级子树演示：每层子卡按 16 / 32 / 48px 递进缩进，箭头保留在标题内。', '收起中间层会隐藏整棵子树；展开/收起只重建卡片列表，不影响其他分支。', '组合限制：卡片模式不启用虚拟滚动，超大子树建议配合分页或按层懒加载。']" />
+<Demo path="table/stacked-tree-nested" title="卡片 · 多级子树" :desc="['四级子树演示：每层子卡按 16 / 32 / 48px 递进缩进，箭头保留在标题内。', '收起中间层会隐藏整棵子树；展开/收起只重建卡片列表，不影响其他分支。', '组合限制：子树走同一份卡片虚拟窗口（需 `scroll.y`），超大子树仍建议配合分页或按层懒加载。']" />
 
-<Demo path="table/stacked-expanded" title="卡片 · 展开自定义详情" :desc="['`expandedRender` 返回自定义组件，展开区渲染商品明细、收货地址与交互按钮。', '展开内容在卡片内部、字段之后、操作之前；组件内部状态随该卡片的展开实例保留。', '组合限制：自定义内容高度按内容自适应，卡片模式下不参与虚拟滚动。']" />
+<Demo path="table/stacked-expanded" title="卡片 · 展开自定义详情" :desc="['`expandedRender` 返回自定义组件，展开区渲染商品明细、收货地址与交互按钮。', '展开内容在卡片内部、字段之后、操作之前；组件内部状态随该卡片的展开实例保留。', '组合限制：自定义内容高度按内容自适应并计入卡片实测高度，超长内容建议自控高度。']" />
 
 <Demo path="table/stacked-custom" title="卡片 · 自定义内容" :desc="['`#card` 插槽整体替换卡片主体，可自由排版金额、状态与操作。', '选择与展开控件由表格渲染在插槽上方，交互状态与表格模式共用。']" />
 
@@ -83,19 +85,23 @@
 
 <Demo path="table/sort-filter" title="排序与筛选" :desc="['列 `sortable` 点击循环：升序 → 降序 → 取消。', '`filters` 在表头展开多选面板，`filterMultiple=false` 为单选。', '排序与筛选可叠加；树形下排序只作用于同级。']" />
 
-<Demo path="table/global-filter" title="全局搜索" :desc="['工具条搜索框绑定 `v-model:global-filter`，默认按可见叶子列的文本包含匹配。', '与列筛选、排序、分页叠加；树形下命中行的祖先链同样保留并展开。', '组合限制：自定义匹配用 `globalFilterMethod`；不提供关键字高亮。']" />
+<Demo path="table/global-filter" title="全局搜索" :desc="['工具条搜索框绑定 `v-model:global-filter`，默认按可见叶子列的文本包含匹配。', '与列筛选、排序、分页叠加；树形下命中行的祖先链同样保留并展开。', '组合限制：自定义匹配用 `globalFilterMethod`；默认文本单元格高亮命中片段，自定义 `render` 不处理。']" />
 
 <Demo path="table/slots-toolbar" title="插槽 · 工具条筛选与操作区" :desc="['`#filter` 放左侧筛选区，`#toolbar` 放右侧操作区，位于内置列设置按钮之前。', '工具条搜索仍用 `searchable` + `v-model:global-filter`；自定义筛选可自行驱动 `dataSource`，再叠加搜索。', '组合限制：插槽只负责布局，筛选与导出逻辑由业务实现；卡片模式下工具条仍可用，但列设置入口隐藏表头时无意义。']" />
 
-<Demo path="table/selection" title="多选" :desc="['`rowSelection` 默认 checkbox 多选，开启当前页全选。', '`getCheckboxProps` 禁用不可选行，`selectionChange` 回传 keys 与行数据。', '组合限制：选择只作用于当前页，跨页需受控维护 `selectedRowKeys`；树形选择不级联。']" />
+<Demo path="table/selection" title="多选" :desc="['`rowSelection` 默认 checkbox 多选，开启当前页全选。', '`getCheckboxProps` 禁用不可选行，`selectionChange` 回传 keys 与行数据。', '翻页不会清掉已选 key；需要表头一次选完所有页时用 `selectAllScope: all`，见「跨页选择」。', '组合限制：默认全选只作用于当前页；树形选择不级联。']" />
 
 <Demo path="table/selection-single" title="单选" :desc="['`rowSelection.type` 设为 `radio` 切换单选：表头不再出现全选。', '点击只保留一个 key，禁用行同样通过 `getCheckboxProps` 控制。']" />
+
+<Demo path="table/selection-cross-page" title="跨页选择" :desc="['`rowSelection.selectAllScope` 设为 `all` 后，表头全选覆盖当前筛选/排序结果的**所有分页**，表头勾选态与半选态按全局计算。', '翻页、改每页条数都会保留已选 key；本演示用受控 `selectedRowKeys`，勾选几行后翻页仍在。', '全选后再取消单行，表头转半选；「清空」只重置受控数组。', '组合限制：`rowPinning` 固定行不参与表头全选；树形不级联；被筛选掉的行仍保留在已选 keys 中。']" />
 
 <Demo path="table/row-actions" title="行操作" :desc="['列配 `actions` 生成图标按钮，超出 `maxActions` 的收进竖向点下拉菜单；`icon` 内置 view / edit / copy / remove / more。', '`#actions` 插槽渲染在按钮之前，与按钮同一 flex 行垂直居中，可放状态标签等。', '`danger`、`disabled`（布尔或按行函数）与 `onClick`；点击不会触发 `rowClick`。', '组合限制：操作列是普通列，固定、宽度、分组规则与其他列一致。']" />
 
 <Demo path="table/row-drag" title="行拖拽" :desc="['按住第一列行抓手拖动，浮层副本跟随指针，蓝色线条标示落位，不插入占位行。', '松手发 `rowReorder`（`from` / `to` 为当前页展示序），业务按需重排 `dataSource`，组件不改数据。', '组合限制：固定行不可拖动；分页 / 排序 / 筛选后按当前展示序返回。']" />
 
 <Demo path="table/cell-edit" title="单元格编辑" :desc="['列配 `editable`，`editTrigger` 决定单击 / 双击 / 手动进入，编辑态走 `v-model:editingCell`。', '默认渲染 KInput：Enter / blur 提交、Esc 取消；提交只发 `cellEdit`，不直接改数据。', '自定义控件用列的 `editRender`；同一时间只编辑一个单元格，固定列浮层与主表共用同一编辑态。']" />
+
+<Demo path="table/cell-edit-height" title="编辑 · 自定义控件行高" :desc="['备注列用两行 textarea + 按钮作为 `editRender`，列上 `editHeight: 104` 让可编辑行提前按较高控件预留。', '进入 / 退出编辑行高不变，表格不会上下跳；⌘/Ctrl+Enter 或「提交」写回，Esc 或「取消」放弃。', '组合限制：`editHeight` 只影响有 `editable` 列的行；多个可编辑列取最大预留值。']" />
 
 <Demo path="table/fixed" title="固定列 + 粘性表头" :desc="['`fixed` 取 `left` / `right`，需配合数字 `width`。', '`scroll.x` 横向滚动，`scroll.y` 限制高度并让表头吸顶。', '组合限制：固定列需与数字 `scroll.x` 搭配，同侧固定列必须连续。']" />
 
@@ -156,8 +162,8 @@
 | rowDraggable | 行拖拽排序（发 `rowReorder`，不改数据） | `boolean` | `false` |
 | columnDragMode | 列拖拽触发：`handle` 仅抓手 / `press` 表头任意处 | `'handle' \| 'press'` | `'handle'` |
 | rowDragMode | 行拖拽触发：`handle` 仅行抓手 / `press` 按住行任意处 | `'handle' \| 'press'` | `'handle'` |
-| classNames | 部件类名<br>（`root / header / toolbar / columnSetting / wrap / row / filterPanel / loading / stack / scrollbar / loadMore / footer / pagination`） | `Partial<Record<Part, string>>` | — |
-| styles | 部件内联样式<br>（`root / toolbar / columnSetting / wrap / row / filterPanel / loading / stack / scrollbar / loadMore / pagination`） | `Partial<Record<Part, CSSProperties>>` | — |
+| classNames | 部件类名<br>（`root / header / toolbar / columnSetting / wrap / fixedLayer / row / filterPanel / loading / stack / scrollbar / loadMore / footer / pagination`） | `Partial<Record<Part, string>>` | — |
+| styles | 部件内联样式<br>（`root / toolbar / columnSetting / wrap / fixedLayer / row / filterPanel / loading / stack / scrollbar / loadMore / pagination`） | `Partial<Record<Part, CSSProperties>>` | — |
 
 <CommonProps />
 
@@ -177,6 +183,7 @@
 | searchPlaceholder | 搜索框占位文案 | `string` | `'搜索'` |
 | v-model:globalFilter | 全局搜索关键字；不传走内部状态 | `string` | `''` |
 | globalFilterMethod | 自定义全局匹配 `(row, keyword) => boolean`；缺省按可见叶子列文本包含匹配 | `(row, keyword) => boolean` | — |
+| globalFilterHighlight | 全局搜索命中时高亮默认文本单元格；自定义 `render` 内容不处理 | `boolean` | `true` |
 
 #### 列设置与显隐
 
@@ -258,7 +265,7 @@
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| virtual | 虚拟滚动（支持变量行高、单元格合并与展开行） | `boolean` | `false` |
+| virtual | 虚拟滚动（支持变量行高、单元格合并与展开行；卡片模式按卡片高度虚拟化） | `boolean` | `false` |
 | virtualThreshold | 启用虚拟滚动的行数阈值 | `number` | `40` |
 | virtualOverscan | 窗口上下各预渲染的行数 | `number` | `6` |
 | virtualBuffer | 滚出当前窗口多少行后才重算窗口 | `number` | `3` |
@@ -302,6 +309,7 @@
 | `ellipsisTooltip` | 只在真实溢出时用 KTooltip 显示全文 |
 | `render` | 单元格渲染 `({ row, value, index, column }) => VNodeChild` |
 | `editable` | 允许进入单元格编辑 |
+| `editHeight` | 自定义编辑控件高度（px）：可编辑行按它与默认控件取大预留，避免进入编辑撑高行 |
 | `editRender` | 自定义编辑控件 `({ row, value, index, column, commit, cancel }) => VNodeChild`；缺省渲染 KInput |
 | `actions` | 操作列图标按钮 `{ label, icon?, danger?, disabled?, onClick }[]`；点击不触发 `rowClick` |
 | `maxActions` | 直排按钮数量，超出收进下拉菜单，默认 `3` |
@@ -317,6 +325,7 @@
 | `selectedRowKeys` | 受控选中 keys；单选模式长度保持 ≤ 1 |
 | `onChange` | `(keys, rows) => void` |
 | `getCheckboxProps` | `(row) => ({ disabled? })`，多选/单选共用 |
+| `selectAllScope` | `'page'`（默认，全选只增删当前页）或 `'all'`（表头全选覆盖当前筛选/排序结果的所有分页） |
 
 ### Slots
 
@@ -359,7 +368,7 @@
 - **表头沉底**：`headerPosition="bottom"` 时整组表头渲染在数据行之后，汇总行排在其上方；`sticky` 让表头吸在容器底部并按行补 `bottom` 偏移，选择/展开列跨整组表头直接贴底；筛选面板自动向上展开；固定行底部堆叠会让出表头高度，加载指示也会抬到表头上方。
 - **粘性表头**：`sticky` 只在 `scroll.y` 形成内部滚动时生效；`headerPosition="bottom"` 时改为吸在容器底部，固定行自动让出表头高度。页面滚动吸顶改用 `pageSticky`（要求没有 `scroll.x` / `scroll.y`，偏移用 `pageStickyOffset`，底部表头则吸在视口底部），检测到内部滚动会忽略并 dev 告警；祖先若是 `overflow: hidden` 会阻断吸顶（改成 `overflow: clip` 可保留裁剪又不阻断）；存在自定义滚动容器时吸在该容器边缘。
 - 排序为单列、客户端排序；筛选默认取单元格值与选项相等，复杂条件用 `filterMethod`。
-- 行选择默认作用于**当前页**；多选全选只增删当前页可选行，跨页选择需受控维护 `selectedRowKeys`；单选模式表头无全选，`selectedRowKeys` 始终只保留最后一个选中项。
+- 行选择默认作用于**当前页**；已选 key 会跨页保留，翻页与切换每页条数都不清空；`rowSelection.selectAllScope="all"` 让表头全选覆盖当前筛选/排序结果的所有分页，勾选态与半选态按全局计算。固定行不参与全选；单选模式表头无全选，`selectedRowKeys` 始终只保留最后一个选中项。
 - 表头排序使用真实按钮，`th` 输出 `aria-sort`；加载态表格 `aria-busy`，空态由 KEmpty 提供描述。
 - 表头文字统一左对齐；列 `align` 只影响表体单元格（如数值列右对齐），表头不会跟着偏移。
 - 边框三层独立控制：`bordered` 管外框/圆角，`rowBorders` 管横向分隔线，`columnBorders` 管纵向分隔线；`columnBorders` 缺省跟随 `bordered` 保持旧行为。
@@ -383,7 +392,7 @@
     - `spanMethod` 的固定行数合并：`rowSpan` 会按固定行数跨过收起后的分组、吞掉相邻行（实测会丢失下一分组的单元格）。必须按**当前展开后的可见行**计算合并跨度，且层级列通常不需要纵向合并；写法见「综合 · 树形」演示。
     - `rowPinning` 固定带子节点的行：固定后该节点的子树不再展示（只剩顶层行）。只能固定扁平汇总行或叶子节点。
     - 按固定行数分页：分页切的是展开后的可见扁平行，父子会被切到两页；需要整棵树翻页时先在业务侧对顶层节点分页。
-  - 选择不级联（父节点勾选不会带上子节点），全选只作用于当前页可见行；排序只作用于同级。
+  - 选择不级联（父节点勾选不会带上子节点），全选默认只作用于当前页可见行（`selectAllScope: all` 时覆盖全部分页）；排序只作用于同级。
 - **固定行**：`rowPinning` 的行始终按 `dataSource` 顺序展示，不受筛选、排序与分页影响，也从分页总数中剔除；
   - top 从表头下方、bottom 从容器底部按实测行高依次堆叠。
   - 固定行与固定列可同时使用，交叉单元格同时 sticky 两个方向，行堆叠与列堆叠互不影响。
@@ -391,6 +400,7 @@
 - **分组表头**只支持叶子列排序/筛选；分组跨固定与非固定边界时整组不参与吸边，需把分组整体放在同侧固定区内。
 - **全局搜索**：`searchable` 在工具条显示搜索框，关键字走 `v-model:globalFilter`；
   - 默认匹配可见叶子列的文本（大小写不敏感），可用 `globalFilterMethod` 自定义；
+  - 默认文本单元格把命中片段（全部出现，大小写不敏感）包成 `<mark class="k-table__mark">`，`globalFilterHighlight="false"` 关闭；列 `render` 或行操作等自定义内容不处理；
   - 与列筛选、排序、分页叠加，树形下命中行的祖先链保留并强制展开；搜索变化会重置到第 1 页。
 - **列顺序与列宽**：`columnOrder` 是叶子 key 数组，按叶子排序后分组跟随首个叶子移动；`columnDragMode` 缺省只允许拖表头抓手（`press` 为表头任意处），拖拽可跨分组换位。
   - 跨分组落位写回 `columnGroups`（叶子 key → 目标分组 key 路径，顶层为空数组），未记录的分组归属保持不变；固定侧不同的列拒绝换位；
@@ -400,7 +410,7 @@
   - 默认控件是 KInput：Enter 或失焦提交、Esc 取消；`editRender` 可换成 KSelect 等任意控件，通过 `commit` / `cancel` 结束；
   - 提交只发 `cellEdit({ row, column, value, previousValue, rowIndex })`，不会直接修改 `dataSource`，由业务回写；
   - 同一时间只编辑一个单元格，固定列浮层与主表共用同一编辑态；
-  - 存在 `editable` 列时，表体行最低高度统一按默认编辑控件（KInput sm，跟随 `--k-control-height-sm`）加单元格上下 padding 预留，进入/退出编辑不改变行高；自定义 `editRender` 更高时仍会撑高该行。
+  - 存在 `editable` 列时，表体行最低高度统一按默认编辑控件（KInput sm，跟随 `--k-control-height-sm`）加单元格上下 padding 预留，进入/退出编辑不改变行高；自定义 `editRender` 高于默认控件时给列设 `editHeight`（px），行高按最大者预留。
 - **行操作**：列的 `actions` 生成图标按钮（`icon` 内置 view / edit / copy / remove / more），`maxActions` 之外的收进竖向点下拉菜单；`danger` 用危险色，`disabled` 支持布尔或按行函数。
   - `#actions` 插槽渲染在按钮之前，与按钮同一 flex 行垂直居中，可放状态标签；
   - 点击操作会阻止冒泡，不触发 `rowClick`；操作列是普通列，固定、宽度与分组规则与其他列一致。
@@ -413,7 +423,8 @@
 - **响应式卡片**：`stackBreakpoint` 按视口断点自动切换（档位或像素），`stacked` 可强制开启，二者同时存在时以 `stacked` 为准。
   - 卡片字段由可见叶子列生成：第一个非副标题列作标题，其余列按「标签：值」网格排列；树形子卡按层级缩进，标题内不再重复缩进；`stack: false` 隐藏、`stack: 'title'` / `'subtitle'` 指定标题与副标题，树形首列即使被隐藏也会回到标题以保留展开箭头；
   - 选择、展开详情、行操作、单元格编辑与 `rowClick` 在卡片内继续可用；展开内容追加在所属卡片内部，`#card="{ row, index, entry, columns }"` 可整体替换卡片主体（展开内容仍追加在插槽之后），选择与展开控件仍由表格渲染；
-  - 卡片下不渲染表头，因此列筛选面板不可用（工具条搜索、受控排序/筛选照常生效）；列宽/列拖拽、行拖拽、单元格合并与虚拟滚动不适用，固定行按普通卡片显示，分页照常切片。
+  - 卡片下不渲染表头，列筛选改走工具条「筛选」弹层（汇总所有配了 `filters` 的可见列，状态与表格模式共用）；列宽/列拖拽、行拖拽、单元格合并不适用，固定行按普通卡片显示，分页照常切片；
+  - `virtual` 在卡片下同样生效：卡片高度单独测量缓存（含展开内容与自定义卡片），只渲染可视窗口，测量后自动锚定滚动；需 `scroll.y` 形成内部滚动，阈值复用 `virtualThreshold`。
 - **隐藏列**不会丢失已有排序与筛选状态；
   - `columnVisibility` 缺省为 `{}`，可见性按列 `hidden` 默认值；
   - 显式 `columnVisibility[key]` 优先，可把默认隐藏的列重新打开。
@@ -426,6 +437,8 @@
   - 支持**单元格合并**：窗口会自动上探到跨窗口合并格的起始行、下探到覆盖末行，合并格不会因窗口裁切出现空白；
   - **展开行纳入窗口**：内联展开行与合并组尾展开行都作为窗口项渲染，高度单独测量后计入所属行偏移；展开/收起会重建前缀和；
   - `virtualThreshold`（默认 40）、`virtualOverscan`（默认 6）、`virtualBuffer`（默认 3 行）可调；固定行始终渲染、不受窗口影响；
+  - 卡片模式下按整卡高度独立测量（含展开内容、自定义 `#card`），滚动锚定与阈值规则同上；
+  - 列宽测量带缓存：表宽、列定义与列宽覆盖不变时跳过表头宽度读取，虚拟换窗与行高变化不再触发整表强制排版；字体就绪或视口变化会自动重测；
   - 千行数据 DOM 行数从 O(n) 降到约 20 行/表。
 - **单元格合并**：`spanMethod` 返回 `{ rowSpan, colSpan }`，起点之外被覆盖的单元格不再渲染；`rowIndex` 是当前页展示序（排序/筛选后），`columnIndex` 只数可见叶子列（展开/选择列不计）。
   - 合并只在同一固定区内有效；跨左右固定区与中区时整表退回粘性单元格模式（dev 告警），固定列的抗抖动与性能相应回退。

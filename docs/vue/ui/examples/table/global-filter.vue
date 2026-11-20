@@ -1,7 +1,7 @@
 <template>
   <div>
     <p class="hint">
-      工具条搜索框绑定 <code>v-model:global-filter</code>：默认按可见叶子列的文本做包含匹配，可与列筛选、排序、分页叠加。
+      工具条搜索框绑定 <code>v-model:global-filter</code>：默认按可见叶子列的文本做包含匹配，命中片段在单元格内高亮，可与列筛选、排序、分页叠加。
     </p>
     <KTable
       v-model:global-filter="keyword"

@@ -77,13 +77,20 @@ const selection = computed(() => ({
 const columns: KTableColumn<Order>[] = [
   { key: 'code', dataIndex: 'code', title: '订单号' },
   { key: 'customer', dataIndex: 'customer', title: '客户', stack: 'subtitle' },
-  { key: 'city', dataIndex: 'city', title: '城市', stack: 'subtitle' },
+  {
+    key: 'city',
+    dataIndex: 'city',
+    title: '城市',
+    stack: 'subtitle',
+    filters: ['杭州', '上海', '成都', '深圳'].map(value => ({ label: value, value })),
+  },
   { key: 'amount', dataIndex: 'amount', title: '金额', render: ({ value }) => `¥ ${Number(value).toLocaleString()}` },
   {
     key: 'status',
     dataIndex: 'status',
     title: '状态',
     editable: true,
+    filters: ['待付款', '已发货', '已完成'].map(value => ({ label: value, value })),
     render: ({ value }) => value,
   },
   { key: 'created', dataIndex: 'created', title: '创建时间' },

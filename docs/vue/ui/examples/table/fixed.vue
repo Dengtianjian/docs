@@ -1,20 +1,15 @@
 <template>
   <div>
-    <p class="hint">左右拖动底部滚动条，观察首列与末列固定不动；滚到最左/最右时边缘阴影消失。</p>
-    <div class="controls">
-      <KSwitch v-model="stickyHeader" label="吸顶表头" />
-    </div>
-    <KTable class="fixed-demo" :columns="columns" :data-source="rows" :sticky="stickyHeader" :scroll="{ x: 920, y: 320 }" />
+    <p class="hint">
+      左右拖动底部滚动条，观察首列与末列固定不动；来回滚动时表头吸在容器顶部，滚到最左/最右时边缘阴影消失。
+    </p>
+    <KTable class="fixed-demo" :columns="columns" :data-source="rows" sticky :scroll="{ x: 920, y: 320 }" />
   </div>
 </template>
 
 <script setup lang="ts">
 import KTable from 'kit/vue/ui/components/Table/Table.vue'
-import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
-import { ref } from 'vue'
 import type { KTableColumn } from 'kit/vue/ui'
-
-const stickyHeader = ref(true)
 
 interface Row {
   id: number
@@ -51,9 +46,6 @@ const rows: Row[] = Array.from({ length: 20 }, (_, index) => ({
   margin: 0 0 8px;
   color: var(--k-color-text-secondary);
   font-size: 12px;
-}
-.controls {
-  margin-bottom: 8px;
 }
 /* macOS 默认隐藏 overlay 滚动条；演示里强制显示以便观察固定列 */
 .fixed-demo :deep(.k-table__wrap) {

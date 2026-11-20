@@ -53,13 +53,15 @@
 
 <Demo path="table/column-visibility" title="列显隐" :desc="['`columnSetting` 显示内置「列设置」按钮。', '`v-model:columnVisibility` 可受控；`hidden` 静态隐藏，`hideable: false` 锁定列。', '组合限制：分组列不可单独隐藏；至少保留一列可见。']" />
 
-<Demo path="table/column-layout" title="列拖拽 / 列宽拖拽" :desc="['拖动表头左侧抓手换位（同分组内生效）；拖动右边缘改列宽：左拖缩窄、右拖挤右邻列，末列拖动让表格变宽。', '`v-model:columnOrder` / `v-model:columnWidths` 受控；双击表头或右缘把手按容器宽度重新分配列宽（填满表格、消除空隙）；`columnResizable` 会切为固定布局。', '组合限制：固定列在浮层表头里，暂不提供拖拽与拖宽把手；列拖拽不跨分组。']" />
+<Demo path="table/column-layout" title="列拖拽 / 列宽拖拽" :desc="['拖动表头左侧抓手换位；拖动右边缘改列宽：左拖缩窄、右拖挤右邻列，末列拖动让表格变宽。', '`v-model:columnOrder` / `v-model:columnWidths` 受控；双击表头或右缘把手按容器宽度重新分配列宽（填满表格、消除空隙）；`columnResizable` 会切为固定布局。', '组合限制：不跨固定侧换位，左/右浮层列只在各自一侧内移动。']" />
+
+<Demo path="table/column-layout-group" title="列拖拽 · 固定列与跨分组" :desc="['左/右固定列的表头在浮层里也能拖，`columnDraggable` 在两侧都对抓手生效。', '把列拖到其它分组的列旁会并入该分组，拖到顶层列旁则回到顶层；分组归属走 `v-model:columnGroups`（叶子 key → 分组 key 路径）。', '组合限制：固定侧不同的列不能互换；分组只剩空壳时自动消失。']" />
 
 <Demo path="table/bottom-scrollbar" title="吸底横向滚动条" :desc="['`bottomScrollbar` 在表格下方渲染常驻横向滚动条，拖动条或滚动表体双向同步。', '页面继续下滚时滚动条贴在视口底部，宽表不用滚到表尾才能横向拖动；固定列与浮层照常工作。', '组合限制：只在表格真实横向溢出时出现；卡片模式不渲染；设了 `scroll.y` 时不额外渲染，使用容器底部的原生横向条。']" />
 
 <Demo path="table/header-position" title="表头位置 · 顶部 / 底部" :desc="['`headerPosition` 控制表头渲染在数据行上方还是下方；表头在底部时汇总行仍在其上方。', '`sticky` 跟随位置：表头在底部时吸在滚动容器底部，多级表头整块悬浮。', '组合限制：卡片模式不渲染表头；表头沉底依赖表格行组渲染顺序，分页器仍固定在表格外。']" />
 
-<Demo path="table/header-bottom-combo" title="表头沉底 · 交互与组合" :desc="['底部表头叠加多级表头、左右固定列、选择/展开列、固定行、汇总行、排序/筛选与列拖宽。', '筛选面板在底部表头下改为向上展开；选择/展开列的整组表头贴住容器底部。', '组合限制：固定列仍在浮层表头里，不提供拖拽/拖宽；卡片模式不渲染表头。']" />
+<Demo path="table/header-bottom-combo" title="表头沉底 · 交互与组合" :desc="['底部表头叠加多级表头、左右固定列、选择/展开列、固定行、汇总行、排序/筛选与列拖宽。', '筛选面板在底部表头下改为向上展开；选择/展开列的整组表头贴住容器底部。', '组合限制：固定列的表头在浮层里拖拽可用，拖宽把手仍只在主表表头；卡片模式不渲染表头。']" />
 
 <Demo path="table/page-sticky" title="页面级吸顶表头" :desc="['`pageSticky` 在页面滚动时把表头吸在视口顶部，不需要 `scroll.y`。', '`pageStickyOffset` 可避开站点顶栏；多级表头整块吸顶。', '组合限制：依赖 CSS sticky，表头到页面根之间若有 `overflow: hidden` 祖先会被阻断（`overflow: clip` 不阻断；自定义滚动容器则吸在该容器顶部）；检测到 `scroll.x` / `scroll.y` 时忽略并 dev 告警（`scroll.y` 请用 `sticky`）。']" />
 
@@ -183,8 +185,9 @@
 | columnSetting | 显示内置「列设置」按钮 | `boolean` | `false` |
 | v-model:columnVisibility | 列显隐受控表 `{ 列key: boolean }` | `Record<string, boolean>` | `{}` |
 | v-model:columnOrder | 列顺序（叶子 key 数组）；不传走内部状态 | `string[]` | `[]` |
+| v-model:columnGroups | 跨分组换位（叶子 key → 分组 key 路径）；缺省沿用列定义 | `Record<string, string[]>` | `{}` |
 | v-model:columnWidths | 列宽覆盖（叶子 key → px，最小 56）；不传走内部状态 | `Record<string, number>` | `{}` |
-| columnDraggable | 拖动表头调整列顺序（同分组内） | `boolean` | `false` |
+| columnDraggable | 拖动表头调整列顺序（可跨分组换位） | `boolean` | `false` |
 | columnResizable | 拖动表头右边缘调整列宽 | `boolean` | `false` |
 
 #### 响应式卡片
@@ -389,9 +392,10 @@
 - **全局搜索**：`searchable` 在工具条显示搜索框，关键字走 `v-model:globalFilter`；
   - 默认匹配可见叶子列的文本（大小写不敏感），可用 `globalFilterMethod` 自定义；
   - 与列筛选、排序、分页叠加，树形下命中行的祖先链保留并强制展开；搜索变化会重置到第 1 页。
-- **列顺序与列宽**：`columnOrder` 是叶子 key 数组，按叶子排序后分组跟随首个叶子移动；`columnDragMode` 缺省只允许拖表头抓手（`press` 为表头任意处），拖拽只在同分组内换位。
+- **列顺序与列宽**：`columnOrder` 是叶子 key 数组，按叶子排序后分组跟随首个叶子移动；`columnDragMode` 缺省只允许拖表头抓手（`press` 为表头任意处），拖拽可跨分组换位。
+  - 跨分组落位写回 `columnGroups`（叶子 key → 目标分组 key 路径，顶层为空数组），未记录的分组归属保持不变；固定侧不同的列拒绝换位；
   - `columnWidths` 是叶子 key → px（最小 56），拖动右缘时当前列与右邻列互补，末列拖动让表格变宽；双击表头/把手按容器重新分配列宽；`columnResizable` 开启后表格切为固定布局；
-  - 固定列渲染在浮层表头里，暂不提供拖拽与拖宽把手。
+  - 固定列渲染在浮层表头里，拖拽可用（同侧内换位）；拖宽把手仍只在主表表头。
 - **单元格编辑**：列配 `editable` 后按 `editTrigger` 进入编辑（click / dblclick / manual），编辑态走 `v-model:editingCell`。
   - 默认控件是 KInput：Enter 或失焦提交、Esc 取消；`editRender` 可换成 KSelect 等任意控件，通过 `commit` / `cancel` 结束；
   - 提交只发 `cellEdit({ row, column, value, previousValue, rowIndex })`，不会直接修改 `dataSource`，由业务回写；

@@ -1,7 +1,7 @@
 <template>
   <div>
     <p class="hint">
-      拖表头抓手换位（同分组内生效），拖右缘改列宽（挤右邻列，末列加宽表格），双击右缘复位；顺序与宽度分别走
+      拖表头抓手换位（同一列可并入别的分组），拖右缘改列宽（挤右邻列，末列加宽表格），双击右缘复位；顺序与宽度分别走
       <code>v-model:column-order</code> / <code>v-model:column-widths</code>，可保存后还原。
     </p>
     <KTable

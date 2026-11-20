@@ -150,8 +150,7 @@ export default defineConfig({
               text: "playground（矩阵页）",
               collapsed: false,
               items: [
-                  { text: "组件矩阵页", link: "/vue/ui/playground/matrix" },
-                  { text: "响应式演示（临时）", link: "/vue/ui/playground/responsive-form" }
+                  { text: "组件矩阵页", link: "/vue/ui/playground/matrix" }
                 ]
             },
             {

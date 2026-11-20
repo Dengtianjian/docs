@@ -216,7 +216,7 @@ KButton / KButtonGroup 各有 scope（入口导出），逐字段如下（接口
   - tonal 的 hover/active 走 naive 等差 +4% 的破格值 8%/12%（`color-mix(text-base, transparent 92%/88%)`），语义档同灰底 + `--k-button-c` 彩字（naive tertiary 同款）；
   - 等级不单独立演示，收在外观变体矩阵内呈现；
 - 部件变量初值引用 alias token，状态（`:hover`/`:active`/`.is-disabled`）以局部重声明实现，见 [主题 Token 规格 §1.1](../design/theme-tokens.md)；
-- 响应式 `size` 见 [响应式取值演示](../playground/responsive-form.md)。
+- 响应式 `size` 语法见 [响应式取值](../design/responsive-values.md)。
 
 - ghost/plain/soft 三档（2026-11-17 拍板，三家对照调研）：
   - ghost 进 variant 轴而非 antd/naive 的布尔——variant 天然互斥，避免 ghost×variant 组合爆炸；

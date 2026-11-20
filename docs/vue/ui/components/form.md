@@ -80,8 +80,6 @@ Expose：`validate(): Promise<void>`（失败 reject `{errors, values}`）、`re
 
 - **整表校验 = 逐字段 Promise.allSettled 汇总**（校验逻辑全部下沉 FormItem），不存在「表级 schema 与字段独有规则两套回显路径」的分叉。
 - 字段 rules 只在 FormItem 侧合并一次：`props.rules ?? form.rules[name]`。
-- 响应式表单属性（layout / labelWidth / labelAlign / colon）的完整演示见 [响应式取值演示](../playground/responsive-form.md)。
-
 - 布局变量链：`--k-form-label-width`（表级 style 注入）→ `--k-form-item-label-width`（字段级覆盖）；gap = `--k-form-gap`(size-lg)。
   - 响应式表单属性（layout / labelWidth / labelAlign / colon）由共享断点解析，语法见 [响应式取值](../design/responsive-values.md)；
   - `model` / `rules` 是数据，不做断点解析。

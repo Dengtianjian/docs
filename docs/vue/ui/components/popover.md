@@ -10,7 +10,7 @@
 
 <Demo path="popover/basic" title="触发 / closable / 插槽" :desc="['hover 容差移入不消失。', 'click + closable 卡片。', '#trigger 包触发元素，#title 部件插槽 + 默认插槽内容区放任意结构。']" />
 
-<Demo path="popover/sizes" title="三档尺寸" :desc="['`size` 支持 `sm` / `md` / `lg`，字号、内边距、标题与关闭钮同步缩放。', '只影响弹层，触发器尺寸由业务控件决定。']" />
+<Demo path="popover/sizes" title="三档尺寸" :desc="['`size` 支持 `sm` / `md` / `lg`，内容 14/16/18、标题 16/18/20、内边距 12/16/20，关闭钮同步缩放。', '只影响弹层，触发器尺寸由业务控件决定。']" />
 
 <Demo path="popover/placements" title="12 方位" :desc="['top/bottom/left/right 四主方位 ± Top/Bottom 对齐后缀 = 12 方位，主侧放不下且对侧放得下才翻转。', '箭头逐位跟随触发器中心（贴边方位不钉边中点）。']" />
 
@@ -55,8 +55,8 @@
 | 变量 | 初值 |
 | --- | --- |
 | `--k-popover-bg` | `--k-color-bg-elevated`（弹层卡面标准底） |
-| `--k-popover-radius / -padding` | `border-radius-lg` / 随 size 档（sm/md/lg = 8/12/16px）；标题与关闭钮同步缩放 |
-| `--k-popover-min-width / -max-width` | `15×size / 40×size` |
+| `--k-popover-radius / -padding` | `border-radius-lg` / 随 size 档（sm/md/lg = 12/16/20px）；标题 16/18/20、内容 14/16/18，关闭钮同步缩放；标题常规字重 |
+| `--k-popover-min-width / -max-width` | `13×size / 40×size`（sm 12×、lg 18×/48×） |
 | `--k-popover-arrow-size` | `8px` 常数 |
 
 ## 注意事项
@@ -87,7 +87,7 @@
 | placement | `KOverlayPlacement` | **翻转后的实际方位**（基座 `useOverlayPosition` 的 actualPlacement，与 `popupAttrs['data-placement']` 同值；12 方位联合类型）；只在首选侧放不下且对侧放得下时翻转 |
 | title | `string \| undefined` | 卡片标题 prop 通道（`title` 插槽优先，经 `slots.title` 取）；有标题或标题插槽时默认渲染才画标题行 |
 | content | `string \| undefined` | 内容 prop 通道（默认插槽优先，经 `slots.default` 取，可放任意结构） |
-| size | `KPopoverSize` | 尺寸档（`sm / md / lg`）；默认渲染据此缩放字号、内边距、标题与关闭钮 |
+| size | `KPopoverSize` | 尺寸档（`sm / md / lg`）；默认渲染据此缩放字号、内边距、标题与关闭钮，卡面样式与 KPopconfirm 对齐 |
 | closable | `boolean` | 是否应渲染右上关闭 X；自绘关闭钮据此显隐，点击走 `setOpen(false)`（受控同样只发事件） |
 | arrow | `boolean` | 是否应渲染箭头；箭头节点与形状自绘（可消费 style 里的 `--k-overlay-arrow-offset` 偏移变量） |
 

@@ -10,7 +10,7 @@
 
 <Demo path="popconfirm/basic" title="基础 / 危险操作 / 异步 onOk" :desc="['confirm/cancel 事件回传原生点击。', 'ok-loading 期间确定钮转圈不即关，收尾（true→false）自动收起。', 'danger 确定钮走 KButton type=danger。', '默认插槽可整块覆盖文案区。']" />
 
-<Demo path="popconfirm/sizes" title="三档尺寸" :desc="['`size` 支持 `sm` / `md` / `lg`，标题 16/18/20、描述 14/16/18，内边距 12/16/20。', '实心图标固定 22px，图文间距 5px；标题不加粗。', '文案到操作区固定 16px；内置按钮 sm/md 用 xs，lg 用 md。']" />
+<Demo path="popconfirm/sizes" title="三档尺寸" :desc="['`size` 支持 `sm` / `md` / `lg`，标题 16/18/20、描述 14/16/18，内边距 12/16/20。', '实心图标固定 22px，图文间距 5px；标题不加粗。', '文案到操作区固定 16px；内置按钮同档跟随，sm 用 xs。']" />
 
 <Demo path="popconfirm/placements" title="12 方位" :desc="['与 KTooltip/KPopover 共用 utils/overlay 基座，12 方位 + 自动翻转全覆盖。', '箭头逐位跟随触发器中心。']" />
 
@@ -58,7 +58,7 @@
 
 | 变量 | 初值 |
 | --- | --- |
-| `--k-popconfirm-bg / -radius / -padding` | `bg-elevated` / `border-radius-lg` / 随 size 档（sm/md/lg = 12/16/20px）；标题 sm/md/lg = 16/18/20，描述 14/16/18；`--k-popconfirm-icon-size = 22px`、`--k-popconfirm-gap = 5px`、`--k-popconfirm-action-gap = 16px`；内置按钮 sm/md = xs、lg = md |
+| `--k-popconfirm-bg / -radius / -padding` | `bg-elevated` / `border-radius-lg` / 随 size 档（sm/md/lg = 12/16/20px）；标题 sm/md/lg = 16/18/20，描述 14/16/18；`--k-popconfirm-icon-size = 22px`、`--k-popconfirm-gap = 5px`、`--k-popconfirm-action-gap = 16px`；内置按钮 sm = xs、md = md、lg = lg |
 | `--k-popconfirm-min-width / -max-width` | `13×size / 24×size` |
 | 图标着色 | `--k-color-warning` / `--k-color-info`（随 `icon`） |
 
@@ -66,7 +66,7 @@
 
 - 移动端（≤767px）：气泡最大宽度收为 `100vw - 24px`，避免超出屏幕。
 - 默认图标为实心圆 + 镂空 warning / info 符号，容器固定 22px，图文间距 5px；标题常规字重，靠字号与描述区分层级。
-- 文案区到操作区固定 16px；按钮 sm/md 用 xs、lg 用 md。
+- 文案区到操作区固定 16px；按钮同档跟随，sm 用 xs。
 
 - **插槽语义**（2026-11-18 改判 naive 同款，破坏性）：`#trigger` 包触发元素、**默认插槽 = 消息文案整块**（覆盖 title/description 文案区）；无默认插槽时 `#title`/`#description` 部件插槽与同名 prop 照旧。
 
@@ -78,7 +78,7 @@
 
 - 触发固定为 click（确认语义不该 hover 误触）；外点/Esc = 取消路径（发 `openChange(false)`，不发 `cancel`，与 antd 一致）。
 - 弹层复用 `usePopup` 基座与出口契约，同 [KTooltip](./tooltip.md)。
-- 按钮行内嵌 KButton（`size="xs"`），样式随主题级联。
+- 按钮行内嵌 KButton（sm 档用 `xs`，md/lg 同档），样式随主题级联。
 
 ## 自定义渲染（headless）
 

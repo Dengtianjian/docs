@@ -17,6 +17,8 @@
 
 <Demo path="table/header-group-sort" title="分组表头 + 排序/筛选 + 滚动" :desc="['多级表头里同时放可排序列与带筛选项的列。', '配合横向滚动、粘性表头、左右固定列观察图标与吸附稳定性。', '组合限制：固定列必须连续；分组跨边界时该组退回非吸边。']" />
 
+<Demo path="table/slots-header" title="插槽 · 自定义列头" :desc="['`#columnHeader` 同时作用于分组列与叶子列，可补单位、列数等说明。', '自定义内容仍在排序按钮内部，点击排序、筛选面板与 `aria-sort` 不受影响。']" />
+
 <Demo path="table/expandable" title="可展开行" :desc="['配合 `#expanded` 插槽出现 44px 展开列。', '`v-model:expandedRowKeys` 受控，`defaultExpandAll` 默认全展开，`rowExpandable` 指定可展开行。', '组合限制：固定行不显示展开按钮；树形模式改用首列箭头，不再占独立展开列。']" />
 
 <Demo path="table/expand-component" title="行展开 · 组件渲染" :desc="['`expandedRender` 返回 `h(组件)`：展开内容是真实组件实例，带 props 与本地状态。', '示例点「标记关注」在组件内部计数。', '某行返回 `undefined` 时回退 `#expanded` 插槽。']" />
@@ -81,11 +83,13 @@
 
 <Demo path="table/global-filter" title="全局搜索" :desc="['工具条搜索框绑定 `v-model:global-filter`，默认按可见叶子列的文本包含匹配。', '与列筛选、排序、分页叠加；树形下命中行的祖先链同样保留并展开。', '组合限制：自定义匹配用 `globalFilterMethod`；不提供关键字高亮。']" />
 
+<Demo path="table/slots-toolbar" title="插槽 · 工具条筛选与操作区" :desc="['`#filter` 放左侧筛选区，`#toolbar` 放右侧操作区，位于内置列设置按钮之前。', '工具条搜索仍用 `searchable` + `v-model:global-filter`；自定义筛选可自行驱动 `dataSource`，再叠加搜索。', '组合限制：插槽只负责布局，筛选与导出逻辑由业务实现；卡片模式下工具条仍可用，但列设置入口隐藏表头时无意义。']" />
+
 <Demo path="table/selection" title="多选" :desc="['`rowSelection` 默认 checkbox 多选，开启当前页全选。', '`getCheckboxProps` 禁用不可选行，`selectionChange` 回传 keys 与行数据。', '组合限制：选择只作用于当前页，跨页需受控维护 `selectedRowKeys`；树形选择不级联。']" />
 
 <Demo path="table/selection-single" title="单选" :desc="['`rowSelection.type` 设为 `radio` 切换单选：表头不再出现全选。', '点击只保留一个 key，禁用行同样通过 `getCheckboxProps` 控制。']" />
 
-<Demo path="table/row-actions" title="行操作" :desc="['列配 `actions` 生成图标按钮，超出 `maxActions` 收进「更多」；`icon` 内置 view / edit / copy / remove / more。', '`#actions` 插槽渲染在按钮之前，与按钮同一 flex 行垂直居中，可放状态标签等。', '`danger`、`disabled`（布尔或按行函数）与 `onClick`；点击不会触发 `rowClick`。', '组合限制：操作列是普通列，固定、宽度、分组规则与其他列一致。']" />
+<Demo path="table/row-actions" title="行操作" :desc="['列配 `actions` 生成图标按钮，超出 `maxActions` 的收进竖向点下拉菜单；`icon` 内置 view / edit / copy / remove / more。', '`#actions` 插槽渲染在按钮之前，与按钮同一 flex 行垂直居中，可放状态标签等。', '`danger`、`disabled`（布尔或按行函数）与 `onClick`；点击不会触发 `rowClick`。', '组合限制：操作列是普通列，固定、宽度、分组规则与其他列一致。']" />
 
 <Demo path="table/row-drag" title="行拖拽" :desc="['按住第一列行抓手拖动，浮层副本跟随指针，蓝色线条标示落位，不插入占位行。', '松手发 `rowReorder`（`from` / `to` 为当前页展示序），业务按需重排 `dataSource`，组件不改数据。', '组合限制：固定行不可拖动；分页 / 排序 / 筛选后按当前展示序返回。']" />
 
@@ -96,6 +100,10 @@
 <Demo path="table/fixed-stacked" title="堆叠固定列" :desc="['同侧多列按 `width` 依次累加偏移。', '选择列 44px 自动计入左侧偏移。', '组合限制：固定列需连续，分组不能同时跨固定与非固定边界。']" />
 
 <Demo path="table/pinned-rows" title="固定行堆叠 × 固定列堆叠" :desc="['`rowPinning` 指定 top / bottom 行，可与左右固定列同时存在。', '固定行不受筛选、排序与分页影响，并从分页总数剔除。', '组合限制：树形下只能固定顶层行，固定带子节点的行后子树不再展示。']" />
+
+<Demo path="table/slots-summary" title="插槽 · 自定义汇总行" :desc="['`#summary` 收到当前展示的 `rows` 与可见叶子列 `columns`，合计、计数都按当前结果计算。', '汇总行沿用表格最低一行的留白与分隔线；表头沉底时汇总行排在表头上方。']" />
+
+<Demo path="table/slots-footer" title="插槽 · 表格页眉与页脚" :desc="['`#header` / `#footer` 渲染在表格上下，独立于表体；插槽本身不带内边距、颜色等样式，保持纯净。', '参数与 `#summary` 一致（`columns` / `rows`），间距与布局由插槽内容自己控制。', '组合限制：页眉页脚在横向滚动容器外，不跟随表体横向滚动；需要与列对齐的合计请用 `#summary`。']" />
 
 <Demo path="table/virtual" title="虚拟滚动（千行）" :desc="['`virtual` 开启后只渲染可视窗口，主体与左右固定列浮层共用同一窗口。', '行高按实测缓存写入前缀和；展开行同样计入窗口与占位高度。', '组合限制：需要 `scroll.y` 形成固定高度容器；固定行始终渲染、不参与窗口裁剪。']" />
 
@@ -146,7 +154,7 @@
 | rowDraggable | 行拖拽排序（发 `rowReorder`，不改数据） | `boolean` | `false` |
 | columnDragMode | 列拖拽触发：`handle` 仅抓手 / `press` 表头任意处 | `'handle' \| 'press'` | `'handle'` |
 | rowDragMode | 行拖拽触发：`handle` 仅行抓手 / `press` 按住行任意处 | `'handle' \| 'press'` | `'handle'` |
-| classNames | 部件类名<br>（`root / toolbar / columnSetting / wrap / row / filterPanel / loading / stack / scrollbar / loadMore / pagination`） | `Partial<Record<Part, string>>` | — |
+| classNames | 部件类名<br>（`root / header / toolbar / columnSetting / wrap / row / filterPanel / loading / stack / scrollbar / loadMore / footer / pagination`） | `Partial<Record<Part, string>>` | — |
 | styles | 部件内联样式<br>（`root / toolbar / columnSetting / wrap / row / filterPanel / loading / stack / scrollbar / loadMore / pagination`） | `Partial<Record<Part, CSSProperties>>` | — |
 
 <CommonProps />
@@ -274,7 +282,7 @@
 | 字段 | 说明 |
 | --- | --- |
 | `key` | 列唯一键（缺省用 `dataIndex`） |
-| `title` | 表头文本（`#header` 插槽优先） |
+| `title` | 表头文本（`#columnHeader` 插槽优先） |
 | `dataIndex` | 取值路径，支持 `a.b` |
 | `width` | 列宽；<br>固定列必须为数字 `width` |
 | `minWidth` | 最小列宽 |
@@ -293,7 +301,7 @@
 | `editable` | 允许进入单元格编辑 |
 | `editRender` | 自定义编辑控件 `({ row, value, index, column, commit, cancel }) => VNodeChild`；缺省渲染 KInput |
 | `actions` | 操作列图标按钮 `{ label, icon?, danger?, disabled?, onClick }[]`；点击不触发 `rowClick` |
-| `maxActions` | 直排按钮数量，超出收进「更多」，默认 `3` |
+| `maxActions` | 直排按钮数量，超出收进下拉菜单，默认 `3` |
 | `stack` | 卡片模式字段：`false` 隐藏；<br>`'title'` / `'subtitle'` 指定标题与副标题；<br>缺省第一个非副标题列作标题、其余为键值字段 | `false \| 'title' \| 'subtitle'` |
 | `classNames` | 列级表头/单元格类名，类型 `Partial<Record<Part, string>>` |
 | `styles` | 列级表头/单元格内联样式，类型 `Partial<Record<Part, CSSProperties>>` |
@@ -311,9 +319,11 @@
 
 | 插槽名 | 说明 | 参数 |
 | --- | --- | --- |
-| header | 统一表头内容（分组列与叶子列都会触发） | `{ column, index }` |
+| header | 表格上方页眉区（不带内边距/样式，内容自控） | `{ columns, rows }` |
+| columnHeader | 列头内容（分组列与叶子列都会触发） | `{ column, index }` |
 | empty | 空态内容 | `{ columns }` |
 | summary | 表尾汇总行 | `{ columns, rows }` |
+| footer | 表格下方页脚区（在分页器上方，不带内边距/样式） | `{ columns, rows }` |
 | expanded | 展开行内容 | `{ row, index, rowKey }` |
 | filter | 工具条左侧筛选区 | `{ columns, visibility }`，`columns` 为叶子列（含 `key`） |
 | toolbar | 工具条右侧操作区（位于内置列设置按钮前） | `{ columns }` |
@@ -387,7 +397,7 @@
   - 提交只发 `cellEdit({ row, column, value, previousValue, rowIndex })`，不会直接修改 `dataSource`，由业务回写；
   - 同一时间只编辑一个单元格，固定列浮层与主表共用同一编辑态；
   - 存在 `editable` 列时，表体行最低高度统一按默认编辑控件（KInput sm，跟随 `--k-control-height-sm`）加单元格上下 padding 预留，进入/退出编辑不改变行高；自定义 `editRender` 更高时仍会撑高该行。
-- **行操作**：列的 `actions` 生成图标按钮（`icon` 内置 view / edit / copy / remove / more），`maxActions` 之外的收进「更多」；`danger` 用危险色，`disabled` 支持布尔或按行函数。
+- **行操作**：列的 `actions` 生成图标按钮（`icon` 内置 view / edit / copy / remove / more），`maxActions` 之外的收进竖向点下拉菜单；`danger` 用危险色，`disabled` 支持布尔或按行函数。
   - `#actions` 插槽渲染在按钮之前，与按钮同一 flex 行垂直居中，可放状态标签；
   - 点击操作会阻止冒泡，不触发 `rowClick`；操作列是普通列，固定、宽度与分组规则与其他列一致。
 - **行拖拽**：`rowDraggable` 拖行首列抓手（`rowDragMode="press"` 可改为按住行任意处），浮层副本跟随指针、蓝色线条标示落位，不插入占位行。

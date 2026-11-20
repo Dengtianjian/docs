@@ -1,7 +1,7 @@
 <template>
   <div>
     <p class="hint">
-      列配置 <code>actions</code> 直排按钮，超出 <code>maxActions</code> 的收进「更多」；点击操作不会触发行的
+      列配置 <code>actions</code> 直排按钮，超出 <code>maxActions</code> 的收进竖向点下拉菜单；点击操作不会触发行的
       <code>rowClick</code>。
     </p>
     <KTable row-key="id" :columns="columns" :data-source="rows" :pagination="false">

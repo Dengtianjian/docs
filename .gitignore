@@ -1,7 +1,7 @@
 .vitepress/cache
 .vitepress/dist
 .vitepress/.temp
-community/dist
+community
 
 package-lock.json
 node_modules

@@ -53,7 +53,7 @@ message.destroy(key) / message.destroyAll()
 | --- | --- |
 | `--k-message-bg` | `--k-color-bg-elevated` |
 | `--k-message-radius` | `--k-border-radius-lg` |
-| `--k-message-pad / -font-size / -icon-size` | 随 size 档（sm 8×12 / md 12×16 / lg 16×20；字号 12/14/16） |
+| `--k-message-pad / -font-size / -icon-size` | 随 size 档（上下×左右：sm 8×16 / md 12×20 / lg 16×24；字号 12/14/16、图标 16/18/20）；多条纵向间距 12px |
 | z 层级 | `--k-z-index-message` |
 | 图标着色 | 类型语义色 `--k-color-success/error/warning/info` |
 
@@ -63,7 +63,7 @@ message.destroy(key) / message.destroyAll()
 
 - 实例 API 只在 KApp 之下可用（拍板③：无全局静态），队列与计时器随 KApp 卸载整体清理；`useKApp()` 返回 `undefined` 时先检查页面是否套了 `<KApp>`。
 - Holder 出口 Teleport 到 body 并按契约④携带 `scopeClass`/`data-k-theme`。
-- 图标是内建 inline SVG（路径表同 notification），零图标库依赖。
-- 离场动画：TransitionGroup 淡出 + 轻微上移，剩余消息通过 move 过渡平滑补位；最后一条移除时容器常驻以便动画播完。
+- 图标是内建 inline SVG：实心圆底 + 反白符号（路径表与 notification 同源），零图标库依赖。
+- 离场动画：消失条先钉在原位脱离文档流，淡出 + 轻微上移的同时剩余消息以 FLIP 过渡平滑补位；最后一条移除时容器常驻以便动画播完。
 - 读屏：普通消息 `role="status"`（polite），错误消息 `role="alert"`（assertive），单条 `aria-atomic="true"` 整条朗读；动态插入自动播报。
 - loading 常驻靠 `duration: 0`，结束时同 key 更新或 `handle.destroy()`。

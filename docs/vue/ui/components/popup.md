@@ -1,0 +1,46 @@
+# KPopup 弹层 / KCenterPopup 居中弹层
+
+> 共同约定见 [共同约定](./index.md)。P9 移动端专项。底部 / 顶部 / 左右 / 居中五向弹层。
+
+## 何时使用
+
+- 移动端底部弹层、侧滑面板与居中确认；
+- 需要遮罩、圆角、安全区与 Esc 关闭；
+- 需要 Teleport 到 body 或 ConfigProvider 容器。
+
+## 代码演示
+
+<Demo path="popup/basic" title="底部与居中" :desc="['`placement` 支持 bottom / top / left / right / center。', '`closeable` 显示关闭按钮，`closeOnMask` 控制遮罩关闭。', '`KCenterPopup` 固定居中，适合确认与短提示。']" />
+
+## API
+
+### KPopup Props
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| placement | 方向 | `'bottom' \| 'top' \| 'left' \| 'right' \| 'center'` | `'bottom'` |
+| title | 标题 | `string` | — |
+| round | 圆角 | `boolean` | `true` |
+| closeable | 关闭按钮 | `boolean` | `false` |
+| closeOnMask | 遮罩关闭 | `boolean` | `true` |
+| safeArea | 底部安全区 | `boolean` | `true` |
+| width / height | 尺寸 | `number \| string` | — |
+| zIndex | 层级 | `number` | 主题弹层层级 |
+| ariaLabel | 无障碍名称 | `string` | 标题 |
+| classNames / styles | 部件：`root / close / header / title / body / footer` | — | — |
+
+### v-model
+
+`open: boolean`
+
+### Slots
+
+`default` / `header` / `footer`
+
+### Events
+
+`close` / `opened` / `update:open`
+
+### KCenterPopup
+
+接受 KPopup 全部属性与插槽，固定 `placement="center"`；通常用于确认与短提示。

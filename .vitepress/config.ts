@@ -343,6 +343,28 @@ export default defineConfig({
                     { text: "KListbox 列表框", link: "/vue/ui/components/listbox" }
                   ]
                 },
+                {
+                  text: "移动端专项（P9）",
+                  collapsed: false,
+                  items: [
+                    { text: `${mobileOnlyIcon}KActionSheet / KShareSheet 操作面板`, docFooterText: "KActionSheet / KShareSheet 操作面板", link: "/vue/ui/components/action-sheet" },
+                    { text: `${mobileOnlyIcon}KPicker 选择器`, docFooterText: "KPicker 选择器", link: "/vue/ui/components/picker" },
+                    { text: `${mobileOnlyIcon}KPullToRefresh 下拉刷新`, docFooterText: "KPullToRefresh 下拉刷新", link: "/vue/ui/components/pull-to-refresh" },
+                    { text: `${mobileOnlyIcon}KInfiniteScroll 无限滚动`, docFooterText: "KInfiniteScroll 无限滚动", link: "/vue/ui/components/infinite-scroll" },
+                    { text: `${mobileOnlyIcon}KSwipeCell 滑动单元格`, docFooterText: "KSwipeCell 滑动单元格", link: "/vue/ui/components/swipe-cell" },
+                    { text: `${mobileOnlyIcon}KSearchBar 搜索栏`, docFooterText: "KSearchBar 搜索栏", link: "/vue/ui/components/search-bar" },
+                    { text: `${mobileOnlyIcon}KNoticeBar 通知栏`, docFooterText: "KNoticeBar 通知栏", link: "/vue/ui/components/notice-bar" },
+                    { text: `${mobileOnlyIcon}KIndexBar 索引栏`, docFooterText: "KIndexBar 索引栏", link: "/vue/ui/components/index-bar" },
+                    { text: `${mobileOnlyIcon}KSideBar 侧边导航`, docFooterText: "KSideBar 侧边导航", link: "/vue/ui/components/side-bar" },
+                    { text: `${mobileOnlyIcon}KNumberKeyboard 数字键盘`, docFooterText: "KNumberKeyboard 数字键盘", link: "/vue/ui/components/number-keyboard" },
+                    { text: `${mobileOnlyIcon}KFloatingBubble / KFloatingPanel 悬浮组件`, docFooterText: "KFloatingBubble / KFloatingPanel 悬浮组件", link: "/vue/ui/components/floating" },
+                    { text: `${mobileOnlyIcon}KSubmitBar / KActionBar 底部操作`, docFooterText: "KSubmitBar / KActionBar 底部操作", link: "/vue/ui/components/submit-bar" },
+                    { text: `${mobileOnlyIcon}KCountDown / KRollingText 倒计时`, docFooterText: "KCountDown / KRollingText 倒计时", link: "/vue/ui/components/count-down" },
+                    { text: `${mobileOnlyIcon}KPopup / KCenterPopup 弹层`, docFooterText: "KPopup / KCenterPopup 弹层", link: "/vue/ui/components/popup" },
+                    { text: `${mobileOnlyIcon}KSafeArea 安全区`, docFooterText: "KSafeArea 安全区", link: "/vue/ui/components/safe-area" },
+                    { text: `${mobileOnlyIcon}KSignature 签名板`, docFooterText: "KSignature 签名板", link: "/vue/ui/components/signature" }
+                  ]
+                }
               ]
             }
           ]

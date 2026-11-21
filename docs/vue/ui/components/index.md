@@ -254,3 +254,26 @@ themes 全套 + css/theme(reset/layer/utility) → KIcon → KButton（样板，
 验收：playground「组件矩阵页」（四轴全组合 × 亮暗 × pc/mobile 视口）+ 主题设计器最小版（改 seed 全页联动）——
 矩阵页即后续所有批次的回归基线，P1 建成是硬要求。
 
+## 组件清单（P9 移动端专项）
+
+| 文件 | 组件 | 状态 |
+| --- | --- | --- |
+| [action-sheet.md](./action-sheet.md) | KActionSheet / KShareSheet | 已落地（P9，列表 + 宫格） |
+| [picker.md](./picker.md) | KPicker / KPickerView | 已落地（P9，滚轮吸附 + 键盘） |
+| [pull-to-refresh.md](./pull-to-refresh.md) | KPullToRefresh | 已落地（P9，触摸/鼠标下拉） |
+| [infinite-scroll.md](./infinite-scroll.md) | KInfiniteScroll | 已落地（P9，IntersectionObserver） |
+| [swipe-cell.md](./swipe-cell.md) | KSwipeCell / KSwipeAction | 已落地（P9，左右滑操作） |
+| [search-bar.md](./search-bar.md) | KSearchBar | 已落地（P9，清空/取消/回车） |
+| [notice-bar.md](./notice-bar.md) | KNoticeBar | 已落地（P9，滚动/关闭/链接） |
+| [index-bar.md](./index-bar.md) | KIndexBar / KIndexAnchor | 已落地（P9，锚点 + 气泡） |
+| [side-bar.md](./side-bar.md) | KSideBar | 已落地（P9，角标 + 键盘） |
+| [number-keyboard.md](./number-keyboard.md) | KNumberKeyboard / KPasscodeInput / KPasswordInput | 已落地（P9，数字键盘三件套） |
+| [floating.md](./floating.md) | KFloatingBubble / KFloatingPanel | 已落地（P9，吸附与悬浮面板） |
+| [submit-bar.md](./submit-bar.md) | KSubmitBar / KActionBar | 已落地（P9，底部操作条） |
+| [count-down.md](./count-down.md) | KCountDown / KRollingText | 已落地（P9，倒计时 + 滚动数字） |
+| [popup.md](./popup.md) | KPopup / KCenterPopup | 已落地（P9，五向弹层） |
+| [safe-area.md](./safe-area.md) | KSafeArea | 已落地（P9，env 安全区） |
+| [signature.md](./signature.md) | KSignature | 已落地（P9，Canvas 签名） |
+
+> 2026-11-21：**P9 移动端专项落地**。新增 16 个文档页与 22 个演示，26 个组件 / 子组件接入 barrel 与 KResolver；新增 20 个 DOM 回归测试。移动端专属项在侧边栏带手机图标。
+

@@ -1,6 +1,6 @@
 # headless 自定义渲染
 
-> 逻辑留在组件里，视觉整件交给你。K UI 全部视觉组件支持 headless：状态机、受控双模、键盘导航、弹层定位、外点关闭、校验联动等逻辑照跑，默认视觉输出（含 Teleport / Transition / 包裹层）被你的自绘节点**整件替换**。
+> 逻辑留在组件里，视觉整件交给你。K UI 目前有 56 个公开组件支持 headless 双通道；状态机、受控双模、键盘导航、弹层定位、外点关闭、校验联动等逻辑照跑，默认视觉输出（含 Teleport / Transition / 包裹层）被你的自绘节点**整件替换**。P6–P9 新增组件暂只提供默认渲染 + `classNames / styles` + 插槽，覆盖现状见文末。
 
 ## 何时使用
 
@@ -101,7 +101,12 @@ h('button', { ...ctx.controlAttrs, ...onProps(ctx.controlOn) }, '…')
 
 ## 覆盖表
 
-除 P3 表格族（KTable / KPagination / KVirtualList / KEmpty / KSkeleton）按「部级 `classNames/styles` + 插槽 + 列 `render`」交付外，其余视觉组件支持 headless 双通道（`render` prop + `#render` 插槽）。App / ConfigProvider 为逻辑提供者，message / notification 的**实例 API** 为服务驱动，无 headless 契约（声明式卡片 `KNotification` 本身支持，见下表）。
+当前 **56 个公开组件**支持 headless 双通道（`render` prop + `#render` 插槽）。以下按批次列出已支持项；未支持项按原因分组见本节末尾。App / ConfigProvider 为逻辑提供者，Message 的**实例 API** 为服务驱动，无 headless 契约（声明式卡片 `KNotification` 本身支持）。
+
+### 已支持（核心表）
+
+| 组件 | scope 类型 | 关键绑定包 / 动作 |
+| --- | --- | --- |
 
 | 组件 | scope 类型 | 关键绑定包 / 动作 |
 | --- | --- | --- |
@@ -134,6 +139,33 @@ h('button', { ...ctx.controlAttrs, ...onProps(ctx.controlOn) }, '…')
 | KCard | `KCardRenderScope` | `rootAttrs` + title / loading / hoverable 状态 |
 | KTable / KPagination / KVirtualList | —（P3 部级契约） | `classNames/styles` 部件 + 插槽；Table 另有列 `render`，无整件替换 |
 | KEmpty / KSkeleton | —（P3 部级契约） | `classNames/styles` 部件 + 插槽 |
+
+### 已支持（补充）
+
+| 批次 | 组件 |
+| --- | --- |
+| P2.5 | KDatePicker、KDateRangePicker、KUpload、KSortable、KPreview |
+| P4 | KMenu |
+| P5 | KProgress、KResult、KRate、KSlider、KMentions、KAutoComplete、KTimePicker、KCascader、KTreeSelect、KTransfer、KColorPicker |
+
+对应 scope 类型与绑定包字段见各组件文档的「自定义渲染（headless）」节。
+
+### 暂未支持 headless
+
+以下组件目前只提供默认渲染、`classNames / styles` 部件与插槽；不会渲染 `#render` / `render`。需要自定义整件视觉时，请先用部件变量 / 插槽覆盖，或等后续按需求补契约。
+
+| 范围 | 组件 | 说明 |
+| --- | --- | --- |
+| 逻辑/服务 | KApp、KConfigProvider | 逻辑提供者，无视觉整件替换需求 |
+| P2.5 | KImageCropper | 默认渲染 + 部件覆盖 |
+| P3 | KTable、KPagination、KVirtualList、KEmpty、KSkeleton、KCardAction | 表格族按部级契约 |
+| P4 导航族 | KBreadcrumb、KBreadcrumbItem、KSteps、KStep、KTabs、KTabPane、KDropdown、KAffix、KBackTop、KAnchor、KDrawer、KNavBar、KTabBar | 仅 KMenu 支持 |
+| P6 | KAvatar、KAvatarGroup、KCollapse、KCollapseItem、KDescriptions、KDescriptionsItem、KSegmented、KFieldGroup、KList、KListItem、KCellGroup、KCell、KTree、KInputTags | 新增基础件 |
+| P7 | KCalendar、KTimeline、KTimelineItem、KStatistic、KImage、KCarousel、KPinInput、KChart、KCommandPalette、KNavigationMenu | 数据与导航 |
+| P8 | KContextMenu、KScrollArea、KKbd、KUser、KBanner、KMarquee、KSplitter、KQRCode、KWatermark、KMasonry、KTour、KFloatButton、KBorderBeam、KListbox | 增强件 |
+| P9 | KActionSheet、KShareSheet、KPicker、KPickerView、KPullToRefresh、KInfiniteScroll、KSwipeCell、KSwipeAction、KSearchBar、KNoticeBar、KIndexBar、KIndexAnchor、KSideBar、KNumberKeyboard、KPasscodeInput、KPasswordInput、KFloatingBubble、KFloatingPanel、KSubmitBar、KActionBar、KCountDown、KRollingText、KPopup、KCenterPopup、KSafeArea、KSignature | 移动端专项 |
+
+> P10 评估结论：不批量补“伪 headless”。P6–P9 先用默认渲染、`classNames / styles` 与插槽满足业务；确有个别组件需要自有设计系统整件替换时，再按组件补 scope 与绑定包。
 
 入口导出：`KRenderFn` / `KOnPack` / `onProps` + 上表全部 scope 类型（`kit/vue/ui`）。
 

@@ -4,8 +4,8 @@
       <template #extra>更多</template>
       卡片内容区域，支持任意内容与插槽。
         <template #actions>
-          <KCardAction aria-label="编辑卡片" @click="reset">编辑</KCardAction>
-          <KCardAction @click="reset">分享</KCardAction>
+          <KCardAction aria-label="编辑卡片" @click="last = '编辑'">编辑</KCardAction>
+          <KCardAction @click="last = '分享'">分享</KCardAction>
         </template>
     </KCard>
     <KCard hoverable style="width: 300px">
@@ -19,22 +19,31 @@
     <KCard title="按钮属性" style="width: 300px">
       `KCardAction` 的属性直接透传到 button。
       <template #actions>
-        <KCardAction @click="reset">编辑</KCardAction>
+        <KCardAction @click="last = '编辑'">编辑</KCardAction>
         <KCardAction disabled>删除</KCardAction>
       </template>
     </KCard>
     <KCard title="加载中" loading style="width: 300px" />
   </KSpace>
+  <p class="tip">最近操作：{{ last || '（无）' }}</p>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import KCard from 'kit/vue/ui/components/Card/Card.vue'
 import KCardAction from 'kit/vue/ui/components/Card/CardAction.vue'
 import KSpace from 'kit/vue/ui/components/Space/Space.vue'
 import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
+
+const last = ref('')
 </script>
 
 <style scoped>
+.tip {
+  margin: 12px 0 0;
+  color: var(--k-color-text-secondary);
+  font-size: var(--k-font-size-sm);
+}
 .cover {
   display: flex;
   align-items: center;

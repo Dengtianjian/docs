@@ -1,7 +1,7 @@
 # 组件规格 · 共同约定与交付顺序
 
 > 上游：[../design/theme-tokens.md](../design/theme-tokens.md)（部件变量机制 §1.1/§9）、[config-provider.md](./config-provider.md)（轴默认值合并链）、[../design/language.md](../design/language.md)（视觉规则）。
-> 本文件收录 P1 批次；后续批次（P2 表单/反馈、P3 数据展示、P4 导航）逐组件建文件，共同约定不再重复。P3 数据展示批（Table/Pagination/VirtualList/Tag/Badge/Card/Empty/Skeleton）已落地，清单见文末。
+> 本文件是 K UI 组件总览与共同约定。P1–P9 共 120 个组件已落地，各批次清单见文末；组件与参考库的权威对照表见 `kit/.ai/COMPONENTS.md`。
 
 ## 全组件共同约定（一次性写死，各组件不再重复）
 

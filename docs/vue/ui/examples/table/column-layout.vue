@@ -43,6 +43,8 @@ interface Row {
   score: number
 }
 
+const pressMode = ref(false)
+
 const columns: KTableColumn<Row>[] = [
   { key: 'name', dataIndex: 'name', title: '姓名', width: 150 },
   { key: 'team', dataIndex: 'team', title: '团队', width: 110 },

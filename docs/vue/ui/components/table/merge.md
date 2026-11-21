@@ -13,9 +13,15 @@ function spanMethod({ row, columnIndex }) {
 <KTable row-key="id" :columns="columns" :data-source="rows" :span-method="spanMethod" />
 ```
 
+::: warning 跨固定区合并的已知限制
+合并跨左/右固定区与中区时，整表会退回逐格粘性模式，这是刻意保留的降级路径。
+快速横向滚动可能出现轻微抖动或漏光；“浮层桥接”方案已放弃，不再提供兼容实现。
+需要稳定吸边时，请把合并控制在同一固定区内，或暂时不使用固定列。
+:::
+
 ### 基础合并
 
-<Demo :title-level="4" path="table/span" title="单元格合并" :desc="['`spanMethod` 按行与列返回 `rowSpan` / `colSpan`，覆盖格自动不再渲染。', '左右固定列浮层与主表共用同一份合并计划。', '组合限制：合并跨越左/右固定区与中区时无法用浮层承载，整表退回粘性单元格模式并在 dev 告警。']" />
+<Demo :title-level="4" path="table/span" title="单元格合并" :desc="['`spanMethod` 按行与列返回 `rowSpan` / `colSpan`，覆盖格自动不再渲染。', '左右固定列浮层与主表共用同一份合并计划。', '组合限制：跨固定区合并会退回粘性单元格模式；桥接层方案已放弃，快速横滚可能轻微抖动/漏光。']" />
 
 <Demo :title-level="4" path="table/span-basic" title="合并 · 纵向" :desc="['只有 rowSpan：部门列按连续相同值合并。', '其余列逐行显示，用于检查行高、行分隔线与斑马纹。', '组合限制：rowSpan 必须按当前可见行计算，与树形展开、筛选、分页组合时不能写死行数。']" />
 

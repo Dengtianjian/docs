@@ -143,6 +143,21 @@
 
 > 2026-11-20：**P5 补充批落地**（反馈完整首版 + 高频录入标准完整；移动端沿用现有浮层）。反馈件 Progress / Result；录入件 Rate / Slider / Mentions / AutoComplete / TimePicker / Cascader / TreeSelect / Transfer / ColorPicker。新增纯函数 `utils/time.ts`、`utils/tree.ts`、`utils/color.ts` 并纳入 `pnpm test`。
 
+## 组件清单（P6 基础补齐）
+
+| 文件 | 组件 | 状态 |
+| --- | --- | --- |
+| [avatar.md](./avatar.md) | KAvatar / KAvatarGroup | 已落地（P6） |
+| [list.md](./list.md) | KList / KListItem（KCellGroup / KCell 别名） | 已落地（P6） |
+| [collapse.md](./collapse.md) | KCollapse / KCollapseItem | 已落地（P6） |
+| [descriptions.md](./descriptions.md) | KDescriptions / KDescriptionsItem | 已落地（P6） |
+| [segmented.md](./segmented.md) | KSegmented（ToggleGroup 语义） | 已落地（P6） |
+| [field-group.md](./field-group.md) | KFieldGroup | 已落地（P6） |
+| [tree.md](./tree.md) | KTree | 已落地（P6） |
+| [input-tags.md](./input-tags.md) | KInputTags | 已落地（P6） |
+
+> 2026-11-21：**P6 基础补齐批落地**。新增 8 个组件页与 19 个演示；全部导出接入 barrel 与 KResolver，新增 8 个 DOM 回归测试，合计 DOM 测试 23 个。组件缺口权威表见 `kit/.ai/COMPONENTS.md`。
+
 > 2026-11-19：**P3 数据展示批开工**：
 >   - 表格基座抽纯函数到 `utils/table.ts`（取值/排序/筛选/分页/固定列偏移），分页序列 `utils/pagination.ts`、虚拟窗口 `utils/virtual.ts` 同步纳入 `pnpm test`
 >   - KTable 首版支持排序、筛选、行选择、固定列、粘性表头、客户端分页、空态/加载与 summary 插槽

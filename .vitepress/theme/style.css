@@ -177,3 +177,17 @@ html {
   touch-action: manipulation;
   -webkit-text-size-adjust: 100%;
 }
+
+/* 侧边栏：移动端专属组件标记 */
+.k-sidebar-mobile-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 6px;
+  color: var(--vp-c-brand-1);
+  vertical-align: -2px;
+}
+
+.k-sidebar-mobile-icon svg {
+  width: 13px;
+  height: 13px;
+}

@@ -5,6 +5,9 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 import { kitPlugin } from 'kit/vue/vite-plugin'
 import { isolateVpDoc } from './isolate-vp-doc'
 
+const mobileOnlyIcon =
+  '<span class="k-sidebar-mobile-icon" role="img" aria-label="移动端专属" title="移动端专属"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2z"/><path d="M11 5h2"/><path d="M12 17h.01"/></svg></span>'
+
 /**
  * 扫描 docs/php/api 生成「一个类一篇」的侧边栏
  *
@@ -264,8 +267,8 @@ export default defineConfig({
                     { text: "KBackTop 回到顶部", link: "/vue/ui/components/back-top" },
                     { text: "KAffix 吸顶", link: "/vue/ui/components/affix" },
                     { text: "KDrawer 抽屉", link: "/vue/ui/components/drawer" },
-                    { text: "KNavBar 顶部导航", link: "/vue/ui/components/navbar" },
-                    { text: "KTabBar 底部导航", link: "/vue/ui/components/tabbar" }
+                    { text: `${mobileOnlyIcon}KNavBar 顶部导航`, docFooterText: "KNavBar 顶部导航", link: "/vue/ui/components/navbar" },
+                    { text: `${mobileOnlyIcon}KTabBar 底部导航`, docFooterText: "KTabBar 底部导航", link: "/vue/ui/components/tabbar" }
                   ]
                 },
                 {
@@ -289,6 +292,30 @@ export default defineConfig({
                     { text: "KTreeSelect 树选择", link: "/vue/ui/components/treeselect" },
                     { text: "KTransfer 穿梭框", link: "/vue/ui/components/transfer" },
                     { text: "KColorPicker 颜色选择", link: "/vue/ui/components/colorpicker" }
+                  ]
+                },
+                {
+                  text: "基础补齐（P6）",
+                  collapsed: false,
+                  items: [
+                    { text: "KAvatar 头像", link: "/vue/ui/components/avatar" },
+                    { text: "KList 列表 / KCell 单元格", link: "/vue/ui/components/list" },
+                    { text: "KCollapse 折叠面板", link: "/vue/ui/components/collapse" },
+                    { text: "KDescriptions 描述列表", link: "/vue/ui/components/descriptions" },
+                    { text: "KSegmented 分段控制器", link: "/vue/ui/components/segmented" },
+                    { text: "KFieldGroup 字段组", link: "/vue/ui/components/field-group" },
+                    { text: "KTree 树形控件", link: "/vue/ui/components/tree" },
+                    { text: "KInputTags 标签输入", link: "/vue/ui/components/input-tags" }
+                  ]
+                },
+                {
+                  text: "数据与导航（P7）",
+                  collapsed: false,
+                  items: [
+                    { text: "KTimeline 时间轴", link: "/vue/ui/components/timeline" },
+                    { text: "KStatistic 统计数值", link: "/vue/ui/components/statistic" },
+                    { text: "KImage 图片", link: "/vue/ui/components/image" },
+                    { text: "KChart 图表", link: "/vue/ui/components/chart" }
                   ]
                 }
               ]

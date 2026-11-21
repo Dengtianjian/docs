@@ -318,7 +318,9 @@ export default defineConfig({
                     { text: "KChart 图表", link: "/vue/ui/components/chart" },
                     { text: "KCalendar 日历", link: "/vue/ui/components/calendar" },
                     { text: "KCarousel 轮播", link: "/vue/ui/components/carousel" },
-                    { text: "KPinInput 验证码输入", link: "/vue/ui/components/pin-input" }
+                    { text: "KPinInput 验证码输入", link: "/vue/ui/components/pin-input" },
+                    { text: "KCommandPalette 命令面板", link: "/vue/ui/components/command-palette" },
+                    { text: "KNavigationMenu 导航菜单", link: "/vue/ui/components/navigation-menu" }
                   ]
                 }
               ]

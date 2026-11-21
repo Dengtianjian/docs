@@ -174,6 +174,27 @@
 
 > 2026-11-21：**P7 数据与导航重新落地**。新增 9 个组件页与 20 个演示；全部导出接入 barrel 与 KResolver，新增 9 个 DOM 回归测试。
 
+## 组件清单（P8 增强件）
+
+| 文件 | 组件 | 状态 |
+| --- | --- | --- |
+| [context-menu.md](./context-menu.md) | KContextMenu | 已落地（P8，视口夹取 + 键盘导航） |
+| [scroll-area.md](./scroll-area.md) | KScrollArea | 已落地（P8，细滚动条 + 阴影） |
+| [kbd.md](./kbd.md) | KKbd | 已落地（P8，组合键与平台修饰键） |
+| [user.md](./user.md) | KUser | 已落地（P8，头像 + 状态角标） |
+| [banner.md](./banner.md) | KBanner | 已落地（P8，四语义 + 操作区） |
+| [marquee.md](./marquee.md) | KMarquee | 已落地（P8，无缝循环 + reduced-motion） |
+| [splitter.md](./splitter.md) | KSplitter | 已落地（P8，拖拽 + 键盘 + min/max） |
+| [qrcode.md](./qrcode.md) | KQRCode | 已落地（P8，零依赖 SVG + Vision 实测解码） |
+| [watermark.md](./watermark.md) | KWatermark | 已落地（P8，Canvas 平铺） |
+| [masonry.md](./masonry.md) | KMasonry | 已落地（P8，CSS columns 自适应） |
+| [tour.md](./tour.md) | KTour | 已落地（P8，高亮 + 自动避让） |
+| [float-button.md](./float-button.md) | KFloatButton | 已落地（P8，四角定位 + 菜单） |
+| [border-beam.md](./border-beam.md) | KBorderBeam | 已落地（P8，mask 光束） |
+| [listbox.md](./listbox.md) | KListbox | 已落地（P8，单选/多选 + 键盘） |
+
+> 2026-11-21：**P8 增强件批落地**。新增 14 个组件页与 28 个演示；全部组件接入 barrel；新增 14 个 DOM 回归测试。KQRCode 为零依赖实现，并用 macOS Vision 对版本 2–8、L/M/Q/H 与中文内容实测解码。
+
 > 2026-11-19：**P3 数据展示批开工**：
 >   - 表格基座抽纯函数到 `utils/table.ts`（取值/排序/筛选/分页/固定列偏移），分页序列 `utils/pagination.ts`、虚拟窗口 `utils/virtual.ts` 同步纳入 `pnpm test`
 >   - KTable 首版支持排序、筛选、行选择、固定列、粘性表头、客户端分页、空态/加载与 summary 插槽

@@ -322,7 +322,27 @@ export default defineConfig({
                     { text: "KCommandPalette 命令面板", link: "/vue/ui/components/command-palette" },
                     { text: "KNavigationMenu 导航菜单", link: "/vue/ui/components/navigation-menu" }
                   ]
-                },,
+                },
+                {
+                  text: "增强件（P8）",
+                  collapsed: false,
+                  items: [
+                    { text: "KContextMenu 右键菜单", link: "/vue/ui/components/context-menu" },
+                    { text: "KScrollArea 滚动区域", link: "/vue/ui/components/scroll-area" },
+                    { text: "KKbd 键帽", link: "/vue/ui/components/kbd" },
+                    { text: "KUser 用户信息", link: "/vue/ui/components/user" },
+                    { text: "KBanner 公告条", link: "/vue/ui/components/banner" },
+                    { text: "KMarquee 跑马灯", link: "/vue/ui/components/marquee" },
+                    { text: "KSplitter 分隔面板", link: "/vue/ui/components/splitter" },
+                    { text: "KQRCode 二维码", link: "/vue/ui/components/qrcode" },
+                    { text: "KWatermark 水印", link: "/vue/ui/components/watermark" },
+                    { text: "KMasonry 瀑布流", link: "/vue/ui/components/masonry" },
+                    { text: "KTour 漫游引导", link: "/vue/ui/components/tour" },
+                    { text: "KFloatButton 悬浮按钮", link: "/vue/ui/components/float-button" },
+                    { text: "KBorderBeam 边框光束", link: "/vue/ui/components/border-beam" },
+                    { text: "KListbox 列表框", link: "/vue/ui/components/listbox" }
+                  ]
+                },
               ]
             }
           ]

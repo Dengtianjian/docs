@@ -12,7 +12,7 @@
 
 <Demo path="command-palette/basic" title="基础命令面板" :desc="['`v-model:open` 控制显隐，`items` 按 `group` 自动分组。', '支持 `shortcut` 展示快捷键、`keywords` 参与搜索。', '`select` 在点击或回车执行时派发。']" />
 
-<Demo path="command-palette/hotkey" title="全局快捷键与搜索" :desc="['`hotkey=\"mod+k\"` 注册全局唤起（Mac 为 ⌘K，其他平台 Ctrl+K）。', '搜索支持子序列匹配，`kbtn` 可以命中 `KButton`。', '`search` 事件可用于异步补全。']" />
+<Demo path="command-palette/hotkey" title="全局快捷键与搜索" :desc="['`hotkey=&quot;mod+k&quot;` 注册全局唤起（Mac 为 ⌘K，其他平台 Ctrl+K）。', '搜索支持子序列匹配，`kbtn` 可以命中 `KButton`。', '`search` 事件可用于异步补全。']" />
 
 <Demo path="command-palette/custom" title="自定义命令项" :desc="['`#item` 作用域 `{ item, active, query }` 完全接管每项渲染。', '`#empty` 自定义空态。', '`#footer` 放统计或提示信息。']" />
 

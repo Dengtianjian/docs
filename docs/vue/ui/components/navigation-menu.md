@@ -10,11 +10,11 @@
 
 ## 代码演示
 
-<Demo path="navigation-menu/basic" title="水平导航" :desc="['`items` 的 `children` 自动生成下拉面板。', '默认悬停展开（`trigger=\"hover\"`），也支持点击。', '`v-model:value` 与 `select` 同步当前项。']" />
+<Demo path="navigation-menu/basic" title="水平导航" :desc="['`items` 的 `children` 自动生成下拉面板。', '默认悬停展开（`trigger=&quot;hover&quot;`），也支持点击。', '`v-model:value` 与 `select` 同步当前项。']" />
 
-<Demo path="navigation-menu/vertical" title="垂直折叠" :desc="['`orientation=\"vertical\"` 切换为侧边栏样式。', '子项以内联折叠展示，不再绝对定位。', '键盘漫游：方向键在顶级项之间移动，Enter / 空格展开。']" />
+<Demo path="navigation-menu/vertical" title="垂直折叠" :desc="['`orientation=&quot;vertical&quot;` 切换为侧边栏样式。', '子项以内联折叠展示，不再绝对定位。', '键盘漫游：方向键在顶级项之间移动，Enter / 空格展开。']" />
 
-<Demo path="navigation-menu/custom" title="自定义触发与面板" :desc="['`#item` 自定义顶级项，作用域 `{ item, active, open }`。', '`#content` 接管下拉面板，作用域含 `close` 方法。', '`trigger=\"click\"` 适合面板内含复杂交互的场景。']" />
+<Demo path="navigation-menu/custom" title="自定义触发与面板" :desc="['`#item` 自定义顶级项，作用域 `{ item, active, open }`。', '`#content` 接管下拉面板，作用域含 `close` 方法。', '`trigger=&quot;click&quot;` 适合面板内含复杂交互的场景。']" />
 
 ## API
 

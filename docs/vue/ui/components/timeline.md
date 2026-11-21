@@ -13,7 +13,7 @@
 
 <Demo path="timeline/slots" title="插槽与图标" :desc="['默认插槽里逐个使用 `KTimelineItem`。', 'KTimelineItem 提供 `dot` / `label` / `time` 插槽与 `icon` 图标。', 'item 的 `position` 可单独覆盖左右停靠（`left` / `right`）。']" />
 
-<Demo path="timeline/alternate" title="交替布局与等待态" :desc="['`mode=\"alternate\"` 奇偶行左右交替。', '`pending` 传字符串时展示等待节点与文案。', '`reverse` 反转顺序，等待节点随之置顶。']" />
+<Demo path="timeline/alternate" title="交替布局与等待态" :desc="['`mode=&quot;alternate&quot;` 奇偶行左右交替。', '`pending` 传字符串时展示等待节点与文案。', '`reverse` 反转顺序，等待节点随之置顶。']" />
 
 ## API
 

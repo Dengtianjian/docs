@@ -9,11 +9,11 @@
 
 ## 代码演示
 
-<Demo path="carousel/basic" title="基础轮播" :desc="['默认 `slide` 位移切换，`arrows` 显示左右按钮。', '`autoplay` + `interval` 自动播放，悬停 / 聚焦自动暂停。', '指示器默认在容器内，`indicator=\"line\"` 使用进度条样式。']" />
+<Demo path="carousel/basic" title="基础轮播" :desc="['默认 `slide` 位移切换，`arrows` 显示左右按钮。', '`autoplay` + `interval` 自动播放，悬停 / 聚焦自动暂停。', '指示器默认在容器内，`indicator=&quot;line&quot;` 使用进度条样式。']" />
 
-<Demo path="carousel/fade" title="淡入与外部指示器" :desc="['`effect=\"fade\"` 交叉淡入，幻灯片绝对定位叠放。', '`indicator-placement=\"outside\"` 把指示器放到容器下方。', '自定义内容无需额外包裹，直接作为幻灯片子节点。']" />
+<Demo path="carousel/fade" title="淡入与外部指示器" :desc="['`effect=&quot;fade&quot;` 交叉淡入，幻灯片绝对定位叠放。', '`indicator-placement=&quot;outside&quot;` 把指示器放到容器下方。', '自定义内容无需额外包裹，直接作为幻灯片子节点。']" />
 
-<Demo path="carousel/vertical" title="纵向与受控切换" :desc="['`direction=\"vertical\"` 纵向切换，`loop=false` 到边界停止。', '`v-model:active-index` 双向绑定当前页。', '聚焦容器后可用方向键、Home / End 切换。']" />
+<Demo path="carousel/vertical" title="纵向与受控切换" :desc="['`direction=&quot;vertical&quot;` 纵向切换，`loop=false` 到边界停止。', '`v-model:active-index` 双向绑定当前页。', '聚焦容器后可用方向键、Home / End 切换。']" />
 
 ## API
 

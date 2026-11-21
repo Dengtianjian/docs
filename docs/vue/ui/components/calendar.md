@@ -13,7 +13,7 @@
 
 <Demo path="calendar/disabled" title="范围与禁用" :desc="['`disabledDate` 入参为 dayjs 日期，返回 true 即禁用。', '`min` / `max` 接受时间戳或可解析字符串。', '`change` 第二个参数标记来源：select / today / keyboard。']" />
 
-<Demo path="calendar/custom" title="自定义单元格与月份视图" :desc="['`#dateCell` 作用域提供 `{ date, cell }`，可叠加日程点。', '`#footer` 放统计或快捷操作。', '`type=\"month\"` 切换为 12 个月选择面板。']" />
+<Demo path="calendar/custom" title="自定义单元格与月份视图" :desc="['`#dateCell` 作用域提供 `{ date, cell }`，可叠加日程点。', '`#footer` 放统计或快捷操作。', '`type=&quot;month&quot;` 切换为 12 个月选择面板。']" />
 
 ## API
 

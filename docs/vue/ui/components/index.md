@@ -158,6 +158,22 @@
 
 > 2026-11-21：**P6 基础补齐批落地**。新增 8 个组件页与 19 个演示；全部导出接入 barrel 与 KResolver，新增 8 个 DOM 回归测试，合计 DOM 测试 23 个。组件缺口权威表见 `kit/.ai/COMPONENTS.md`。
 
+## 组件清单（P7 数据与导航）
+
+| 文件 | 组件 | 状态 |
+| --- | --- | --- |
+| [timeline.md](./timeline.md) | KTimeline / KTimelineItem | 已落地（P7，left/right/alternate） |
+| [statistic.md](./statistic.md) | KStatistic | 已落地（P7，千分位 + countUp） |
+| [image.md](./image.md) | KImage | 已落地（P7，懒加载/失败兜底/复用 KPreview） |
+| [chart.md](./chart.md) | KChart | 已落地（P7，零依赖 SVG + `#chart` 插槽） |
+| [calendar.md](./calendar.md) | KCalendar | 已落地（P7，date/month + 键盘导航） |
+| [carousel.md](./carousel.md) | KCarousel | 已落地（P7，slide/fade + 拖拽/自动播放） |
+| [pin-input.md](./pin-input.md) | KPinInput | 已落地（P7，粘贴分发/OTP/分组） |
+| [command-palette.md](./command-palette.md) | KCommandPalette | 已落地（P7，模糊搜索 + 热键 + combobox ARIA） |
+| [navigation-menu.md](./navigation-menu.md) | KNavigationMenu | 已落地（P7，水平下拉/垂直折叠） |
+
+> 2026-11-21：**P7 数据与导航重新落地**。新增 9 个组件页与 20 个演示；全部导出接入 barrel 与 KResolver，新增 9 个 DOM 回归测试。
+
 > 2026-11-19：**P3 数据展示批开工**：
 >   - 表格基座抽纯函数到 `utils/table.ts`（取值/排序/筛选/分页/固定列偏移），分页序列 `utils/pagination.ts`、虚拟窗口 `utils/virtual.ts` 同步纳入 `pnpm test`
 >   - KTable 首版支持排序、筛选、行选择、固定列、粘性表头、客户端分页、空态/加载与 summary 插槽
@@ -216,3 +232,4 @@ themes 全套 + css/theme(reset/layer/utility) → KIcon → KButton（样板，
 
 验收：playground「组件矩阵页」（四轴全组合 × 亮暗 × pc/mobile 视口）+ 主题设计器最小版（改 seed 全页联动）——
 矩阵页即后续所有批次的回归基线，P1 建成是硬要求。
+

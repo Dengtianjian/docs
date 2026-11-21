@@ -307,7 +307,22 @@ export default defineConfig({
                     { text: "KTree 树形控件", link: "/vue/ui/components/tree" },
                     { text: "KInputTags 标签输入", link: "/vue/ui/components/input-tags" }
                   ]
-                }
+                },
+                {
+                  text: "数据与导航（P7）",
+                  collapsed: false,
+                  items: [
+                    { text: "KTimeline 时间轴", link: "/vue/ui/components/timeline" },
+                    { text: "KStatistic 统计数值", link: "/vue/ui/components/statistic" },
+                    { text: "KImage 图片", link: "/vue/ui/components/image" },
+                    { text: "KChart 图表", link: "/vue/ui/components/chart" },
+                    { text: "KCalendar 日历", link: "/vue/ui/components/calendar" },
+                    { text: "KCarousel 轮播", link: "/vue/ui/components/carousel" },
+                    { text: "KPinInput 验证码输入", link: "/vue/ui/components/pin-input" },
+                    { text: "KCommandPalette 命令面板", link: "/vue/ui/components/command-palette" },
+                    { text: "KNavigationMenu 导航菜单", link: "/vue/ui/components/navigation-menu" }
+                  ]
+                },,
               ]
             }
           ]

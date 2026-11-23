@@ -1,13 +1,13 @@
 <template>
-  <KSpace direction="vertical" size="lg">
+  <KFlex vertical gap="lg">
     <KTree :data="data" :load-data="loadData" @expand="onExpand" />
     <p class="hint">{{ hint || '点击根节点的箭头异步加载子节点。' }}</p>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import KTree from 'kit/vue/ui/components/Tree/Tree.vue'
 
 const data = [

@@ -5,8 +5,8 @@
       <p class="compose__desc">清晰的标题 + 可复现的描述，能让讨论更快进入正题。</p>
     </header>
 
-    <KRow gutter="xs:0 md:16,24 lg:24,24">
-      <KCol :span="{ xs: 24, md: 17 }">
+    <KGrid gap="xs:0 md:16,24 lg:24,24">
+      <KGridItem :span="{ xs: 24, md: 17 }">
         <KCard :bordered="true">
           <KAlert
             v-if="error"
@@ -61,16 +61,16 @@
 
           <div class="compose__actions">
             <span class="compose__count">草稿自动保存在本地</span>
-            <KSpace size="xs:sm md:md" wrap>
+            <KFlex gap="xs:sm md:md" wrap>
               <KButton size="xs:md md:md" @click="navigate('/')">取消</KButton>
               <KButton size="xs:md md:md" @click="reset">清空</KButton>
               <KButton type="primary" size="xs:md md:md" :disabled="!canPublish" @click="publish">发布主题</KButton>
-            </KSpace>
+            </KFlex>
           </div>
         </KCard>
-      </KCol>
+      </KGridItem>
 
-      <KCol :span="{ xs: 24, md: 7 }">
+      <KGridItem :span="{ xs: 24, md: 7 }">
         <div class="aside">
           <KCard title="发帖建议" size="md">
             <ul class="tips">
@@ -94,8 +94,8 @@
             </div>
           </KCard>
         </div>
-      </KCol>
-    </KRow>
+      </KGridItem>
+    </KGrid>
   </div>
 </template>
 
@@ -103,9 +103,9 @@
 import { computed, reactive, ref } from 'vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import KCard from 'kit/vue/ui/components/Card/Card.vue'
-import KRow from 'kit/vue/ui/components/Grid/Row.vue'
-import KCol from 'kit/vue/ui/components/Grid/Col.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KGrid from 'kit/vue/ui/components/Grid/Grid.vue'
+import KGridItem from 'kit/vue/ui/components/Grid/GridItem.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
 import KAlert from 'kit/vue/ui/components/Alert/Alert.vue'
 import KForm from 'kit/vue/ui/components/Form/Form.vue'

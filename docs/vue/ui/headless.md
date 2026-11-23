@@ -113,10 +113,9 @@ h('button', { ...ctx.controlAttrs, ...onProps(ctx.controlOn) }, '…')
 | KButton | `KButtonRenderScope` | `rootAttrs / rootOn`、`loading / disabled` 状态 |
 | KButtonGroup | `KButtonGroupRenderScope` | `rootAttrs`（组语义） |
 | KIcon | `KIconRenderScope` | `rootAttrs`（aria 语义）、`spin` 状态 |
-| KSpace | `KSpaceRenderScope` | `rootAttrs` + 间距 style（布局逻辑） |
-| KFlex | `KFlexRenderScope` | `rootAttrs` + flex style（布局逻辑） |
+| KFlex | `KFlexRenderScope` | `rootAttrs` + 间距 style、`children` 拍平（separator 自绘） |
 | KDivider | `KDividerRenderScope` | `rootAttrs`（separator 语义） |
-| KRow / KCol | `KRowRenderScope` / `KColRenderScope` | `rootAttrs` + 栅格 style（gutter / span 逻辑） |
+| KGrid / KGridItem | `KGridRenderScope` / `KGridItemRenderScope` | `rootAttrs` + 列模板 / gap / grid-column 逻辑 |
 | KLayout 五件 | `KLayoutRenderScope` 等 | `rootAttrs` + `hasSider` 等派生状态 |
 | KTitle / KText / KParagraph | `KTitleRenderScope` 等 | `rootAttrs`（层级 / 语义标记） |
 | KLink | `KLinkRenderScope` | `rootAttrs / rootOn`（href / 禁用拦截） |

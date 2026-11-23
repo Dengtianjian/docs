@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="md">
+  <KFlex vertical gap="md">
     <KBanner
       v-model:open="visible"
       type="info"
@@ -15,14 +15,14 @@
     </KBanner>
     <KButton v-if="!visible" size="sm" variant="outline" @click="visible = true">重新显示公告</KButton>
     <p class="tip">{{ closed ? '公告已关闭' : '等待操作' }}</p>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KBanner from 'kit/vue/ui/components/Banner/Banner.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const visible = ref(true)
 const closed = ref(false)

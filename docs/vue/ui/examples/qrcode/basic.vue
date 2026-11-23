@@ -1,5 +1,5 @@
 <template>
-  <KSpace :size="24" wrap align="center">
+  <KFlex :gap="24" wrap align="center">
     <div class="item">
       <KQRCode value="https://ruyi.dev" :size="144" />
       <span>默认 M 级</span>
@@ -12,12 +12,12 @@
       <KQRCode :value="'K UI P8 二维码 · 中文内容'" :size="144" level="Q" />
       <span>UTF-8 中文</span>
     </div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KQRCode from 'kit/vue/ui/components/QRCode/QRCode.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 </script>
 
 <style scoped>

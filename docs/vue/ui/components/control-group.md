@@ -57,7 +57,7 @@
 - **复合控件圆角透传**：Select 的圆角画在 `.k-select__control`、InputNumber 画在内部 KInput、按钮型 RadioGroup 画在首尾 `.k-radio--button` 上，组件组会把边缘规则透传到这些视觉壳。
 - **无边框控件用 KControlGroupItem 包裹**：Checkbox/Radio/Switch 自身没有输入框外壳，直接放进来会与相邻控件脱节；包一层 `KControlGroupItem` 后获得与 Input 同款的高度、边框、底色与圆角，作为直接子元素参与首尾圆角拼接。该外壳也可只放文字（如「单位：件」）。
 - `block` 下子项 `flex: 1 1 0; min-width: 0`，输入类控件自动去掉 100% 宽参与拉伸；非 block 时按子控件自身宽度排布。
-- 只做视觉拼接，不含间距：需要间隔请用 KSpace，需要标签/校验请用 KFormItem。
+- 只做视觉拼接，不含间距：需要间隔请用 KFlex，需要标签/校验请用 KFormItem。
 - 纵向模式子项强制 `width: 100%`，上下压边。
 
 ## 自定义渲染（headless）

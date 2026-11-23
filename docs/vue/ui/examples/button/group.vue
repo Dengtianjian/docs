@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg">
+  <KFlex vertical gap="lg">
     <KButtonGroup>
       <KButton>左</KButton>
       <KButton type="primary">中</KButton>
@@ -14,11 +14,11 @@
       <KButton>组下发 sm</KButton>
       <KButton size="lg">自传 lg 优先</KButton>
     </KButtonGroup>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import KButtonGroup from 'kit/vue/ui/components/Button/ButtonGroup.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 </script>

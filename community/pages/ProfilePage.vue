@@ -11,20 +11,20 @@
           <p class="profile-head__bio">{{ currentUser.bio }}</p>
           <span class="profile-head__joined">{{ currentUser.joined }}</span>
         </div>
-        <KSpace size="sm" wrap class="profile-head__actions">
+        <KFlex gap="sm" wrap class="profile-head__actions">
           <KButton size="sm" @click="editing = !editing">{{ editing ? '收起编辑' : '编辑资料' }}</KButton>
           <KButton type="primary" size="sm">私信</KButton>
-        </KSpace>
+        </KFlex>
       </div>
 
-      <KRow class="profile-stats" gutter="xs:8,8 sm:12,12 md:16,12">
-        <KCol v-for="item in userStats" :key="item.label" :span="{ xs: 12, sm: 6 }">
+      <KGrid class="profile-stats" gap="xs:8,8 sm:12,12 md:16,12">
+        <KGridItem v-for="item in userStats" :key="item.label" :span="{ xs: 12, sm: 6 }">
           <div class="stat">
             <strong :style="{ fontSize: statSize }">{{ item.value }}</strong>
             <span>{{ item.label }}</span>
           </div>
-        </KCol>
-      </KRow>
+        </KGridItem>
+      </KGrid>
 
       <div v-if="editing" class="profile-edit">
         <KForm
@@ -47,8 +47,8 @@
       </div>
     </KCard>
 
-    <KRow gutter="xs:0 sm:12 md:16,20 lg:24,24">
-      <KCol :span="{ xs: 24, lg: 17 }">
+    <KGrid gap="xs:0 sm:12 md:16,20 lg:24,24">
+      <KGridItem :span="{ xs: 24, lg: 17 }">
         <KCard :bordered="true">
           <template #header>
             <KControlGroup>
@@ -108,9 +108,9 @@
             </div>
           </div>
         </KCard>
-      </KCol>
+      </KGridItem>
 
-      <KCol :span="{ xs: 24, lg: 7 }">
+      <KGridItem :span="{ xs: 24, lg: 7 }">
         <div class="aside">
           <KCard title="我的关注" size="md">
             <ul class="member-list">
@@ -136,8 +136,8 @@
             </ul>
           </KCard>
         </div>
-      </KCol>
-    </KRow>
+      </KGridItem>
+    </KGrid>
   </div>
 </template>
 
@@ -146,9 +146,9 @@ import { computed, reactive, ref } from 'vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import KControlGroup from 'kit/vue/ui/components/ControlGroup/ControlGroup.vue'
 import KCard from 'kit/vue/ui/components/Card/Card.vue'
-import KRow from 'kit/vue/ui/components/Grid/Row.vue'
-import KCol from 'kit/vue/ui/components/Grid/Col.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KGrid from 'kit/vue/ui/components/Grid/Grid.vue'
+import KGridItem from 'kit/vue/ui/components/Grid/GridItem.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
 import KDivider from 'kit/vue/ui/components/Divider/Divider.vue'
 import KEmpty from 'kit/vue/ui/components/Empty/Empty.vue'

@@ -1,18 +1,18 @@
 <template>
-  <KSpace direction="vertical" size="lg" align="start">
+  <KFlex vertical gap="lg" align="start">
     <KSegmented v-model="value" :options="options" />
-    <KSpace size="lg" align="center">
+    <KFlex gap="lg" align="center">
       <KSegmented v-model="sizeValue" size="sm" :options="options" />
       <KSegmented v-model="sizeValue" size="lg" :options="options" />
-    </KSpace>
+    </KFlex>
     <p class="value">当前：{{ value }} / {{ sizeValue }}</p>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KSegmented from 'kit/vue/ui/components/Segmented/Segmented.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const options = [
   { label: '日', value: 'day' },

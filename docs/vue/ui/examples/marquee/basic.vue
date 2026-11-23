@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="md">
+  <KFlex vertical gap="md">
     <KMarquee
       text="K UI P8 增强件已发布：右键菜单、分隔面板、二维码、水印与引导上线。"
       :duration="16"
@@ -11,10 +11,10 @@
       :duration="20"
       :gap="64"
     />
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KMarquee from 'kit/vue/ui/components/Marquee/Marquee.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 </script>

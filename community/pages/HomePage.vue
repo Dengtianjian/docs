@@ -10,7 +10,7 @@
           Vue、组件库、Discuz
           迁移与小程序实践。提问、分享、共建，好的讨论值得被看见。
         </p>
-        <KSpace size="xs:sm md:md" wrap>
+        <KFlex gap="xs:sm md:md" wrap>
           <KButton
             type="primary"
             size="xs:md lg:lg"
@@ -18,11 +18,11 @@
             >发布主题</KButton
           >
           <KButton size="xs:md lg:lg" @click="scrollToFeed">浏览板块</KButton>
-        </KSpace>
+        </KFlex>
       </div>
       <div class="hero__stats">
-        <KRow gutter="xs:8,8 sm:12,12 md:16,12">
-          <KCol
+        <KGrid gap="xs:8,8 sm:12,12 md:16,12">
+          <KGridItem
             v-for="item in stats"
             :key="item.label"
             :span="{ xs: 12, md: 6 }"
@@ -31,13 +31,13 @@
               <strong :style="{ fontSize: statSize }">{{ item.value }}</strong>
               <span>{{ item.label }}</span>
             </div>
-          </KCol>
-        </KRow>
+          </KGridItem>
+        </KGrid>
       </div>
     </section>
 
-    <KRow ref="feedRow" class="content" gutter="xs:0 sm:12 md:16,20 lg:24,24">
-      <KCol :span="{ xs: 24, lg: 17 }">
+    <KGrid ref="feedRow" class="content" gap="xs:0 sm:12 md:16,20 lg:24,24">
+      <KGridItem :span="{ xs: 24, lg: 17 }">
         <KCard :bordered="true">
           <template #header>
             <div class="feed-head">
@@ -171,9 +171,9 @@
             </div>
           </template>
         </KCard>
-      </KCol>
+      </KGridItem>
 
-      <KCol :span="{ xs: 24, lg: 7 }">
+      <KGridItem :span="{ xs: 24, lg: 7 }">
         <div class="aside">
           <KCard title="社区公告" size="md">
             <KAlert
@@ -234,8 +234,8 @@
             </div>
           </KCard>
         </div>
-      </KCol>
-    </KRow>
+      </KGridItem>
+    </KGrid>
   </div>
 </template>
 
@@ -245,9 +245,9 @@ import KButton from "kit/vue/ui/components/Button/Button.vue";
 import KControlGroup from "kit/vue/ui/components/ControlGroup/ControlGroup.vue";
 import KSelect from "kit/vue/ui/components/Select/Select.vue";
 import KCard from "kit/vue/ui/components/Card/Card.vue";
-import KRow from "kit/vue/ui/components/Grid/Row.vue";
-import KCol from "kit/vue/ui/components/Grid/Col.vue";
-import KSpace from "kit/vue/ui/components/Space/Space.vue";
+import KGrid from "kit/vue/ui/components/Grid/Grid.vue";
+import KGridItem from "kit/vue/ui/components/Grid/GridItem.vue";
+import KFlex from "kit/vue/ui/components/Flex/Flex.vue";
 import KTag from "kit/vue/ui/components/Tag/Tag.vue";
 import KDivider from "kit/vue/ui/components/Divider/Divider.vue";
 import KEmpty from "kit/vue/ui/components/Empty/Empty.vue";
@@ -288,7 +288,7 @@ const sortOptions = [
 const activeTag = ref("");
 const page = ref(1);
 const pageSize = 5;
-const feedRow = ref<InstanceType<typeof KRow> | null>(null);
+const feedRow = ref<InstanceType<typeof KGrid> | null>(null);
 
 const filtered = computed(() => {
   let list = posts.value;

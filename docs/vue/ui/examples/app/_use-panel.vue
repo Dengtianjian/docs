@@ -12,13 +12,13 @@
         :class="{ 'is-on': api.on }"
       >{{ api.name }}</span>
     </div>
-    <KSpace wrap size="sm">
+    <KFlex wrap gap="sm">
       <KButton size="sm" type="primary" @click="messageDemo">message</KButton>
       <KButton size="sm" @click="notificationDemo">notification</KButton>
       <KButton size="sm" @click="modalDemo">modal</KButton>
       <KButton size="sm" @click="drawerDemo">drawer</KButton>
       <KButton size="sm" variant="text" type="link" @click="destroyAll">清空本实例</KButton>
-    </KSpace>
+    </KFlex>
     <p class="use-panel__status">最近：{{ status }}</p>
   </div>
 </template>
@@ -27,7 +27,7 @@
 import { computed, ref } from 'vue'
 import { useKApp } from 'kit/vue/ui'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const props = withDefaults(defineProps<{ title?: string }>(), { title: 'useKApp' })
 

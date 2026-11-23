@@ -82,7 +82,7 @@ cfg.breakpoints               // 当前作用域断点差量（与上层按档�
 - 弹层类组件（P3+）有硬契约：portal 根必须绑 `cfg.scopeClass` 并按 `cfg.popupContainer` 选定出口，「局部暗色区内的弹层跟随暗色」是验收用例。
 - 与 [KApp](./app.md) 组合时推荐 `KApp` 放在 Provider 内层：主题变量由 Provider 承担，文字基线与实例上下文由 KApp 承担；演示见 [app.md「与 KConfigProvider 组合」](./app.md)。
 - **自定义断点的作用范围**：JS 断点判定（`useBreakpoint` / `useResponsiveValue`，覆盖 Button/Space/Form/Sider/Row gutter/DateRangePicker 的移动端行为）、`--k-screen-*` 变量、`platform.mobile` 生成块；
-  - 组件样式内的静态 `@media`（如 `max-width: 767px`）与 `grid.css` 的栅格断点仍是设计基线值，不随 Provider 运行时改变；需要整体改版式请同步覆盖对应 CSS。
+  - 组件样式内的静态 `@media`（如 `max-width: 767px`）仍是设计基线值，不随 Provider 运行时改变；需要整体改版式请同步覆盖对应 CSS。
 - 断点请传**单调递增**的整组档位；
   - 只改单档时至少要保证它落在相邻两档之间，否则 `useBreakpoint` 会按「从高到低第一个满足 min-width」的规则返回较低档。
 

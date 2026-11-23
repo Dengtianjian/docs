@@ -1,6 +1,6 @@
 <template>
-  <KSpace direction="vertical" size="lg">
-    <KSpace size="lg" wrap align="center">
+  <KFlex vertical gap="lg">
+    <KFlex gap="lg" wrap align="center">
       <span style="color: var(--k-color-text-secondary)">弹出位置</span>
       <KRadioGroup v-model="placement" shape="button">
         <KRadio value="top">上中</KRadio>
@@ -10,8 +10,8 @@
         <KRadio value="bottomLeft">左下</KRadio>
         <KRadio value="bottomRight">右下</KRadio>
       </KRadioGroup>
-    </KSpace>
-    <KSpace size="lg" wrap>
+    </KFlex>
+    <KFlex gap="lg" wrap>
       <KButton type="primary" @click="openWithActions"
         >带操作区（actions）</KButton
       >
@@ -19,8 +19,8 @@
       <KButton variant="text" type="link" @click="notification!.destroyAll()"
         >清空</KButton
       >
-    </KSpace>
-  </KSpace>
+    </KFlex>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
@@ -29,7 +29,7 @@ import { useKApp } from "kit/vue/ui/composables/useKApp";
 import KButton from "kit/vue/ui/components/Button/Button.vue";
 import KRadioGroup from "kit/vue/ui/components/Radio/RadioGroup.vue";
 import KRadio from "kit/vue/ui/components/Radio/Radio.vue";
-import KSpace from "kit/vue/ui/components/Space/Space.vue";
+import KFlex from "kit/vue/ui/components/Flex/Flex.vue";
 import type { KNotificationPlacement } from "kit/vue/ui/components/Notification/service";
 
 const { notification } = useKApp()!;

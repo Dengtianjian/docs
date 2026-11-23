@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="md" style="width: 100%">
+  <KFlex vertical gap="md" style="width: 100%">
     <KAlert message="info：普通通知，不带描述时单行紧凑" />
     <KAlert type="success" message="success" description="带描述形态：标题加粗，辅助文案走 --k-color-text-secondary。" />
     <KAlert type="warning" :show-icon="false" message="warning + showIcon=false" />
@@ -11,14 +11,14 @@
       </template>
     </KAlert>
     <KButton v-else variant="text" type="link" @click="alive = true">恢复上一条</KButton>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KAlert from 'kit/vue/ui/components/Alert/Alert.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const alive = ref(true)
 </script>

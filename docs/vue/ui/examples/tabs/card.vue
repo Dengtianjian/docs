@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg">
+  <KFlex vertical gap="lg">
     <KRadioGroup
       v-model="size"
       shape="button"
@@ -19,7 +19,7 @@
       <KTabPane name="b" label="等分 2">内容 2</KTabPane>
       <KTabPane name="c" label="等分 3">内容 3</KTabPane>
     </KTabs>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
@@ -27,7 +27,7 @@ import { ref } from 'vue'
 import KTabs from 'kit/vue/ui/components/Tabs/Tabs.vue'
 import KTabPane from 'kit/vue/ui/components/Tabs/TabPane.vue'
 import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const size = ref('md')
 </script>

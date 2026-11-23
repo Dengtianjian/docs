@@ -1,15 +1,15 @@
 <template>
-  <KSpace direction="vertical" size="lg">
-    <KSpace size="lg" align="start" wrap>
+  <KFlex vertical gap="lg">
+    <KFlex gap="lg" align="start" wrap>
       <KCard v-for="item in variants" :key="item.value" :variant="item.value" :title="item.label" style="width: 220px">
         {{ item.desc }}
       </KCard>
-    </KSpace>
-    <KSpace size="lg" align="start" wrap>
+    </KFlex>
+    <KFlex gap="lg" align="start" wrap>
       <KCard v-for="item in sizes" :key="item" :size="item" :title="`size=${item}`" style="width: 220px">
         内边距与标题字号随尺寸变化。
       </KCard>
-    </KSpace>
+    </KFlex>
     <KCard hover-shadow variant="borderless" title="hoverShadow" style="width: 220px">
       悬浮时浮起阴影，0.2s 过渡。
     </KCard>
@@ -19,12 +19,12 @@
         <template #footer>inner 的页脚同样可用。</template>
       </KCard>
     </KCard>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KCard from 'kit/vue/ui/components/Card/Card.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KCardVariant } from 'kit/vue/ui'
 
 const variants: { value: KCardVariant; label: string; desc: string }[] = [

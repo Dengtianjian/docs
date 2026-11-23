@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg">
+  <KFlex vertical gap="lg">
     <KRate v-model="heart" character="♥" color="#e5484d" :count="5" />
     <KRate
       v-model="tips"
@@ -8,13 +8,13 @@
     />
     <KRate v-model="clearable" allow-clear allow-half />
     <span style="color: var(--k-color-text-secondary)">当前值：{{ clearable }}</span>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KRate from 'kit/vue/ui/components/Rate/Rate.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const heart = ref(3)
 const tips = ref(4)

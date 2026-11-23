@@ -1,16 +1,16 @@
 <template>
-  <KSpace direction="vertical" size="lg">
+  <KFlex vertical gap="lg">
     <KButton size="sm" @click="loading = !loading">{{ loading ? '结束加载' : '模拟加载' }}</KButton>
     <KList :items="items" :loading="loading" />
     <KList :items="[]" empty-text="还没有任务" />
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import KList from 'kit/vue/ui/components/List/List.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const loading = ref(false)
 const items = [

@@ -1,25 +1,25 @@
 <template>
-  <KSpace direction="vertical" size="md">
-    <KSpace>
+  <KFlex vertical gap="md">
+    <KFlex>
       <KTag v-for="color in colors" :key="color" :color="color">#{{ color.slice(1) }}</KTag>
-    </KSpace>
-    <KSpace>
+    </KFlex>
+    <KFlex>
       <KTag v-for="variant in variants" :key="variant" color="#722ed1" :variant="variant">
         {{ variant }}
       </KTag>
-    </KSpace>
-    <KSpace>
+    </KFlex>
+    <KFlex>
       <KTag color="#722ed1" round size="lg" closable>紫色大号可关闭</KTag>
       <KTag color="warning" closable>预设与十六进制共用 color</KTag>
       <KTag color="#fa8c16" spin :icon="RefreshIcon">自定义图标 + spin</KTag>
-    </KSpace>
-  </KSpace>
+    </KFlex>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { defineComponent, h } from 'vue'
 import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KTagVariant } from 'kit/vue/ui'
 
 const colors = ['#1677ff', '#52c41a', '#faad14', '#ff4d4f', '#722ed1']

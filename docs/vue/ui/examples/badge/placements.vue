@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg">
+  <KFlex vertical gap="lg">
     <div class="grid">
       <div v-for="item in placements" :key="item.placement" class="cell">
         <KBadge :count="5" :placement="item.placement">
@@ -7,7 +7,7 @@
         </KBadge>
       </div>
     </div>
-    <KSpace align="center">
+    <KFlex align="center">
       <KBadge :count="5" placement="top-start" :offset="[-4, -4]">
         <span class="box">偏移 -4,-4</span>
       </KBadge>
@@ -17,13 +17,13 @@
       <KBadge dot placement="start">
         <span class="box">圆点 start</span>
       </KBadge>
-    </KSpace>
-  </KSpace>
+    </KFlex>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KBadge from 'kit/vue/ui/components/Badge/Badge.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KBadgePlacement } from 'kit/vue/ui'
 
 const placements: { placement: KBadgePlacement; label: string }[] = [

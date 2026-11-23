@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg" style="width: 100%">
+  <KFlex vertical gap="lg" style="width: 100%">
     <KSteps v-model:current="current" direction="vertical" variant="navigation" show-icon clickable>
       <KStep title="账号资料">
         <template #icon><UserIcon /></template>
@@ -9,14 +9,14 @@
       <KStep title="完善资料" description="企业与开票信息" />
       <KStep title="完成设置" description="进入工作台" />
     </KSteps>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { defineComponent, h, ref } from 'vue'
 import KSteps from 'kit/vue/ui/components/Steps/Steps.vue'
 import KStep from 'kit/vue/ui/components/Steps/Step.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const current = ref(1)
 

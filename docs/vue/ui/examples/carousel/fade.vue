@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="md" style="width: 100%">
+  <KFlex vertical gap="md" style="width: 100%">
     <KCarousel :items="items" effect="fade" :height="200" indicator="line">
       <template #content="{ item }">
         <div class="panel" :style="{ background: item.background }">
@@ -11,12 +11,12 @@
     <KCarousel :items="items" vertical :height="220" :show-indicators="false">
       <template #content="{ item }">{{ item.title }}</template>
     </KCarousel>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KCarousel from 'kit/vue/ui/components/Carousel/Carousel.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const items = [
   { title: '淡入淡出', copy: '适合图文占比高的品牌位', background: 'linear-gradient(135deg,#0f172a,#334155)' },

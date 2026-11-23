@@ -1,12 +1,12 @@
 <template>
-  <KSpace direction="vertical" size="md">
+  <KFlex vertical gap="md">
     <KDropdown :items="items" trigger="click" @select="onSelect">
       <template #trigger>
         <KButton>操作</KButton>
       </template>
     </KDropdown>
     <div class="dropdown-tip">最近操作：{{ last || '—' }}</div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
@@ -14,7 +14,7 @@ import { ref } from 'vue'
 import { defineComponent, h } from 'vue'
 import KDropdown from 'kit/vue/ui/components/Dropdown/Dropdown.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KDropdownItem } from 'kit/vue/ui'
 
 function svg(children: ReturnType<typeof h>[]) {

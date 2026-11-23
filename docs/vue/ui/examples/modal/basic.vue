@@ -1,5 +1,5 @@
 <template>
-  <KSpace size="lg" wrap align="center">
+  <KFlex gap="lg" wrap align="center">
     <KModal title="编辑名称" @close="done = '已关闭（X / Esc / 蒙层）'">
       <template #trigger><KButton type="primary">打开弹窗（自管开合）</KButton></template>
       <p style="margin: 0 0 12px">自管开合：不传 <code>open</code>，<code>#trigger</code> 点击即开；关闭走右上 X / 蒙层 / Esc，统一发 <code>close</code> 事件。</p>
@@ -16,7 +16,7 @@
       <p style="margin: 0">受控开合：传 <code>v-model:open</code>，trigger 点击只发 <code>update:open</code>；footer 纯插槽驱动，按钮完全由业务自绘。</p>
     </KModal>
     <span style="color: var(--k-color-text-secondary)">{{ done }}</span>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
@@ -24,7 +24,7 @@ import { ref } from 'vue'
 import KModal from 'kit/vue/ui/components/Modal/Modal.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import KInput from 'kit/vue/ui/components/Input/Input.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const centerOpen = ref(false)
 const done = ref('未提交')

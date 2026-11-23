@@ -1,5 +1,5 @@
 <template>
-  <KSpace align="start">
+  <KFlex align="start">
     <div class="box">
       <KButton type="primary">默认主题</KButton>
       <KButton>Default</KButton>
@@ -10,13 +10,13 @@
         <KButton>Default</KButton>
       </div>
     </KConfigProvider>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 // 只写 seed，Map/Alias 全由 CSS 表达式图派生 —— 这就是「一变百变」
 const teal = { seed: { colorPrimary: '#13c2c2', borderRadius: 10 } }

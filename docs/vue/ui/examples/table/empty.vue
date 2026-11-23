@@ -1,8 +1,8 @@
 <template>
   <div>
-    <KSpace style="margin-bottom: 12px">
+    <KFlex style="margin-bottom: 12px">
       <KSwitch v-model="empty">空数据</KSwitch>
-    </KSpace>
+    </KFlex>
     <KTable :columns="columns" :data-source="empty ? [] : rows">
       <template #empty>
         <KEmpty description="还没有成员，先邀请一位吧">
@@ -19,7 +19,7 @@
 import { ref } from 'vue'
 import KTable from 'kit/vue/ui/components/Table/Table.vue'
 import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import KEmpty from 'kit/vue/ui/components/Empty/Empty.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import type { KTableColumn } from 'kit/vue/ui'

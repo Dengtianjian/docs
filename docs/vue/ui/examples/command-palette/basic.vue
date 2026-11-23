@@ -1,9 +1,9 @@
 <template>
-  <KSpace direction="vertical" size="sm">
+  <KFlex vertical gap="sm">
     <KButton @click="open = true">打开命令面板</KButton>
     <p class="tip">最近执行：{{ last || '（无）' }}</p>
     <KCommandPalette v-model:open="open" :items="items" @select="onSelect" />
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
@@ -11,7 +11,7 @@ import { ref } from 'vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import KCommandPalette from 'kit/vue/ui/components/CommandPalette/CommandPalette.vue'
 import type { KCommandPaletteItem } from 'kit/vue/ui/components/CommandPalette/CommandPalette.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const open = ref(false)
 const last = ref('')

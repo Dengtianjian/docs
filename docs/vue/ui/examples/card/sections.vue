@@ -1,5 +1,5 @@
 <template>
-  <KSpace size="lg" align="start" wrap>
+  <KFlex gap="lg" align="start" wrap>
     <KCard segmented title="分段卡片" extra="更多" style="width: 320px">
       内容区。开启 `segmented` 后，header 与 body、footer 之间出现分隔线。
       <template #footer>页脚说明文字，可放更新时间等信息。</template>
@@ -18,12 +18,12 @@
       传入 `#header` 时整体替换 title / extra。
       <template #footer>未开启分段：header、body、footer 仅靠间距区分。</template>
     </KCard>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KCard from 'kit/vue/ui/components/Card/Card.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
 </script>
 

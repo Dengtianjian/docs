@@ -1,6 +1,6 @@
 <template>
-  <KSpace direction="vertical" size="lg">
-    <KSpace align="center" wrap>
+  <KFlex vertical gap="lg">
+    <KFlex align="center" wrap>
       <KDropdown :items="items" trigger="hover" placement="bottomLeft" @select="onSelect">
         <template #trigger><KButton>悬停触发</KButton></template>
       </KDropdown>
@@ -12,16 +12,16 @@
           <div class="context-area" tabindex="0">在此区域右键</div>
         </template>
       </KDropdown>
-    </KSpace>
+    </KFlex>
     <div class="dropdown-tip">选中：{{ last || '—' }}</div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KDropdown from 'kit/vue/ui/components/Dropdown/Dropdown.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KDropdownItem } from 'kit/vue/ui'
 
 const items: KDropdownItem[] = [

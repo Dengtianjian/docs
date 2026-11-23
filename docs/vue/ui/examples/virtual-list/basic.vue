@@ -1,10 +1,10 @@
 <template>
   <div style="max-width: 420px">
-    <KSpace size="sm" style="margin-bottom: 8px">
+    <KFlex gap="sm" style="margin-bottom: 8px">
       <KButton size="sm" @click="list?.scrollToIndex(0)">回到顶部</KButton>
       <KButton size="sm" @click="list?.scrollToIndex(5000, 'center')">跳到第 5001 项</KButton>
       <KButton size="sm" @click="list?.scrollToIndex(9999, 'end')">跳到底部</KButton>
-    </KSpace>
+    </KFlex>
     <KVirtualList
       ref="list"
       :items="items"
@@ -27,7 +27,7 @@
 import { ref } from 'vue'
 import KVirtualList from 'kit/vue/ui/components/VirtualList/VirtualList.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const list = ref<InstanceType<typeof KVirtualList> | null>(null)
 const items = Array.from({ length: 10000 }, (_, index) => ({

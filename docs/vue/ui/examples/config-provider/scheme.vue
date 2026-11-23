@@ -1,5 +1,5 @@
 <template>
-  <KSpace align="start">
+  <KFlex align="start">
     <div class="box">
       <KButton type="primary">浅色区</KButton>
       <KText type="secondary">页面亮暗不变</KText>
@@ -10,14 +10,14 @@
         <KText type="secondary">light-dark() 就近解析</KText>
       </div>
     </KConfigProvider>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import KText from 'kit/vue/ui/components/Typography/Text.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 </script>
 
 <style scoped>

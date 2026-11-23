@@ -1,21 +1,21 @@
 <template>
-  <KSpace direction="vertical" size="md">
+  <KFlex vertical gap="md">
     <div class="display">
       <KRollingText :value="value" :duration="650" />
       <span class="unit">单</span>
     </div>
-    <KSpace>
+    <KFlex>
       <KButton size="sm" @click="value += 137">增加 137</KButton>
       <KButton size="sm" variant="outline" @click="value = 0">归零</KButton>
-    </KSpace>
-  </KSpace>
+    </KFlex>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import KRollingText from 'kit/vue/ui/components/RollingText/RollingText.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const value = ref(1024)
 </script>

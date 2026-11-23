@@ -1,11 +1,11 @@
 <template>
-  <KSpace direction="vertical" size="md">
-    <KSpace align="center">
+  <KFlex vertical gap="md">
+    <KFlex align="center">
       <KTag v-for="item in icons" :key="item.name" :color="item.color" :icon="item.icon">
         {{ item.name }}
       </KTag>
-    </KSpace>
-    <KSpace align="center">
+    </KFlex>
+    <KFlex align="center">
       <KTag
         v-for="item in positions"
         :key="item.position"
@@ -15,22 +15,22 @@
       >
         {{ item.position }}
       </KTag>
-    </KSpace>
-    <KSpace align="center">
+    </KFlex>
+    <KFlex align="center">
       <KTag color="success" closable>
         <template #icon><CheckIcon /></template>
         插槽图标
       </KTag>
       <KTag color="#722ed1" variant="outlined" :icon="RefreshIcon" spin>自定义颜色 + spin</KTag>
       <KTag color="processing" size="lg" closable>processing 自动图标</KTag>
-    </KSpace>
-  </KSpace>
+    </KFlex>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { defineComponent, h } from 'vue'
 import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { Component, VNode } from 'vue'
 import type { KTagColor, KTagIconPosition } from 'kit/vue/ui'
 

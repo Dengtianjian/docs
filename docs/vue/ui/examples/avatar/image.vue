@@ -1,14 +1,14 @@
 <template>
-  <KSpace align="center" size="lg">
+  <KFlex align="center" gap="lg">
     <KAvatar :src="image" alt="如意" size="lg" />
     <KAvatar :src="image" alt="如意" shape="square" size="lg" />
     <KAvatar src="/not-found.png" alt="加载失败" size="lg" />
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KAvatar from 'kit/vue/ui/components/Avatar/Avatar.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const image = `data:image/svg+xml,${encodeURIComponent(`
   <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96">

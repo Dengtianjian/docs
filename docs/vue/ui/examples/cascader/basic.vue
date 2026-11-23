@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg" style="width: 100%; max-width: 420px">
+  <KFlex vertical gap="lg" style="width: 100%; max-width: 420px">
     <KCascader v-model="region" :options="options" placeholder="请选择地区" />
     <KCascader
       v-model="anyLevel"
@@ -11,13 +11,13 @@
     <span style="color: var(--k-color-text-secondary)">
       地区：{{ region?.join(' / ') || '未选择' }} · 任意层级：{{ anyLevel?.join(' / ') || '未选择' }}
     </span>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KCascader from 'kit/vue/ui/components/Cascader/Cascader.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KCascaderValue } from 'kit/vue/ui/components/Cascader/Cascader.vue'
 import type { KTreeOption } from 'kit/vue/ui/utils/tree'
 

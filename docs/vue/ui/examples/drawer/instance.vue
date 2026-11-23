@@ -1,17 +1,17 @@
 <template>
-  <KSpace direction="vertical" size="md">
-    <KSpace align="center">
+  <KFlex vertical gap="md">
+    <KFlex align="center">
       <KButton type="primary" @click="openDrawer">实例打开</KButton>
       <KButton @click="destroyAll">销毁全部</KButton>
-    </KSpace>
+    </KFlex>
     <div class="drawer-tip">状态：{{ status }}</div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { h, ref } from 'vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import { useKApp } from 'kit/vue/ui'
 import type { KDrawerHandle } from 'kit/vue/ui'
 

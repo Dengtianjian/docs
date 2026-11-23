@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="sm">
+  <KFlex vertical gap="sm">
     <p class="tip">按 <kbd>⌘</kbd> / <kbd>Ctrl</kbd> + <kbd>K</kbd> 随时唤起；搜索支持子序列，例如 <code>kbt</code> 可命中 <code>KButton</code>。</p>
     <KCommandPalette v-model:open="open" :items="items" hotkey="mod+k">
       <template #item="{ item, active }">
@@ -14,7 +14,7 @@
       </template>
     </KCommandPalette>
     <KButton variant="outline" @click="open = true">也可以点这里打开</KButton>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
@@ -22,7 +22,7 @@ import { ref } from 'vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import KCommandPalette from 'kit/vue/ui/components/CommandPalette/CommandPalette.vue'
 import type { KCommandPaletteItem } from 'kit/vue/ui/components/CommandPalette/CommandPalette.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const open = ref(false)
 const items: KCommandPaletteItem[] = [

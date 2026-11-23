@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="md">
+  <KFlex vertical gap="md">
     <KPinInput
       v-model="otp"
       :length="6"
@@ -11,13 +11,13 @@
       aria-label="短信验证码"
     />
     <p class="tip">OTP 模式会提示系统短信验证码；mask 控制是否隐藏数字。</p>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KPinInput from 'kit/vue/ui/components/PinInput/PinInput.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const otp = ref('')
 </script>

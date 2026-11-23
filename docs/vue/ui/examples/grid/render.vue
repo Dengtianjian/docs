@@ -1,38 +1,29 @@
 <template>
-  <!-- gutter 逻辑双向继承：Row 负外边距 + provide 照跑，Col 内边距随 rootAttrs；列宽百分比由 span 自绘 -->
-  <KRow :gutter="[16, 16]">
+  <KGrid :columns="24" :gap="[16, 16]">
     <template #render="ctx">
-      <div v-bind="ctx.rootAttrs" class="hl-row">
-        <KCol v-for="n in 3" :key="n" :span="8">
-          <template #render="col">
-            <div
-              v-bind="col.rootAttrs"
-              class="hl-col"
-              :style="{ width: `${(Number(col.span) / 24) * 100}%` }"
-            >
-              <div class="hl-col__box">span={{ col.span }} · gutter={{ col.gutter.join(',') }}</div>
+      <div v-bind="ctx.rootAttrs" class="hl-grid">
+        <KGridItem v-for="n in 3" :key="n" :span="8">
+          <template #render="item">
+            <div v-bind="item.rootAttrs" class="hl-grid__box">
+              span={{ item.span }} · columns={{ ctx.columns }} · gap={{ ctx.gap.join(' / ') }}
             </div>
           </template>
-        </KCol>
+        </KGridItem>
       </div>
     </template>
-  </KRow>
+  </KGrid>
 </template>
 
 <script setup lang="ts">
-import KRow from 'kit/vue/ui/components/Grid/Row.vue'
-import KCol from 'kit/vue/ui/components/Grid/Col.vue'
+import KGrid from 'kit/vue/ui/components/Grid/Grid.vue'
+import KGridItem from 'kit/vue/ui/components/Grid/GridItem.vue'
 </script>
 
 <style scoped>
-.hl-row {
-  display: flex;
-  flex-wrap: wrap;
+.hl-grid {
+  display: grid;
 }
-.hl-col {
-  box-sizing: border-box;
-}
-.hl-col__box {
+.hl-grid__box {
   padding: 12px;
   border-radius: 8px;
   background: var(--k-color-primary-bg);

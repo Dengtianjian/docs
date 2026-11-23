@@ -1,5 +1,5 @@
 <template>
-  <KSpace :size="20" wrap align="start">
+  <KFlex :gap="20" wrap align="start">
     <KImage
       v-for="item in images"
       :key="item.name"
@@ -10,13 +10,13 @@
       preview
       :preview-items="images"
     />
-  </KSpace>
+  </KFlex>
   <p class="tip">点击图片打开 KPreview，支持缩放、旋转与切换。</p>
 </template>
 
 <script setup lang="ts">
 import KImage from 'kit/vue/ui/components/Image/Image.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 function makeImage(label: string, from: string, to: string) {
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`

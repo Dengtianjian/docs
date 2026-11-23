@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg">
+  <KFlex vertical gap="lg">
     <KSteps v-model:current="active" direction="vertical" clickable @change="onChange">
       <KStep title="创建实例" description="选择配置与可用区" />
       <KStep title="配置网络" description="绑定公网 IP 与安全组" />
@@ -7,14 +7,14 @@
       <KStep title="完成部署" disabled description="支付后自动执行" />
     </KSteps>
     <div class="steps-tip">当前步骤：{{ active + 1 }} / 4</div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KSteps from 'kit/vue/ui/components/Steps/Steps.vue'
 import KStep from 'kit/vue/ui/components/Steps/Step.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const active = ref(0)
 

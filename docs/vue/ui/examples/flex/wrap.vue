@@ -1,5 +1,5 @@
 <template>
-  <KFlex wrap gap="xs" style="max-width: 360px">
+  <KFlex :inline="false" wrap gap="xs" style="max-width: 360px">
     <span
       v-for="tag in ['Vue 3.5', 'CSS-first', 'oklab', '双端', '@layer', '语义 DOM', '零构建', '按需导入']"
       :key="tag"

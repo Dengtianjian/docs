@@ -6,20 +6,20 @@
 
 ```vue
 <!-- 常量 -->
-<KSpace size="sm" />
+<KFlex gap="sm" />
 
 <!-- 对象（推荐，类型完整） -->
-<KSpace :size="{ xs: 8, md: 'sm', lg: 'lg' }" />
+<KFlex :gap="{ xs: 8, md: 'sm', lg: 'lg' }" />
 <KLayoutSider :width="{ xs: 140, sm: 180, md: 208 }" />
 
 <!-- 字符串语法糖（空白分隔键值对） -->
-<KSpace size="xs:8 md:sm lg:lg" />
-<KRow gutter="xs:8 sm:12 md:16 lg:24" />
+<KFlex gap="xs:8 md:sm lg:lg" />
+<KGrid columns="xs:1 sm:2 md:3" />
 <KLayoutSider width="xs:140 sm:180 md:208" />
 ```
 
 - 键：`xs / sm / md / lg / xl / xxl`（与 theme.css 断点同源：0/576/768/992/1200/1600）。
-- 值：组件自身的 prop 值类型；数值型组件（gutter、Sider width）会把字符串里的 `8` 转成数字。
+- 值：组件自身的 prop 值类型；数值型组件（gap、columns、Sider width）会把字符串里的 `8` 转成数字。
 - Grid 二元组字符串用逗号：`"xs:8,16 md:16,24"`（水平, 垂直）。
 - 缺档规则：**mobile-first**，当前档缺值 → 向低档回退；低档全缺 → `undefined`，由组件缺省值接管。
 - SSR：无 `matchMedia` 时按保守档 `md` 首帧解析，挂载后由真实视口校正（视觉仍走 CSS 断点，不闪列宽）。
@@ -28,8 +28,8 @@
 
 | 组件 | prop | 说明 |
 | --- | --- | --- |
-| KRow | gutter | 数字 / 二元组 / 断点对象 / 字符串 |
-| KSpace | size | token 名 / 数字 / 二元组 / 断点对象 / 字符串 |
+| KGrid | columns / gap / span / start | 数字 / 断点对象 / 字符串 |
+| KFlex | gap | token 名 / 数字 / 二元组 / 断点对象 / 字符串 |
 | KLayoutSider | width | px 数字 / 断点对象 / 字符串 |
 | KButton / KButtonGroup | size | xs/sm/md/lg 四档，组内下发同可响应式 |
 | KForm | layout / labelWidth / labelAlign / colon | 全部非数据属性支持断点对象 / 字符串；`model` / `rules` 除外 |

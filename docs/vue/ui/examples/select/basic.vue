@@ -1,18 +1,18 @@
 <template>
-  <KSpace size="md" direction="vertical" style="width: 220px">
+  <KFlex gap="md" vertical style="width: 220px">
     <KSelect v-model="fruit" :options="opts" allow-clear placeholder="选择水果" />
     <div>当前值：{{ fruit }}</div>
     <KSelect :model-value="'apple'" disabled />
-    <KSpace size="xs" direction="vertical" style="width: 220px">
+    <KFlex gap="xs" vertical style="width: 220px">
       <KSelect v-for="s in ['xs', 'sm', 'md', 'lg']" :key="s" :size="s" :options="opts" :placeholder="`size=${s}（选项行 = 触发器 −4）`" />
-    </KSpace>
-  </KSpace>
+    </KFlex>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KSelect from 'kit/vue/ui/components/Select/Select.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const fruit = ref<string | number | null>(null)
 const opts = [

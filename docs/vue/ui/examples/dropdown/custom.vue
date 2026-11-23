@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="md">
+  <KFlex vertical gap="md">
     <KDropdown
       v-model:open="open"
       :items="items"
@@ -16,14 +16,14 @@
       </template>
     </KDropdown>
     <div class="dropdown-tip">菜单状态：{{ open ? '展开' : '收起' }}；最近选择：{{ last || '—' }}</div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KDropdown from 'kit/vue/ui/components/Dropdown/Dropdown.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KDropdownItem } from 'kit/vue/ui'
 
 const open = ref(false)

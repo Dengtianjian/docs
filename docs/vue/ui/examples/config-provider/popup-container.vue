@@ -4,12 +4,12 @@
       <div ref="hostEl" class="popup-host">
         <div class="popup-host__inner">
           <p class="popup-host__text">弹层出口被限定在这个滚动容器：随内容滚动、超出边界被裁切。</p>
-          <KSpace wrap align="center">
+          <KFlex wrap align="center">
             <KSelect v-model="value" :options="options" placeholder="展开选项" style="width: 180px" />
             <KTooltip content="容器内 tooltip">
               <KButton>悬停提示</KButton>
             </KTooltip>
-          </KSpace>
+          </KFlex>
           <div class="popup-host__spacer">滚动区内容</div>
           <p class="popup-host__text">末尾：弹层始终留在这个容器里。</p>
         </div>
@@ -27,7 +27,7 @@ import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider
 import KSelect from 'kit/vue/ui/components/Select/Select.vue'
 import KTooltip from 'kit/vue/ui/components/Tooltip/Tooltip.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const hostEl = ref<HTMLElement>()
 const getHost = () => hostEl.value as HTMLElement

@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="md">
+  <KFlex vertical gap="md">
     <KBreadcrumb :items="items" />
     <KBreadcrumb>
       <KBreadcrumbItem href="#api">首页</KBreadcrumbItem>
@@ -7,13 +7,13 @@
       <KBreadcrumbItem current>面包屑</KBreadcrumbItem>
     </KBreadcrumb>
     <KBreadcrumb :items="items" size="sm" />
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KBreadcrumb from 'kit/vue/ui/components/Breadcrumb/Breadcrumb.vue'
 import KBreadcrumbItem from 'kit/vue/ui/components/Breadcrumb/BreadcrumbItem.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KBreadcrumbItemOption } from 'kit/vue/ui'
 
 const items: KBreadcrumbItemOption[] = [

@@ -1,9 +1,9 @@
 <template>
-  <KSpace direction="vertical" size="lg">
-    <KSpace align="center">
+  <KFlex vertical gap="lg">
+    <KFlex align="center">
       <KSwitch v-model="strict">严格模式</KSwitch>
       <span class="hint">严格模式只影响当前节点</span>
-    </KSpace>
+    </KFlex>
     <KTree
       v-model:checked-keys="checked"
       :data="data"
@@ -12,12 +12,12 @@
       default-expand-all
     />
     <p class="hint">已勾选：{{ checked.join('、') || '无' }}</p>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
 import KTree from 'kit/vue/ui/components/Tree/Tree.vue'
 

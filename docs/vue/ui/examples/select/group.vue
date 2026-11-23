@@ -1,5 +1,5 @@
 <template>
-  <KSpace size="md" direction="vertical" style="width: 260px">
+  <KFlex gap="md" vertical style="width: 260px">
     <KSelect v-model="picked" mode="multiple" :options="opts" hide-selected placeholder="分组 + 隐藏已选（选完组空整组消失）">
       <template #prefix>
         <svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.5" /><path d="M10.5 10.5L14 14" /></svg>
@@ -10,13 +10,13 @@
       <template #suffix><span style="font-size: 12px">v1</span></template>
     </KSelect>
     <div>当前值：{{ picked.join(', ') }}</div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KSelect from 'kit/vue/ui/components/Select/Select.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const picked = ref<(string | number)[]>(['vue'])
 const single = ref<string | number | null>(null)

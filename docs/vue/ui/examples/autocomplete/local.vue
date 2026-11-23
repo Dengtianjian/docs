@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg" style="width: 100%">
+  <KFlex vertical gap="lg" style="width: 100%">
     <KAutoComplete
       v-model="value"
       :options="options"
@@ -14,13 +14,13 @@
       placeholder="聚焦即展示全部建议"
     />
     <span style="color: var(--k-color-text-secondary)">已选：{{ selected || '尚未选择' }}</span>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KAutoComplete from 'kit/vue/ui/components/AutoComplete/AutoComplete.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KAutoCompleteOption } from 'kit/vue/ui/components/AutoComplete/AutoComplete.vue'
 
 const value = ref('')

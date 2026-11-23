@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="md">
+  <KFlex vertical gap="md">
     <KTabs v-model:active="active" @close="close">
       <KTabPane
         v-for="tab in tabs"
@@ -13,14 +13,14 @@
       </KTabPane>
     </KTabs>
     <div class="tabs-tip">当前页签：{{ active }}</div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KTabs from 'kit/vue/ui/components/Tabs/Tabs.vue'
 import KTabPane from 'kit/vue/ui/components/Tabs/TabPane.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const active = ref<string | number>('profile')
 const tabs = ref([

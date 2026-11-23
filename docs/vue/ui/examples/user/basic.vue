@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg">
+  <KFlex vertical gap="lg">
     <KUser
       name="林小满"
       description="产品设计 · 杭州"
@@ -16,12 +16,12 @@
     />
     <KUser name="K UI" description="设计系统" avatar-text="K" size="sm" status="away" />
     <p class="tip">当前选中：{{ active || '（未选择）' }}</p>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import KUser from 'kit/vue/ui/components/User/User.vue'
 
 const active = ref('')

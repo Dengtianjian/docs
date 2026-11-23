@@ -1,5 +1,5 @@
 <template>
-  <KSpace :size="28" wrap align="start">
+  <KFlex :gap="28" wrap align="start">
     <KChart
       type="pie"
       :categories="categories"
@@ -17,12 +17,12 @@
       :show-legend="false"
       class="pie"
     />
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KChart from 'kit/vue/ui/components/Chart/Chart.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const categories = ['文档', '组件', '表格', '其他']
 const data = [38, 32, 20, 10]

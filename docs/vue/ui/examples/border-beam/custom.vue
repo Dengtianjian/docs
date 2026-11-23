@@ -1,5 +1,5 @@
 <template>
-  <KSpace :size="16" wrap>
+  <KFlex :gap="16" wrap>
     <KBorderBeam :size="3" :duration="3" :color="['#4f8cff', '#22c55e']" :radius="12">
       <div class="panel small">
         <strong>蓝绿光束</strong>
@@ -18,12 +18,12 @@
         <span>paused · 光束保留</span>
       </div>
     </KBorderBeam>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KBorderBeam from 'kit/vue/ui/components/BorderBeam/BorderBeam.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 </script>
 
 <style scoped>

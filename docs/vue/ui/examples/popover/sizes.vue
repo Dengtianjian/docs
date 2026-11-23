@@ -1,5 +1,5 @@
 <template>
-  <KSpace wrap align="center">
+  <KFlex wrap align="center">
     <KPopover
       v-for="size in sizes"
       :key="size"
@@ -13,13 +13,13 @@
         <KButton :size="size">{{ size.toUpperCase() }}</KButton>
       </template>
     </KPopover>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import KPopover from 'kit/vue/ui/components/Popover/Popover.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KPopoverSize } from 'kit/vue/ui'
 
 const sizes: KPopoverSize[] = ['sm', 'md', 'lg']

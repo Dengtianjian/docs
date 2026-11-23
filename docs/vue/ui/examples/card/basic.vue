@@ -1,5 +1,5 @@
 <template>
-  <KSpace size="lg" align="start" wrap>
+  <KFlex gap="lg" align="start" wrap>
     <KCard title="基础卡片" style="width: 300px">
       <template #extra>更多</template>
       卡片内容区域，支持任意内容与插槽。
@@ -24,7 +24,7 @@
       </template>
     </KCard>
     <KCard title="加载中" loading style="width: 300px" />
-  </KSpace>
+  </KFlex>
   <p class="tip">最近操作：{{ last || '（无）' }}</p>
 </template>
 
@@ -32,7 +32,7 @@
 import { ref } from 'vue'
 import KCard from 'kit/vue/ui/components/Card/Card.vue'
 import KCardAction from 'kit/vue/ui/components/Card/CardAction.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
 
 const last = ref('')

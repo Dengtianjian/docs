@@ -207,10 +207,9 @@ export default defineConfig({
                     { text: "KConfigProvider 全局配置", link: "/vue/ui/components/config-provider" },
                     { text: "KButton 按钮", link: "/vue/ui/components/button" },
                     { text: "KIcon 图标", link: "/vue/ui/components/icon" },
-                    { text: "KSpace 间距", link: "/vue/ui/components/space" },
                     { text: "KFlex 弹性布局", link: "/vue/ui/components/flex" },
                     { text: "KDivider 分割线", link: "/vue/ui/components/divider" },
-                    { text: "KRow / KCol 栅格", link: "/vue/ui/components/grid" },
+                    { text: "KGrid 栅格", link: "/vue/ui/components/grid" },
                     { text: "KLayout 布局组", link: "/vue/ui/components/layout" },
                     { text: "KTitle / KParagraph / KText 文字排版", link: "/vue/ui/components/typography" },
                     { text: "KLink 链接", link: "/vue/ui/components/link" }

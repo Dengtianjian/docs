@@ -1,15 +1,15 @@
 <template>
-  <KSpace direction="vertical" size="lg">
+  <KFlex vertical gap="lg">
     <KBreadcrumb :items="items" highlight-current />
     <KBreadcrumb :items="items" />
     <KBreadcrumb :items="items" separator="›" />
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { Bell, Components, Compass, FileText, Forms, Home } from '@vicons/tabler'
 import KBreadcrumb from 'kit/vue/ui/components/Breadcrumb/Breadcrumb.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KBreadcrumbItemOption } from 'kit/vue/ui'
 
 const items: KBreadcrumbItemOption[] = [

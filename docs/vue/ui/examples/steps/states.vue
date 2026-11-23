@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg" style="width: 100%">
+  <KFlex vertical gap="lg" style="width: 100%">
     <KSteps :current="1" status="error">
       <KStep title="填写信息" />
       <KStep title="校验失败" description="证件号格式不正确" />
@@ -20,11 +20,11 @@
       <KStep title="当前步骤" description="pulse=false" />
       <KStep title="完成" />
     </KSteps>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KSteps from 'kit/vue/ui/components/Steps/Steps.vue'
 import KStep from 'kit/vue/ui/components/Steps/Step.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 </script>

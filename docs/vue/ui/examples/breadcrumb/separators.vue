@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg">
+  <KFlex vertical gap="lg">
     <KBreadcrumb separator="›">
       <KBreadcrumbItem href="#api">首页</KBreadcrumbItem>
       <KBreadcrumbItem href="#api">组件</KBreadcrumbItem>
@@ -21,14 +21,14 @@
       <KBreadcrumbItem href="#api" separator="›">组件</KBreadcrumbItem>
       <KBreadcrumbItem current>单项覆盖</KBreadcrumbItem>
     </KBreadcrumb>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { defineComponent, h } from 'vue'
 import KBreadcrumb from 'kit/vue/ui/components/Breadcrumb/Breadcrumb.vue'
 import KBreadcrumbItem from 'kit/vue/ui/components/Breadcrumb/BreadcrumbItem.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const ChevronRight = defineComponent({
   setup() {

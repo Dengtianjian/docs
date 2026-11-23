@@ -1,5 +1,5 @@
 <template>
-  <KSpace size="lg" wrap align="center">
+  <KFlex gap="lg" wrap align="center">
     <KPopconfirm title="确认删除这条记录？" @confirm="log = '已确认'" @cancel="log = '已取消'">
       <template #trigger><KButton>删除</KButton></template>
     </KPopconfirm>
@@ -19,14 +19,14 @@
       <b>自定义整块</b>：默认插槽覆盖 title / description 文案区
     </KPopconfirm>
     <span style="color: var(--k-color-text-secondary)">{{ log }}</span>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KPopconfirm from 'kit/vue/ui/components/Popconfirm/Popconfirm.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const log = ref('还没操作')
 const loading = ref(false)

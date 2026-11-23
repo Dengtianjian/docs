@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg" style="width: 100%; max-width: 420px">
+  <KFlex vertical gap="lg" style="width: 100%; max-width: 420px">
     <KTreeSelect
       v-model="value"
       :options="options"
@@ -13,13 +13,13 @@
       placeholder="搜索节点"
     />
     <span style="color: var(--k-color-text-secondary)">已选：{{ value || '未选择' }}</span>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KTreeSelect from 'kit/vue/ui/components/TreeSelect/TreeSelect.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KTreeSelectValue } from 'kit/vue/ui/components/TreeSelect/TreeSelect.vue'
 import type { KTreeOption } from 'kit/vue/ui/utils/tree'
 

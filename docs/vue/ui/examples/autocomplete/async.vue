@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg" style="width: 100%">
+  <KFlex vertical gap="lg" style="width: 100%">
     <KAutoComplete
       v-model="value"
       :fetch-suggestions="fetchSuggestions"
@@ -12,13 +12,13 @@
       <span>最近搜索：{{ lastQuery || '（无）' }}</span>
       <span>请求序号：{{ requestCount }}</span>
     </div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KAutoComplete from 'kit/vue/ui/components/AutoComplete/AutoComplete.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KAutoCompleteOption } from 'kit/vue/ui/components/AutoComplete/AutoComplete.vue'
 
 const value = ref('')

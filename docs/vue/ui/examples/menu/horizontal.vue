@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="md">
+  <KFlex vertical gap="md">
     <KMenu
       v-model:selected-keys="selected"
       :items="items"
@@ -8,13 +8,13 @@
       style="border-bottom: 1px solid var(--k-color-border-secondary)"
     />
     <div class="menu-tip">选中：{{ selected.join(', ') || '—' }}</div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KMenu from 'kit/vue/ui/components/Menu/Menu.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KMenuItem } from 'kit/vue/ui'
 
 const selected = ref<string[]>(['overview'])

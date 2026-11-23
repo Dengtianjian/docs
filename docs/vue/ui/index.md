@@ -18,8 +18,8 @@
 │   ├── config-provider.md     # KConfigProvider 机制规格
 │   ├── button.md              # KButton（全库样板，深度最高）
 │   ├── icon.md                │ button 前置依赖
-│   ├── space.md               ├── flex.md      ├── divider.md
-│   ├── grid.md (KRow/KCol)    ├── layout.md    ├── typography.md
+│   ├── flex.md                ├── divider.md
+│   ├── grid.md (KGrid)        ├── layout.md    ├── typography.md
 │   └── link.md
 └── templates/                 # 模板：组合好的页面与区块（单文件可复制）
     ├── index.md               # 模板总览与复制约定

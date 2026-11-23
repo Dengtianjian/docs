@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="md">
+  <KFlex vertical gap="md">
     <KSegmented v-model="tag" :options="options" />
     <div class="component-frame">
       <KApp :component="tag === 'none' ? false : tag">
@@ -11,14 +11,14 @@
         ? '无包裹层：useKApp().root 为 undefined，反馈队列仍随 KApp 存活并回落 body 挂载。'
         : `component=${tag}：root 指向带 .k-app 类的包裹元素。` }}
     </p>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KApp from 'kit/vue/ui/components/App/App.vue'
 import KSegmented from 'kit/vue/ui/components/Segmented/Segmented.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import UsePanel from './_use-panel.vue'
 
 const tag = ref<'div' | 'section' | 'none'>('div')

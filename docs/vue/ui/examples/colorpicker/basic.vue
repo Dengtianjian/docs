@@ -1,18 +1,18 @@
 <template>
-  <KSpace direction="vertical" size="lg">
+  <KFlex vertical gap="lg">
     <KColorPicker v-model="color" :presets="presets" />
     <KColorPicker v-model="rgb" format="rgb" alpha :presets="presets" />
     <KColorPicker v-model="hsl" format="hsl" allow-clear show-text />
     <div class="color-preview" :style="{ background: color }">
       <span>{{ color }}</span>
     </div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KColorPicker from 'kit/vue/ui/components/ColorPicker/ColorPicker.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const color = ref('#1677ff')
 const rgb = ref('rgba(82, 196, 26, 0.75)')

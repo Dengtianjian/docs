@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="md" style="max-width: 280px">
+  <KFlex vertical gap="md" style="max-width: 280px">
     <KMenu
       v-model:selected-keys="selected"
       v-model:open-keys="open"
@@ -10,14 +10,14 @@
     <div class="menu-tip">
       选中：{{ selected.join(', ') || '—' }}；展开：{{ open.join(', ') || '—' }}
     </div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { defineComponent, h } from 'vue'
 import KMenu from 'kit/vue/ui/components/Menu/Menu.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KMenuItem } from 'kit/vue/ui'
 
 function svg(children: ReturnType<typeof h>[]) {

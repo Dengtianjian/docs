@@ -1,18 +1,18 @@
 <template>
-  <KSpace direction="vertical" size="lg" align="start">
-    <KSpace size="xl" align="center">
+  <KFlex vertical gap="lg" align="start">
+    <KFlex gap="xl" align="center">
       <KSpin size="sm" />
       <KSpin />
       <KSpin size="lg" />
       <KSpin tip="加载中…" />
       <KSpin :spinning="false" />（spinning=false 不渲染）
-    </KSpace>
+    </KFlex>
 
     <div style="width: calc(var(--k-size) * 20)">
-      <KSpace size="md" align="center" style="margin-bottom: 12px">
+      <KFlex gap="md" align="center" style="margin-bottom: 12px">
         <KButton type="primary" :loading="contentLoading" @click="reload">重新加载</KButton>
         <span style="color: var(--k-color-text-secondary)">包裹模式：内容压暗 + 禁交互，指示器居中；delay 见文档</span>
-      </KSpace>
+      </KFlex>
       <KSpin :spinning="contentLoading" tip="加载中…">
         <div
           style="
@@ -29,14 +29,14 @@
         </div>
       </KSpin>
     </div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KSpin from 'kit/vue/ui/components/Spin/Spin.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const contentLoading = ref(false)
 

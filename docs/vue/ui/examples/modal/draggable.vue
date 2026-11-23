@@ -1,5 +1,5 @@
 <template>
-  <KSpace size="lg" wrap align="center">
+  <KFlex gap="lg" wrap align="center">
     <KModal
       title="拖拽 + 内容滚动"
       :draggable="draggable"
@@ -11,15 +11,15 @@
       </p>
       <p v-for="(p, i) in paragraphs" :key="i" style="margin: 0 0 12px">{{ p }}</p>
     </KModal>
-    <KSpace size="xs" align="center">
+    <KFlex gap="xs" align="center">
       <span style="color: var(--k-color-text-secondary)">可拖拽</span>
       <KSwitch v-model="draggable" size="sm" />
-    </KSpace>
-    <KSpace size="xs" align="center">
+    </KFlex>
+    <KFlex gap="xs" align="center">
       <span style="color: var(--k-color-text-secondary)">显示遮罩</span>
       <KSwitch v-model="mask" size="sm" />
-    </KSpace>
-  </KSpace>
+    </KFlex>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
@@ -27,7 +27,7 @@ import { ref } from 'vue'
 import KModal from 'kit/vue/ui/components/Modal/Modal.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const draggable = ref(true)
 const mask = ref(true)

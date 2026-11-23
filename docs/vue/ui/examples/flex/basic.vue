@@ -1,12 +1,12 @@
 <template>
-  <KSpace>
+  <KFlex>
     <KButton type="primary">保存</KButton>
     <KButton>取消</KButton>
     <KButton variant="quiet">更多</KButton>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 </script>

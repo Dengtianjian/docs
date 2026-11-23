@@ -1,15 +1,15 @@
 <template>
-  <KSpace size="lg" wrap>
+  <KFlex gap="lg" wrap>
     <KButton type="primary" @click="deploy">同 key 三段式更新</KButton>
     <KButton variant="text" type="link" @click="notification!.destroyAll()">清空</KButton>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useKApp } from 'kit/vue/ui/composables/useKApp'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const { notification } = useKApp()!
 const round = ref(0)

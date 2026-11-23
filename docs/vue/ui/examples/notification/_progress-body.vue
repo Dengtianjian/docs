@@ -1,14 +1,14 @@
 <template>
-  <KSpace size="lg" wrap>
+  <KFlex gap="lg" wrap>
     <KButton type="primary" @click="openProgress(true)">showProgress（8s，悬停暂停）</KButton>
     <KButton @click="openProgress(false)">showProgress（8s，悬停不暂停）</KButton>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { useKApp } from 'kit/vue/ui/composables/useKApp'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const { notification } = useKApp()!
 

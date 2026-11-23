@@ -8,8 +8,8 @@
       <span class="crumbs__current">{{ post.title }}</span>
     </nav>
 
-    <KRow gutter="xs:0 sm:12 md:16,20 lg:24,24">
-      <KCol :span="{ xs: 24, lg: 17 }">
+    <KGrid gap="xs:0 sm:12 md:16,20 lg:24,24">
+      <KGridItem :span="{ xs: 24, lg: 17 }">
         <KCard :bordered="true">
           <article class="article">
             <div class="article__tags">
@@ -98,17 +98,17 @@
               />
               <div class="reply__actions">
                 <span class="reply__hint">{{ replyText.length }}/2000</span>
-                <KSpace size="sm">
+                <KFlex gap="sm">
                   <KButton size="xs:sm md:md" @click="replyText = ''">清空</KButton>
                   <KButton type="primary" size="xs:sm md:md" :disabled="!replyText.trim()" @click="submitReply">发布回复</KButton>
-                </KSpace>
+                </KFlex>
               </div>
             </div>
           </section>
         </KCard>
-      </KCol>
+      </KGridItem>
 
-      <KCol :span="{ xs: 24, lg: 7 }">
+      <KGridItem :span="{ xs: 24, lg: 7 }">
         <div class="aside">
           <KCard size="md">
             <div class="author-card">
@@ -140,8 +140,8 @@
             <a class="text-link" href="#" @click.prevent="navigate('/')">返回社区首页 →</a>
           </KCard>
         </div>
-      </KCol>
-    </KRow>
+      </KGridItem>
+    </KGrid>
   </div>
 
   <div v-else class="missing">
@@ -154,9 +154,9 @@
 import { computed, ref, watch } from 'vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import KCard from 'kit/vue/ui/components/Card/Card.vue'
-import KRow from 'kit/vue/ui/components/Grid/Row.vue'
-import KCol from 'kit/vue/ui/components/Grid/Col.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KGrid from 'kit/vue/ui/components/Grid/Grid.vue'
+import KGridItem from 'kit/vue/ui/components/Grid/GridItem.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
 import KDivider from 'kit/vue/ui/components/Divider/Divider.vue'
 import KEmpty from 'kit/vue/ui/components/Empty/Empty.vue'

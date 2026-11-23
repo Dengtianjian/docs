@@ -1,15 +1,15 @@
 <template>
-  <KSpace wrap align="center">
+  <KFlex wrap align="center">
     <KButton v-for="size in sizes" :key="size" :size="size" @click="show(size)">
       {{ size.toUpperCase() }}
     </KButton>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { useKApp } from 'kit/vue/ui/composables/useKApp'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KMessageSize } from 'kit/vue/ui'
 
 const sizes: KMessageSize[] = ['sm', 'md', 'lg']

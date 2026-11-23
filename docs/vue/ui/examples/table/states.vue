@@ -1,12 +1,12 @@
 <template>
   <div>
-    <KSpace size="md" style="margin-bottom: 12px">
+    <KFlex gap="md" style="margin-bottom: 12px">
       <KSwitch v-model="loading">加载中</KSwitch>
       <KSwitch v-model="empty">空数据</KSwitch>
       <KSwitch v-model="striped">斑马纹</KSwitch>
       <KSwitch v-model="bordered">边框</KSwitch>
       <KSwitch v-model="summary">汇总</KSwitch>
-    </KSpace>
+    </KFlex>
     <KTable
       :columns="columns"
       :data-source="empty ? [] : rows"
@@ -26,7 +26,7 @@
 import { ref } from 'vue'
 import KTable from 'kit/vue/ui/components/Table/Table.vue'
 import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KTableColumn } from 'kit/vue/ui'
 
 interface Row {

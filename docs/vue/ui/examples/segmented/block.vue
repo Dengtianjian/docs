@@ -1,14 +1,14 @@
 <template>
-  <KSpace direction="vertical" size="lg" style="width: 420px; max-width: 100%">
+  <KFlex vertical gap="lg" style="width: 420px; max-width: 100%">
     <KSegmented v-model="value" :options="options" block variant="outlined" />
     <KSegmented v-model="value" :options="options" block disabled />
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KSegmented from 'kit/vue/ui/components/Segmented/Segmented.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const options = [
   { label: '全部', value: 'all' },

@@ -1,15 +1,15 @@
 <template>
-  <KSpace size="md" direction="vertical" style="width: 260px">
+  <KFlex gap="md" vertical style="width: 260px">
     <KInput v-model="text" :maxlength="10" show-count placeholder="最多 10 字" />
     <KButton size="sm" @click="fill">程序写入 14 字（超限标红）</KButton>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KInput from 'kit/vue/ui/components/Input/Input.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const text = ref('ruyi-kit')
 

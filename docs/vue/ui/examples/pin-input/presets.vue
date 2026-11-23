@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg">
+  <KFlex vertical gap="lg">
     <div class="block">
       <span class="label">支付密码</span>
       <KPasswordInput v-model="password" :length="6" />
@@ -9,14 +9,14 @@
       <KPasscodeInput v-model="passcode" :length="4" :group-size="2" />
     </div>
     <p class="tip">KPasscodeInput 是 KPinInput 的掩码预设；KPasswordInput 是旧 API 兼容密码预设。</p>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KPasscodeInput from 'kit/vue/ui/components/PasscodeInput/PasscodeInput.vue'
 import KPasswordInput from 'kit/vue/ui/components/PasswordInput/PasswordInput.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const password = ref('')
 const passcode = ref('')

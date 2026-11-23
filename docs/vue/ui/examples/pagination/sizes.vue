@@ -1,14 +1,14 @@
 <template>
-  <KSpace direction="vertical" size="lg">
+  <KFlex vertical gap="lg">
     <div class="row"><span class="tag">sm</span><KPagination :total="120" size="sm" show-total /></div>
     <div class="row"><span class="tag">md</span><KPagination :total="120" size="md" show-total /></div>
     <div class="row"><span class="tag">lg</span><KPagination :total="120" size="lg" show-total /></div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KPagination from 'kit/vue/ui/components/Pagination/Pagination.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 </script>
 
 <style scoped>

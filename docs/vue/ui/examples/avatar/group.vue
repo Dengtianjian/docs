@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg">
+  <KFlex vertical gap="lg">
     <KAvatarGroup :max-count="4" hover-expand>
       <KAvatar text="如" />
       <KAvatar text="意" color="#7c5cff" />
@@ -21,11 +21,11 @@
       <KAvatar text="C" />
       <KAvatar text="D" />
     </KAvatarGroup>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KAvatar from 'kit/vue/ui/components/Avatar/Avatar.vue'
 import KAvatarGroup from 'kit/vue/ui/components/Avatar/AvatarGroup.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 </script>

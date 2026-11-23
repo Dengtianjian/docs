@@ -1,10 +1,10 @@
 <template>
   <div>
-    <KSpace size="md" style="margin-bottom: 12px">
+    <KFlex gap="md" style="margin-bottom: 12px">
       <KSwitch v-model="bordered">外框</KSwitch>
       <KSwitch v-model="rowBorders">行边框</KSwitch>
       <KSwitch v-model="columnBorders">列边框</KSwitch>
-    </KSpace>
+    </KFlex>
     <KTable
       :columns="columns"
       :data-source="rows"
@@ -19,7 +19,7 @@
 import { ref } from 'vue'
 import KTable from 'kit/vue/ui/components/Table/Table.vue'
 import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KTableColumn } from 'kit/vue/ui'
 
 interface Row {

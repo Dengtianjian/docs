@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg">
+  <KFlex vertical gap="lg">
     <KControlGroup>
       <KInputNumber v-model="qty" :min="1" :max="99" style="width: 110px" />
       <KSelect v-model="unit" :options="units" style="width: 120px" />
@@ -27,7 +27,7 @@
       <KControlGroupItem>单位：件</KControlGroupItem>
       <KButton>保存</KButton>
     </KControlGroup>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
@@ -41,7 +41,7 @@ import KRadio from 'kit/vue/ui/components/Radio/Radio.vue'
 import KCheckbox from 'kit/vue/ui/components/Checkbox/Checkbox.vue'
 import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const qty = ref(1)
 const unit = ref('piece')

@@ -1,21 +1,22 @@
 <template>
   <div class="grid-demo">
-    <KRow>
-      <KCol :span="6"><div class="cell">span 6</div></KCol>
-      <KCol :span="6" :offset="6"><div class="cell light">span 6 + offset 6</div></KCol>
-    </KRow>
-    <!-- flex 模式：数字 = flex-grow，字符串透传 -->
-    <KRow :gutter="8">
-      <KCol :flex="2"><div class="cell">flex=2</div></KCol>
-      <KCol :flex="3"><div class="cell light">flex=3</div></KCol>
-      <KCol flex="120px"><div class="cell">flex='120px'（字符串透传 CSS flex）</div></KCol>
-    </KRow>
+    <KGrid>
+      <KGridItem :span="6"><div class="cell">span 6</div></KGridItem>
+      <KGridItem :span="6" :start="13"><div class="cell light">span 6 + start 13</div></KGridItem>
+    </KGrid>
+    <!-- 需要按比例分配时用 KFlex，而不是栅格 -->
+    <KFlex :inline="false" gap="8">
+      <div class="cell" style="flex: 2">flex: 2</div>
+      <div class="cell light" style="flex: 3">flex: 3</div>
+      <div class="cell" style="flex: 0 0 120px">120px</div>
+    </KFlex>
   </div>
 </template>
 
 <script setup lang="ts">
-import KRow from 'kit/vue/ui/components/Grid/Row.vue'
-import KCol from 'kit/vue/ui/components/Grid/Col.vue'
+import KGrid from 'kit/vue/ui/components/Grid/Grid.vue'
+import KGridItem from 'kit/vue/ui/components/Grid/GridItem.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 </script>
 
 <style scoped>

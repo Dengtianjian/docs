@@ -1,17 +1,17 @@
 <template>
-  <KSpace direction="vertical" size="md">
+  <KFlex vertical gap="md">
     <div v-for="variant in variants" :key="variant.name" class="row">
       <span class="label">{{ variant.label }}</span>
-      <KSpace>
+      <KFlex>
         <KTag v-for="color in colors" :key="color" :color="color" :variant="variant.name">{{ color }}</KTag>
-      </KSpace>
+      </KFlex>
     </div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KTagPresetColor, KTagVariant } from 'kit/vue/ui'
 
 const variants: { name: KTagVariant; label: string }[] = [

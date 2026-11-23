@@ -1,5 +1,5 @@
 <template>
-  <KSpace :size="20" wrap align="start">
+  <KFlex :gap="20" wrap align="start">
     <KCalendar v-model="value" :markers="markers" @change="last = $event" />
     <div class="side">
       <div class="label">当前日期</div>
@@ -9,13 +9,13 @@
       <div class="label">标记</div>
       <span>11 月 21 日有发布节点</span>
     </div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KCalendar from 'kit/vue/ui/components/Calendar/Calendar.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const value = ref('2026-11-21')
 const last = ref('')

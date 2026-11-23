@@ -10,10 +10,10 @@
       <KSwitch v-model="model.enabled" />
     </KFormItem>
     <KFormItem>
-      <KSpace align="center">
+      <KFlex align="center">
         <KButton type="primary" @click="submit">校验</KButton>
         <span style="color: var(--k-color-text-tertiary); font-size: 12px">{{ result }}</span>
-      </KSpace>
+      </KFlex>
     </KFormItem>
   </KForm>
 </template>
@@ -26,7 +26,7 @@ import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
 import KCheckboxGroup from 'kit/vue/ui/components/Checkbox/CheckboxGroup.vue'
 import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const form = ref()
 const model = reactive<{ plan: string; channels: string[]; enabled: boolean }>({

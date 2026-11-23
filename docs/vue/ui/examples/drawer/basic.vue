@@ -1,6 +1,6 @@
 <template>
-  <KSpace direction="vertical" size="md">
-    <KSpace align="center" wrap>
+  <KFlex vertical gap="md">
+    <KFlex align="center" wrap>
       <KRadioGroup
         v-model="placement"
         shape="button"
@@ -21,7 +21,7 @@
         ]"
       />
       <KButton type="primary" @click="open = true">打开抽屉</KButton>
-    </KSpace>
+    </KFlex>
     <div class="drawer-tip">最近关闭：{{ last }}</div>
 
     <KDrawer
@@ -31,16 +31,16 @@
       title="编辑资料"
       @close="last = 'close 事件'"
     >
-      <KSpace direction="vertical" size="sm">
+      <KFlex vertical gap="sm">
         <p>抽屉内容从四个方向滑入，尺寸由 size 控制（sm 320 / md 378 / lg 480）。</p>
         <p>点击遮罩、右上角 X 或按 Esc 关闭；页脚按钮由业务自绘。</p>
-      </KSpace>
+      </KFlex>
       <template #footer>
         <KButton size="sm" @click="open = false">取消</KButton>
         <KButton size="sm" type="primary" @click="save">保存</KButton>
       </template>
     </KDrawer>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
@@ -48,7 +48,7 @@ import { ref } from 'vue'
 import KDrawer from 'kit/vue/ui/components/Drawer/Drawer.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KDrawerPlacement, KDrawerSize } from 'kit/vue/ui'
 
 const open = ref(false)

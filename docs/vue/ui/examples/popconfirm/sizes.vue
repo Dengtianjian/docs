@@ -1,5 +1,5 @@
 <template>
-  <KSpace wrap align="center">
+  <KFlex wrap align="center">
     <KPopconfirm
       v-for="size in sizes"
       :key="size"
@@ -13,13 +13,13 @@
         <KButton :size="size" type="danger" variant="outlined">{{ size.toUpperCase() }}</KButton>
       </template>
     </KPopconfirm>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import KPopconfirm from 'kit/vue/ui/components/Popconfirm/Popconfirm.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KPopconfirmSize } from 'kit/vue/ui'
 
 const sizes: KPopconfirmSize[] = ['sm', 'md', 'lg']

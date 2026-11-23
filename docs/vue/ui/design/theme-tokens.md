@@ -494,7 +494,7 @@ export const buttonTokens = {
 | --- | --- | --- |
 | 低风险批 | `components/Flex` `Divider` | ✅ Flex 与 CSS 一对一映射；Divider 文本模式用 `::before/::after` 线（无幽灵 DOM），`role="separator"` |
 | 文字批 | `components/Typography/{Title,Paragraph,Text}` `Link` | ✅ 字重走新增 `--k-font-weight-base/strong/heading` 别名（theme.css §5）；KText mark 用 `--k-color-warning-bg`，无裸色值 |
-| 栅格批 | `css/grid.css`（302 行预编译矩阵）+ `css/gen-grid.mjs`（生成脚本存档）+ `components/Grid/{Row,Col}` | ✅ 列宽 CSS-first；gutter 响应式对象是唯一 JS 运行时展开（useBreakpoint/matchMedia，登记为 §10 例外） |
+| 栅格批 | `components/Grid/{Grid,GridItem}` | ✅ 真 CSS Grid：列模板 / gap / span 写内联；响应式列数与跨度走共享断点 |
 | 布局批 | `components/Layout/{Layout,Header,Sider,Content,Footer}` | ✅ 尺寸缺省在 CSS（`var(--k-layout-header-height, 64px)` 式回退），prop 显式才落内联，createTheme components 令牌可覆盖 |
 | Provider | `components/ConfigProvider/ConfigProvider.vue` + `composables/useKConfig.ts` | ✅ 主题差量经 `<Teleport to="head">` 的 `<style>` 注入（hash 作用域类，绝不内联变量）；合并链 `prop > defaults > token`；`useProps(name, prop, pick)` |
 | 入口 | `index.ts`（17 组件 barrel）+ `resolver.ts`（GROUP_FILE 多文件目录映射） | ✅ 语法核对通过；编译验证仍受②阻塞 |

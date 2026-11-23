@@ -1,10 +1,10 @@
 <template>
   <KButton @click="open = true">打开悬浮面板</KButton>
   <KFloatingPanel v-model:open="open" title="快捷筛选" :height="300">
-    <KSpace direction="vertical" size="md">
+    <KFlex vertical gap="md">
       <div v-for="group in groups" :key="group.label" class="group">
         <span class="label">{{ group.label }}</span>
-        <KSpace wrap>
+        <KFlex wrap>
           <KButton
             v-for="item in group.items"
             :key="item"
@@ -13,9 +13,9 @@
             :variant="selected.includes(item) ? 'filled' : 'outlined'"
             @click="toggle(item)"
           >{{ item }}</KButton>
-        </KSpace>
+        </KFlex>
       </div>
-    </KSpace>
+    </KFlex>
     <template #footer>
       <KButton block @click="open = false">应用筛选</KButton>
     </template>
@@ -26,7 +26,7 @@
 import { ref } from 'vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import KFloatingPanel from 'kit/vue/ui/components/FloatingPanel/FloatingPanel.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const open = ref(false)
 const selected = ref<string[]>(['近 7 天'])

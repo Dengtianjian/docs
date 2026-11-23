@@ -7,7 +7,7 @@
 
 - **命名**：组件 `KXxx`，类名 `k-xxx`，根节点带 `k-xxx k-xxx--{type} k-xxx--{variant} k-xxx--{size}`，状态 `is-disabled / is-loading`；
 - **四轴**：`type | variant | size | shape`，值缺省走合并链（prop > useKConfig defaults > token）；
-- **尺寸枚举**：全组件统一 `xs | sm | md | lg`（`KSize`，组件按需支持子集），不再使用 `small / medium / large`；间距轴 `KSpaceSize` 例外，额外含 `xxs` 与数字；
+- **尺寸枚举**：全组件统一 `xs | sm | md | lg`（`KSize`，组件按需支持子集），不再使用 `small / medium / large`；间距轴 `KSpacingSize` 例外，额外含 `xxs` 与数字；
 - **语义 DOM API**：每组件 props 含 `classNames?: Partial<Record<Part, string>>`、`styles?: Partial<Record<Part, CSSProperties>>`；
   所有部件带 `data-part="…"`，部件清单 = 各组件文档「部件」小节，**DOM 结构即公开 API**；
 - **部件变量**：`--k-<comp>-<part?>-<prop>`，初值引用 alias，状态类局部重声明（token 规格 §1.1）；
@@ -27,10 +27,9 @@
 | --- | --- | --- |
 | [button.md](./button.md) | KButton | 规格定稿，样板已落地 |
 | [icon.md](./icon.md) | KIcon | 规格定稿，已落地（图标集 = **@vicons/tabler**，2026-11-17 Q1 定稿；`component` 注入模式仍可换任意方案） |
-| [space.md](./space.md) | KSpace | 规格定稿，已落地 |
-| [flex.md](./flex.md) | KFlex | 规格定稿，已落地 |
+| [flex.md](./flex.md) | KFlex | 规格定稿，已落地（flex 排布 + 间距 + 分隔符） |
 | [divider.md](./divider.md) | KDivider | 规格定稿，已落地 |
-| [grid.md](./grid.md) | KRow / KCol | 规格定稿，已落地（列宽矩阵 `css/grid.css` 由 `css/gen-grid.mjs` 预编译；gutter 响应式 = JS 闭环例外） |
+| [grid.md](./grid.md) | KGrid / KGridItem | 规格定稿，已落地（真 CSS Grid：固定列数 + span/start；列数/gap/跨度支持断点） |
 | [layout.md](./layout.md) | KLayout 组 | 规格定稿，已落地（Layout/Header/Sider/Content/Footer） |
 | [typography.md](./typography.md) | KTitle / KParagraph / KText | 规格定稿，已落地（省略/可复制等增强行为留 P2） |
 | [link.md](./link.md) | KLink | 规格定稿，已落地（静态依赖 vue-router peer，未装 router 的业务全量引入 barrel 时需留意向量） |
@@ -204,7 +203,7 @@
 
 ```
 themes 全套 + css/theme(reset/layer/utility) → KIcon → KButton（样板，验证部件变量机制）
-  → KSpace/KFlex/KDivider（低风险批）→ Typography/KLink → KRow/KCol → KLayout → KConfigProvider(①③④)
+  → KFlex/KDivider（低风险批）→ Typography/KLink → KGrid → KLayout → KConfigProvider(①③④)
 ```
 
 > 2026-11-17：矩阵页 **R1~R4 全收官**（[playground/matrix](../playground/matrix.md)）：

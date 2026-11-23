@@ -1,19 +1,19 @@
 <template>
-  <KSpace direction="vertical" size="md">
+  <KFlex vertical gap="md">
     <KNoticeBar text="K UI P9 移动端专项已发布：底部面板、选择器、滑动单元格与签名板。" />
     <KNoticeBar text="滚动公告：本周五 22:00 进行数据库维护，请提前保存。" mode="link" @click="last = '打开维护公告'" />
     <KNoticeBar text="该提示可关闭，关闭后不再展示。" mode="close" type="warning" v-model:open="visible" />
     <KNoticeBar text="长文本可换行展示，适合需要完整阅读的通知内容。" wrapable />
     <KButton v-if="!visible" size="sm" @click="visible = true">重新显示警告</KButton>
     <p class="tip">{{ last || '（无操作）' }}</p>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import KNoticeBar from 'kit/vue/ui/components/NoticeBar/NoticeBar.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const visible = ref(true)
 const last = ref('')

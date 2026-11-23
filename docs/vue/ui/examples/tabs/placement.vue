@@ -1,6 +1,6 @@
 <template>
-  <KSpace direction="vertical" size="lg">
-    <KSpace>
+  <KFlex vertical gap="lg">
+    <KFlex>
       <KRadioGroup
         v-model="placement"
         shape="button"
@@ -19,13 +19,13 @@
           { label: 'card', value: 'card' },
         ]"
       />
-    </KSpace>
+    </KFlex>
     <KTabs :placement="placement" :type="type" style="min-height: 160px">
       <KTabPane name="one" label="页签一">页签一内容。</KTabPane>
       <KTabPane name="two" label="页签二">页签二内容。</KTabPane>
       <KTabPane name="three" label="页签三">页签三内容。</KTabPane>
     </KTabs>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
@@ -33,7 +33,7 @@ import { ref } from 'vue'
 import KTabs from 'kit/vue/ui/components/Tabs/Tabs.vue'
 import KTabPane from 'kit/vue/ui/components/Tabs/TabPane.vue'
 import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KTabsPlacement, KTabsType } from 'kit/vue/ui'
 
 const placement = ref<KTabsPlacement>('top')

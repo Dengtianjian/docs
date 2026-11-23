@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg" style="width: 100%">
+  <KFlex vertical gap="lg" style="width: 100%">
     <KSlider
       v-model="percent"
       :step="5"
@@ -9,13 +9,13 @@
     />
     <KSlider v-model="price" range :min="0" :max="1000" :step="50" :tooltip-formatter="formatPrice" />
     <span style="color: var(--k-color-text-secondary)">价格区间：{{ formatPrice(price[0]) }} - {{ formatPrice(price[1]) }}</span>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KSlider from 'kit/vue/ui/components/Slider/Slider.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const percent = ref(45)
 const price = ref<[number, number]>([200, 800])

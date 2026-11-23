@@ -1,22 +1,22 @@
 <template>
   <div class="grid-demo">
-    <KRow><KCol :span="24"><div class="cell">24</div></KCol></KRow>
-    <KRow>
-      <KCol :span="12"><div class="cell">12</div></KCol>
-      <KCol :span="12"><div class="cell light">12</div></KCol>
-    </KRow>
-    <KRow>
-      <KCol v-for="i in 3" :key="i" :span="8"><div :class="['cell', i === 2 && 'light']">8</div></KCol>
-    </KRow>
-    <KRow>
-      <KCol v-for="i in 6" :key="i" :span="4"><div :class="['cell', i % 2 && 'light']">4</div></KCol>
-    </KRow>
+    <KGrid><KGridItem :span="24"><div class="cell">24</div></KGridItem></KGrid>
+    <KGrid>
+      <KGridItem :span="12"><div class="cell">12</div></KGridItem>
+      <KGridItem :span="12"><div class="cell light">12</div></KGridItem>
+    </KGrid>
+    <KGrid>
+      <KGridItem v-for="i in 3" :key="i" :span="8"><div :class="['cell', i === 2 && 'light']">8</div></KGridItem>
+    </KGrid>
+    <KGrid>
+      <KGridItem v-for="i in 6" :key="i" :span="4"><div :class="['cell', i % 2 && 'light']">4</div></KGridItem>
+    </KGrid>
   </div>
 </template>
 
 <script setup lang="ts">
-import KRow from 'kit/vue/ui/components/Grid/Row.vue'
-import KCol from 'kit/vue/ui/components/Grid/Col.vue'
+import KGrid from 'kit/vue/ui/components/Grid/Grid.vue'
+import KGridItem from 'kit/vue/ui/components/Grid/GridItem.vue'
 </script>
 
 <style scoped>

@@ -1,22 +1,17 @@
 <template>
   <div class="grid-demo">
-    <!-- 水平间距 -->
-    <KRow :gutter="16">
-      <KCol :span="6"><div class="cell">6</div></KCol>
-      <KCol :span="6"><div class="cell">6</div></KCol>
-      <KCol :span="6"><div class="cell">6</div></KCol>
-      <KCol :span="6"><div class="cell">6</div></KCol>
-    </KRow>
-    <!-- [水平, 垂直] -->
-    <KRow :gutter="[16, 8]">
-      <KCol v-for="i in 6" :key="i" :span="8"><div class="cell">{{ 8 }}</div></KCol>
-    </KRow>
+    <KGrid :gap="16">
+      <KGridItem v-for="i in 4" :key="i" :span="6"><div class="cell">6</div></KGridItem>
+    </KGrid>
+    <KGrid :gap="[16, 8]">
+      <KGridItem v-for="i in 6" :key="i" :span="8"><div class="cell">{{ 8 }}</div></KGridItem>
+    </KGrid>
   </div>
 </template>
 
 <script setup lang="ts">
-import KRow from 'kit/vue/ui/components/Grid/Row.vue'
-import KCol from 'kit/vue/ui/components/Grid/Col.vue'
+import KGrid from 'kit/vue/ui/components/Grid/Grid.vue'
+import KGridItem from 'kit/vue/ui/components/Grid/GridItem.vue'
 </script>
 
 <style scoped>

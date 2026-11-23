@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="sm">
+  <KFlex vertical gap="sm">
     <KButton @click="open = true">选择城市</KButton>
     <p class="tip">当前：{{ values.join(' / ') }}</p>
     <KPicker
@@ -10,7 +10,7 @@
       @confirm="last = $event.join(' / ')"
     />
     <p class="tip">确认值：{{ last || '（未确认）' }}</p>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
@@ -18,7 +18,7 @@ import { ref } from 'vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import KPicker from 'kit/vue/ui/components/Picker/Picker.vue'
 import type { KPickerColumn, KPickerValue } from 'kit/vue/ui/components/Picker/PickerView.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const open = ref(false)
 const values = ref<KPickerValue[]>(['杭州', '西湖区'])

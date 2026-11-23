@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg" style="width: 100%; max-width: 520px">
+  <KFlex vertical gap="lg" style="width: 100%; max-width: 520px">
     <KCascader
       v-model="values"
       :options="options"
@@ -8,13 +8,13 @@
       placeholder="可多选，支持搜索"
     />
     <span style="color: var(--k-color-text-secondary)">已选 {{ values?.length ?? 0 }} 项</span>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KCascader from 'kit/vue/ui/components/Cascader/Cascader.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KCascaderValue } from 'kit/vue/ui/components/Cascader/Cascader.vue'
 import type { KTreeOption } from 'kit/vue/ui/utils/tree'
 

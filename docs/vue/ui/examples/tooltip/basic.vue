@@ -1,5 +1,5 @@
 <template>
-  <KSpace size="lg" wrap>
+  <KFlex gap="lg" wrap>
     <KTooltip content="=top 默认方位（content prop 兜底）">
       <template #trigger><KButton>Top</KButton></template>
     </KTooltip>
@@ -26,7 +26,7 @@
     <KTooltip title="disabled 不弹出" disabled>
       <template #trigger><KButton>Disabled</KButton></template>
     </KTooltip>
-  </KSpace>
+  </KFlex>
   <p style="margin: 12px 0 0; color: var(--k-color-text-tertiary); font-size: var(--k-font-size-sm)">
     贴近视口上缘的 top 提示会自动翻到下方（可用浏览器缩窗口验证）。
   </p>
@@ -36,7 +36,7 @@
 import { ref } from 'vue'
 import KTooltip from 'kit/vue/ui/components/Tooltip/Tooltip.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const controlled = ref(false)
 </script>

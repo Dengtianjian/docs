@@ -1,5 +1,5 @@
 <template>
-  <KSpace :size="20" wrap align="start">
+  <KFlex :gap="20" wrap align="start">
     <div class="item">
       <KImage :src="cover" alt="设计系统封面" :width="280" :height="168" />
       <span>圆角封面</span>
@@ -12,12 +12,12 @@
       <KImage src="https://invalid.invalid/missing.png" alt="缺失图片" :width="200" :height="128" fallback="图片加载失败" />
       <span>失败兜底</span>
     </div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KImage from 'kit/vue/ui/components/Image/Image.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const cover = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`
 <svg xmlns="http://www.w3.org/2000/svg" width="560" height="336">

@@ -1,5 +1,5 @@
 <template>
-  <KSpace size="md" direction="vertical" style="width: 240px">
+  <KFlex gap="md" vertical style="width: 240px">
     <KDatePicker v-model="a" :min="min" :max="max" clearable placeholder="2026-11-05 ~ 11-25" />
     <KDatePicker v-model="b" :disabled-date="noWeekend" clearable placeholder="周末不可选" />
     <KDatePicker v-model="c" format="YYYY年M月D日" clearable placeholder="自定义展示格式" />
@@ -7,14 +7,14 @@
       min/max 收时间戳或可解析字符串，按 picker 粒度比较；disabledDate 逐格判定（下钻到月/年层时按整月/整年判）。
       format 只改回显，值仍是时间戳。
     </div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { Dayjs } from 'dayjs'
 import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const a = ref<number | null>(null)
 const b = ref<number | null>(null)

@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg" style="width: 420px; max-width: 100%">
+  <KFlex vertical gap="lg" style="width: 420px; max-width: 100%">
     <KInputTags
       v-model="tags"
       :max="3"
@@ -10,13 +10,13 @@
       @invalid="onInvalid"
     />
     <p class="hint">{{ message || '最多 3 个，每个不超过 6 个字符；重复值会被拦截。' }}</p>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KInputTags from 'kit/vue/ui/components/InputTags/InputTags.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const tags = ref<string[]>([])
 const message = ref('')

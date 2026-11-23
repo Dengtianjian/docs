@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg">
+  <KFlex vertical gap="lg">
     <div>
       <p class="label">size="sm"</p>
       <KTable size="sm" :columns="columns" :data-source="rows" />
@@ -12,12 +12,12 @@
       <p class="label">size="lg"</p>
       <KTable size="lg" :columns="columns" :data-source="rows" />
     </div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KTable from 'kit/vue/ui/components/Table/Table.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KTableColumn } from 'kit/vue/ui'
 
 interface Row {

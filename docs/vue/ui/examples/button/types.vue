@@ -1,12 +1,12 @@
 <template>
-  <KSpace wrap>
+  <KFlex wrap>
     <KButton v-for="t in types" :key="t" :type="t">{{ t }}</KButton>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const types = ['default', 'primary', 'info', 'success', 'warning', 'danger', 'link'] as const
 </script>

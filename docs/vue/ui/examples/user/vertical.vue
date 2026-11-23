@@ -1,5 +1,5 @@
 <template>
-  <KSpace :size="32" wrap>
+  <KFlex :gap="32" wrap>
     <KUser
       v-for="member in members"
       :key="member.name"
@@ -10,11 +10,11 @@
       :status="member.status"
       size="lg"
     />
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import KUser from 'kit/vue/ui/components/User/User.vue'
 import type { KUserStatus } from 'kit/vue/ui/components/User/User.vue'
 

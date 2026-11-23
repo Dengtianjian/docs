@@ -1,5 +1,5 @@
 <template>
-  <KSpace size="md" direction="vertical" style="width: 260px">
+  <KFlex gap="md" vertical style="width: 260px">
     <KSelect v-model="fixed" mode="multiple" :options="opts" :max-tag-count="2" placeholder="maxTagCount=2" />
     <div style="width: 180px">
       <KSelect v-model="resp" mode="multiple" :options="opts" max-tag-count="responsive" placeholder="responsive（窄触发器）" />
@@ -10,13 +10,13 @@
       </template>
     </KSelect>
     <div style="font-size: 12px; color: var(--k-color-text-tertiary)">悬停 +N 标签看被折叠项；responsive 随触发器宽度实测收敛。</div>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KSelect from 'kit/vue/ui/components/Select/Select.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const opts = [
   { label: '北京', value: 'bj' },

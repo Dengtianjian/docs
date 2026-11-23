@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="md">
+  <KFlex vertical gap="md">
     <KButton @click="active = !active">
       {{ active ? '关闭全屏水印' : '开启全屏水印' }}
     </KButton>
@@ -15,13 +15,13 @@
       <p class="hint">水印层铺满整个视口，页面内容与按钮仍可正常操作。</p>
     </KWatermark>
     <p class="tip">开启后水印会覆盖浏览器视口，再次点击按钮即可关闭。</p>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import KWatermark from 'kit/vue/ui/components/Watermark/Watermark.vue'
 
 const active = ref(false)

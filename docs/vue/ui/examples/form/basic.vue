@@ -19,10 +19,10 @@
       <KCheckbox v-model="model.agree">我已阅读并同意</KCheckbox>
     </KFormItem>
     <KFormItem>
-      <KSpace>
+      <KFlex>
         <KButton type="primary" @click="onSubmit">校验提交</KButton>
         <KButton @click="onReset">重置</KButton>
-      </KSpace>
+      </KFlex>
     </KFormItem>
     <div>{{ result }}</div>
   </KForm>
@@ -37,7 +37,7 @@ import KInputNumber from 'kit/vue/ui/components/InputNumber/InputNumber.vue'
 import KSelect from 'kit/vue/ui/components/Select/Select.vue'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
 import KCheckbox from 'kit/vue/ui/components/Checkbox/Checkbox.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const form = ref<InstanceType<typeof KForm> | null>(null)
 const model = reactive<Record<string, unknown>>({

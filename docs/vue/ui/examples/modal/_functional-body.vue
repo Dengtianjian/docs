@@ -1,5 +1,5 @@
 <template>
-  <KSpace size="lg" wrap>
+  <KFlex gap="lg" wrap>
     <KButton @click="openDemo">open（无图标）</KButton>
     <KButton @click="functionalDemos('info')">info</KButton>
     <KButton @click="functionalDemos('success')">success</KButton>
@@ -7,7 +7,7 @@
     <KButton @click="functionalDemos('warning')">warning</KButton>
     <KButton variant="soft" @click="selfButtonDemo">内容自绘按钮</KButton>
     <KButton @click="draggableDemo">可拖拽 + 无遮罩</KButton>
-  </KSpace>
+  </KFlex>
   <p style="margin: 12px 0 0; color: var(--k-color-text-secondary)">{{ result }}</p>
 </template>
 
@@ -15,7 +15,7 @@
 import { h, ref } from 'vue'
 import { useKApp } from 'kit/vue/ui/composables/useKApp'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const { modal } = useKApp()!
 const result = ref('—')

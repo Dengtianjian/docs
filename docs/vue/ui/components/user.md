@@ -12,7 +12,7 @@
 
 <Demo path="user/basic" title="基础用户信息" :desc="['`avatar-text` 在没有图片时作为头像文字。', '`status` 渲染头像角标。', '`clickable` 提供按钮语义、键盘 Enter / Space 与 hover 反馈。']" />
 
-<Demo path="user/vertical" title="纵向成员卡" :desc="['`orientation=&quot;vertical&quot;` 头像在上、信息在下。', '`size` 同时控制头像与文字档位。', '可组合 `KSpace` 做成员墙。']" />
+<Demo path="user/vertical" title="纵向成员卡" :desc="['`orientation=&quot;vertical&quot;` 头像在上、信息在下。', '`size` 同时控制头像与文字档位。', '可组合 `KFlex` 做成员墙。']" />
 
 ## API
 

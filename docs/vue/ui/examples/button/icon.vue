@@ -1,5 +1,5 @@
 <template>
-  <KSpace wrap>
+  <KFlex wrap>
     <!-- icon prop：注入图标组件（示例 = 推荐的 @vicons/tabler） -->
     <KButton type="primary" :icon="Download">下载</KButton>
     <!-- #icon 插槽：直接放 svg / 字体图标 -->
@@ -14,11 +14,11 @@
       <template #loading>…</template>
       自定义 Loading
     </KButton>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { Download } from '@vicons/tabler'
 import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 </script>

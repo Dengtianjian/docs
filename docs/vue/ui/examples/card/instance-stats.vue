@@ -1,15 +1,15 @@
 <template>
-  <KSpace size="lg" wrap>
+  <KFlex gap="lg" wrap>
     <KCard v-for="item in stats" :key="item.label" :title="item.label" size="sm" variant="filled" style="width: 180px">
       <div class="value">{{ item.value }}</div>
       <div class="trend" :class="{ 'is-up': item.up }">{{ item.trend }}</div>
     </KCard>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import KCard from 'kit/vue/ui/components/Card/Card.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const stats = [
   { label: '访问量', value: '12,480', trend: '较上周 +8.2%', up: true },

@@ -1,14 +1,14 @@
 <template>
-  <KSpace direction="vertical" size="md">
+  <KFlex vertical gap="md">
     <KSegmented v-model="range" :options="ranges" />
     <p class="tip">当前：{{ range }}</p>
-  </KSpace>
+  </KFlex>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import KSegmented from 'kit/vue/ui/components/Segmented/Segmented.vue'
-import KSpace from 'kit/vue/ui/components/Space/Space.vue'
+import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 
 const range = ref('30d')
 const ranges = [

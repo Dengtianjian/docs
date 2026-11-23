@@ -14,6 +14,8 @@
 
 <Demo path="watermark/custom" title="密度、角度与透明度" :desc="['`rotate` 控制倾斜角度，`fontSize` 控制字号。', '`opacity` 作用于整层。', '`image` 可传入图片地址，失败时自动回退文字。']" />
 
+<Demo path="watermark/fullscreen" title="全屏水印" overflow="visible" :desc="['`fullscreen` 让水印层固定铺满视口，不改变内容容器尺寸。', '全屏层仍为 `pointer-events: none`，页面操作不受影响。', '配合 `zIndex` 控制覆盖层级，关闭时可直接卸载。']" />
+
 ## API
 
 ### Props
@@ -31,6 +33,7 @@
 | opacity | 整层透明度 | `number` | `1` |
 | imageWidth | 图片宽度 | `number` | `48` |
 | zIndex | 水印层层级 | `number` | `9` |
+| fullscreen | 水印层固定铺满视口 | `boolean` | `false` |
 | classNames / styles | 部件：`root / layer` | — | — |
 
 ### Slots

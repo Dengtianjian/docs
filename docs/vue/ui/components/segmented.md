@@ -13,6 +13,8 @@
 
 <Demo path="segmented/block" title="通栏 / 描边 / 禁用" :desc="['block 占满容器宽度并等分。', 'variant=outlined 使用描边外观。', 'disabled 或选项 disabled 阻止切换。']" />
 
+<Demo path="segmented/measured" title="不等宽选项" :desc="['滑轨读取每个选项的真实位置与宽度，不按等分计算。', '文案长短不同、可选间距不同时，滑轨仍与选中项对齐。', '切换时滑轨同时过渡位置与宽度。']" />
+
 ## API
 
 ### Props
@@ -56,4 +58,4 @@
 
 - 使用 `radiogroup / radio` 语义；左右方向键切换，Home / End 跳到首尾项。
 - 禁用项会被键盘导航跳过。
-- 滑轨按等宽选项计算；选项文案过长会省略，建议保持短标签。
+- 滑轨按每个选项的真实 `offset + width` 测量定位，不等宽选项也会对齐；窗口尺寸、文案或选项变化后自动重算。

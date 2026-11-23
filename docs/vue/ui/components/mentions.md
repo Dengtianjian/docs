@@ -9,7 +9,7 @@
 
 ## 代码演示
 
-<Demo path="mentions/basic" title="基础用法" :desc="['输入 `@` 唤起候选，继续输入过滤。', '上下方向键切换，Enter / Tab 选中，Esc 关闭。', '`#option` 可替换候选项内容。']" />
+<Demo path="mentions/basic" title="基础用法" :desc="['输入 `@` 唤起候选，弹层定位到 `@` 光标位置。', '输入过滤、滚动或换行时弹层跟随光标。', '上下方向键切换，Enter / Tab 选中，Esc 关闭。', '`#option` 可替换候选项内容。']" />
 
 ## API
 

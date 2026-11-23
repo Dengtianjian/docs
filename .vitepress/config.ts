@@ -4,9 +4,46 @@ import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { kitPlugin } from 'kit/vue/vite-plugin'
 import { isolateVpDoc } from './isolate-vp-doc'
+import { componentPlatform } from './platform'
 
+const mobileSvg =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2z"/><path d="M11 5h2"/><path d="M12 17h.01"/></svg>'
+const pcSvg =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8"/><path d="M12 16v4"/></svg>'
+const bothSvg =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8"/><path d="M10 19v-3.96 3.15"/><path d="M7 19h5"/><rect width="6" height="10" x="16" y="12" rx="2"/></svg>'
 const mobileOnlyIcon =
-  '<span class="k-sidebar-mobile-icon" role="img" aria-label="移动端专属" title="移动端专属"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2z"/><path d="M11 5h2"/><path d="M12 17h.01"/></svg></span>'
+  `<span class="k-sidebar-mobile-icon" role="img" aria-label="移动端可用" title="移动端可用">${mobileSvg}</span>`
+const pcOnlyIcon =
+  `<span class="k-sidebar-pc-icon" role="img" aria-label="PC 端可用" title="PC 端可用">${pcSvg}</span>`
+const bothPlatformIcon =
+  `<span class="k-sidebar-both-icon" role="img" aria-label="PC 与移动端可用" title="PC 与移动端可用">${bothSvg}</span>`
+
+function platformIcon(link: string) {
+  const platform = componentPlatform(link)
+  if (platform === 'pc') return pcOnlyIcon
+  if (platform === 'mobile') return mobileOnlyIcon
+  return bothPlatformIcon
+}
+
+/** 组件侧边栏只给一级组件页加端侧图标；表格子页等同组件不重复标。 */
+function decorateComponentPlatforms<T extends { text?: unknown; link?: unknown; docFooterText?: unknown; items?: T[] }>(items: T[]): T[] {
+  for (const item of items) {
+    if (item.items?.length) decorateComponentPlatforms(item.items)
+    if (typeof item.link !== 'string' || !item.link.startsWith('/vue/ui/components/')) continue
+    const rest = item.link.slice('/vue/ui/components/'.length)
+    if (!rest || rest === 'index' || rest.includes('/')) continue
+    const plain = typeof item.docFooterText === 'string'
+      ? item.docFooterText
+      : typeof item.text === 'string'
+        ? item.text
+        : ''
+    if (!plain) continue
+    item.docFooterText = plain
+    item.text = `${platformIcon(item.link)}${plain}`
+  }
+  return items
+}
 
 /**
  * 扫描 docs/php/api 生成「一个类一篇」的侧边栏
@@ -135,7 +172,7 @@ export default defineConfig({
     ],
 
     sidebar: {
-      '/vue/ui/': [
+      '/vue/ui/': decorateComponentPlatforms([
         {
           text: "K UI 组件库",
           items: [
@@ -318,7 +355,7 @@ export default defineConfig({
                     { text: "KChart 图表", link: "/vue/ui/components/chart" },
                     { text: "KCalendar 日历", link: "/vue/ui/components/calendar" },
                     { text: "KCarousel 轮播", link: "/vue/ui/components/carousel" },
-                    { text: "KPinInput 验证码输入", link: "/vue/ui/components/pin-input" },
+                    { text: "KPinInput 验证码/密码输入", link: "/vue/ui/components/pin-input" },
                     { text: "KCommandPalette 命令面板", link: "/vue/ui/components/command-palette" },
                     { text: "KNavigationMenu 导航菜单", link: "/vue/ui/components/navigation-menu" }
                   ]
@@ -366,10 +403,35 @@ export default defineConfig({
                   ]
                 }
               ]
+            },
+            {
+              text: "模板（Templates）",
+              collapsed: false,
+              items: [
+                { text: "模板总览", link: "/vue/ui/templates" },
+                {
+                  text: "页面（Pages）",
+                  collapsed: false,
+                  items: [
+                    { text: "数据看板", link: "/vue/ui/templates/pages/dashboard" },
+                    { text: "成员管理", link: "/vue/ui/templates/pages/members" },
+                    { text: `${mobileOnlyIcon}移动端确认订单`, docFooterText: "移动端确认订单", link: "/vue/ui/templates/pages/mobile-order" }
+                  ]
+                },
+                {
+                  text: "区块（Blocks）",
+                  collapsed: false,
+                  items: [
+                    { text: "登录", link: "/vue/ui/templates/blocks/login" },
+                    { text: "定价方案", link: "/vue/ui/templates/blocks/pricing" },
+                    { text: "通知设置", link: "/vue/ui/templates/blocks/settings" }
+                  ]
+                }
+              ]
             }
           ]
         }
-      ],
+      ]),
       '/vue/': [
         {
           text: "介绍",

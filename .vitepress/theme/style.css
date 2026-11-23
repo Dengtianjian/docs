@@ -139,6 +139,12 @@
   max-width: 1068px !important;
 }
 
+/* VitePress 默认 :where(.vp-doc) li + li 会给导航菜单项加 8px 顶距，破坏垂直居中。
+   这是文档宿主样式，只在 docs 侧覆盖，不进入组件库。 */
+.vp-doc .k-navigation-menu__list > .k-navigation-menu__item + .k-navigation-menu__item {
+  margin-top: 0;
+}
+
 .vp-doc table {
   display:table;
   width:100%;
@@ -178,16 +184,28 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-/* 侧边栏：移动端专属组件标记 */
-.k-sidebar-mobile-icon {
+/* 侧边栏：端侧覆盖标记（PC / 移动 / 双端） */
+.k-sidebar-pc-icon,
+.k-sidebar-mobile-icon,
+.k-sidebar-both-icon {
   display: inline-flex;
   align-items: center;
   margin-right: 6px;
-  color: var(--vp-c-brand-1);
+  color: inherit;
   vertical-align: -2px;
+  transition: color 0.2s;
 }
-
-.k-sidebar-mobile-icon svg {
+.VPSidebarItem a:hover .k-sidebar-pc-icon,
+.VPSidebarItem a:hover .k-sidebar-mobile-icon,
+.VPSidebarItem a:hover .k-sidebar-both-icon,
+.VPSidebarItem a.router-link-active .k-sidebar-pc-icon,
+.VPSidebarItem a.router-link-active .k-sidebar-mobile-icon,
+.VPSidebarItem a.router-link-active .k-sidebar-both-icon {
+  color: var(--vp-c-brand-1);
+}
+.k-sidebar-pc-icon svg,
+.k-sidebar-mobile-icon svg,
+.k-sidebar-both-icon svg {
   width: 13px;
   height: 13px;
 }

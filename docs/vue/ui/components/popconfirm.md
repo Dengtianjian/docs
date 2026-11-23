@@ -113,7 +113,7 @@
 | --- | --- | --- |
 | triggerAttrs | `Record<string, unknown>` | 触发器：仅 `data-part="trigger"`，无 ARIA/类；默认模板的 `span.k-popconfirm__trigger`（inline-block 包裹层）是视觉壳，自绘自理 |
 | triggerOn | `Record<string, (e: Event) => void>` | 触发器事件：**仅 `click`**（触发固定 click，确认语义不该 hover 误触）——`!disabled` 守卫后 `setOpen(!visible)`；无 hover/focus 档，也因此**没有 popupOn 包**（无悬停容差逻辑） |
-| popupAttrs | `Record<string, unknown>` | 弹层节点：`data-part="root"` + `class` 出口类 + `data-k-theme`（Provider scheme 非 auto 时）+ `data-placement`（实际方位）+ `role="dialog"` + `aria-modal="false"`（非模态浮层语义）+ `style` 定位包。**class 含 `k-popconfirm` token 宿主类**——`--k-popconfirm-*` 变量（bg/radius/padding/min-max-width/arrow-size）与 `z-index-popup-base` 都声明在它上面，必须保留否则 token 断链；另含 scoped Provider 的 `k-config-provider + scopeClass`。style = position（fixed/absolute）+ top/left + visibility（先隐藏测量再落位的两遍渲染）+ `--k-overlay-arrow-offset`（箭头主轴偏移 px，JS 端 clamp 进限位）。**卡片视觉壳不在包内**——`.k-popconfirm__card` 的背景/圆角/阴影、图标、文案区与按钮行全自绘（按钮点击绑 `onConfirm`/`onCancel`） |
+| popupAttrs | `Record<string, unknown>` | 弹层节点：`data-part="root"` + `class` 出口类 + `data-k-theme`（Provider scheme 非 auto 时）+ `data-placement`（实际方位）+ `role="dialog"` + `aria-modal="false"`（非模态浮层语义）+ `style` 定位包。**class 含 `k-popconfirm` token 宿主类**——`--k-popconfirm-*` 变量（bg/radius/padding/min-max-width/arrow-size）与 `z-index-popover` 都声明在它上面，必须保留否则 token 断链；另含 scoped Provider 的 `k-config-provider + scopeClass`。style = position（fixed/absolute）+ top/left + visibility（先隐藏测量再落位的两遍渲染）+ `--k-overlay-arrow-offset`（箭头主轴偏移 px，JS 端 clamp 进限位）。**卡片视觉壳不在包内**——`.k-popconfirm__card` 的背景/圆角/阴影、图标、文案区与按钮行全自绘（按钮点击绑 `onConfirm`/`onCancel`） |
 
 #### 动作
 

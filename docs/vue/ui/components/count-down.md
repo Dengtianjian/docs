@@ -2,6 +2,8 @@
 
 > 共同约定见 [共同约定](./index.md)。P9 移动端专项。时间倒计时与逐位滚动的数字动画。
 
+`KRollingText` 是底层滚动原语；统计数值使用 [KStatistic](./statistic.md) 的 `animation="rolling"`，只有独立一段数字/文本需要滚动时才直接使用 KRollingText。
+
 ## 何时使用
 
 - 秒杀、验证码、活动倒计时；
@@ -38,7 +40,9 @@
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | value | 文本或数字 | `string \| number` | `0` |
-| duration | 过渡时长（ms） | `number` | `600` |
+| duration | 过渡时长（ms）；显式传入时覆盖速度档 | `number` | — |
+| speed | 速度档：350 / 700 / 1100ms | `'fast' \| 'normal' \| 'slow'` | `'normal'` |
+| timing | 缓动：匀速 / 先快后慢 | `'linear' \| 'ease-out'` | `'ease-out'` |
 | height | 高度 | `number \| string` | — |
 | classNames / styles | 部件：`root / char / track` | — | — |
 

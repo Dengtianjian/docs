@@ -12,10 +12,10 @@
         <span>1px / 8s</span>
       </div>
     </KBorderBeam>
-    <KBorderBeam :active="false">
+    <KBorderBeam paused>
       <div class="panel small">
         <strong>已暂停</strong>
-        <span>active=false</span>
+        <span>paused · 光束保留</span>
       </div>
     </KBorderBeam>
   </KSpace>

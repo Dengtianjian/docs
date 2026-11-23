@@ -2,9 +2,10 @@
   <KFloatButton
     position="right-top"
     shape="square"
-    description="帮助"
+    content="帮助"
     type="default"
     tooltip="文档与反馈"
+    :badge="{ dot: true }"
     :offset="[24, 96]"
     @click="clicked = (clicked ?? 0) + 1"
   >

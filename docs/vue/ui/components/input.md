@@ -17,7 +17,7 @@
 
 <Demo path="input/autosize-range" title="自适应高度范围" desc="`{ minRows, maxRows }` 限定高度区间，超出 maxRows 出内部滚动。" />
 
-<Demo path="input/password" title="密码框" :desc="['`type=password` 默认带明暗文切换，切换保持焦点与光标。', '`showPassword=false` 关闭，`passwordVisibleChange` 监听状态。']" />
+<Demo path="input/password" title="密码框" :desc="['`type=password` 默认带明暗文切换，切换保持焦点与光标。', '`showPassword=false` 关闭，`passwordVisibleChange` 监听状态。', '`disableAutofill` 屏蔽浏览器密码提示与原生 reveal 图标，演示默认开启。']" />
 
 <Demo path="input/loading" title="加载状态" desc="`loading` 在后缀显示旋转图标并标记 `aria-busy`，不锁定输入。" />
 
@@ -69,6 +69,7 @@
 | addonAfter | 后置组合标签（纯文本；插槽优先） | `string \| number` | — |
 | autofocus | 原生 autofocus 透传（挂载即聚焦） | `boolean` | — |
 | autocomplete | 原生 autocomplete 透传（浏览器自动填充提示） | `string` | — |
+| disableAutofill | 屏蔽浏览器自动填充与密码提示：密码框回落 `new-password`、其它类型回落 `off`；附加 1Password/LastPass/Bitwarden 忽略标记，并隐藏原生 reveal 图标。显式 `autocomplete` 优先 | `boolean` | `false` |
 | id | 原生 id 透传（label for 关联） | `string` | — |
 | name | 原生 name 透传（表单提交字段名） | `string` | — |
 
@@ -131,6 +132,7 @@
 
 - `type=textarea` 渲染原生 `<textarea>`：未开 `autosize` 时按 `rows` 定高、可纵向缩放；`autosize` 时禁用缩放并随内容/宽度重算高度（超过 `maxRows` 出现内部滚动）。
 - 密码框默认显示明文切换按钮（`showPassword=false` 可关）；切换后保持焦点与光标位置，并 emit `passwordVisibleChange`。
+- 浏览器密码管理器/扩展图标无法被组件强制关闭：需要屏蔽时传 `disableAutofill`（或在真实登录表单按需传 `autocomplete`）；KInput 是多根节点，`data-lpignore` 等原生属性直接写在组件标签上不会落到内部 `<input>`。
 - `loading` 仅在后缀占位显示旋转图标、设置 `aria-busy`，不锁定输入；需要只读请同时传 `readonly`。
 - `passivelyActivated` 让外壳空白/前后缀点击也能聚焦输入框；`#render` 自绘时可用 scope 的 `passivelyActivated` 自行实现。
 - 手动操作：expose `focus()` / `blur()` / `select()`（另有 `activate`/`deactivate` 别名）与 `inputEl`。

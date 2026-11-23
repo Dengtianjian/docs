@@ -53,3 +53,4 @@
 - 根节点带 `role="progressbar"` 与 `aria-valuenow/min/max`；信息文本只作视觉呈现。
 - `active` 的条纹动画在 `prefers-reduced-motion` 下自动关闭。
 - 环形的 `strokeWidth` 随 viewBox 缩放，实际像素宽度会随尺寸档变化。
+- 环形 / 仪表盘的半径会按 `strokeWidth` 内缩，描边不会超出 SVG 视口被裁切；根节点按内容宽度收缩。

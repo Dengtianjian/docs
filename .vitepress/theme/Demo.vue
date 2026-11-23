@@ -25,8 +25,10 @@ const props = withDefaults(
     lines?: string;
     /** 标题层级：默认 h3 进入右侧目录；长文档可传 4 让演示不占目录 */
     titleLevel?: 3 | 4;
+    /** 预览区溢出策略：浮层演示用 visible，避免下拉/展开被裁切 */
+    overflow?: 'clip' | 'visible';
   }>(),
-  { titleLevel: 3 },
+  { titleLevel: 3, overflow: 'clip' },
 );
 
 const escapeHtml = (text: string) =>
@@ -176,7 +178,7 @@ async function copy() {
 </script>
 
 <template>
-  <section ref="sectionEl" class="k-doc-demo">
+  <section ref="sectionEl" class="k-doc-demo" :style="{ overflow }">
     <header v-if="title || desc" class="k-doc-demo__head">
       <component
         :is="`h${titleLevel}`"

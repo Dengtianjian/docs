@@ -12,7 +12,7 @@
 
 <Demo path="border-beam/basic" title="基础光束" :desc="['光束由 conic-gradient 与 mask 合成，不占布局。', '`size` 控制描边宽度，`duration` 控制一圈时长。', '内容保持可交互。']" />
 
-<Demo path="border-beam/custom" title="颜色、圆角与暂停" :desc="['`color` 接受单色或 `[起色, 止色]`。', '`radius` 支持数字或任意 CSS 长度，`999` 为胶囊。', '`active=false` 直接隐藏光束。']" />
+<Demo path="border-beam/custom" title="颜色、圆角与暂停" :desc="['`color` 接受单色或 `[起色, 止色]`。', '`radius` 支持数字或任意 CSS 长度，`999` 为胶囊。', '`paused` 暂停动画但保留静态光束；`active=false` 才隐藏光束。']" />
 
 ## API
 
@@ -20,7 +20,8 @@
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| active | 是否播放 | `boolean` | `true` |
+| active | 是否显示光束 | `boolean` | `true` |
+| paused | 是否暂停动画（保留静态光束） | `boolean` | `false` |
 | size | 光束宽度（px） | `number` | `2` |
 | duration | 一圈时长（秒） | `number` | `6` |
 | color | 单色或双色渐变 | `string \| [string, string]` | 主题主色 → 成功色 |

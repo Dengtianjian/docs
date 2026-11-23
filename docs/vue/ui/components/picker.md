@@ -10,7 +10,7 @@
 
 ## 代码演示
 
-<Demo path="picker/basic" title="底部选择器" :desc="['`columns` 每列提供 `options`，`v-model` 绑定值数组。', '滚动停止后吸附到最近项，禁用项自动跳过。', '`confirm` 派发确认值，`cancel` 恢复原值。']" />
+<Demo path="picker/basic" title="底部选择器" :desc="['`columns` 每列提供 `options`，`v-model` 绑定值数组。', '遮罩淡入、面板滑入；滚动停止后平滑吸附到最近项，禁用项自动跳过。', '`confirm` 派发确认值，`cancel` 恢复原值。']" />
 
 <Demo path="picker/inline" title="内联滚轮" :desc="['`KPickerView` 不带弹层，可直接嵌入页面。', '`visibleCount` 控制可见行数，`itemHeight` 控制行高。', '↑ / ↓ / Home / End 可键盘选择。']" />
 
@@ -28,6 +28,7 @@
 | loading | 加载态（禁用操作） | `boolean` | `false` |
 | closeOnMask | 遮罩关闭 | `boolean` | `true` |
 | safeArea | 底部安全区 | `boolean` | `true` |
+| width | 宽度覆盖；缺省最大宽 `420px` | `number \| string` | — |
 | ariaLabel | 无障碍名称 | `string` | 标题 |
 | classNames / styles | 部件：`root / header / title / footer / column / scroller / option / highlight` | — | — |
 
@@ -65,3 +66,11 @@
 ### 键盘
 
 列可聚焦：`↑ / ↓` 切换选项，`Home / End` 首尾，禁用项自动跳过。
+
+滚轮与弹层均关闭文本选择；手动滚动结束后会平滑吸附到最近选项。
+
+## PC 端宽度
+
+- 默认 `width: min(100%, 420px)`：移动端占满，PC 端缩窄并水平居中。
+- `width` prop 直接覆盖；也可用 `--k-picker-max-width` 修改默认上限。
+- 视口 ≥ 768px 时只收窄到 420px，仍保持贴底与上圆角。

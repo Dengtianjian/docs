@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="lg">
+  <KSpace direction="vertical" size="lg" align="start">
     <KSegmented v-model="value" :options="options" />
     <KSpace size="lg" align="center">
       <KSegmented v-model="sizeValue" size="sm" :options="options" />

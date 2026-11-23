@@ -77,7 +77,7 @@
 
 - 弹层 `Teleport` 出口走 popupContainer 契约（ConfigProvider 职责④）：缺省 body = `position: fixed` + scroll/resize 跟随。
   - 指定容器 = `absolute` 进容器文档流（随内容滚、被裁切）。
-  - z `--k-z-index-popup-base`，`scopeClass`/`data-k-theme` 随出口节点走。
+  - z `--k-z-index-popover`（临时浮层档，高于 modal/drawer），`scopeClass`/`data-k-theme` 随出口节点走。
 - 定位/外点关闭/Esc 走共用基座 `composables/usePopup.ts`（`utils/overlay.ts` 纯函数算位），与 KPopover/KPopconfirm 同源；KSelect 的自有定位暂不并轨（宽度贴触发器等专属语义）。
 - 触发元素放 `#trigger` 插槽，外包一层 `span.k-tooltip__trigger`（inline-block），事件绑在这层；焦点语义保持留在触发元素上。
 - 弹层显示时触发层带 `aria-describedby` 指向弹层 id（`role="tooltip"`），读屏在焦点触发时可朗读提示内容；隐藏时移除关联，避免指向空节点。
@@ -111,7 +111,7 @@
 | --- | --- | --- |
 | triggerAttrs | `Record<string, unknown>` | 触发器：仅 `data-part="trigger"`，无 ARIA/类；默认模板的 `span.k-tooltip__trigger`（inline-block 包裹层）是视觉壳，自绘自理 |
 | triggerOn | `Record<string, (e: Event) => void>` | 触发器事件：`mouseenter`/`mouseleave`（hover 档走 `mouseEnterDelay`/`mouseLeaveDelay` 延迟链，单位秒；开启路径有 disabled 守卫）、`focusin`/`focusout`（focus 档同延迟链）、`click`（click 档 `setOpen(!visible)`）；`trigger` 组合决定哪些事件实际生效，未配置的档空转 |
-| popupAttrs | `Record<string, unknown>` | 气泡节点：`data-part="root"` + `class` 出口类 + `data-k-theme`（Provider scheme 非 auto 时）+ `data-placement`（实际方位）+ `role="tooltip"` + `style` 定位包。**class 含 `k-tooltip` token 宿主类**——`--k-tooltip-*` 变量（bg/color/radius/padding/font-size/arrow-size）与 `z-index-popup-base`、max-width 都声明在它上面，必须保留否则 token 断链；另含 scoped Provider 的 `k-config-provider + scopeClass`。style = position（fixed/absolute）+ top/left + visibility（先隐藏测量再落位的两遍渲染）+ `--k-overlay-arrow-offset`（箭头主轴偏移 px，JS 端 clamp 进限位）。**气泡视觉壳不在包内**——`.k-tooltip__inner` 的背景/圆角/内边距与箭头节点全自绘（箭头可消费偏移变量） |
+| popupAttrs | `Record<string, unknown>` | 气泡节点：`data-part="root"` + `class` 出口类 + `data-k-theme`（Provider scheme 非 auto 时）+ `data-placement`（实际方位）+ `role="tooltip"` + `style` 定位包。**class 含 `k-tooltip` token 宿主类**——`--k-tooltip-*` 变量（bg/color/radius/padding/font-size/arrow-size）与 `z-index-popover`、max-width 都声明在它上面，必须保留否则 token 断链；另含 scoped Provider 的 `k-config-provider + scopeClass`。style = position（fixed/absolute）+ top/left + visibility（先隐藏测量再落位的两遍渲染）+ `--k-overlay-arrow-offset`（箭头主轴偏移 px，JS 端 clamp 进限位）。**气泡视觉壳不在包内**——`.k-tooltip__inner` 的背景/圆角/内边距与箭头节点全自绘（箭头可消费偏移变量） |
 | popupOn | `Record<string, (e: Event) => void>` | 气泡悬停容差：`mouseenter`（hover 档清掉待关计时器——移入气泡不消失）、`mouseleave`（hover 档按 `mouseLeaveDelay` 延迟关闭） |
 
 #### 动作

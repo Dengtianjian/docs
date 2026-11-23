@@ -10,7 +10,7 @@
 
 ## 代码演示
 
-<Demo path="popup/basic" title="底部与居中" :desc="['`placement` 支持 bottom / top / left / right / center。', '`closeable` 显示关闭按钮，`closeOnMask` 控制遮罩关闭。', '`KCenterPopup` 固定居中，适合确认与短提示。']" />
+<Demo path="popup/basic" title="底部与居中" :desc="['`placement` 支持 bottom / top / left / right / center。', '遮罩淡入，面板按方向滑入；居中弹层使用缩放 + 淡入。', '`closeable` 显示关闭按钮，`closeOnMask` 控制遮罩关闭。', '`KCenterPopup` 固定居中，适合确认与短提示。']" />
 
 ## API
 
@@ -24,7 +24,7 @@
 | closeable | 关闭按钮 | `boolean` | `false` |
 | closeOnMask | 遮罩关闭 | `boolean` | `true` |
 | safeArea | 底部安全区 | `boolean` | `true` |
-| width / height | 尺寸 | `number \| string` | — |
+| width / height | 尺寸；bottom / top 默认最大宽 `420px` | `number \| string` | width 上限 `420px` |
 | zIndex | 层级 | `number` | 主题弹层层级 |
 | ariaLabel | 无障碍名称 | `string` | 标题 |
 | classNames / styles | 部件：`root / close / header / title / body / footer` | — | — |
@@ -44,3 +44,9 @@
 ### KCenterPopup
 
 接受 KPopup 全部属性与插槽，固定 `placement="center"`；通常用于确认与短提示。
+
+## PC 端宽度
+
+- bottom / top 默认 `width: min(100%, 420px)`：移动端仍占满，PC 端自动缩窄并居中。
+- `width` prop 直接覆盖；也可用 `--k-popup-max-width` 修改默认上限。
+- 视口 ≥ 768px 时 bottom / top 只收窄到 420px 并保持贴底 / 贴顶；left / right / center 维持各自宽度。

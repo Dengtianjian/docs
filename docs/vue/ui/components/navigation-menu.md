@@ -10,9 +10,9 @@
 
 ## 代码演示
 
-<Demo path="navigation-menu/horizontal" title="水平下拉" :desc="['`items` 一级项可带 `children`。', '悬停或点击展开，`select` 派发子项与路径。', '`← / →` 切换一级项，`↓` 展开并聚焦子项。']" />
+<Demo path="navigation-menu/horizontal" title="水平下拉" overflow="visible" :desc="['`items` 一级项可带 `children`。', '悬停或点击展开，同一时间只保留一个展开项。', '`select` 派发子项与路径。', '`← / →` 切换一级项，`↓` 展开并聚焦子项。']" />
 
-<Demo path="navigation-menu/vertical" title="垂直折叠" :desc="['`orientation=&quot;vertical&quot;` 内联展开。', '`:open-on-hover=&quot;false&quot;` 时完全由点击/键盘控制。', '`Esc` 收起并回到父项。']" />
+<Demo path="navigation-menu/vertical" title="垂直折叠" :desc="['`orientation=&quot;vertical&quot;` 内联展开。', '`:open-on-hover=&quot;false&quot;` 时完全由点击/键盘控制。', '选择子项后父级保持展开，`Esc` 收起并回到父项。']" />
 
 ## API
 

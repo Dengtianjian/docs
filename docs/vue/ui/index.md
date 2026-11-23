@@ -1,6 +1,8 @@
 # K UI 组件库 · 文档总览
 
 > kit 内 Vue 3 双端组件库（`packages/vue/ui/`）的全部规格，随如意技术库文档站维护。目录组织规则见文末「文档准入」。
+>
+> 侧边栏端侧标记：显示器图标 = PC 端可用；手机图标 = 移动端可用；显示器 + 手机组合图标 = 双端可用。
 
 ## 目录
 
@@ -11,14 +13,18 @@
 ├── design/                    # 全局规格（跨组件）
 │   ├── language.md            # 设计语言：纯视觉规则（色彩/布局/字体/图标/阴影/动效/数据格式）
 │   └── theme-tokens.md        # 主题 token 规格：三层变量模型、CSS-first 派生管线、平台组
-└── components/                # 逐组件规格（一组件一文件）
-    ├── index.md               # 全组件共同约定 + 交付顺序
-    ├── config-provider.md     # KConfigProvider 机制规格
-    ├── button.md              # KButton（全库样板，深度最高）
-    ├── icon.md                │ button 前置依赖
-    ├── space.md               ├── flex.md      ├── divider.md
-    ├── grid.md (KRow/KCol)    ├── layout.md    ├── typography.md
-    └── link.md
+├── components/                # 逐组件规格（一组件一文件）
+│   ├── index.md               # 全组件共同约定 + 交付顺序
+│   ├── config-provider.md     # KConfigProvider 机制规格
+│   ├── button.md              # KButton（全库样板，深度最高）
+│   ├── icon.md                │ button 前置依赖
+│   ├── space.md               ├── flex.md      ├── divider.md
+│   ├── grid.md (KRow/KCol)    ├── layout.md    ├── typography.md
+│   └── link.md
+└── templates/                 # 模板：组合好的页面与区块（单文件可复制）
+    ├── index.md               # 模板总览与复制约定
+    ├── pages/                 # 完整页面（看板/成员/移动端订单）
+    └── blocks/                # 页面区块（登录/定价/通知设置）
 ```
 
 ## 总方案决策速记（会话评审定稿，规格细节看各文档）
@@ -36,6 +42,7 @@
 | Vue 基线 | Vue 3.5+：defineModel / defineOptions / props 解构响应式 / useId / useTemplateRef / defineSlots / 泛型组件优先 | — |
 | 主题设计器 | 一个主色 hex → oklab 表达式图自动铺全库；JS antd 色板算法降级为导出辅助/`--static` 兜底/图表 API | theme-tokens §4.6 |
 | 组件范围 | antd/naive-ui/vant/antd-mobile 除复杂件外全收录，分 P1（基础 10 组）→ P2（表单/反馈）→ P3（数据展示）→ P4（导航/复杂） | components/共同约定 |
+| 模板（Templates） | `templates/` 放页面与区块级组合，单文件 SFC 可直接复制；不新增包导出或抽象层 | [模板总览](./templates/index.md) |
 
 ## 代码目录对应关系
 

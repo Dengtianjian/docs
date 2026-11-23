@@ -9,7 +9,7 @@
 
 ## 代码演示
 
-<Demo path="collapse/basic" title="基础用法" :desc="['v-model:active-key 受控展开项，不传走内部状态。', '非手风琴模式可同时展开多项。', '标题、额外内容与内容区都可以用插槽。']" />
+<Demo path="collapse/basic" title="基础用法" :desc="['v-model:active-key 受控展开项，不传走内部状态。', '非手风琴模式可同时展开多项。', '展开 / 收起使用高度与透明度动画，收起后内容不可聚焦。', '标题、额外内容与内容区都可以用插槽。']" />
 
 <Demo path="collapse/accordion" title="手风琴 / 无边框" :desc="['accordion 同一时间只展开一项。', 'ghost 去掉外框与底色，只保留分隔线。', 'disabled 禁用单项；extra 放计数或操作。']" />
 

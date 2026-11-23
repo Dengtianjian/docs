@@ -168,7 +168,7 @@
 | [chart.md](./chart.md) | KChart | 已落地（P7，零依赖 SVG + `#chart` 插槽） |
 | [calendar.md](./calendar.md) | KCalendar | 已落地（P7，date/month + 键盘导航） |
 | [carousel.md](./carousel.md) | KCarousel | 已落地（P7，slide/fade + 拖拽/自动播放） |
-| [pin-input.md](./pin-input.md) | KPinInput | 已落地（P7，粘贴分发/OTP/分组） |
+| [pin-input.md](./pin-input.md) | KPinInput / KPasscodeInput / KPasswordInput | 已落地（P7，粘贴分发/OTP/分组 + 密码预设） |
 | [command-palette.md](./command-palette.md) | KCommandPalette | 已落地（P7，模糊搜索 + 热键 + combobox ARIA） |
 | [navigation-menu.md](./navigation-menu.md) | KNavigationMenu | 已落地（P7，水平下拉/垂直折叠） |
 
@@ -267,7 +267,7 @@ themes 全套 + css/theme(reset/layer/utility) → KIcon → KButton（样板，
 | [notice-bar.md](./notice-bar.md) | KNoticeBar | 已落地（P9，滚动/关闭/链接） |
 | [index-bar.md](./index-bar.md) | KIndexBar / KIndexAnchor | 已落地（P9，锚点 + 气泡） |
 | [side-bar.md](./side-bar.md) | KSideBar | 已落地（P9，角标 + 键盘） |
-| [number-keyboard.md](./number-keyboard.md) | KNumberKeyboard / KPasscodeInput / KPasswordInput | 已落地（P9，数字键盘三件套） |
+| [number-keyboard.md](./number-keyboard.md) | KNumberKeyboard | 已落地（P9，自绘数字键盘） |
 | [floating.md](./floating.md) | KFloatingBubble / KFloatingPanel | 已落地（P9，吸附与悬浮面板） |
 | [submit-bar.md](./submit-bar.md) | KSubmitBar / KActionBar | 已落地（P9，底部操作条） |
 | [count-down.md](./count-down.md) | KCountDown / KRollingText | 已落地（P9，倒计时 + 滚动数字） |

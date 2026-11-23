@@ -1,5 +1,5 @@
 <template>
-  <KSpace direction="vertical" size="md">
+  <KSpace direction="vertical" size="md" style="width: 100%">
     <KCarousel :items="items" effect="fade" :height="200" indicator="line">
       <template #content="{ item }">
         <div class="panel" :style="{ background: item.background }">

@@ -270,8 +270,9 @@ motionDurationFast/Mid/Slow = max(0.1/0.2/0.3, motionUnit × 1/2/3)
 motionDurationWave = 0.6s | motionEaseWave = (0.08,0.82,0.16,1)   // 点击波纹（2026-11-17 调参：用户「太快」，由 antd 同值 0.4s 放慢到 0.6s）
 缓动预设：easeInOutCubic (0.645,0.045,0.355,1) | easeOutQuint (0.23,1,0.32,1) 弹出
         | easeInQuint (0.755,0.05,0.855,0.06) 收起 | easeOutBack (0.12,0.4,0.29,1.46) 备用（库内不消费，业务二开可选）
-zIndex: base 0 | divider 1 | segment 2 | affix 10 | popup 1000(seed)
-        dropdown +100 | sticky +200 | mask +300 | modal/drawer +400 | popover +500 | message +910 | notification +990
+zIndex: base 0 | divider 1 | segment 2 | affix 10 | popup-base 1000(seed)
+        sticky +200 | float-button +200 | mask +300 | modal/drawer +400 | 临时浮层 popup/dropdown/popover +500 | message +910 | notification +990
+        // 临时浮层必须高于 modal/drawer：弹窗内打开 Select/Tooltip 等不会被弹窗盖住
 ```
 
 ---

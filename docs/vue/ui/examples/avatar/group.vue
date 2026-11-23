@@ -1,6 +1,6 @@
 <template>
   <KSpace direction="vertical" size="lg">
-    <KAvatarGroup :max-count="4">
+    <KAvatarGroup :max-count="4" hover-expand>
       <KAvatar text="如" />
       <KAvatar text="意" color="#7c5cff" />
       <KAvatar text="技" color="#39c5bb" />
@@ -8,7 +8,14 @@
       <KAvatar text="库" />
       <KAvatar text="组" />
     </KAvatarGroup>
-    <KAvatarGroup :max-count="3" size="sm" :gap="6">
+    <KAvatarGroup
+      :max-count="3"
+      size="sm"
+      :gap="6"
+      hover-expand
+      expand-mode="peek"
+      :hover-offset="3"
+    >
       <KAvatar text="A" />
       <KAvatar text="B" />
       <KAvatar text="C" />

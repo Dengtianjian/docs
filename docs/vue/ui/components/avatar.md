@@ -13,7 +13,7 @@
 
 <Demo path="avatar/image" title="图片与失败回退" :desc="['传 src 渲染图片；加载失败自动回退到文字/图标。', '错误后更换 src 会自动重试。', '触发 load / error 事件可接入业务埋点。']" />
 
-<Demo path="avatar/group" title="头像组" :desc="['maxCount 控制最多展示数量，超出显示 +N。', 'size / shape 作为子 Avatar 的默认值，可被单个 Avatar 覆盖。', 'gap 控制叠放间距，默认 8px。']" />
+<Demo path="avatar/group" title="头像组" overflow="visible" :desc="['maxCount 控制最多展示数量，超出显示 +N。', 'size / shape 作为子 Avatar 的默认值，可被单个 Avatar 覆盖。', 'gap 控制叠放间距，默认 8px。', 'hover-expand 开启悬停展开：expandMode=&quot;full&quot; 完全分开，peek 仅移动 hoverOffset 距离；悬停头像同时上浮并高亮描边。', '+N 使用更深填充色，并随组悬停轻微上浮。']" />
 
 ## API
 
@@ -57,6 +57,9 @@
 | shape | 子头像默认形状 | `'circle' \| 'square'` | — |
 | gap | 叠放间距，正值表示重叠 | `number` | `8` |
 | bordered | 子头像白色描边 | `boolean` | `true` |
+| hoverExpand | 悬停时展开头像组 | `boolean` | `false` |
+| expandMode | 展开方式：完全分开 / 仅移动一点 | `'full' \| 'peek'` | `'full'` |
+| hoverOffset | peek 模式的分离距离（px） | `number` | `6` |
 | classNames / styles | 部件：`root / extra` | — | — |
 
 <CommonProps />
@@ -65,4 +68,5 @@
 
 - `+N` 使用与子头像相同的尺寸与形状；`maxCount=0` 时不显示计数。
 - 头像组通过父级依赖注入下发尺寸/形状/描边，单个 Avatar 显式传值优先。
+- `hoverExpand` 只在支持悬停的设备生效，触屏不会因点击残留展开态。
 - 图片按 `alt` 提供可访问名称；纯装饰头像请传空 `alt` 并用 `aria-hidden` 包裹。

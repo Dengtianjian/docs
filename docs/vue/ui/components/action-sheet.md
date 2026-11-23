@@ -27,6 +27,7 @@
 | cancelText | 取消按钮文案，空字符串隐藏 | `string` | `'取消'` |
 | closeOnMask | 点击遮罩关闭 | `boolean` | `true` |
 | safeArea | 底部安全区 | `boolean` | `true` |
+| width | 宽度覆盖；缺省最大宽 `420px` | `number \| string` | — |
 | ariaLabel | 无障碍名称 | `string` | 标题 |
 | classNames / styles | 部件：`root / header / title / description / actions / action / actionIcon / actionLabel / actionDescription / cancel` | — | — |
 
@@ -65,3 +66,9 @@
 ### KShareSheet
 
 Props 与 KActionSheet 相同；额外默认 `layout="grid"`、`title="分享到"`。透传全部属性与插槽。
+
+## PC 端宽度
+
+- 默认 `width: min(100%, 420px)`：移动端占满，PC 端缩窄并水平居中。
+- `width` prop 直接覆盖；也可用 `--k-action-sheet-max-width` 修改默认上限。
+- 视口 ≥ 768px 时只收窄到 420px，仍保持贴底与上圆角。

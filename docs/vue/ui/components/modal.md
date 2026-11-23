@@ -16,6 +16,8 @@
 
 <Demo path="modal/draggable" title="拖拽 / 无遮罩 / 内容滚动" :desc="['`draggable` 按住标题栏拖动。', '`mask=false` 不压暗背景。', '长内容在 body 内滚动，标题与页脚固定。']" />
 
+<Demo path="modal/nested-layers" title="弹窗内浮层层级" :desc="['Select、DatePicker、TimePicker、Dropdown、Tooltip、Popconfirm 的弹层 Teleport 到 body 后统一高于弹窗与遮罩。', '临时浮层走 `--k-z-index-popup`（= modal +100），不会再被弹窗盖住。', '点开各控件验证；弹窗右上角 X 或「完成」关闭。']" />
+
 <Demo path="modal/functional" title="实例 API：功能弹窗" :desc="['useKApp().modal：open + info/success/error/warning（类型图标）。', '不预设按钮，关闭统一 X / 蒙层 / Esc 触发 onClose。', '需要操作钮时在内容里自绘（handle.destroy 关闭）。', 'draggable/mask/placement 同样可配。']" />
 
 <Demo path="modal/render" title="自定义渲染（headless）" :desc="['双通道：`#render` 自绘拖拽面板（headerOn 拖拽链 + translate 位移 + 原点变量全继承）。', '`render` prop 自绘居中 sheets。', '滚动锁、Esc、蒙层关闭与焦点移入照常生效。']" />

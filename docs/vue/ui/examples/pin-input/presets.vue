@@ -2,13 +2,13 @@
   <KSpace direction="vertical" size="lg">
     <div class="block">
       <span class="label">支付密码</span>
-      <KPasswordInput v-model="password" :length="6" @complete="completed = true" />
+      <KPasswordInput v-model="password" :length="6" />
     </div>
     <div class="block">
       <span class="label">验证码（PasscodeInput）</span>
       <KPasscodeInput v-model="passcode" :length="4" :group-size="2" />
     </div>
-    <p class="tip">{{ completed ? '支付密码已输入完成' : '请输入 6 位数字密码' }}</p>
+    <p class="tip">KPasscodeInput 是 KPinInput 的掩码预设；KPasswordInput 是旧 API 兼容密码预设。</p>
   </KSpace>
 </template>
 
@@ -20,7 +20,6 @@ import KSpace from 'kit/vue/ui/components/Space/Space.vue'
 
 const password = ref('')
 const passcode = ref('')
-const completed = ref(false)
 </script>
 
 <style scoped>

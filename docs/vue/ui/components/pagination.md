@@ -13,6 +13,8 @@
 
 <Demo path="pagination/basic" title="基础 / 受控 / 每页条数 / 跳转 / 简单 / 禁用" :desc="['`v-model:current` + `v-model:page-size` 受控。', '`show-total` / `show-size-changer` / `show-quick-jumper` 组合。', '`simple` 只保留前后与页码摘要。', '`hide-on-single-page` 单页时隐藏。', '`disabled` 整体禁用。']" />
 
+<Demo path="pagination/align" title="对齐位置" desc="`align` 控制整组分页在容器内的位置：`left` / `center` / `right`，默认靠左。" />
+
 ## API
 
 ### Props
@@ -30,6 +32,7 @@
 | disabled | 整体禁用 | `boolean` | `false` |
 | hideOnSinglePage | 只有一页时隐藏 | `boolean` | `false` |
 | size | 尺寸 | `'sm' \| 'md' \| 'lg'` | `'md'` |
+| align | 整组分页在容器内的位置 | `'left' \| 'center' \| 'right'` | `'left'` |
 | classNames | 部件类名（`root / total / item / active / ellipsis / prev / next / sizeChanger / quickJumper`） | `Partial<Record<Part, string>>` | — |
 | styles | 部件内联样式（`root / total / item / active / ellipsis / prev / next / sizeChanger / quickJumper`） | `Partial<Record<Part, CSSProperties>>` | — |
 
@@ -46,6 +49,7 @@
 ## 注意事项
 
 - 页码为 1 基并自动收敛到 `1..pageCount`；`total=0` 时显示第 1 页。
+- `align` 只移动整组分页，需要容器比分页本身宽才看得出左右位置；放在 flex 行内时先把外层撑满。
 - 页码、翻页按钮与省略号占位均为固定**正方形**（边长 = 当前尺寸档高度），两位数页码不会把格子撑宽。
 - 按钮带 `aria-label`，当前页带 `aria-current="page"`；跳转输入回车或失焦提交，非法值回退当前页。
 - 每页条数变化会把页码重置为 1。

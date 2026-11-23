@@ -12,6 +12,8 @@
 
 <Demo path="radio/button" title="按钮形态" :desc="['`shape=button`：段拼接（首末圆角、选中段主色描边主色字并抬 z-index 压相邻边）。', '键盘方向键走原生 radio 组语义。']" />
 
+<Demo path="radio/variants" title="按钮变体" :desc="['`variant` 仅对 `shape=button` 生效：outlined（缺省，主色描边主色字）、filled（主色实底白字）、tonal（主色浅底）、text（无框文字）。', '选中段沿用 KButton 的浓度阶梯与 token；段高、内边距、圆角、字号同 KButton md。']" />
+
 <Demo path="radio/render" title="自定义渲染（headless）" :desc="['KRadioGroup `#render` 直消费 options/value/select 自绘套餐卡（role=radiogroup 语义继承）。', 'KRadio `render` prop 自绘方案瓦片（原生 radio 语义包 + change 逻辑包继承）。']" />
 
 ## API
@@ -35,6 +37,7 @@
 | v-model | `string \| number` |
 | options | `Array<string \| {label, value, disabled?}>` |
 | shape | `'circle'`（缺省）\| `'button'` |
+| variant | 按钮形态选中段配色：`'outlined'`（描边主色字）\| `'filled'`（实底白字）\| `'tonal'`（主色浅底）\| `'text'`（无框文字）；`shape=circle` 时忽略 |
 | disabled | 组级禁用下发 |
 | name | 原生 name（同组互斥由 context 收敛） |
 | id | 组根节点 id（缺省取 FormItem 自动 id） |
@@ -57,7 +60,7 @@
 
 ### 部件变量
 
-圆点框：`--k-radio-dot-size`=`--k-size`；选中内点 `--k-radio-inner`=`primary`；边框链同 Checkbox。button 形态段高 = `control-height`，段距零（拼接），变量 `--k-radio-btn-padding-x`=`size`（16px）。
+圆点框：`--k-radio-dot-size`=`--k-size`；选中内点 `--k-radio-inner`=`primary`；边框链同 Checkbox。button 形态段高 = `control-height`，段距零（拼接），内边距变量 `--k-radio-btn-padding-x`=`--k-padding-md`（20px，与 KButton md 对齐）；选中段配色由 `variant` 决定。
 
 ## 注意事项
 
@@ -66,6 +69,7 @@
 - button 形态选中段左缘由 `::before` 1px 竖条补上并翻主色（段自身 `border-left:0`，左缘像素归前段右边框所有，选中描边染不到左缘）；竖条高度含上下边框行才与选中上下边连成整框，`z-index:1` 压相邻边、共用边线不双描（antd 实况同，2026-11-17 左边框补全）。
 - 圆点内点取 8×8 @ 3px 整偏移（`inset: calc(25% - 0.5px)`）：纯 25% 得 7px @ 3.5px 半像素，栅格化把环隙舍入成 3/4 不对称而视觉偏芯（2026-11-17 居中修正）。
 - 单选「反选」不存在：点已选中项无变化（原生 radio 语义），清空需求走 KSelect allowClear。
+- `variant` 只作用于 `shape="button"`：outlined 保持原拼接段观感；filled / tonal 仍保留 1px 边线让拼接闭合，text 为无框无底纯文字段。
 - 按压遮罩豁免（同输入族）。
 
 ## 自定义渲染（headless）
@@ -82,6 +86,7 @@
 | checked | `boolean` | 当前选中态：组模式比对 `group.value === value`，standalone 比对 `modelValue === value`；自绘内点/描边统一用它 |
 | disabled | `boolean` | **`disabled \|\| 组 disabled` 合成后的禁用态**（非 prop 原值）；inputAttrs 的原生 disabled 消费它，自绘置灰也应以它为准 |
 | button | `boolean` | 组 `shape="button"` 注入的拼接段形态标记（`group?.shape === 'button'`，standalone 恒 false）；默认渲染据此切「圆点 + 文字」/「段内文字」两套结构，自绘可据此切形态 |
+| variant | `'outlined' \| 'filled' \| 'tonal' \| 'text'` | 组按钮形态的选中段配色（standalone 恒 `outlined`）；默认渲染落 `k-radio--button-{variant}` 类，自绘按值取描边/实底/浅底/文字配色 |
 | name | `string \| undefined` | 原生 name 原值；已并入 inputAttrs。**同名是原生 radio 互斥与方向键组语义的根据**——组默认渲染把组 name 下发到每个子件，headless 自绘需自行保证同组同 name |
 | id | `string \| undefined` | 原生 id 原值；已并入 inputAttrs，外部 label for 关联无需单独消费 |
 
@@ -109,6 +114,7 @@
 | --- | --- | --- |
 | options | `{ label: string; value: string \| number; disabled?: boolean }[]` | 归一化后的选项清单（string 项展开为 `{label: o, value: o}`；未传 options 为 `[]`，此时走 `slots.default` 手写子件形态）；自绘 `v-for` 数据源 |
 | shape | `'circle' \| 'button'` | 组形态（缺省 `'circle'`）；经 provide 下发为子件 scope 的 `button` 标记；自绘据此决定圆点平铺或拼接段 |
+| variant | `'outlined' \| 'filled' \| 'tonal' \| 'text'` | 按钮形态选中段配色（缺省 `'outlined'`）；经 provide 下发为子件 scope 的 `variant`，自绘按值取色 |
 | disabled | `boolean` | 组级禁用 prop（缺省 false）；经 provide 下发合成子件禁用态，并落 rootAttrs 的 aria-disabled；自绘直绘选项时需自行消费 |
 | name | `string \| undefined` | 组级原生 name 原值；**不在 rootAttrs 内**——默认渲染逐子件下发，headless 需自行传给子件/自绘 input（同名互斥 + 方向键组语义靠它） |
 | value | `string \| number \| undefined` | 当前选中单值（v-model 原值，未选为 undefined）；选中判断 `value === o.value` |
@@ -117,7 +123,7 @@
 
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
-| rootAttrs | `Record<string, unknown>` | 根节点：`data-part="root"` + `role="radiogroup"` + `aria-disabled`（组禁用为 true 才落，false 省略键）。**不含视觉类**——默认根的 inline-flex 换行排布/间距、button 形态的无缝拼接（gap:0 + nowrap）自绘；provide 注入照跑：headless 组内放默认渲染的 KRadio（带 value）照常继承组 value/disabled/shape/select |
+| rootAttrs | `Record<string, unknown>` | 根节点：`data-part="root"` + `role="radiogroup"` + `aria-disabled`（组禁用为 true 才落，false 省略键）。**不含视觉类**——默认根的 inline-flex 换行排布/间距、button 形态的无缝拼接（gap:0 + nowrap）自绘；provide 注入照跑：headless 组内放默认渲染的 KRadio（带 value）照常继承组 value/disabled/shape/variant/select |
 
 #### 动作
 

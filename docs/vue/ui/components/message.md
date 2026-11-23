@@ -11,6 +11,8 @@
 
 <Demo path="message/basic" title="message" :desc="['四类型 + loading。', '时长秒、0 常驻。', '同 key 复更新（loading→success 不叠条）。', 'destroyAll。']" />
 
+<Demo path="message/promise" title="Promise 接口（包装异步任务）" :desc="['`message.promise(task, { loading, success, error, duration?, key? })`：自动开 loading，任务落定后同 key 原地更新为成功/失败提示。', '返回原任务结果，异常原样抛出；loading / success / error 支持函数动态取错误文案。']" />
+
 <Demo path="message/sizes" title="三档尺寸" :desc="['`size` 支持 `sm` / `md` / `lg`，字号、内边距与图标同步缩放。', '尺寸按单条消息配置，不影响队列其它消息。']" />
 
 <Demo path="message/render" title="自定义内容（render + classNames）" :desc="['render 只替换图标与正文，外层 k-message 的队列、role、计时与关闭回调仍由 Holder 提供。', 'classNames/styles 逐部件覆盖。']" />
@@ -32,6 +34,7 @@ message.success('操作成功')
 message.open(config | string) → { destroy() }
 message.info|success|error|warning|loading(content, duration?, onClose?) → { destroy() }
 message.info|…({ content, duration, icon, key, onClose, render, classNames, styles }) → { destroy() }
+message.promise(task, { loading?, success?, error?, duration?, key? }) → Promise<T>
 message.destroy(key) / message.destroyAll()
 ```
 
@@ -46,6 +49,27 @@ message.destroy(key) / message.destroyAll()
 | classNames | 部件类名覆盖：`root / icon / content` | — |
 | styles | 部件样式覆盖：`root / icon / content` | — |
 | onClose | 该条销毁时回调 | — |
+
+### Promise 封装
+
+```ts
+const rows = await message.promise(fetchRows(), {
+  loading: '正在同步…',
+  success: '同步完成',
+  error: (e) => `同步失败：${(e as Error).message}`,
+})
+```
+
+| 字段 | 说明 | 默认 |
+| --- | --- | --- |
+| loading | loading 文案或 config；恒为常驻，结果落定时原地更新 | `'加载中…'` |
+| success | 成功文案或 config | `'操作成功'` |
+| error | 失败文案、config，或 `(error) => 文案/config` | `'操作失败'` |
+| duration | 成功/失败提示停留秒数，`0` = 常驻 | `3` |
+| key | 复用 key（loading 与结果同一条）；缺省内部生成 | — |
+
+- `task` 可传 Promise 或返回 Promise 的函数；resolve 值原样返回，reject 原样抛出（先用 error 文案更新提示再 throw）。
+- loading → 结果走同 key 原地更新，不叠加第二条；结果提示的计时从更新时重新开始。
 
 ### 部件变量
 

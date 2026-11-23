@@ -10,6 +10,12 @@
 
 <Demo path="modal/basic" title="声明式（#trigger + 自管/受控）" :desc="['#trigger 点击即开。', '不传 open = 自管开合（X / 蒙层 / Esc 即关），传 v-model:open = 受控（trigger 只发 update:open）。', 'center 落位、width、footer 纯插槽驱动。']" />
 
+<Demo path="modal/trigger" title="条件触发（受控 open 拦截）" :desc="['`#trigger` 点击只发 `update:open`；遍历 `open` 前先校验业务条件，未满足则不打开并给出提示。', '示例：名称非空才允许打开；勾选确认后才允许危险操作弹窗。']" />
+
+<Demo path="modal/async-close" title="异步关闭（beforeClose）" :desc="['`beforeClose` 可返回 Promise：关闭 X / 蒙层 / Esc 与暴露的 `close()` 都先等待它，返回 false 或抛错则保持打开。', '守卫执行期间 `closing` 为 true，重复关闭请求被忽略；示例用 900ms 模拟保存。']" />
+
+<Demo path="modal/nested" title="弹窗中的弹窗" :desc="['外层弹窗自管开合，内层用 `v-model:open` 控制。', 'Esc 只关最上层；焦点圈定、滚动锁与遮罩层级按打开栈处理。']" />
+
 <Demo path="modal/sizes" title="三档尺寸 / header-body 配重" :desc="['`size` 支持 `sm` / `md` / `lg`，标题、正文、四周边距与关闭钮同步缩放。', 'header 下边距与 body 上边距用一个视觉间距统一，header/body/footer 各段内边距保持对称。']" />
 
 <Demo path="modal/placement" title="九宫格屏幕落位" :desc="['`placement` 九值控制弹窗打开后停在视口哪一格（缘距：上/下 80、左/右 24、center 20）。', 'zoom 动画原点仍走点击自动记录，与落位互不干涉。', '另附 `--k-modal-transform-origin` 动画原点 CSS 通道。']" />
@@ -21,6 +27,8 @@
 <Demo path="modal/functional" title="实例 API：功能弹窗" :desc="['useKApp().modal：open + info/success/error/warning（类型图标）。', '不预设按钮，关闭统一 X / 蒙层 / Esc 触发 onClose。', '需要操作钮时在内容里自绘（handle.destroy 关闭）。', 'draggable/mask/placement 同样可配。']" />
 
 <Demo path="modal/render" title="自定义渲染（headless）" :desc="['双通道：`#render` 自绘拖拽面板（headerOn 拖拽链 + translate 位移 + 原点变量全继承）。', '`render` prop 自绘居中 sheets。', '滚动锁、Esc、蒙层关闭与焦点移入照常生效。']" />
+
+- 程序化把受控 `open` 置 false（如 `v-model:open` 直接改值）会绕过 `beforeClose`；需要统一守卫时调用暴露的 `close()`。
 
 ## API
 
@@ -41,6 +49,7 @@
 | closable | 右上关闭 X | `boolean` | `true` |
 | draggable | 按住标题栏拖拽移动弹窗（naive 同款） | `boolean` | `false` |
 | source | 动画原点覆盖元素（优先级：`source` > 最近 pointerdown 自动记录 > 中心缩放；与落位无关） | `Element` | — |
+| beforeClose | 关闭前异步守卫：返回 `false` 或抛错则保持打开；期间 `closing=true`，重复关闭请求忽略 | `(e: MouseEvent \| KeyboardEvent) => boolean \| Promise<boolean>` | — |
 
 <CommonProps />
 
@@ -51,6 +60,13 @@
 | update:open | 开合态变化（`v-model:open`；自管模式同步发出） | `(open: boolean)` |
 | close | 关闭 X / 点蒙层 / Esc（均走 requestClose，与 open 对称） | `(e: MouseEvent \| KeyboardEvent)` |
 | afterClose | 退场动画播完、节点移除后派发 | — |
+
+### Expose
+
+| 方法 | 说明 |
+| --- | --- |
+| open() | 打开弹窗（走 requestOpen，受控/自管双模） |
+| close(e?) | 关闭弹窗，走 `beforeClose` 守卫；不传事件参数时合成 MouseEvent |
 
 ### Slots
 
@@ -153,6 +169,7 @@ modal.destroyAll()
 | closable | `boolean` | 是否应渲染右上关闭 X；自绘关闭钮据此显隐并绑 `requestClose` |
 | draggable | `boolean` | 头部拖拽总开关；headerOn 拖拽链内部据此守卫，dialogAttrs.style 也只在开启时携带 translate 位移 |
 | dragging | `boolean` | 拖拽进行中（pointerdown → pointerup/cancel）；自绘可据此切 grab/grabbing 光标 |
+| closing | `boolean` | `beforeClose` 异步守卫执行中；自绘可据此显示保存中或禁用关闭钮 |
 | zoomed | `boolean` | **原点测好、动画放行标记**：打开 watch 先置 false → nextTick 测触发源原点（`source` prop > 最近 pointerdown 自动记录 > 无则中心）→ 置 true 并聚焦 dialog；默认模板靠 `is-zoomed` 类控 `visibility:hidden` 门与 zoom 动画，自绘用它做 dialog 可见性门/动画触发。**退场期间保持 true**（否则动画中途 dialog 被藏掉），`onAfterLeave` 才复位；退场中途重开会重起 zoom 并把拖拽位移归零 |
 
 #### ref 与出口
@@ -181,7 +198,7 @@ modal.destroyAll()
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
 | requestOpen() | `() => void` | 打开：**受控双模**——自管置内部开合态 true，受控（传了 `open`）只 emit 不改内部态；两模都发 `update:open(true)`（不发 close）。连带开合 watch：body 滚动锁（模块级计数，多模态叠层只由最后一个释放）、挂 document keydown（Esc/Tab 圈定，仅最上层响应）、压入打开栈、zoomed 复位 → 测原点 → 放行、拖拽位移归零（重开回位）、焦点移入（autofocus → 正文 → footer → dialog） |
-| requestClose(e) | `(e: MouseEvent \| KeyboardEvent) => void` | 关闭：自管置内部开合态 false，受控只 emit；两模都发 `update:open(false)` + `close(e)`。关闭 X / 点蒙层（wrapOn 合成 MouseEvent）/ Esc（原生 KeyboardEvent）三路径共用；连带释放滚动锁计数、卸 Esc 监听、移出打开栈；zoomed/原点变量留到退场结束由 `onAfterLeave` 复位（退场动画期间 dialog 仍需可见） |
+| requestClose(e) | `(e: MouseEvent \| KeyboardEvent) => void` | 关闭：先走 `beforeClose` 异步守卫（返回 false/抛错则中止，期间 `closing=true`、重复请求忽略）；通过后自管置内部开合态 false，受控只 emit；两模都发 `update:open(false)` + `close(e)`。关闭 X / 点蒙层（wrapOn 合成 MouseEvent）/ Esc（原生 KeyboardEvent）三路径共用；连带释放滚动锁计数、卸 Esc 监听、移出打开栈；zoomed/原点变量留到退场结束由 `onAfterLeave` 复位（退场动画期间 dialog 仍需可见） |
 | onAfterLeave() | `() => void` | **自绘退场动画结束后必须调用**（默认模板挂 Transition `@after-leave`）：复位 `zoomed=false` + 清原点变量 + 还原打开前焦点（未卸载时）+ 发 `afterClose`；不调则 afterClose 不发、zoom 态不复位、焦点不还原（命令式 Holder 也据此才真正出队） |
 
 另有 `slots`（`ReturnType<typeof useSlots>`）：默认渲染的插槽集合（trigger/title/default/footer），自绘时可按需取用，如 `ctx.slots.footer?.()`（页脚纯插槽驱动，不传就不画）。

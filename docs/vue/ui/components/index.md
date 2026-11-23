@@ -181,7 +181,6 @@
 | [scroll-area.md](./scroll-area.md) | KScrollArea | 已落地（P8，细滚动条 + 阴影） |
 | [kbd.md](./kbd.md) | KKbd | 已落地（P8，组合键与平台修饰键） |
 | [user.md](./user.md) | KUser | 已落地（P8，头像 + 状态角标） |
-| [banner.md](./banner.md) | KBanner | 已落地（P8，四语义 + 操作区） |
 | [marquee.md](./marquee.md) | KMarquee | 已落地（P8，无缝循环 + reduced-motion） |
 | [splitter.md](./splitter.md) | KSplitter | 已落地（P8，拖拽 + 键盘 + min/max） |
 | [qrcode.md](./qrcode.md) | KQRCode | 已落地（P8，零依赖 SVG + Vision 实测解码） |

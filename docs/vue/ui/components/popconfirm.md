@@ -10,6 +10,10 @@
 
 <Demo path="popconfirm/basic" title="基础 / 危险操作 / 异步 onOk" :desc="['confirm/cancel 事件回传原生点击。', 'ok-loading 期间确定钮转圈不即关，收尾（true→false）自动收起。', 'danger 确定钮走 KButton type=danger。', '默认插槽可整块覆盖文案区。']" />
 
+<Demo path="popconfirm/trigger" title="条件触发" :desc="['确认气泡固定 click 打开；用受控 `open` + `update:open` 做业务条件拦截：名称非空才允许弹出。', '`disabled` 也可作为整体开关，关闭时点击不弹出。']" />
+
+<Demo path="popconfirm/arrow" title="箭头开关" :desc="['`arrow` 控制确认气泡箭头，默认显示；两枚气泡并排对比。', '配合开关动态切换，箭头实时出现 / 消失。']" />
+
 <Demo path="popconfirm/sizes" title="三档尺寸" :desc="['`size` 支持 `sm` / `md` / `lg`，标题 16/18/20、描述 14/16/18，内边距 12/16/20。', '实心图标固定 22px，图文间距 5px；标题不加粗。', '文案到操作区固定 16px；内置按钮同档跟随，sm 用 xs。']" />
 
 <Demo path="popconfirm/placements" title="12 方位" :desc="['与 KTooltip/KPopover 共用 utils/overlay 基座，12 方位 + 自动翻转全覆盖。', '箭头逐位跟随触发器中心。']" />

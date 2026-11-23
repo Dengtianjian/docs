@@ -10,6 +10,12 @@
 
 <Demo path="spin/basic" title="三档尺寸 / tip / 包裹模式" :desc="['独立用法与包裹用法（内容压暗 + inert 禁交互）。', 'spinning=false 整体不渲染指示器。']" />
 
+<Demo path="spin/placement" title="指示器四方位" :desc="['`indicatorPlacement`：top（缺省）/ bottom / left / right，控制指示器与文案的相对位置。', '横向方位下进度环同样适用，尺寸档保持不变。']" />
+
+<Demo path="spin/progress" title="环形进度" :desc="['`percent`（0-100，自动取整并夹紧）把指示器切换为环形进度 + 中心百分比文本。', '三档尺寸同步缩放；包裹模式下进度环居中浮层显示。']" />
+
+<Demo path="spin/custom" title="自定义文案与指示符" :desc="['`tip` 支持 VNode：示例用 KTag + 进度文案组合。', '`#indicator` 插槽替换内建 spinner：演示三点跳动与柱状律动两种指示符。']" />
+
 <Demo path="spin/render" title="自定义渲染（headless）" :desc="['双通道：`#render` 自绘包裹遮罩（nestedAttrs 继承 inert/aria-busy，delay 收敛态照常生效）。', '`render` prop 自绘三点脉冲。']" />
 
 ## API
@@ -19,6 +25,8 @@
 | spinning | 加载态 | `boolean` | `true` |
 | size | 指示器档位 | `'sm' \| 'md' \| 'lg'` | `'md'` |
 | tip | 指示器下方文案（支持 VNode） | `string \| VNode` | — |
+| percent | 进度百分比（0-100）；提供时显示环形进度 + 百分比文本 | `number` | — |
+| indicatorPlacement | 指示器相对文案的方位 | `'top' \| 'bottom' \| 'left' \| 'right'` | `'top'` |
 | delay | 延迟展示毫秒（防瞬时请求闪烁） | `number` | — |
 
 <CommonProps />
@@ -41,10 +49,12 @@
 | `--k-spin-color / --k-spin-tip-color` | `--k-color-primary` |
 | 旋转 | `--k-motion-duration-spin`（1s）linear infinite |
 | 包裹内容压暗 | `opacity .45` + `user-select/pointer-events` 关闭 + `inert` |
+| 进度环 | 尺寸 = `--k-spin-dot-size × 1.75`；轨道 `--k-color-fill-secondary`，进度 `--k-spin-color` |
 
 ## 注意事项
 
 - spinner 为内建 inline SVG（`stroke-dasharray` 圆环），与反馈件图标同路线，零图标依赖。
+- `percent` 与 `#indicator` 互斥：提供自定义指示符时整块替换，百分比环不再渲染。
 - `inert` 让被包裹区整体退出焦点序列，读屏播报 `role="status"`；静态渲染可补 `aria-live`。
 - delay 只对「进入」生效：`spinning` 转 false 立即收起，避免加载完成反而晚出现。
 
@@ -61,6 +71,8 @@ scope = `KSpinRenderScope`（入口导出），字段逐组如下（纯状态指
 | spinning | `boolean` | **delay 收敛后的展示态**（非原始 prop）：`delay > 0` 时转 true 要等 delay 毫秒才展示（防瞬时请求闪烁），转 false 立即收起并清计时器（组件卸载也清理）；自绘指示器用它做 `v-if` 门控 |
 | size | `'sm' \| 'md' \| 'lg'` | 指示器档位；默认渲染映射 `--k-spin-dot-size`（18/24/32px），自绘可映射为自己的尺寸变量 |
 | tip | `string \| VNode \| undefined` | 指示器下方文案（VNode 经 KNode 渲染）；纯 prop 通道，无同名插槽 |
+| percent | `number \| null` | 归一化后的进度（0-100 取整夹紧）；未传为 null。默认渲染据此切换环形进度与 `k-spin--progress` 类，自绘按值画环 |
+| indicatorPlacement | `'top' \| 'bottom' \| 'left' \| 'right'` | 指示器与文案的相对方位；默认渲染落 `k-spin--indicator-{placement}` 类（column / column-reverse / row / row-reverse），自绘按值排列 |
 | nested | `boolean` | 是否传了默认插槽（包裹模式标记）；自绘据此决定画独立指示器还是包裹遮罩结构 |
 
 #### 绑定包（spread 到自绘节点才继承）

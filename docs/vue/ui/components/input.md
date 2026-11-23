@@ -54,7 +54,7 @@
 | model-value / v-model | 绑定值 | `string` | `''` |
 | size | 高度档（controlHeight 阶梯） | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
 | status | 校验态（手动指定；KForm 下发同值） | `'error' \| 'warning'` | — |
-| variant | 外观形态 | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | `'outlined'` |
+| variant | 外观形态 | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | 跟随 KForm（缺省 `'outlined'`） |
 | rows | type=textarea 行数（未开 autosize 时生效） | `number` | `3` |
 | autosize | 文本域自适应高度：`true` 或 `{ minRows, maxRows }` | `boolean \| object` | `false` |
 | loading | 加载态：后缀旋转图标（不改变可编辑性） | `boolean` | `false` |
@@ -177,7 +177,7 @@
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
 | size | `'xs' \| 'sm' \| 'md' \| 'lg'` | 高度档（缺省 `'md'`，controlHeight 阶梯）；默认渲染映射 `.k-input--{size}` 类，自绘可映射为自己的密度变量；字号全档同值（根级 `--k-input-font-size`，iOS 防缩放保护） |
-| variant | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | 外观形态（缺省 `'outlined'`）；filled 灰底无框 / borderless 全透明 / underlined 仅底部边框，后三者不参与完整边框反馈与聚焦圈——自绘按此语义绘制 |
+| variant | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | 外观形态（缺省跟随 KForm，再缺省 `'outlined'`）；filled 灰底无框 / borderless 全透明 / underlined 仅底部边框，后三者不参与完整边框反馈与聚焦圈——自绘按此语义绘制 |
 | type | `string` | 原生 input 类型（prop 限 `'text' \| 'password' \| 'search' \| 'email' \| 'tel' \| 'url' \| 'number'`，缺省 `'text'`）；已并入 inputAttrs |
 | status | `InputStatus \| undefined` | 校验态（`'error' \| 'warning'`），**合并链：prop > KFormItem 校验态**（`props.status ?? formItem.status`）；自绘语义色边框/聚焦圈消费它，无校验为 undefined |
 | placeholder | `string` | 占位文本（已应用默认：textarea「请输入内容」，其余「请输入」）；已并入 inputAttrs |

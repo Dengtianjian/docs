@@ -89,7 +89,7 @@ Slots：`render` = 自定义渲染作用域插槽（scope 见文末「自定义�
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
 | size | `'xs' \| 'sm' \| 'md' \| 'lg'` | 高度档（缺省 `'md'`）；默认渲染透传内层 KInput，自绘可映射为自己的密度变量 |
-| variant | `'outlined' \| 'filled' \| 'borderless'` | 外观形态（缺省 `'outlined'`）；透传 KInput 同轴；默认渲染 borderless 时步进列不垫左边线，自绘对齐此语义 |
+| variant | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | 外观形态（缺省跟随 KForm，再缺省 `'outlined'`）；透传 KInput 同轴；默认渲染 borderless 时步进列不垫左边线，自绘对齐此语义 |
 | status | `NumberStatus \| undefined` | 校验态 prop 原值（`'error' \| 'warning'`）。**scope 里是原值不做合并**——「prop > FormItem 校验态」合并链发生在内层 KInput；headless 直绘原生 input 拿不到 FormItem 校验态，自绘内嵌默认渲染 KInput 并透传 status 才继承合并链 |
 | min | `number \| undefined` | 下限原值；限幅只在落定（onCommit/步进）发生，打字中途不拦截；自绘可据此画限幅提示 |
 | max | `number \| undefined` | 上限原值；同上 |

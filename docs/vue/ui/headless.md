@@ -161,7 +161,7 @@ h('button', { ...ctx.controlAttrs, ...onProps(ctx.controlOn) }, '…')
 | P4 导航族 | KBreadcrumb、KBreadcrumbItem、KSteps、KStep、KTabs、KTabPane、KDropdown、KAffix、KBackTop、KAnchor、KDrawer、KNavBar、KTabBar | 仅 KMenu 支持 |
 | P6 | KAvatar、KAvatarGroup、KCollapse、KCollapseItem、KDescriptions、KDescriptionsItem、KSegmented、KFieldGroup、KList、KListItem、KCellGroup、KCell、KTree、KInputTags | 新增基础件 |
 | P7 | KCalendar、KTimeline、KTimelineItem、KStatistic、KImage、KCarousel、KPinInput、KChart、KCommandPalette、KNavigationMenu | 数据与导航 |
-| P8 | KContextMenu、KScrollArea、KKbd、KUser、KBanner、KMarquee、KSplitter、KQRCode、KWatermark、KMasonry、KTour、KFloatButton、KBorderBeam、KListbox | 增强件 |
+| P8 | KContextMenu、KScrollArea、KKbd、KUser、KMarquee、KSplitter、KQRCode、KWatermark、KMasonry、KTour、KFloatButton、KBorderBeam、KListbox | 增强件 |
 | P9 | KActionSheet、KShareSheet、KPicker、KPickerView、KPullToRefresh、KInfiniteScroll、KSwipeCell、KSwipeAction、KSearchBar、KNoticeBar、KIndexBar、KIndexAnchor、KSideBar、KNumberKeyboard、KPasscodeInput、KPasswordInput、KFloatingBubble、KFloatingPanel、KSubmitBar、KActionBar、KCountDown、KRollingText、KPopup、KCenterPopup、KSafeArea、KSignature | 移动端专项 |
 
 > P10 评估结论：不批量补“伪 headless”。P6–P9 先用默认渲染、`classNames / styles` 与插槽满足业务；确有个别组件需要自有设计系统整件替换时，再按组件补 scope 与绑定包。

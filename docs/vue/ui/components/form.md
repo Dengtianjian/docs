@@ -12,9 +12,13 @@
 
 <Demo path="form/layout" title="布局" :desc="['`layout=vertical`（缺省）/ `horizontal`（labelWidth 定宽 + labelAlign）/ `inline`（横排紧凑）。', 'horizontal / inline 的内容列垂直居中；移动端转纵向后恢复拉伸。', '冒号 `colon` 默认开。']" />
 
+<Demo path="form/variant" title="表单级控件变体" :desc="['`variant` 下发到表单内的输入/选择类控件（Input、InputNumber、Select、DatePicker、Cascader、TreeSelect、Mentions、InputTags、PinInput 等）。', '控件自身显式传 `variant` 时优先生效（示例第三条覆盖为 underlined）。', 'Checkbox / Radio / Switch 等无输入壳控件不受影响。']" />
+
 <Demo path="form/a11y" title="分组控件关联" :desc="['RadioGroup / CheckboxGroup 用 aria-labelledby 关联字段标签，Switch 用 label for。', '错误时自动带 aria-describedby 与 aria-invalid。']" />
 
 <Demo path="form/render" title="自定义渲染（headless）" :desc="['Form / FormItem 双层 `#render`：自绘卡片表单 + 字段行——字段注册、整表校验（submit 拦截）、错误回显、控件 status 注入照常生效。', 'validate/resetFields 动作直消费。']" />
+
+- `variant` 只作用于输入/选择类控件的视觉外壳；弹层内容、勾选/开关等无输入壳控件不受影响；控件显式传 `variant` 时优先于表单级。
 
 ## API
 
@@ -28,6 +32,7 @@
 | labelWidth | horizontal/inline 标签宽；支持断点对象/字符串 | `number \| string \| Partial<Record<Breakpoint, number \| string>>` | `100` |
 | labelAlign | 标签对齐；支持断点对象/字符串 | `'left' \| 'right' \| Partial<Record<Breakpoint, 'left' \| 'right'>> \| string` | `'right'` |
 | colon | 标签后冒号；支持断点对象/字符串（字符串值 `true`/`false`） | `boolean \| Partial<Record<Breakpoint, boolean>> \| string` | `true` |
+| variant | 表单级控件外观，下发到输入/选择类控件；控件自身 variant 优先 | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | — |
 
 <CommonProps />
 
@@ -80,7 +85,7 @@ Expose：`validate(): Promise<void>`（失败 reject `{errors, values}`）、`re
 
 - **整表校验 = 逐字段 Promise.allSettled 汇总**（校验逻辑全部下沉 FormItem），不存在「表级 schema 与字段独有规则两套回显路径」的分叉。
 - 字段 rules 只在 FormItem 侧合并一次：`props.rules ?? form.rules[name]`。
-- 布局变量链：`--k-form-label-width`（表级 style 注入）→ `--k-form-item-label-width`（字段级覆盖）；gap = `--k-form-gap`(size-lg)。
+- 布局变量链：`--k-form-label-width`（表级 style 注入）→ `--k-form-item-label-width`（字段级覆盖）；gap = `--k-form-gap`(size-sm)。
   - 响应式表单属性（layout / labelWidth / labelAlign / colon）由共享断点解析，语法见 [响应式取值](../design/responsive-values.md)；
   - `model` / `rules` 是数据，不做断点解析。
 - **warningOnly 现状**：async-validator 4.x 的 `warningOnly` 也会走 reject 通道，本实现按「error 才置失败」判定 —— `warningOnly` 规则失败时字段仍计入失败（语义待 P2 复盘拍板，暂按 error 处理并保留规则透传）。
@@ -99,6 +104,7 @@ Expose：`validate(): Promise<void>`（失败 reject `{errors, values}`）、`re
 | labelWidth | `string` | **解析后的标签宽 CSS 值**（响应式对象/字符串按当前断点取值；number → `{n}px`，string 原样；缺省 `'100px'`）；已经变量形式并入 rootAttrs.style，自绘直取此值定标签列宽亦可 |
 | labelAlign | `'left' \| 'right'` | 标签对齐（缺省 `'right'`）；默认渲染映射 `.k-form--label-{align}` 类，仅 horizontal/inline 有标签列时生效，自绘自映射 |
 | colon | `boolean` | 标签后冒号开关（缺省 true）；经 FORM_KEY 注入为 FormItem scope 的 `colon`，自绘标签行消费 |
+| variant | `'outlined' \| 'filled' \| 'borderless' \| 'underlined' \| undefined` | 表单级控件外观（缺省 undefined）；经 FORM_KEY 注入，输入类控件自身未传 `variant` 时继承 |
 | model | `Record<string, unknown> \| undefined` | 数据源对象原值（字段值按 name 取）；validate 的 finish/finishFailed 回传它的浅拷贝；控件各自 v-model 到 `model.xxx`，KForm 不代管值 |
 | rules | `Record<string, unknown> \| undefined` | 表级规则表原值（async-validator 语义，按字段 name 匹配）；字段级 `KFormItem rules` 覆盖，合并只在 FormItem 侧发生一次 |
 | validating | `boolean` | 整表校验进行中（validate 进入置 true、finally 置 false）；自绘提交钮 loading 消费它；与组件 expose 的 `validating` 同源 |

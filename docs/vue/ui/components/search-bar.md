@@ -12,6 +12,8 @@
 
 <Demo path="search-bar/basic" title="基础搜索" :desc="['`v-model` 绑定关键字，回车派发 `search`。', '`show-action` 显示取消按钮，`cancel` 可清空或退出搜索。', '有内容时出现清空按钮。']" />
 
+<Demo path="search-bar/variants" title="外观变体" :desc="['默认变体为 filled（灰底胶囊）。', 'outlined = 白底带框；borderless = 全透明；underlined = 仅底部边框。']" />
+
 ## API
 
 ### Props
@@ -23,6 +25,7 @@
 | actionText | 取消文案 | `string` | `'取消'` |
 | shape | 形状 | `'round' \| 'square'` | `'round'` |
 | size | 尺寸 | `'sm' \| 'md' \| 'lg'` | `'md'` |
+| variant | 外观 | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | 跟随 KForm（缺省 `'filled'`） |
 | disabled | 禁用 | `boolean` | `false` |
 | autofocus | 自动聚焦 | `boolean` | `false` |
 | maxlength | 最大长度 | `number` | — |

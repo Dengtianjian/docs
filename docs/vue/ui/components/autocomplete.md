@@ -13,6 +13,8 @@
 
 <Demo path="autocomplete/async" title="异步建议" :desc="['`fetch-suggestions` 返回数组或 Promise。', '`debounce` 控制请求节流，`min-length` 控制最小查询长度。', '过期请求结果会被丢弃；请求失败时展示空列表。']" />
 
+<Demo path="autocomplete/variants" title="外观变体" :desc="['`variant` 四档：outlined 带框 / filled 灰底无框 / borderless 全透明 / underlined 仅底部边框（hover / 聚焦只变底线颜色，不出聚焦圈）。']" />
+
 ## API
 
 ### KAutoComplete Props
@@ -29,7 +31,7 @@
 | placeholder | 占位文本 | `string` | — |
 | disabled / readonly | 禁用 / 只读 | `boolean` | `false` |
 | size | 尺寸 | `'sm' \| 'md' \| 'lg'` | `'md'` |
-| variant | 外观 | `'outlined' \| 'filled' \| 'borderless'` | `'outlined'` |
+| variant | 外观 | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | 跟随 KForm（缺省 `'outlined'`） |
 | status | 校验态 | `'error' \| 'warning'` | FormItem 兜底 |
 | notFoundContent | 无结果文案 | `string` | `'无匹配项'` |
 | render | 自定义渲染闭包 | `KRenderFn<KAutoCompleteRenderScope>` | — |

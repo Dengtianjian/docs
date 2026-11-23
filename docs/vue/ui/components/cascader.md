@@ -13,6 +13,8 @@
 
 <Demo path="cascader/multiple" title="多选与搜索" :desc="['`multiple` 时 model 为路径数组的数组。', '搜索模式按叶子节点匹配并展示完整路径。', '已选项以标签回显，可逐个移除。']" />
 
+<Demo path="cascader/variants" title="外观变体" :desc="['`variant` 四档：outlined 带框 / filled 灰底无框 / borderless 全透明 / underlined 仅底部边框（hover / 聚焦只变底线颜色，不出聚焦圈）。']" />
+
 ## API
 
 ### KCascader Props
@@ -32,6 +34,7 @@
 | displayRender | 自定义回显 | `(labels, options) => string` | — |
 | filter | 自定义搜索 | `(query, row) => boolean` | — |
 | disabled / size / status | 禁用 / 尺寸 / 校验态 | — | — |
+| variant | 外观 | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | 跟随 KForm（缺省 `'outlined'`） |
 | render | 自定义渲染闭包 | `KRenderFn<KCascaderRenderScope>` | — |
 
 ### Events

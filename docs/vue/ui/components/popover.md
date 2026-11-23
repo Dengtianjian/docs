@@ -10,6 +10,10 @@
 
 <Demo path="popover/basic" title="触发 / closable / 插槽" :desc="['hover 容差移入不消失。', 'click + closable 卡片。', '#trigger 包触发元素，#title 部件插槽 + 默认插槽内容区放任意结构。']" />
 
+<Demo path="popover/trigger" title="触发方式与条件" :desc="['`trigger` 支持 `hover` / `focus` / `click` 单值或数组组合。', '`disabled` 关闭触发：受开关控制的条件示例仅在开关打开时弹出。']" />
+
+<Demo path="popover/arrow" title="箭头开关" :desc="['`arrow` 控制卡片箭头，默认显示；两枚卡片并排对比。', '配合开关动态切换，箭头实时出现 / 消失。']" />
+
 <Demo path="popover/sizes" title="三档尺寸" :desc="['`size` 支持 `sm` / `md` / `lg`，内容 14/16/18、标题 16/18/20、内边距 12/16/20，关闭钮同步缩放。', '只影响弹层，触发器尺寸由业务控件决定。']" />
 
 <Demo path="popover/placements" title="12 方位" :desc="['top/bottom/left/right 四主方位 ± Top/Bottom 对齐后缀 = 12 方位，主侧放不下且对侧放得下才翻转。', '箭头逐位跟随触发器中心（贴边方位不钉边中点）。']" />

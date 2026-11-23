@@ -11,6 +11,8 @@
 
 <Demo path="notification/basic" title="弹出位置 + 操作区" :desc="['placement 六方位（top/bottom 水平居中）。', '同一方位的通知共用一个列表，不同方位各自一个列表。', 'actions 操作区（VNode 按钮）。', 'duration=0 常驻走关闭钮。']" />
 
+<Demo path="notification/types" title="四种类型" :desc="['`type` 取 `info` / `success` / `warning` / `error`：图标与强调色随类型走，标题/描述布局一致。', '逐个点击对比，或「四类齐发」观察同方位队列依次入场。']" />
+
 <Demo path="notification/sizes" title="三档尺寸" :desc="['`size` 支持 `sm` / `md` / `lg`，字号、内边距、标题/描述与关闭钮同步缩放。', '实例 API 与声明式组件共用同一尺寸轴。']" />
 
 <Demo path="notification/progress" title="倒计时进度条 + 悬停暂停" :desc="['showProgress 底部进度条与自动关闭同源计时。', '两个按钮分别对比 pauseOnHover 开启/关闭时，悬停对计时与进度条的影响。']" />

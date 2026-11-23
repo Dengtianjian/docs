@@ -367,7 +367,6 @@ export default defineConfig({
                     { text: "KScrollArea 滚动区域", link: "/vue/ui/components/scroll-area" },
                     { text: "KKbd 键帽", link: "/vue/ui/components/kbd" },
                     { text: "KUser 用户信息", link: "/vue/ui/components/user" },
-                    { text: "KBanner 公告条", link: "/vue/ui/components/banner" },
                     { text: "KMarquee 跑马灯", link: "/vue/ui/components/marquee" },
                     { text: "KSplitter 分隔面板", link: "/vue/ui/components/splitter" },
                     { text: "KQRCode 二维码", link: "/vue/ui/components/qrcode" },

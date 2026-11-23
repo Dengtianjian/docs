@@ -30,6 +30,8 @@
 
 <Demo path="select/render" title="自定义渲染（headless）" :desc="['`#render` 插槽 / `render` prop 整件替换：下划线触发器 + 深色面板全自绘。', '开合、键盘导航、点外关闭、定位翻转、禁用项逻辑由绑定包继承。']" />
 
+<Demo path="select/variants" title="外观变体" :desc="['`variant` 四档：outlined 带框 / filled 灰底无框 / borderless 全透明 / underlined 仅底部边框（hover / 聚焦只变底线颜色，不出聚焦圈）。']" />
+
 ## API
 
 ### Props
@@ -47,7 +49,7 @@
 | hideSelected | 菜单隐藏已选中项 | `boolean` | `false` |
 | virtual | 选择列表虚拟滚动（分组标题 + 选项统一窗口化，行高实测修正） | `boolean` | `false` |
 | size | 同 [KInput](./input.md) 尺寸轴（触发器视觉同源） | — | — |
-| variant | 同 [KInput](./input.md) 样式轴（触发器视觉同源） | — | — |
+| variant | 外观：outlined / filled / borderless / underlined（同 [KInput](./input.md) 样式轴，触发器视觉同源） | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | 跟随 KForm（缺省 `'outlined'`） |
 | status | 同 [KInput](./input.md) 校验态轴（触发器视觉同源） | — | — |
 | disabled | 同 KInput 语义（整件禁用） | — | — |
 | allowClear | 同 KInput 语义（有值时悬浮出清除钮） | — | — |

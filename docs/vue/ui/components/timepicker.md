@@ -13,6 +13,8 @@
 
 <Demo path="timepicker/step" title="步进与精度" :desc="['`hour-step / minute-step / second-step` 控制列选项间隔。', '范围面板通过点击左侧/右侧切换当前编辑面板。', '`allow-clear=false` 隐藏清除入口。']" />
 
+<Demo path="timepicker/variants" title="外观变体" :desc="['`variant` 四档：outlined 带框 / filled 灰底无框 / borderless 全透明 / underlined 仅底部边框（hover / 聚焦只变底线颜色，不出聚焦圈）。']" />
+
 ## API
 
 ### KTimePicker Props
@@ -30,6 +32,7 @@
 | disabled / readonly | 禁用 / 只读 | `boolean` | `false` |
 | size | 尺寸 | `'sm' \| 'md' \| 'lg'` | `'md'` |
 | status | 校验态 | `'error' \| 'warning'` | FormItem 兜底 |
+| variant | 外观 | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | 跟随 KForm（缺省 `'outlined'`） |
 | render | 自定义渲染闭包 | `KRenderFn<KTimePickerRenderScope>` | — |
 | classNames / styles | 部件类名 / 样式 | `Partial<Record<Part, …>>` | — |
 

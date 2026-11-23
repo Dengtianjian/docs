@@ -19,6 +19,8 @@
 
 <Demo path="date-range-picker/render" title="自定义渲染（headless）" :desc="['`#render` 自绘极简范围选择：触发输入、预设、双月网格全部自绘。', '开合、起止选择、hover 预览、快捷提交、清空由 scope 绑定包继承。']" />
 
+<Demo path="date-range-picker/variants" title="外观变体" :desc="['`variant` 四档：outlined 带框 / filled 灰底无框 / borderless 全透明 / underlined 仅底部边框（hover / 聚焦只变底线颜色，不出聚焦圈）。']" />
+
 ## API
 
 ### Props
@@ -27,7 +29,7 @@
 | --- | --- | --- | --- |
 | model-value / v-model | 日期区间（毫秒时间戳，起点 ≤ 终点） | `[number, number] \| null` | `null` |
 | size | 高度档 | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
-| variant | 外观 | `'outlined' \| 'filled' \| 'borderless'` | `'outlined'` |
+| variant | 外观 | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | 跟随 KForm（缺省 `'outlined'`） |
 | status | 校验态 | `'error' \| 'warning'` | — |
 | disabled | 禁用 | `boolean` | `false` |
 | clearable | 显示清除钮（有值且非禁用） | `boolean` | `false` |

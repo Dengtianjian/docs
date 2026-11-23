@@ -13,6 +13,8 @@
 
 <Demo path="treeselect/multiple" title="多选级联 / 父子独立" :desc="['`multiple` 使用复选框，父级与子级自动级联。', '`check-strictly` 关闭级联，父子可独立勾选。', '已选标签只展示叶子节点（严格模式下包含父节点）。']" />
 
+<Demo path="treeselect/variants" title="外观变体" :desc="['`variant` 四档：outlined 带框 / filled 灰底无框 / borderless 全透明 / underlined 仅底部边框（hover / 聚焦只变底线颜色，不出聚焦圈）。']" />
+
 ## API
 
 ### KTreeSelect Props
@@ -31,6 +33,7 @@
 | defaultExpandedKeys | 初始展开节点 | `(string \| number)[]` | `[]` |
 | filterTreeNode | 自定义搜索 | `(query, node) => boolean` | label/value 包含 |
 | disabled / size / status | 禁用 / 尺寸 / 校验态 | — | — |
+| variant | 外观 | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | 跟随 KForm（缺省 `'outlined'`） |
 | render | 自定义渲染闭包 | `KRenderFn<KTreeSelectRenderScope>` | — |
 
 ### Events

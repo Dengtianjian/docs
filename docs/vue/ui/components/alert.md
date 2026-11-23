@@ -10,6 +10,10 @@
 
 <Demo path="alert/basic" title="类型 / 描述 / 可关闭 / 操作区" :desc="['四类型语义色链（bg/border/icon 三件套随 type）。', 'description 触发加粗标题形态。', 'closable、action 插槽、banner、showIcon=false。']" />
 
+<Demo path="alert/slots" title="插槽组合" :desc="['icon / title / description / action 四个插槽分别覆盖对应 prop，可放富文本、标签与按钮。', 'title 与 description 一旦提供插槽，prop 文案即被覆盖（示例第二条）。']" />
+
+<Demo path="alert/variants" title="六种外观变体" :desc="['`variant`：outlined（缺省浅底描边）/ filled（语义实底白字）/ tonal（灰底彩字）/ text（无底无框）/ plain（贴边、保留上下边框）/ soft（贴边、四边无边框）。', '贴边形态拆为 plain / soft 两档；布尔 `banner` 等价 plain。']" />
+
 <Demo path="alert/sizes" title="三档尺寸" :desc="['`size` 支持 `sm` / `md` / `lg`，字号、内边距、图标与关闭钮同步缩放。', '标题与描述始终保持主次层级。']" />
 
 <Demo path="alert/render" title="自定义渲染（headless）" :desc="['双通道：`#render` 自绘语义左缘条（type 驱动强调色，onClose 继承关闭）。', '`render` prop 自绘紧凑横条。', '关闭后整件消失（仍受 `visible` 控制）。']" />
@@ -24,7 +28,8 @@
 | showIcon | 显示类型图标（`icon` 插槽 / icon prop 覆盖；prop 传 `null` 强制无图标） | `boolean` | `true` |
 | closable | 显示关闭 X | `boolean` | `false` |
 | open / v-model:open | 受控开合（关闭钮发 `update:open=false` + 自隐） | `boolean` | `true` |
-| banner | 贴边通告条（直角 + 去左右边框） | `boolean` | `false` |
+| variant | 外观变体：outlined / filled / tonal / text / plain / soft | `KAlertVariant` | `'outlined'` |
+| banner | 贴边通告条的布尔别名（等价 `variant="plain"`） | `boolean` | `false` |
 | size | 尺寸：字号、内边距、图标与关闭钮同步缩放 | `'sm' \| 'md' \| 'lg'` | `'md'` |
 
 <CommonProps />
@@ -78,7 +83,8 @@
 | showIcon | `boolean` | 是否显示类型图标；默认渲染还受 `icon` prop 约束（传 `null` 强制无图标——该 prop 不在 scope 内），自绘画图标可取 `slots.icon` 或按 type 自绘 |
 | size | `KAlertSize` | 尺寸档（`sm / md / lg`）；默认渲染据此缩放字号、内边距、图标与关闭钮，自绘可映射自己的规格 |
 | closable | `boolean` | 是否应渲染关闭 X；自绘关闭钮据此显隐并绑 `onClose` |
-| banner | `boolean` | 贴边通告条标记（默认渲染直角 + 去左右边框）；自绘映射自己的贴边样式 |
+| variant | `KAlertVariant` | 外观变体（outlined / filled / tonal / text / plain / soft）；默认渲染落 `k-alert--{variant}` 类，自绘按值取配色/形态 |
+| banner | `boolean` | 贴边通告条标记（`variant="plain"/"soft"` 或布尔 banner 为真）；默认渲染直角 + 去左右边框，自绘映射自己的贴边样式 |
 | visible | `boolean` | 开合合成态：受控（原始 vnode props 含 `open` 键）取 `props.open`，否则取内部开合态；**整件输出门控**——为 false 时 `#render` 插槽 / `render` prop 整体不渲染（关闭后整件消失），自绘内部无需再做 v-if |
 
 #### 绑定包（spread 到自绘节点才继承）

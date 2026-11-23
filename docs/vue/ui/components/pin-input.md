@@ -17,6 +17,8 @@
 
 <Demo path="pin-input/presets" title="密码与验证码预设" :desc="['`KPasscodeInput` 是 KPinInput 的掩码预设，支持分组。', '`KPasswordInput` 是为旧 API 保留的兼容密码预设，内部同样使用 KPinInput。', '两者都支持 error / warning 状态。']" />
 
+<Demo path="pin-input/variants" title="外观变体" :desc="['KPinInput 分格同样支持四档；underlined 每格只保留底线。', 'KPasscodeInput / KPasswordInput 预设透传 `variant`。']" />
+
 ## API
 
 ### Props
@@ -29,6 +31,7 @@
 | otp | 开启 OTP 自动填充提示 | `boolean` | `false` |
 | size | 尺寸 | `'sm' \| 'md' \| 'lg'` | `'md'` |
 | status | 状态 | `'error' \| 'warning'` | — |
+| variant | 外观 | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | 跟随 KForm（缺省 `'outlined'`） |
 | disabled / readonly | 禁用 / 只读 | `boolean` | `false` |
 | groupSize | 每组位数，0 不分组 | `number` | `0` |
 | separator | 分组分隔符 | `string` | `'-'` |
@@ -55,7 +58,7 @@
 
 ### KPasscodeInput
 
-`KPinInput` 的掩码预设，默认 `mask / size / status / disabled / ariaLabel`，其余 Props、事件和暴露方法与 KPinInput 一致。
+`KPinInput` 的掩码预设，默认 `mask / size / status / variant / disabled / ariaLabel`，其余 Props、事件和暴露方法与 KPinInput 一致。
 
 ### KPasswordInput Props
 
@@ -67,6 +70,7 @@
 | mask | 隐藏字符 | `boolean` | `true` |
 | size | 尺寸 | `'sm' \| 'md' \| 'lg'` | `'md'` |
 | status | 状态 | `'error' \| 'warning'` | — |
+| variant | 外观 | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | 跟随 KForm（缺省 `'outlined'`） |
 | disabled | 禁用 | `boolean` | `false` |
 | placeholder | 占位 | `string` | `'请输入支付密码'` |
 | ariaLabel | 无障碍名称 | `string` | `'支付密码'` |

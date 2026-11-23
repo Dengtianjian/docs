@@ -11,6 +11,10 @@
 
 <Demo path="tooltip/basic" title="方位 / 触发 / 受控" :desc="['12 方位（top 系/bottom 系/left 系/right 系 ± 对齐后缀）。', 'trigger 支持 hover/focus/click 组合。', 'v-model:open 受控。', '#trigger 包触发元素、默认插槽放富内容（content/title prop 兜底）。', '空内容不弹泡。']" />
 
+<Demo path="tooltip/trigger" title="触发方式与条件" :desc="['`trigger` 支持 `hover` / `focus` / `click` 单值或数组组合。', '`disabled` 关闭触发：受开关控制的条件示例仅在开关打开时弹出。']" />
+
+<Demo path="tooltip/arrow" title="箭头开关" :desc="['`arrow` 控制气泡箭头，默认显示；两枚气泡并排对比。', '配合开关动态切换，箭头实时出现 / 消失。']" />
+
 <Demo path="tooltip/sizes" title="三档尺寸" :desc="['`size` 支持 `sm` / `md` / `lg`，字号、内边距与最大宽度同步缩放。', '只影响气泡，触发器尺寸由业务控件决定。']" />
 
 <Demo path="tooltip/placements" title="12 方位全览" :desc="['四主方位 ± 对齐后缀共 12 个，逐位悬停查看。', '箭头逐位跟随触发器中心（贴边方位不钉边中点）。']" />

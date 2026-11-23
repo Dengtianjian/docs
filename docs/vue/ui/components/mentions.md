@@ -11,6 +11,8 @@
 
 <Demo path="mentions/basic" title="基础用法" :desc="['输入 `@` 唤起候选，弹层定位到 `@` 光标位置。', '输入过滤、滚动或换行时弹层跟随光标。', '上下方向键切换，Enter / Tab 选中，Esc 关闭。', '`#option` 可替换候选项内容。']" />
 
+<Demo path="mentions/variants" title="外观变体" :desc="['`variant` 四档：outlined 带框 / filled 灰底无框 / borderless 全透明 / underlined 仅底部边框（hover / 聚焦只变底线颜色，不出聚焦圈）。']" />
+
 ## API
 
 ### KMentions Props
@@ -25,6 +27,7 @@
 | disabled / readonly | 禁用 / 只读 | `boolean` | `false` |
 | size | 尺寸 | `'sm' \| 'md' \| 'lg'` | `'md'` |
 | status | 校验态 | `'error' \| 'warning'` | FormItem 兜底 |
+| variant | 外观 | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | 跟随 KForm（缺省 `'outlined'`） |
 | maxlength | 最大长度 | `number` | — |
 | notFoundContent | 无匹配文案 | `string` | `'无匹配项'` |
 | filter | 自定义过滤 | `(pattern, option) => boolean` | label/value 包含 |

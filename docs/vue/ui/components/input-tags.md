@@ -13,6 +13,8 @@
 
 <Demo path="input-tags/limit" title="数量 / 长度 / 校验" :desc="['max 限制标签数量，maxLength 限制单标签长度。', 'validate 返回 false 或错误文案时阻止添加。', 'invalid 事件返回值和原因，可用于展示错误。']" />
 
+<Demo path="input-tags/variants" title="外观变体" :desc="['标签外壳同样四档：outlined / filled / borderless / underlined。', 'underlined 仅保留底部边框，聚焦不出外圈。']" />
+
 ## API
 
 ### Props
@@ -29,6 +31,7 @@
 | allowDuplicates | 允许重复 | `boolean` | `false` |
 | clearable | 显示清空按钮 | `boolean` | `true` |
 | status | 状态 | `'error' \| 'warning'` | — |
+| variant | 外观 | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | 跟随 KForm（缺省 `'outlined'`） |
 | prefix / suffix | 前后缀文案 | `string` | — |
 | ariaLabel | 输入框读屏文案 | `string` | `'标签输入'` |
 | validate | 自定义校验 | `(value) => boolean \| string` | — |

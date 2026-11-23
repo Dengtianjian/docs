@@ -33,6 +33,8 @@
 
 <Demo path="date-picker/render" title="自定义渲染（headless）" :desc="['#render 整件替换触发器、面板和单元格。', '开合、下钻、键盘、点外关闭、定位和禁用逻辑由绑定包继承。']" />
 
+<Demo path="date-picker/variants" title="外观变体" :desc="['`variant` 四档：outlined 带框 / filled 灰底无框 / borderless 全透明 / underlined 仅底部边框（hover / 聚焦只变底线颜色，不出聚焦圈）。']" />
+
 ## API
 
 ### Props
@@ -42,7 +44,7 @@
 | v-model | 周期起点的毫秒时间戳；未选择为 `null`；`multiple` 时为时间戳数组 | `number \| number[] \| null` | `null` |
 | picker | 选择粒度 | `'date' \| 'week' \| 'month' \| 'quarter' \| 'year'` | `'date'` |
 | size | 触发器尺寸 | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
-| variant | 触发器样式 | `'outlined' \| 'filled' \| 'borderless'` | `'outlined'` |
+| variant | 触发器样式 | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | 跟随 KForm（缺省 `'outlined'`） |
 | status | 语义校验态；KFormItem 下发值时，prop 优先 | `'error' \| 'warning'` | — |
 | placeholder | 未选择时的提示 | `string` | 随 picker 变化 |
 | disabled | 是否禁用 | `boolean` | `false` |
@@ -135,7 +137,7 @@
 | placeholder | `string` | 解析后的提示文案 |
 | disabled | `boolean \| undefined` | 是否禁用 |
 | size | `'xs' \| 'sm' \| 'md' \| 'lg'` | 触发器尺寸 |
-| variant | `'outlined' \| 'filled' \| 'borderless'` | 触发器样式 |
+| variant | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | 触发器样式（underlined 仅底部边框） |
 | status | `'error' \| 'warning' \| undefined` | 合并后的校验态 |
 | viewDate | `number` | 当前面板视图时间戳 |
 | viewLevel | `'date' \| 'month' \| 'year'` | 当前面板层级 |

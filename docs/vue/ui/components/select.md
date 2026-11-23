@@ -14,7 +14,9 @@
 
 <Demo path="select/filter" title="过滤 / 输入创建选项" :desc="['`filterable` 触发器内嵌输入框（单选替换回显、多选跟在标签后），本地按 label 不区分大小写过滤。', '`filter` 自定义匹配。', '`tag` 回车把输入值创建为选项。', '`search` 事件实时抛输入。']" />
 
-<Demo path="select/group" title="分组 / 隐藏已选 / 前后缀" :desc="['`options` 混排 `{type:\'group\',label,children}` 与散选项。', '`hide-selected` 菜单隐藏已选（组空整组消失）。', '`#prefix` / `#suffix` 插槽（箭头保留）。']" />
+<Demo path="select/group" title="分组 / 隐藏已选 / 前后缀" :desc="['`options` 混排 `{type:\'group\',label,children}` 与散选项，分组子项自动缩进一级。', '`hide-selected` 菜单隐藏已选（组空整组消失）。', '`#prefix` / `#suffix` 插槽（箭头保留）。']" />
+
+<Demo path="select/virtual" title="虚拟列表 / 到顶到底" :desc="['`virtual` 只渲染可视窗口内的行，1000 条选项照样流畅；分组标题参与定高。', '`reach-top` / `reach-bottom` 在滚动进入边界时各触发一次（打开时静默初始化，不触发）。', '`filterable` 与虚拟滚动可同时开启。']" />
 
 <Demo path="select/max-tag" title="最大标签数" :desc="['`max-tag-count` 数字 = 固定保留个数。', '`responsive` = ResizeObserver 实测触发器宽度自适应收敛。', '溢出 +N 标签悬停 Tooltip 列剩余项。', '`#label` 插槽改标签回显。']" />
 
@@ -39,6 +41,7 @@
 | tag | 输入值可创建为选项（需 filterable）；Enter 无高亮项时创建并选中 | `boolean` | `false` |
 | maxTagCount | 多选标签折叠：数字 = 保留个数；`'responsive'` = 按触发器宽度实测 | `number \| 'responsive'` | — |
 | hideSelected | 菜单隐藏已选中项 | `boolean` | `false` |
+| virtual | 选择列表虚拟滚动（分组标题 + 选项统一窗口化，行高实测修正） | `boolean` | `false` |
 | size | 同 [KInput](./input.md) 尺寸轴（触发器视觉同源） | — | — |
 | variant | 同 [KInput](./input.md) 样式轴（触发器视觉同源） | — | — |
 | status | 同 [KInput](./input.md) 校验态轴（触发器视觉同源） | — | — |
@@ -57,6 +60,8 @@
 | blur | 触发件（filterable = 输入框）失焦 | `(e: FocusEvent)` |
 | search | 过滤输入变化 | `(pattern: string)` |
 | scroll | 选项列表滚动 | `(e: Event)` |
+| reachTop | 滚动进入列表顶部（状态跃迁触发一次，打开时静默） | — |
+| reachBottom | 滚动进入列表底部（状态跃迁触发一次，打开时静默） | — |
 
 ### Slots
 
@@ -98,6 +103,9 @@ Expose：`focus() / blur() / open() / close()`。
 - **多选换行撑高**：触发器 `min-height` + 内容 `flex-wrap`，标签换行自动撑大盒高；多选模式控制框带 4px 垂直内边距（`--k-size-xxs`），换行行不贴边框；+N 的 KTooltip 触发层 flex 化消除 inline 基线 strut（否则单行被撑大 3px）。
 - 外点关闭用 `pointerdown` capture 判定（含弹层内与触发区内不关）；Tab 焦点离开触发区/弹层亦关。
 - 列表滚动条走部件视觉（thin / 6px、`fill-secondary` thumb）。
+- **分组缩进**：组标题保持弹层水平内边距，组内选项再缩进一级（`--k-popup-item-padding-x + --k-size-sm` = 20px）；散选项无组标题，不缩进。
+- **filterable 空输入态**：输入框在有 pattern 时按字符数收缩、为空时撑满剩余宽度，多选触发器的 placeholder 因此完整可见。
+- **虚拟列表**：`virtual` 开启后按「分组标题 + 选项」拍平成行，容器用行高前缀和撑总高、窗口内行绝对定位；行高先估算（md 32 / 分组 26）再实测修正，`size` 换档与过滤导致行集变化时缓存失效重测。键盘高亮行在窗口外时按偏移直接滚列表；`reachTop` / `reachBottom` 只在进入边界状态时各触发一次，打开弹层的初始化不触发。headless 自绘需自行窗口化（scope 提供 `virtual` 原值与 `listEl` 滚动容器）。
 
 ## 自定义渲染（headless）
 
@@ -111,6 +119,7 @@ Expose：`focus() / blur() / open() / close()`。
 | multiple | `boolean` | 是否多选（`mode="multiple"`）；决定回显用标签还是单值、pick 后是否保持展开 |
 | disabled | `boolean` | 整件禁用；自绘触发器应据此挂 `disabled` / `data-disabled` 并置灰，所有动作内部也有禁用守卫 |
 | filterable | `boolean` | 可搜索模式；为 true 时焦点与 combobox 语义在输入框（inputAttrs/inputOn），controlAttrs 的 tabindex 变 -1 |
+| virtual | `boolean` | 虚拟滚动开关原值；默认渲染窗口化只需它，headless 自绘需自行实现窗口化与行高测量 |
 | size | `'xs' \| 'sm' \| 'md' \| 'lg'` | 尺寸档；自绘可映射为自己的密度变量 |
 | placeholder | `string` | 占位文案；无值时回显用 |
 | pattern | `string` | 当前过滤输入（filterable）；空菜单提示可用它回显「无匹配」 |
@@ -139,6 +148,7 @@ Expose：`focus() / blur() / open() / close()`。
 | contentEl | `Ref<HTMLElement \| null>` | 触发器内容区 ref：responsive 标签测量的宽度基准 |
 | inputEl | `Ref<HTMLInputElement \| null>` | filterable 输入框 ref：focus()/blur() 落点、多选 pick 后回焦；filterable 自绘必绑 |
 | popupEl | `Ref<HTMLElement \| null>` | 弹层节点 ref：定位测量（量高判翻转）与外点判定「弹层内不关」的依据；自绘弹层**必绑** |
+| listEl | `Ref<HTMLElement \| null>` | 列表滚动容器 ref：到顶/到底状态与虚拟滚动的测量落点；自绘滚动容器建议绑定 |
 | teleportTarget | `HTMLElement \| string` | Teleport 目标：缺省 `'body'`（fixed + 滚动/resize 跟随）；KConfigProvider `popupContainer` 指定时为容器元素（absolute 进容器文档流）。`<Teleport :to="ctx.teleportTarget">` 直接消费 |
 | popupStyle | `CSSProperties` | 定位 style 包（position/top/left/visibility 等，已含翻转结果），经 dropAttrs.style 散播；h() 里追加样式用数组 `[ctx.dropAttrs.style, {…}]` 合并，勿后写 style 键整体覆盖 |
 | popupWidth | `string` | 触发器实测宽（如 `'218px'`）。「弹层贴触发器宽」是默认视觉语义，由默认模板绑定；headless 可自选绑定或忽略，窄触发器建议给弹层 `min-width` 以免选项裁切 |
@@ -155,7 +165,7 @@ Expose：`focus() / blur() / open() / close()`。
 | inputOn | `KOnPack` | 输入框：`input`（写 pattern + search 事件 + 未展开则展开）、`click` 阻止冒泡（不触发开合）、`focus`/`blur` 转发 |
 | dropAttrs | `Record<string, unknown>` | 弹层节点：作用域类 + `data-part="list"` + `data-placement`（top/bottom）+ `data-k-theme` + 定位 style。**不含视觉壳类**——背景/圆角/阴影/层级全自绘 |
 | listAttrs | `Record<string, unknown>` | 列表：`role=listbox` + `id`（combobox 的 aria-controls 指向它）+ `aria-multiselectable`（多选） |
-| listOn | `KOnPack` | 列表：`scroll` 事件转发 |
+| listOn | `KOnPack` | 列表：`scroll` 事件转发 + 到顶/到底状态检测（进入边界时抛 `reachTop` / `reachBottom`，虚拟模式下同步窗口与行高实测） |
 | optionAttrs(o) | `(o: KSelectOption) => Record<string, unknown>` | 选项行：`id`（aria-activedescendant 指向）+ `role=option` + `data-part=option` + `aria-selected` + `data-active`（键盘高亮标记，滚动跟随也靠它） |
 | optionOn(o) | `(o: KSelectOption) => KOnPack` | 选项行：`click` 选中（pick）+ `pointerenter` 移高亮（禁用项跳过） |
 | tagRemoveOn(v) | `(v: string \| number) => KOnPack` | 标签移除钮：`mousedown`（preventDefault 保焦点 + stopPropagation + removeValue） |

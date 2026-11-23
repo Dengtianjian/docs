@@ -33,6 +33,8 @@
 
 <Demo path="input/count-overflow" title="计数超限" :desc="['输入侧仍由原生 `maxlength` 拦截。', '程序化写入超过上限时，`showCount` 计数标红（无需额外开关）。']" />
 
+<Demo path="input/mask" title="输入掩码" :desc="['`mask` 按令牌约束输入并自动补齐分隔符：`#` 数字、`A` 字母、`N` 字母或数字、`X` 任意字符。', '默认 v-model 为带分隔符的展示值；`unmask` 只回写有效字符。', '退格删到分隔符时会连带删除前一个有效字符；粘贴与中途插入同样按掩码重排。']" />
+
 <Demo path="input/addon" title="组合标签" :desc="['`addonBefore / addonAfter` 在外壳内左右贴边，与输入框共用边框和聚焦圈。', '纯文本可直接传 prop，自定义内容用同名插槽。', '四档 size 与 disabled 均适配。']" />
 
 <Demo path="input/prefix-suffix" title="前后缀" :desc="['`#prefix / #suffix` 插槽（示例图标 = @vicons/tabler）。', '清除钮与计数自动落进后缀区，顺序 = 插槽内容 → 清除 → 计数。']" />
@@ -70,6 +72,8 @@
 | autofocus | 原生 autofocus 透传（挂载即聚焦） | `boolean` | — |
 | autocomplete | 原生 autocomplete 透传（浏览器自动填充提示） | `string` | — |
 | disableAutofill | 屏蔽浏览器自动填充与密码提示：密码框回落 `new-password`、其它类型回落 `off`；附加 1Password/LastPass/Bitwarden 忽略标记，并隐藏原生 reveal 图标。显式 `autocomplete` 优先 | `boolean` | `false` |
+| mask | 输入掩码：`#` 数字、`A` 字母、`N` 字母或数字、`X` 任意字符；`\` 转义、`?` 下一令牌可选；数组按有效字符数择短。仅作用于单行输入（`textarea` / `number` 忽略） | `string \| string[]` | — |
+| unmask | 掩码模式下只把有效字符（不含分隔符）写回 v-model | `boolean` | `false` |
 | id | 原生 id 透传（label for 关联） | `string` | — |
 | name | 原生 name 透传（表单提交字段名） | `string` | — |
 
@@ -130,6 +134,21 @@
 
 ## 注意事项
 
+- `mask` 只约束单行输入（`textarea` / `number` 忽略）；DOM 值恒为格式化结果，v-model 默认也是格式化值，需要纯数字/纯字符时开 `unmask`。`showCount` / `maxlength` 仍按 v-model 与 DOM 原值口径（含分隔符）。
+- 掩码令牌：
+
+  | 令牌 | 含义 |
+  | --- | --- |
+  | `#` | 数字 `0-9` |
+  | `A` | 字母 `a-z` / `A-Z` |
+  | `N` | 字母或数字 |
+  | `X` | 任意字符（含空格） |
+  | `\` | 转义下一个字符为字面量（如 `\\+`） |
+  | `?` | 下一个令牌可选 |
+
+- 不匹配令牌的字符直接丢弃；用户键入的分隔符自动略过；光标按「已通过的有效字符数」定位并跳过紧随的分隔符；退格落在分隔符上时连带删除前一个有效字符。
+- 数组掩码按有效字符数选第一个容量足够的模式（如 `['###', '###-####']`），都装不下时用最后一个；同一掩码下格式化是幂等的，可直接把裸值或已有格式值交给 v-model。
+
 - `type=textarea` 渲染原生 `<textarea>`：未开 `autosize` 时按 `rows` 定高、可纵向缩放；`autosize` 时禁用缩放并随内容/宽度重算高度（超过 `maxRows` 出现内部滚动）。
 - 密码框默认显示明文切换按钮（`showPassword=false` 可关）；切换后保持焦点与光标位置，并 emit `passwordVisibleChange`。
 - 浏览器密码管理器/扩展图标无法被组件强制关闭：需要屏蔽时传 `disableAutofill`（或在真实登录表单按需传 `autocomplete`）；KInput 是多根节点，`data-lpignore` 等原生属性直接写在组件标签上不会落到内部 `<input>`。
@@ -173,7 +192,10 @@
 | addonAfter | `string \| number \| undefined` | 后置组合标签文本 prop 原值（插槽内容不进 scope）；默认渲染贴外壳右侧边缘，自绘可自行排版 |
 | id | `string \| undefined` | 原生 id 原值；已并入 inputAttrs，外部 label for 关联无需单独消费 |
 | name | `string \| undefined` | 原生 name 原值；已并入 inputAttrs |
-| value | `string` | 当前绑定值（v-model，缺省 `''`）；已并入 inputAttrs.value 受控回写 DOM；自绘计数/占位判断直接用它 |
+| value | `string` | 当前绑定值（v-model，缺省 `''`）；掩码 + `unmask` 时为不带分隔符的有效字符；自绘计数/占位判断直接用它 |
+| displayValue | `string` | 掩码格式化后的展示值；无掩码时同 value。已并入 inputAttrs.value 受控回写，自绘直接展示 inputAttrs 即可 |
+| mask | `string \| string[] \| undefined` | 掩码原值；格式化逻辑已在 inputOn / inputAttrs 中继承，自绘无需重复实现 |
+| unmask | `boolean \| undefined` | 掩码模式下是否只回写有效字符（原值） |
 | focused | `boolean` | 聚焦态（inputOn 的 focus/blur 维护）；自绘 focus 反馈（底线渐变/发光等）消费它——默认渲染的聚焦圈走 CSS `:focus-within` 不依赖此值 |
 | showClear | `boolean` | 清除钮应否渲染：**`clearable && 有值（value !== '' 且非 null）&& !disabled && !readonly`** 合成；「悬浮或聚焦才可见」（触屏常驻）是默认视觉的 visibility 规则，自绘显隐时机自管 |
 
@@ -188,8 +210,8 @@
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
 | rootAttrs | `Record<string, unknown>` | 根节点：仅 `data-part="root"`（静态对象）。**不含视觉类与状态类**——外框底色/边框/圆角、size/variant/status 类、hover 换框、`:focus-within` 聚焦圈、disabled/readonly 置灰全自绘 |
-| inputAttrs | `Record<string, unknown>` | 原生 input 语义包：`data-part="input"` + `value`（受控回写：DOM 值恒随 model，父级不回写 v-model 则输入被拉回旧值）+ `type` + `placeholder` + `disabled` / `readonly` / `autofocus`（true 才落键，false 省略）+ `maxlength` + `autocomplete` + `inputmode` + `enterkeyhint` + `autocapitalize` + `id` / `name`（未传省略）。注意 autofocus/autocomplete/inputmode 是 prop 直通包内，**scope 无对应快照字段**，只能经本包继承 |
-| inputOn | `{ input: (e: Event) => void; focus: (e: FocusEvent) => void; blur: (e: FocusEvent) => void; change: (e: Event) => void }` | 原生 input 逻辑包：`input` → 读 `target.value` 写 model（抛 `update:modelValue`）+ **KFormItem `onFieldChange()` 校验联动**；`focus` → 置 focused=true + emit `focus(e)`；`blur` → 置 focused=false + emit `blur(e)` + **KFormItem `onFieldBlur()` 校验联动**；`change` → 原样转发 emit `change(e)`（原生失焦提交语义）。禁用/只读拦截靠 inputAttrs 原生属性，包内无显式守卫 |
+| inputAttrs | `Record<string, unknown>` | 原生 input 语义包：`data-part="input"` + `value`（掩码模式为格式化后的 displayValue；受控回写：DOM 值恒随 model，父级不回写 v-model 则输入被拉回旧值）+ `type` + `placeholder` + `disabled` / `readonly` / `autofocus`（true 才落键，false 省略）+ `maxlength` + `autocomplete` + `inputmode` + `enterkeyhint` + `autocapitalize` + `id` / `name`（未传省略）。注意 autofocus/autocomplete/inputmode 是 prop 直通包内，**scope 无对应快照字段**，只能经本包继承 |
+| inputOn | `{ input: (e: Event) => void; focus: (e: FocusEvent) => void; blur: (e: FocusEvent) => void; change: (e: Event) => void }` | 原生 input 逻辑包：`input` → 读 `target.value`，掩码模式下格式化并写回 DOM/光标，再写 model（`unmask` 时只写有效字符）+ **KFormItem `onFieldChange()` 校验联动**；`focus` → 置 focused=true + emit `focus(e)`；`blur` → 置 focused=false + emit `blur(e)` + **KFormItem `onFieldBlur()` 校验联动**；`change` → 原样转发 emit `change(e)`（原生失焦提交语义）。禁用/只读拦截靠 inputAttrs 原生属性，包内无显式守卫 |
 
 #### 动作
 

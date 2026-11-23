@@ -15,7 +15,7 @@
 
 <Demo path="date-range-picker/presets" title="快捷预设" :desc="['`presets` 为 `{ label, value: [start, end] }[]`。', '点击左侧预设直接提交并关闭，当前区间匹配时高亮。']" />
 
-<Demo path="date-range-picker/time" title="日期 + 时间" :desc="['`showTime` 开启时分秒：默认起 00:00:00、止 23:59:59。', '面板底部可分别调整两端时间，点「确定」提交。']" />
+<Demo path="date-range-picker/time" title="日期 + 时间" :desc="['`showTime` 开启时分秒：默认起 00:00:00、止 23:59:59。', '面板右侧（窄屏时移到下方）可分别调整两端时间，点「确定」提交。']" />
 
 <Demo path="date-range-picker/render" title="自定义渲染（headless）" :desc="['`#render` 自绘极简范围选择：触发输入、预设、双月网格全部自绘。', '开合、起止选择、hover 预览、快捷提交、清空由 scope 绑定包继承。']" />
 
@@ -104,8 +104,8 @@
 | presetOn(preset) | — | 预设动作包 |
 | timePart | — | showTime 模式的时/分/秒读 |
 | updateTimePart | — | showTime 模式的时/分/秒写 |
-| hours | — | showTime 模式的小时候选 |
-| minutes | — | showTime 模式的分钟候选 |
+| hours | — | showTime 模式的时间滚列候选 |
+| minutes | — | showTime 模式的时间滚列候选 |
 | openAt | — | 命令式动作：打开 |
 | close | — | 命令式动作：关闭 |
 | commit | — | 命令式动作：提交 |
@@ -122,6 +122,7 @@
 
 - 选择顺序不敏感：第二次点击早于起点时自动交换；同一天可选，形成单日区间。
 - 首次点击只落起点，面板保持打开并等待终点；hover 日期实时预览区间底色。
+- `showTime` 的时间选择为起止两组三列滚列（时/分/秒），桌面优先放在面板右侧且整体高度与日期面板一致；视口 ≤991px 时移到日期面板下方并两组并排。选中项自动滚到列中部；未落日期的一端列禁用。
 - 移动端（≤767px）只显示当前单月，用标题两侧箭头翻月；点起点/终点输入会把视图定位到对应月份，预设改为横向滚动条。弹层内容变化会重新定位并夹入视口，面板限高 76vh 内部滚动；输入/控件高度沿用 mobile token（44px / 16px）。
 - `presets` 只接收常量时间戳（相对日期请在 setup 里用 dayjs 算好）；点击预设立即提交，不进编辑态。
 - 目前未接入 `render` headless 通道，按轮次单独补；showTime 的 min/max 仍按天判断，时间调整不做额外越界限制。

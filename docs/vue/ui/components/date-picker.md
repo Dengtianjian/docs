@@ -9,7 +9,7 @@
 
 ## 代码演示
 
-<Demo path="date-picker/time" title="日期 + 时间" :desc="['`showTime` 点日期只落草稿并保持面板，底部选时/分/秒后点「确定」提交。', '默认格式 `YYYY-MM-DD HH:mm:ss`，`disabledTime` 可按日期给出时分秒黑名单。']" />
+<Demo path="date-picker/time" title="日期 + 时间" :desc="['`showTime` 点日期只落草稿并保持面板，底部滚列选时/分/秒后点「确定」提交。', '默认格式 `YYYY-MM-DD HH:mm:ss`，`disabledTime` 可按日期给出时分秒黑名单。']" />
 
 <Demo path="date-picker/minute-step" title="分钟步长" desc="`showTime` + `minuteStep=5`：分钟列按 5 分钟一档，打开已有值时自动向下对齐到档位。" />
 
@@ -115,6 +115,7 @@
   - 严格解析（dayjs strict），命中禁用日期或 min/max 时回退。
   - multiple 强制只读。
 - `minuteStep`：分钟候选按步长生成；打开已有值时向下对齐到最近档位，点「确定」提交对齐后的时间。
+- `showTime` 的时间选择为三列滚动列表（时/分/秒），桌面优先放在日期网格右侧且高度与网格主体一致，视口 ≤767px 时移到面板下方；选中项高亮并自动滚到列中部；尚未落日期草稿时三列禁用，`disabledTime` 命中的项置灰不可点。
 - `multiple`：v-model 为时间戳数组，点格切换选中且面板不关闭，回显按时间升序逗号拼接；「今天」切换当天、「清除」置空数组；与 `showTime` 互斥，多选时时间列隐藏。
 - `presets`：面板左侧列表，`value` 支持时间戳或可解析字符串；点击按当前 picker 粒度提交并关闭，多选模式则置为单个选中值。移动端预设改为顶部横滚行。
 
@@ -154,9 +155,9 @@
 | canConfirmTime | `boolean` | 确定可用性 |
 | timePart | `(unit) => number` | 草稿时/分/秒读 |
 | updateTimePart | `(unit, value) => void` | 草稿时/分/秒写 |
-| hours | `number[]` | 时间下拉候选 |
-| minutes | `number[]` | 时间下拉候选（已按 minuteStep 过滤） |
-| seconds | `number[]` | 时间下拉候选 |
+| hours | `number[]` | 时间滚列候选 |
+| minutes | `number[]` | 时间滚列候选（已按 minuteStep 过滤） |
+| seconds | `number[]` | 时间滚列候选 |
 | disabledTime | `KDatePickerDisabledTime` | 当前草稿日期的禁用时分秒 |
 | confirmTime | `() => void` | 提交时间模式草稿 |
 | confirmOn | `KOnPack` | 提交时间模式草稿的事件包 |

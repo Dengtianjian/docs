@@ -14,6 +14,8 @@
 
 <Demo path="input-number/precision" title="精度与状态" :desc="['`precision` 显式小数位（失焦补零格式化）。', '`status` / `size` / `variant` 透传 KInput 同轴。']" />
 
+<Demo path="input-number/affix" title="组合标签与前后缀" :desc="['`before / after` 与 `#before / #after / #prefix / #suffix` 插槽透传内层 KInput，规则与 [KInput](./input.md) 一致。', '`after` 标签紧邻步进列，右侧圆角自动压平。']" />
+
 <Demo path="input-number/render" title="自定义渲染（headless）" :desc="['双通道：`#render` 自绘数量步进器（stepUp/stepDown/setText/onBlur/onKeydown 全逻辑继承）。', '`render` prop 自绘温度计（step 0.5 小数步进 + 限幅照常生效）。']" />
 
 ## API
@@ -35,6 +37,8 @@
 | disabled | 同 [KInput](./input.md) 对应项，透传 | — | — |
 | readonly | 同 [KInput](./input.md) 对应项，透传 | — | — |
 | id | 同 [KInput](./input.md) 对应项，透传 | — | — |
+| before | 前置组合标签（纯文本；`#before` 插槽优先） | `string \| number` | — |
+| after | 后置组合标签（纯文本；`#after` 插槽优先） | `string \| number` | — |
 
 <CommonProps />
 
@@ -46,7 +50,7 @@
 | focus | 内层输入框聚焦 | `(e: FocusEvent)` |
 | blur | 内层输入框失焦 | `(e: FocusEvent)` |
 
-Slots：`render` = 自定义渲染作用域插槽（scope 见文末「自定义渲染」节，提供时整件替换）；内层 KInput 的 prefix/suffix 未转发。
+Slots：`render` = 自定义渲染作用域插槽（scope 见文末「自定义渲染」节，提供时整件替换）；`before` / `after` / `prefix` / `suffix` 透传内层 KInput（规则同 [KInput](./input.md)，`after` 标签在步进列左侧）。
 
 ### 部件（DOM `data-part`）
 
@@ -92,6 +96,8 @@ Slots：`render` = 自定义渲染作用域插槽（scope 见文末「自定义�
 | readonly | `boolean \| undefined` | 只读 prop 原值；步进守卫与 showStep 合成消费它（只读仍可选可聚焦）；自绘输入框需自绑原生 readonly |
 | controls | `boolean` | 步进列开关 prop 原值（缺省 true）；实际显隐看 showStep 合成值；关掉后键盘 ↑↓ 仍可用 |
 | id | `string \| undefined` | 原生 id 原值；默认渲染透传内层 KInput，自绘自绑（label for 关联） |
+| before | `string \| number \| undefined` | 前置组合标签文本 prop 原值（插槽内容不进 scope）；默认渲染透传内层 KInput 的 `before`，自绘可自行排版 |
+| after | `string \| number \| undefined` | 后置组合标签文本 prop 原值（插槽内容不进 scope）；默认渲染透传内层 KInput 的 `after`，自绘可自行排版 |
 | value | `number \| null` | **数值态**（v-model，空值 = null）；打字可解析即同步、落定才限幅格式化；自绘回显数值/画温度计类视觉用它 |
 | text | `string` | **文本态**：输入中间态（`"1."`、`"-"`）保留不回填；**自绘输入框的 value 绑它**（不是 value），输入事件调 setText；落定后为 `toFixed(precision)` 格式化串 |
 | showStep | `boolean` | 步进列应否渲染：**`controls && !disabled && !readonly`** 合成；自绘步进钮显隐用它 |
@@ -121,7 +127,7 @@ Slots：`render` = 自定义渲染作用域插槽（scope 见文末「自定义�
 | onKeydown | `(e: KeyboardEvent) => void` | ArrowUp/ArrowDown → `preventDefault()`（防光标跳动/滚动）+ stepBy(±1)（守卫在步进内）；其余键不拦截；自绘输入框 `@keydown` 绑它，controls=false 时键盘步进仍生效 |
 | focus | `() => void` | 编程式聚焦（`inputRef.value?.focus()`，经内层 KInput 落原生 input）；与组件 expose 的 `focus()` 同一函数，未绑 inputRef 时空操作 |
 
-另有 `slots`（`ReturnType<typeof useSlots>`）：默认渲染的插槽集合（本件仅 `render` 自身，无 default；内层 KInput 的 prefix/suffix 未转发），自绘时可按需取用。
+另有 `slots`（`ReturnType<typeof useSlots>`）：默认渲染的插槽集合（before / after / prefix / suffix = 透传给内层 KInput 的内容位，render = 本件自定义渲染），自绘时可按需取用。
 
 ## 规格附录
 

@@ -34,8 +34,8 @@
 | [layout.md](./layout.md) | KLayout 组 | 规格定稿，已落地（Layout/Header/Sider/Content/Footer） |
 | [typography.md](./typography.md) | KTitle / KParagraph / KText | 规格定稿，已落地（省略/可复制等增强行为留 P2） |
 | [link.md](./link.md) | KLink | 规格定稿，已落地（静态依赖 vue-router peer，未装 router 的业务全量引入 barrel 时需留意向量） |
-| [config-provider.md](./config-provider.md) | KConfigProvider | 规格定稿，已落地（①主题注入 ③scheme ④defaults/popupContainer；弹层组件消费 popupContainer 契约待 P2 验证） |
-| [app.md](./app.md) | KApp | 已落地（2026-11-17，对标 antd App：文字 token 继承 + `useKApp().root` 宿主；message/notification/modal 实例随 P2 反馈批接线） |
+| [config-provider.md](./config-provider.md) | KConfigProvider | 已落地（主题注入 / 自定义断点 / scheme / defaults / popupContainer / wave；弹层组件已消费容器契约） |
+| [app.md](./app.md) | KApp | 已落地（文字 token 继承 + `useKApp()` 实例面；message/notification/modal/drawer 队列随 KApp 生命周期，支持多实例隔离） |
 
 > 2026-11-17：**P2a 表单批开工**（三拍板）：
 >   - DatePicker/Upload 出批留 P2.5

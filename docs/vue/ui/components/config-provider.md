@@ -22,6 +22,8 @@
 
 <Demo path="config-provider/wave-toggle" title="波纹全局开关" :desc="['`:wave=&quot;{ disabled: true }&quot;`（antd ConfigProvider.wave 同款形态）关闭子树内所有点击波纹。', '实例级 `KButton wave` prop 优先级更高，可单独强制开/关。']" />
 
+<Demo path="config-provider/popup-container" title="弹层容器" :desc="['`popupContainer` 指向滚动容器：Select / Tooltip 弹层以 absolute 进入容器文档流，随内容滚动并被 `overflow` 裁切。', '缺省 body 时弹层是 fixed + 全局 scroll 跟随；容器为 static 时组件会自动补 `relative`。']" />
+
 ## API
 
 ### Props
@@ -32,7 +34,7 @@
 | scheme | 亮暗指令；`auto` = 跟随系统/外层（**不写属性**，尊重宿主已有的强制控制） | `'auto' \| 'light' \| 'dark'` | `'auto'` |
 | scoped | `true` = 只作用于子树（渲染 wrapper div + 作用域类）；`false` = 全局（变量写 `:root`，显式 light/dark 落 `<html>` 属性） | `boolean` | `false` |
 | popupContainer | 弹层默认容器（Select/Tooltip/Popover/Popconfirm 消费）。缺省 body = `fixed` + scroll 跟随；指定元素 = 弹层 `absolute` 进容器文档流（随内容滚、被容器 overflow 裁切，static 容器自动补 `relative`，antd getPopupContainer 同款） | `HTMLElement \| (() => HTMLElement)` | — |
-| defaults | 组件轴默认值，如 `{ KButton: { size: 'sm' } }`；**P1 组件尚未消费，随 P2 表单件接线**（机制已就位：`useProps()`） | `Record<string, Record<string, unknown>>` | — |
+| defaults | 组件轴默认值，如 `{ KButton: { size: 'sm' } }`；当前 KButton 的 `wave` 直接消费，其它键供组件通过 `useProps(组件名, prop, () => props.x)` 接入。合并链：prop > 最近 Provider > 上层 > token | `Record<string, Record<string, unknown>>` | — |
 | wave | 点击波纹全局开关（antd ConfigProvider.wave 同款）：`disabled=true` 时子树内波纹组件（KButton）停发；嵌套 Provider 子覆盖父 | `{ disabled?: boolean }` | — |
 | theme.breakpoints | 自定义断点（数值 px）。子树内 `useBreakpoint()` / 响应式 prop 按新档位判定，同时生成 `--k-screen-*` 变量；`md` 还决定 `platform.mobile` 生成块的媒体上限。嵌套 Provider 按档合并 | `Partial<Record<'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'xxl', number>>` | — |
 | theme.locale | 国际化规格预留，未实现 | — | — |
@@ -67,7 +69,8 @@ cfg.breakpoints               // 当前作用域断点差量（与上层按档�
 
 - 全局模式（`scoped=false`）：显式 `light/dark` 把属性写到 `<html>`；
   - `auto` 不改写宿主已有属性（只回收本 Provider 自己写上的那次）——多 Provider 同时全局属于业务自己的仲裁，库不禁止但文档不推荐；
-- 弹层类组件（P3+）有硬契约：portal 根必须绑 `cfg.scopeClass` 并渲染进 `cfg.getPopupContainer()`，「局部暗色区内的弹层跟随暗色」是验收用例。
+- 弹层类组件（P3+）有硬契约：portal 根必须绑 `cfg.scopeClass` 并按 `cfg.popupContainer` 选定出口，「局部暗色区内的弹层跟随暗色」是验收用例。
+- 与 [KApp](./app.md) 组合时推荐 `KApp` 放在 Provider 内层：主题变量由 Provider 承担，文字基线与实例上下文由 KApp 承担；演示见 [app.md「与 KConfigProvider 组合」](./app.md)。
 - **自定义断点的作用范围**：JS 断点判定（`useBreakpoint` / `useResponsiveValue`，覆盖 Button/Space/Form/Sider/Row gutter/DateRangePicker 的移动端行为）、`--k-screen-*` 变量、`platform.mobile` 生成块；
   - 组件样式内的静态 `@media`（如 `max-width: 767px`）与 `grid.css` 的栅格断点仍是设计基线值，不随 Provider 运行时改变；需要整体改版式请同步覆盖对应 CSS。
 - 断点请传**单调递增**的整组档位；

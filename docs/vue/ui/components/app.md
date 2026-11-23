@@ -6,11 +6,19 @@
 
 - 挂在应用根（antd 同款顺序：`ConfigProvider` 在外、`App` 在内），让页面里的**普通 HTML 文字**也继承 K UI 字体/文字色，而不是只有组件本身有样式；
 - 消息 / 通知 / 确认框等全局反馈（P2b 已落地）以 KApp 为队列宿主：`useKApp().message/notification/modal/drawer` 实例 API 只在 KApp 之下存在（拍板③：无全局静态）；
-- 微前端块级隔离：每个块挂一个 KApp，与宿主文字样式互不干扰。
+- 微前端块级隔离：每个块挂一个 KApp，与宿主文字样式、反馈队列互不干扰。
 
 ## 代码演示
 
 <Demo path="app/basic" title="基础用法" :desc="['默认渲染 `div.k-app`。', '`component` 可换根标签（如 `main`），`false` 则只保留上下文不渲染包裹层。']" />
+
+<Demo path="app/use-k-app" title="useKApp 实例 API" :desc="['在 KApp 子级调用 `useKApp()`，一次拿到 `root` 与 `message / notification / modal / drawer` 四个实例。', '每个实例的队列随所属 KApp 存活；「清空本实例」只清当前 KApp。', '面板上的 root 显示当前 KApp 的根元素标签。']" />
+
+<Demo path="app/component" title="根标签与无包裹层" :desc="['`component` 可换成 `section` 等语义标签；`false` 时不渲染包裹层，`root` 变为 `undefined`。', '无包裹层时实例 API 仍可用，反馈组件回落 `body` 挂载。']" />
+
+<Demo path="app/instances" title="多个 KApp 实例" :desc="['两个 KApp 各自提供独立 context 与服务队列，适合微前端块级隔离。', '在 A 里发的消息只进 A 的 Holder；清空 A 不影响 B。']" />
+
+<Demo path="app/with-config-provider" title="与 KConfigProvider 组合" :desc="['推荐顺序：ConfigProvider 在外、KApp 在内——主题负责变量图，KApp 负责文字基线与实例上下文。', '子树暗色与主题色同时作用于普通文字和组件；Teleport 到 body 的反馈仍携带 `scopeClass` 与 `scheme`，配色不脱链。']" />
 
 ## API
 
@@ -32,13 +40,15 @@
 
 | 函数 | 说明 |
 | --- | --- |
-| `useKApp()` | 返回 `{ root, message?, notification?, modal?, drawer? }`；未挂 KApp 时为 `undefined`。`message/notification/modal/drawer` 为实例 API（详见 [KModal](./modal.md)、[KMessage](./message.md)、[KNotification](./notification.md)、[KDrawer](./drawer.md)），队列 Holder 随 KApp 挂载与销毁 |
+| `useKApp()` | 在 KApp 子级调用，返回 `{ root, message?, notification?, modal?, drawer? }`；取最近一层 KApp，未挂 KApp 时为 `undefined`。`message/notification/modal/drawer` 为实例 API（详见 [KModal](./modal.md)、[KMessage](./message.md)、[KNotification](./notification.md)、[KDrawer](./drawer.md)），队列 Holder 随 KApp 挂载与销毁 |
 
 ## 注意事项
 
-- **KApp 不注入主题**：换肤三通道（CSS → JSON → JS，见 [主题 Token 规格 §10](../design/theme-tokens.md)）与 KApp 无关，它只负责文字 token 继承 + 挂载点上下文；
+- **KApp 不注入主题**：换肤三通道（CSS → JSON → JS，见 [主题 Token 规格 §10](../design/theme-tokens.md)）与 KApp 无关，它只负责文字 token 继承 + 挂载点上下文；主题请包在 [KConfigProvider](./config-provider.md) 里；
+- `useKApp()` 必须在 KApp **子级**组件调用：在渲染 KApp 的同一个组件里调用拿到的是上层（文档站为全站 KApp，独立应用则为 `undefined`）；
+- 每个 KApp 的实例 API 与队列彼此独立；嵌套 KApp 时 `useKApp()` 取最近一层，适合微前端块级隔离；
 - `component=false` 时 `root` 为 `undefined`，反馈组件将回落 `body` 挂载——多应用场景慎用；
-- 与 `KConfigProvider scoped` 的分工：Provider 的 wrapper 携带**主题变量图**，KApp 携带**文字基线与应用上下文**，二者正交、可嵌套。
+- 与 `KConfigProvider scoped` 的分工：Provider 的 wrapper 携带**主题变量图**，KApp 携带**文字基线与实例上下文**，二者正交、可嵌套；推荐 Provider 在外、KApp 在内。
 
 ---
 

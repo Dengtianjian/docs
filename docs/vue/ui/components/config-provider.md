@@ -28,16 +28,26 @@
 
 ### Props
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| theme | 主题：`ThemeConfig`（就地 `createTheme`）或已有 `ThemeResult`；可传响应式对象 | `ThemeConfig \| ThemeResult` | — |
-| scheme | 亮暗指令；`auto` = 跟随系统/外层（**不写属性**，尊重宿主已有的强制控制） | `'auto' \| 'light' \| 'dark'` | `'auto'` |
-| scoped | `true` = 只作用于子树（渲染 wrapper div + 作用域类）；`false` = 全局（变量写 `:root`，显式 light/dark 落 `<html>` 属性） | `boolean` | `false` |
-| popupContainer | 弹层默认容器（Select/Tooltip/Popover/Popconfirm 消费）。缺省 body = `fixed` + scroll 跟随；指定元素 = 弹层 `absolute` 进容器文档流（随内容滚、被容器 overflow 裁切，static 容器自动补 `relative`，antd getPopupContainer 同款） | `HTMLElement \| (() => HTMLElement)` | — |
-| defaults | 组件轴默认值，如 `{ KButton: { size: 'sm' } }`；当前 KButton 的 `wave` 直接消费，其它键供组件通过 `useProps(组件名, prop, () => props.x)` 接入。合并链：prop > 最近 Provider > 上层 > token | `Record<string, Record<string, unknown>>` | — |
-| wave | 点击波纹全局开关（antd ConfigProvider.wave 同款）：`disabled=true` 时子树内波纹组件（KButton）停发；嵌套 Provider 子覆盖父 | `{ disabled?: boolean }` | — |
-| theme.breakpoints | 自定义断点（数值 px）。子树内 `useBreakpoint()` / 响应式 prop 按新档位判定，同时生成 `--k-screen-*` 变量；`md` 还决定 `platform.mobile` 生成块的媒体上限。嵌套 Provider 按档合并 | `Partial<Record<'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'xxl', number>>` | — |
-| theme.locale | 国际化规格预留，未实现 | — | — |
+| 属性 | 说明 |
+| --- | --- |
+| theme | 类型 `ThemeConfig \| ThemeResult`，默认 `—`。<br>主题配置，可传 computed 响应式对象。 |
+| scheme | 类型 `'auto' \| 'light' \| 'dark'`，默认 `'auto'`。<br>亮暗指令，作用于当前作用域。 |
+| scoped | 类型 `boolean`，默认 `false`。<br>仅子树生效；`false` 为全局。 |
+| popupContainer | 类型 `HTMLElement \| (() => HTMLElement)`，默认 `—`。<br>弹层默认容器，缺省为 body。 |
+| defaults | 类型 `Record<string, Record<string, unknown>>`，默认 `—`。<br>组件轴默认值。 |
+| wave | 类型 `{ disabled?: boolean }`，默认 `—`。<br>波纹全局开关。 |
+| theme.breakpoints | 类型 `Partial<Record<'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'xxl', number>>`，默认 `—`。<br>自定义断点，需整组递增。 |
+| theme.locale | 类型 `—`，默认 `—`。<br>国际化预留，未实现。 |
+
+### Props 说明
+
+- **theme**：`ThemeConfig` 就地调用 `createTheme`，`ThemeResult` 直接复用已有实例。<br>传 computed 时，seed 变化只重算差量 `<style>`，不重建 DOM。
+- **scheme**：`auto` 不写属性，跟随系统/外层并尊重宿主已有的强制态。<br>`light` / `dark` 在 `scoped` 下落 wrapper 的 `data-k-theme`，全局模式落 `<html>`。
+- **scoped**：`true` 渲染 wrapper + 作用域类，主题变量只在子树生效；<br>`false` 变量写 `:root`，显式 light/dark 落 `<html>`。
+- **popupContainer**：Select / Tooltip / Popover / Popconfirm 的默认出口。<br>缺省 body：`fixed` + 全局 scroll 跟随；<br>指定元素：`absolute` 进容器文档流，随内容滚动并被 overflow 裁切；<br>static 容器自动补 `relative`（antd getPopupContainer 同款）。
+- **defaults**：当前 KButton.wave 直接消费；其它键由组件通过 `useProps(组件名, prop, () => props.x)` 接入。<br>合并链：prop > 最近 Provider > 上层 > token。
+- **wave**：`disabled: true` 时子树内波纹组件停发；<br>嵌套 Provider 子覆盖父，实例级 `wave` prop 优先。
+- **theme.breakpoints**：同时影响 `useBreakpoint()`、响应式 prop 与 `--k-screen-*` 变量；<br>`md` 还决定 `platform.mobile` 块的媒体上限；嵌套按档合并。
 
 ### Slots
 

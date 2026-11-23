@@ -21,6 +21,12 @@
 
 <Demo path="date-picker/input" title="手动输入" :desc="['触发器默认可编辑：按 format / 默认格式严格解析，Enter 或失焦提交。', '非法或禁用输入回退上一次回显。', 'inputReadonly 可恢复只读。']" />
 
+<Demo path="date-picker/format" title="自定义格式" :desc="['`format` 使用 dayjs token，如 `YYYY/MM/DD`、`YYYY年M月D日`；只改回显与手动输入解析。', 'showTime 时可连时间一起写，如 `YYYY/MM/DD HH:mm`；v-model 始终是毫秒时间戳。']" />
+
+<Demo path="date-picker/value-format" title="值格式与显示格式" :desc="['`valueFormat` 控制 v-model 的字符串格式，设置后 v-model 为 string / string[]；缺省仍是时间戳。', '`format` 单独控制显示；未传时跟随 `valueFormat`，再缺省按 picker 默认格式。']" />
+
+<Demo path="date-picker/slots" title="header / footer 插槽" :desc="['`#header` 追加在导航栏之上，适合放标题或自定义快捷入口。', '`#footer` 追加在内置「今天 / 清除」行之后；旧名 `extraFooter` 仍可用。']" />
+
 <Demo path="date-picker/pickers" title="五种 picker" :desc="['支持 date、week、month、quarter、year 单选。', '每种模式的 v-model 仍是周期起点时间戳。']" />
 
 <Demo path="date-picker/limit" title="范围与禁用" :desc="['min/max 按 picker 粒度比较。', 'disabledDate 接收当前面板粒度的周期起点。', 'format 只改变回显。']" />
@@ -56,7 +62,8 @@
 | multiple | 多选日期；与 showTime 互斥（多选时隐藏时间列） | `boolean` | `false` |
 | presets | 左侧快捷项 `{ label, value }`，点击提交并关闭 | `KDatePickerPreset[]` | — |
 | disabledTime | 当前草稿日期的时分秒黑名单 | `(date: Dayjs) => { disabledHours?, disabledMinutes?, disabledSeconds? }` | — |
-| format | dayjs 回显格式；不改变 v-model 值 | `string` | 随 picker 变化 |
+| format | dayjs 回显格式；不改变 v-model 值类型 | `string` | 跟随 `valueFormat`，否则随 picker 变化 |
+| valueFormat | v-model 值格式；设置后 v-model 为 string / string[]，缺省为毫秒时间戳 | `string` | — |
 | min | 可选下限，按 picker 粒度比较 | `number \| string` | — |
 | max | 可选上限，按 picker 粒度比较 | `number \| string` | — |
 | disabledDate | 禁用当前面板单元格 | `(date: Dayjs) => boolean` | — |
@@ -81,7 +88,9 @@
 | 插槽 | 说明 | 参数 |
 | --- | --- | --- |
 | suffix | 追加到默认日历图标前的后缀内容 | — |
-| extraFooter | 追加到内置“今天 / 清除”行之后 | — |
+| header | 面板顶部附加内容（导航栏之上） | — |
+| footer | 追加在内置「今天 / 清除」行之后 | — |
+| extraFooter | footer 的兼容别名 | — |
 
 ### Expose
 
@@ -109,7 +118,7 @@
 - `inline` 模式面板常驻文档流：不渲染只读触发器与 Teleport 弹层；点击格、方向键、Enter、今天/清除、三层面板下钻均照常，`open`/`close` 动作与 Esc 关闭为空操作；外部改值会同步视图。
 - 弹层复用 popupContainer 契约：缺省挂到 body 使用 fixed；传入 HTMLElement 或函数返回 HTMLElement 时使用容器内 absolute。
 - KFormItem 会自动合并 status，并在日期改变、触发器失焦或关闭时参与字段校验。
-- `format` 只影响触发器回显，不影响时间戳的周期语义。
+- `format` 只影响触发器回显；`valueFormat` 决定 v-model 的字符串形态，未设置时 v-model 仍为毫秒时间戳；两者都不改变周期语义。
 - **手动输入**：默认可编辑。
   - 候选格式 = `format`（若传）+ 默认 picker 格式 + 时间变体（showTime 时 `YYYY-MM-DD HH:mm[:ss]`、`YYYY/MM/DD HH:mm[:ss]`）+ date 的 `YYYY/MM/DD`。
   - 严格解析（dayjs strict），命中禁用日期或 min/max 时回退。
@@ -129,7 +138,7 @@
 | --- | --- | --- |
 | open | `boolean` | 面板是否打开（inline 下恒为 false） |
 | inline | `boolean` | 是否内联常驻面板 |
-| value | `number \| number[] \| null` | 当前 v-model 值（multiple 为数组） |
+| value | `number \| number[] \| null` | 归一化时间戳（multiple 为数组；不受 valueFormat 影响） |
 | picker | `KPickerMode` | 当前选择粒度 |
 | multiple | `boolean` | 多选模式 |
 | minuteStep | `number` | 分钟步长 |

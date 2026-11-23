@@ -14,6 +14,7 @@
   - ghost 彩色/复杂底图；
   - plain/soft 白底两式（plain 有框 / soft 无边框）；
   - border 隐框交互现边框+文字；
+- 需要更强视觉强调时加 `gradient`（仅实底语义按钮生效）；
 - 跳转请直接用 `href`（渲染为 `<a>`，可被浏览器右键新开）或路由场景用 [KLink](./link.md)。
 
 ## 代码演示
@@ -21,6 +22,8 @@
 <Demo path="button/types" title="语义类型" desc="`type` 轴：default / primary / info / success / warning / danger / link。" />
 
 <Demo path="button/variants" title="外观变体" :desc="['`variant` 轴与 `type` 正交，十种外观 × 语义色全矩阵。', '等级四档：基础 outlined / 次要 filled / 次次要 tonal / 次次次要 text。', 'quiet 是 text 的灰底交互版；dashed 无底色虚线框；ghost 透明底，适合彩色或复杂底图。', 'plain 有框，交互变边框 + 文字；soft 无边框，交互变背景 tint + 文字。', 'border 隐框：静置边框透明，交互现边框色 + 文字色。']" />
+
+<Demo path="button/gradient" title="渐变背景" :desc="['`gradient` 仅作用于实底语义按钮（primary/success/warning/danger/info × outlined）。', '`true` / `primary` 从语义色派生渐变，跟随 ConfigProvider seed 与暗色；sunset / ocean / aurora / candy 为固定色组。', '对象形态可自定义 `{ from, to, angle }`；悬浮提亮、按压缩暗通过背景叠加层实现，不染文字。', 'disabled / loading 自动回落灰底；其它 variant 传 gradient 会被忽略并在开发环境告警。']" />
 
 <Demo path="button/sizes" title="尺寸" desc="`size` 轴走控件高度阶梯（30/34/38/42），移动端 token 组自动升到 44px 触控高度。" />
 
@@ -39,20 +42,6 @@
 <Demo path="button/href" title="链接按钮" desc="有 `href` 时渲染 `<a>`（`target` 透传）；`type=link` 是无框文本按钮，独立于 type×variant 矩阵。" />
 
 <Demo path="button/group" title="按钮组" :desc="['`KButtonGroup` 接壤成组：叠边 -1px、首尾留外侧半径。', '`size` 下发（子级自传优先）、`vertical` 纵排。']" />
-
-::: tip App 端按压形态已拍板（2026-11-17，走 antd-mobile 实况）
-真触屏（`@media (hover: none)`）下 KButton 自动：**关波纹 → `::before` 黑 8% 遮罩（0.15s 过渡），active 底色加深照常叠加**；桌面窄窗口不受影响仍走波纹。
-
-源码查证记录：antd-mobile 并非整体降 opacity（那是 disabled .4），其实况也是遮罩；vant 为灰 #e8e8e8 10% 遮罩，未采用。参数对照（决策存档）：
-| 形态 | 机制 | 参数 |
-| --- | --- | --- |
-| A 桌面（现状） | antd Wave 波纹 + active 底色加深 | 0.6s 自定参，触屏让位给 B |
-| B antd-mobile | `::before` 全铺 `#000`，`:active` 时 opacity .08，transition .15s | 源码 `button.less` 实测抄回 |
-| C vant | `::before` 铺 `#e8e8e8`（--van-active-color），`:active` 时 opacity .1 | 源码 `button.less` 实测抄回 |
-| D opacity | 按压整体降透明度（iOS 原生味） | .65 / .15s，未落地候选 |
-:::
-
-<Demo path="button/mobile-press" title="按压形态对比（决策存档）" :desc="['B 已落库：触屏按住即库真实行为。', 'A 为桌面窄窗表现，C/D 仍是 demo 模拟。']" />
 
 <Demo path="button/render-group" title="按钮组自定义渲染（headless）" desc="KButtonGroup `#render` 自绘胶囊接壤组：role=group 语义与 size 下发（provide）都继承，组内默认 KButton 仍取 sm 档。" />
 
@@ -75,6 +64,7 @@
 | target | 外链打开方式（仅 `href` 渲染 `<a>` 时透传） | `string` | — |
 | icon | 图标组件（也可用 `#icon` 插槽） | `Component \| null` | `null` |
 | iconPlacement | 图标位置（loading 占同位；top/bottom 转纵向并自动增高） | `'start' \| 'end' \| 'top' \| 'bottom'` | `'start'` |
+| gradient | 渐变背景；仅实底语义按钮（primary/success/warning/danger/info × outlined）生效 | `boolean \| 'primary' \| 'sunset' \| 'ocean' \| 'aurora' \| 'candy' \| { from?, to?, angle? }` | `false` |
 | wave | 点击波纹开关；缺省跟随 Provider（`wave.disabled` / `defaults.KButton.wave`），显式传值强制开/关；`variant=text` 与 `type=link` 恒无波纹 | `boolean` | — |
 | nativeType | 原生 type 属性 | `'button' \| 'submit' \| 'reset'` | `'button'` |
 
@@ -133,10 +123,12 @@ KButtonGroup Slots：`default` = 组内 KButton 清单；`render` = 自定义渲
 | `--k-button-icon-gap` | `var(--k-size-xxs)` | icon 与文字同现时生效 |
 | `--k-button-font-size` | `var(--k-font-size)` | xs/sm 降 fontSizeSM |
 | `--k-button-wave-color` | 透明底档 `color-mix(--k-button-c 24%)`；实底/灰底/浅底档（filled/tonal/soft/quiet）`color-mix(--k-button-bg 60%)` | 点击波纹颜色跟主题色——实底/浅底档取当前背景（var 间接引用，hover/active 换底自动跟随）；透明底档取字色 |
+| `--k-button-gradient-from` / `-to` / `-angle` | `var(--k-button-c)` / 语义色压暗 22% / `135deg` | 渐变起止色与角度；预设类与对象 prop 都写这三个变量，可单独覆盖 |
 
 ## 注意事项
 
 - `variant=text` 时 `shape` 无意义，按 default 渲染；`shape=circle` 要求 icon-only，带文字会在开发环境告警；
+- `gradient` 只与实底语义按钮（primary/success/warning/danger/info × outlined）组合；非实底 variant 传入会被忽略并开发告警，disabled / loading 回落灰底不保留渐变；
 - 图标按钮无文字时必须给 `aria-label`（无障碍要求）；
 - 按下反馈 = active 态颜色加深（25%，2026-11-17 按压观感校准）+ 点击波纹（对齐 antd v5 Wave，`--k-button-wave-color` 可调）；
   - 系统「减弱动态效果」（`prefers-reduced-motion`）下波纹自动关闭；
@@ -157,6 +149,7 @@ KButton / KButtonGroup 各有 scope（入口导出），逐字段如下（接口
 | --- | --- | --- |
 | type | `ButtonType` | 语义类型（`ButtonType` = `'default' \| 'primary' \| 'info' \| 'success' \| 'warning' \| 'danger' \| 'link'`，缺省 `'default'`）；自绘按值取语义色 token（`--k-color-primary/success/…`），`link` 独立于 type×variant 矩阵 |
 | variant | `ButtonVariant` | 外观变体（`ButtonVariant` = `'outlined' \| 'filled' \| 'tonal' \| 'text' \| 'quiet' \| 'dashed' \| 'ghost' \| 'plain' \| 'soft' \| 'border'`，缺省 `'outlined'`）；type×variant 配色矩阵是默认渲染的 CSS 类规则，自绘按两轴状态自行取色 |
+| gradient | `boolean \| KButtonGradientPreset \| KButtonGradient` | 生效的渐变值（不支持的类型/变体组合为 `false`）；自绘需自行实现渐变背景与 hover/active 叠加层 |
 | size | `ButtonSize` | **解析后的尺寸**（响应式对象/字符串按当前断点取值）：解析链 `prop > KButtonGroup 下发 > 'md'`——组内未自传 size 时这里已是组下发值，自绘直接消费无需再 inject |
 | shape | `ButtonShape` | 形状（`ButtonShape` = `'default' \| 'round' \| 'circle' \| 'square'`，缺省 `'default'`）；圆角/等宽内边距视觉自绘（circle/square 默认渲染 padding-x = height/2.75） |
 | loading | `boolean` | 加载中（缺省 `false`）；rootAttrs 已落 `aria-busy` 与 button 原生 disabled，rootOn 已拦截点击；spinner 视觉自绘（可取 `ctx.slots.loading`），默认渲染的「保留宽度防抖动」由自绘自管 |

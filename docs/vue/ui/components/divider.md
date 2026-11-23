@@ -5,13 +5,16 @@
 ## 何时使用
 
 - 大段内容的区块分隔（水平线）；
-- 行内操作/链接之间的轻量分隔（纵向线）。
+- 行内操作/链接之间的轻量分隔（纵向线）；
+- 默认插槽可放图标、标签、按钮、状态等复杂内容，不必为此改走 `#render` 自绘。
 
 ## 代码演示
 
 <Demo path="divider/horizontal" title="水平分割线" :desc="['缺省为纯线；有默认插槽内容时左右出线、文字居中。', '`orientation` 调文字位置，`plain` 用常规字重，`dashed` 虚线。']" />
 
 <Demo path="divider/vertical" title="纵向分割线" desc="`type=vertical` 与相邻文本基线对齐，常见于操作列、面包屑式行内分隔。" />
+
+<Demo path="divider/content" title="复杂内容" :desc="['默认插槽不限纯文字：可组合图标、标签、按钮、状态点等组件。', '分区标题用 `orientation=start`；操作列用 `type=vertical` 夹在按钮之间。', '复杂内容仍走同一套左右出线结构，建议控制在单行短内容；整件换结构请用 `#render`。']" />
 
 <Demo path="divider/render" title="自定义渲染（headless）" :desc="['外观不合需求但逻辑合适时，`#render` 插槽或 `render` prop 整件替换视觉输出。', 'scope 给状态与语义绑定包，自绘节点散播即继承。']" />
 
@@ -32,7 +35,7 @@
 
 | 插槽名 | 说明 |
 | --- | --- |
-| default | 分割线内嵌文字（有则左右出线） |
+| default | 分割线内嵌内容：文字、图标、标签、按钮、状态等（有则左右出线；纵向形态不渲染） |
 | render | 自定义渲染作用域插槽，scope 见文末「自定义渲染」节；提供时整件替换 |
 
 无事件。

@@ -17,6 +17,16 @@
 
 <Demo path="control-group/composite" title="复合控件" :desc="['InputNumber、Select、按钮型 RadioGroup 的边缘圆角会透传到各自内部视觉壳。', 'Checkbox/Radio/Switch 等无边框控件用 KControlGroupItem 补输入框同款外壳，也可直接放文字。']" />
 
+### KControlGroupItem 演示
+
+<Demo path="control-group/item-text" title="文字与单位外壳" :desc="['纯文字外壳补上与 Input 同款的高度、边框、底色，参与首尾圆角拼接：适合前缀标签、单位、必填提示等。', '`styles.root` 覆盖 `--k-control-group-item-*` 变量做只读区（浅灰底、无边框）；`classNames.root` 补等宽数字。']" />
+
+<Demo path="control-group/item-controls" title="包裹无边框控件" :desc="['Checkbox / Radio / Switch 自身没有输入框外壳，包一层 KControlGroupItem 后与相邻控件对齐。', '横向混排、纵向堆叠（`vertical`）与通栏（`block`）下都可直接使用。']" />
+
+<Demo path="control-group/item-style" title="样式与状态覆盖" :desc="['通过 `styles.root` 覆盖外壳变量：浅灰只读、成功/警示底色、无边框透明说明、主色高亮。', '`classNames.root` 追加自定义类（等宽编号）；通栏下三格自动等分。']" />
+
+<Demo path="control-group/item-render" title="自定义渲染（headless）" :desc="['`#render` 插槽与 `render` 闭包会替换整个外壳，绑定包里的 `rootAttrs` 散播到自绘根节点即可继续参与拼接。', '自绘外壳需自行补边框/高度；组内的压边与首尾圆角仍由 KControlGroup 负责。']" />
+
 ## API
 
 ### Props

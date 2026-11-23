@@ -6,7 +6,7 @@
 
 - 一切文字渲染走这组组件，**禁止业务直接写色/写字重**——颜色只取文本 α 四级、字重只取 base/strong/heading 三档，全由 token 驱动；
   - 确需自定义色值时用 KText 的 `color`/`gradient` 属性，不要在业务里裸写内联样式；
-- copyable/ellipsis/editable 等高级交互本批**不做**（P2 后评估），单行省略先行以 utility 类 `.k-ellipsis` 提供。
+- 需要复制、单行/多行省略、受控展开收起或 shimmer 流光提示时，直接用 `copyable` / `ellipsis` / `shimmer`，不再手写按钮或 CSS clamp。
 
 ## 代码演示
 
@@ -18,6 +18,14 @@
 
 <Demo path="typography/text-color" title="文字颜色与渐变" :desc="['`color` 收任意 CSS 色值（内联生效，压过 type 层级色）。', '`gradient` 缺省为主色浅→深渐变（hover→active 档），传字符串可自定义色标。']" />
 
+<Demo path="typography/copyable" title="可复制" :desc="['`copyable` 在内容右侧显示复制按钮，复制成功后切换为对勾；点击文字也能复制。', '对象形态可自定义复制文本、提示文案与 onCopy；`#copy` 插槽可替换操作内容。']" />
+
+<Demo path="typography/affix" title="前后缀" :desc="['KText 的 `prefix` / `suffix` 可为字符串，也可用 `#prefix` / `#suffix` 插槽放标签、图标。', '前后缀不参与省略测量与复制内容。']" />
+
+<Demo path="typography/ellipsis" title="省略与展开" :desc="['`ellipsis` 缺省单行；对象 `{ rows }` 控制多行截断。', '`expandable` 显示文字 + 箭头；点击文字也能展开，展开后文字可正常选中。', '`expanded` + `onExpand` 受控；`#expand` 插槽可替换操作内容。']" />
+
+<Demo path="typography/shimmer" title="闪烁文字（shimmer）" desc="`shimmer` 使用 antd v6 同款渐变扫光，提示进行中/思考中状态；系统减弱动态效果时自动关闭。" />
+
 <Demo path="typography/render" title="自定义渲染（headless）" :desc="['Title 派生标签（h3）继承、Text 渐变解析随 rootStyle 继承（background-clip 自绘）、Paragraph 语义继承。', '默认插槽内容经 `ctx.slots.default` 取回。']" />
 
 ## API
@@ -27,12 +35,21 @@
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | level | 标题层级（渲染对应 `h1~h5`） | `1 \| 2 \| 3 \| 4 \| 5` | 必填 |
+| copyable | 可复制 | `boolean \| object` | `false` |
+| ellipsis | 省略；对象可设 rows / expandable / expanded | `boolean \| object` | `false` |
+| shimmer | 流光扫光（antd shimmer） | `boolean` | `false` |
 
 <CommonProps />
 
-### KParagraph
+### KParagraph Props
 
-无专属 props（`p` + 1em 下间距），支持 `classNames/styles`。
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| copyable | 可复制 | `boolean \| object` | `false` |
+| ellipsis | 省略；对象可设 rows / expandable / expanded | `boolean \| object` | `false` |
+| shimmer | 流光扫光（antd shimmer） | `boolean` | `false` |
+
+<CommonProps />
 
 ### KText Props
 
@@ -40,23 +57,51 @@
 | --- | --- | --- | --- |
 | type | 文本层级 | `'default' \| 'secondary' \| 'tertiary' \| 'disabled'` | `'default'` |
 | color | 自定义文字颜色（任意 CSS 色值，落内联 style；与 gradient 同传时 gradient 优先） | `string` | — |
+| prefix | 前置内容（也可用 `#prefix` 插槽） | `string \| number` | — |
+| suffix | 后置内容（也可用 `#suffix` 插槽） | `string \| number` | — |
 | gradient | 渐变文字：`true` = token 默认渐变（`--k-color-primary-hover → --k-color-primary-active` 横向）；`string` = 自定义色标（逗号分隔 CSS 色值，或完整 `gradient()`），`background-clip: text` 实现 | `boolean \| string` | `false` |
 | strong | 加重（font-weight 500，渲染 `b`） | `boolean` | `false` |
 | code | 行内代码（渲染 `code`，等宽字体 + 0.9em + quaternary 底） | `boolean` | `false` |
 | mark | 标记底色（渲染 `mark`，warning-bg） | `boolean` | `false` |
 | delete | 删除线（渲染 `del`） | `boolean` | `false` |
 | underline | 下划线（渲染 `u`） | `boolean` | `false` |
+| copyable | 可复制：true 或 `{ text?, trigger?, tooltips?, onCopy? }` | `boolean \| object` | `false` |
+| ellipsis | 省略：true = 单行；对象 `{ rows?, expandable?, expanded?, defaultExpanded?, symbol?, onExpand? }` | `boolean \| object` | `false` |
+| shimmer | 流光扫光（antd shimmer，减弱动态效果时关闭） | `boolean` | `false` |
 
 语义元素选择优先级：code > mark > delete > underline > strong，全 false = `span`。
+
+### copyable / ellipsis 对象
+
+| 字段 | 说明 |
+| --- | --- |
+| copyable.text | 复制文本，缺省取内容区 `textContent` |
+| copyable.trigger | 触发方式：`'icon'` 仅按钮 / `'text'` 仅点击文字 / `'both'` 两者（默认） |
+| copyable.tooltips | `[复制提示, 已复制提示]`；`false` = 不显示 tooltip |
+| copyable.onCopy | 复制成功回调 `(text) => void` |
+| ellipsis.rows | 行数，缺省 1 |
+| ellipsis.expandable | 显示展开/收起操作 |
+| ellipsis.expanded | 受控展开态 |
+| ellipsis.defaultExpanded | 非受控初始展开态 |
+| ellipsis.symbol | 操作文案；函数按当前展开态返回 |
+| ellipsis.onExpand | 展开态变化回调 `(expanded) => void` |
 
 ### Slots
 
 | 插槽名 | 说明 |
 | --- | --- |
 | default | 三件（KTitle / KParagraph / KText）均为默认插槽放文字内容 |
+| prefix / suffix | KText：前后缀内容 |
+| copy | 三件：复制按钮内容，scope `{ copied, copy }` |
+| expand | 三件：展开按钮内容，scope `{ expanded, toggle }` |
 | render | 自定义渲染作用域插槽（三件各自支持），scope 见文末「自定义渲染」节；提供时整件替换 |
 
-无事件（零行为纯样式件）。
+### Events
+
+| 事件 | 说明 | 参数 |
+| --- | --- | --- |
+| copy | 复制成功（三件均支持） | `text: string` |
+| expand | 展开态变化（三件均支持） | `expanded: boolean` |
 
 ## 主题定制（相关全局 token）
 
@@ -72,12 +117,16 @@
 - `strong` 只有 500 一档，不提供 600+（中文排版原则）；要标题观感请用 KTitle；
 - disabled 的 KText 复用 quaternary 色，本身不禁交互——禁要点按钮/链接。
 - `gradient` 用 `background-clip: text` 实现，整块背景（含 code 底色、mark 高亮）都会被裁进字形——渐变与 code/mark 组合时只剩文字上色、无底色。
+- `copyable` 依赖 Clipboard API，非安全上下文由 `execCommand` 兜底；默认复制内容区全文，`text` 可覆盖；`trigger` 可切按钮 / 点击文字 / 两者。
+- `ellipsis` 需要容器约束宽度；单行省略在受限宽度下才生效。受控展开请同时传 `expanded` 与 `onExpand`（或监听 `expand` 事件）。
+- `expandable` 时折叠态点击文字展开；展开后点击文字不再收起，需点箭头，保证内容可正常选中与操作。同时传 `copyable` 时，折叠态点击优先展开，展开后点击不触发复制。
+- `shimmer` 使用 antd v6 同款渐变扫光，`prefers-reduced-motion: reduce` 下自动关闭；与 `gradient` 不要同时使用（都占 background 通道）。
 
 ## 自定义渲染（headless）
 
 双通道 `#render` 插槽（优先）/ `render` prop，通用契约见 [headless 自定义渲染](../headless.md)。
 
-三件各有 scope（入口导出），均含 `rootAttrs` 与 `slots`（默认插槽内容经 `ctx.slots.default` 取回）。零行为纯样式件，无 ref / 动作组；各 scope 逐字段如下（接口没有的组不列）：
+三件各有 scope（入口导出），均含 `rootAttrs` 与 `slots`（默认插槽内容经 `ctx.slots.default` 取回）。三件均额外提供 `copyable / ellipsis / expanded / shimmer / contentRef / copy() / toggleEllipsis()`；下表只列各件专属字段。
 
 **`KTitleRenderScope`**：
 
@@ -109,6 +158,7 @@
 | delete | `boolean` | 删除线标记；默认渲染 `del` 标签（浏览器原生删除线） |
 | underline | `boolean` | 下划线标记；默认渲染 `u` 标签（浏览器原生下划线） |
 | gradient | `boolean \| string` | 渐变文字原始 prop 值（缺省 `false`）：`true` = token 默认渐变（`--k-color-primary-hover → --k-color-primary-active` 横向，**由默认渲染的类名提供，不在 rootStyle 里**，自绘需自带渐变声明）；字符串 = 自定义色标，解析结果已进 rootStyle 的 `backgroundImage`。`background-clip:text` / 文字透明等裁切视觉一律自绘 |
+| prefix / suffix | `string \| number \| undefined` | 前后缀原始值；默认渲染在内容两侧，不参与省略测量与复制内容 |
 | tag | `string` | 派生语义标签：优先级 code > mark > del（delete）> u（underline）> b（strong），全 false = `span`；自绘可 `:is` 直接消费保留语义 |
 
 #### ref 与出口

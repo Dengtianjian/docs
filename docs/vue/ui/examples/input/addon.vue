@@ -1,12 +1,12 @@
 <template>
   <KFlex gap="md" vertical style="width: 320px">
-    <KInput v-model="site" addon-before="https://" addon-after=".com" placeholder="example" />
-    <KInput v-model="price" size="sm" addon-before="¥" addon-after="RMB" placeholder="0.00" />
+    <KInput v-model="site" before="https://" after=".com" placeholder="example" />
+    <KInput v-model="price" size="sm" before="¥" after="RMB" placeholder="0.00" />
     <KInput v-model="pkg" size="lg" placeholder="包名">
-      <template #addonBefore>npm</template>
-      <template #addonAfter>latest</template>
+      <template #before>npm</template>
+      <template #after>latest</template>
     </KInput>
-    <KInput v-model="readonly" addon-before="ID" disabled placeholder="禁用态" />
+    <KInput v-model="readonly" before="ID" disabled placeholder="禁用态" />
   </KFlex>
 </template>
 

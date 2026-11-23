@@ -17,6 +17,8 @@
 
 <Demo path="virtual-list/ledger" title="账单流水：多列表头 + 状态标签 + 金额对齐" :desc="['表头、行、汇总页脚三段结构，列宽用 grid 对齐。', '金额使用等宽数字并右对齐，收入着色；渠道用 `KTag` 表达状态。', '6000 行只渲染可视区，页脚汇总一次算好。']" />
 
+<Demo path="virtual-list/wide" title="宽表：横向 + 纵向双向滚动" :desc="['12 列合计 1342px，通过 `styles.content` 撑宽内容，虚拟列表自身出现横向滚动条。', '表头在列表外，监听 `scroll` 读取 `viewportEl.scrollLeft` 平移同步。', '横向滚动不影响纵向虚拟化，20000 行只渲染可视区。']" />
+
 <Demo path="virtual-list/load-more" title="滚动触底追加加载" :desc="['监听 `scroll` 事件，距底部小于阈值时追加下一页并显示 `KSpin`。', '首次只放 300 条，每次追加 200 条，直到 20000 条后提示已全部加载。']" />
 
 <Demo path="virtual-list/filter" title="搜索过滤 + 空状态 + 滚动复位" :desc="['输入关键字实时计算过滤结果，数据变化后自动 `scrollToTop()`。', '无匹配时换成 `KEmpty` 空状态；命中数与滚动位置在列表外展示。']" />
@@ -66,5 +68,6 @@
 - 真实高度变化（展开、图片加载、字体变化）由 ResizeObserver 捕获；上方行变高时会补偿 `scrollTop`，保持当前可视锚点。
 - 动态模式跳转到远处行时先按估算落点，随后按实测行高收敛到目标行；用户一旦滚动/触摸会立即取消这次修正。
 - 固定模式下行内容请自行保证高度等于 `itemHeight`，否则会出现重叠或空隙；复杂行（头像、双行文本、角标）同样按固定高度排版。
+- 需要横向滚动时把内容撑宽（例如 `styles.content` 设 width），根元素会同时出现两轴滚动条；列表外的表头可监听 `scroll` 读 `viewportEl.scrollLeft` 自行同步。
 - 无限加载是业务侧行为：在 `scroll` 事件里判断距底距离，追加 `items` 即可，组件会自动修正内容高度。
 - 视口高度传百分比时通过 ResizeObserver 读取真实高度。

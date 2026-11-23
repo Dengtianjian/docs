@@ -27,19 +27,40 @@
 
 <CommonProps />
 
-### 子件 Props
+### KLayoutHeader Props
 
-| 组件 | 属性 | 说明 | 默认值 |
+| 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| KLayoutHeader | height | 高度（px） | 64（CSS 回退） |
-| KLayoutSider | width | 宽度（px）；支持断点对象或字符串 | 208 = 16×13 模度（CSS 回退） |
-| KLayoutSider | collapsible | 开启折叠：渲染触发器 + 提供 Sider context | `false` |
-| KLayoutSider | collapsed | 受控折叠态；不传则组件自管 | — |
-| KLayoutSider | defaultCollapsed | 非受控初始折叠态 | `false` |
-| KLayoutSider | collapsedWidth | 折叠宽度 | `64` |
-| KLayoutSider | trigger | 是否显示触发器（`collapsible` 时生效） | `true` |
-| KLayoutFooter | height | 高度（px） | 64（CSS 回退） |
-| KLayoutContent | — | 无专属 props，`main` 语义 + `overflow:auto` | — |
+| height | 页头高度（px） | `number` | `64`（CSS 回退） |
+
+<CommonProps />
+
+### KLayoutSider Props
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| width | 侧栏宽度（px）；支持断点对象或字符串 | `number \| Partial<Record<Breakpoint, number>> \| string` | `208`（CSS 回退） |
+| collapsible | 开启折叠：渲染触发器 + 提供 Sider context | `boolean` | `false` |
+| collapsed | 受控折叠态；不传则组件自管 | `boolean` | — |
+| defaultCollapsed | 非受控初始折叠态 | `boolean` | `false` |
+| collapsedWidth | 折叠宽度 | `number \| string` | `64` |
+| trigger | 是否显示触发器（`collapsible` 时生效） | `boolean` | `true` |
+
+<CommonProps />
+
+### KLayoutContent Props
+
+无专属 props：`main` 语义 + `overflow:auto`。
+
+<CommonProps />
+
+### KLayoutFooter Props
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| height | 页脚高度（px） | `number` | `64`（CSS 回退） |
+
+<CommonProps />
 
 ### DOM 语义
 

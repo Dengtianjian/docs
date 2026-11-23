@@ -22,6 +22,10 @@
 
 <Demo path="select/slots" title="菜单插槽 / 滚动事件" :desc="['`#header` / `#footer` 不随列表滚。', '`#option` 自绘行（scope：option/selected/active）。', '`#empty` 带 pattern。', '`#label` 改选中回显。', '列表 `scroll` 事件实时抛出。']" />
 
+<Demo path="select/slots-trigger" title="触发器插槽（前缀 / 后缀 / 回显）" :desc="['`#prefix` / `#suffix` 常显在触发器两侧（清除钮与箭头之前）。', '`#label` 同时作用于单选回显与多选标签。']" />
+
+<Demo path="select/rich-options" title="复杂元素选项" :desc="['`#option` 可放头像、两行文字、标签等复杂结构，选中态需自行渲染。', '与分组、多选、过滤同时使用，行高随内容撑高。']" />
+
 <Demo path="select/popup-container" title="弹层容器（契约首验）" :desc="['`KConfigProvider :popup-container` 指定挂载盒：弹层 absolute 进容器文档流，随内容滚动、被盒边界裁切。', 'scoped 主题下出口节点自带作用域类，token 链不断。']" />
 
 <Demo path="select/render" title="自定义渲染（headless）" :desc="['`#render` 插槽 / `render` prop 整件替换：下划线触发器 + 深色面板全自绘。', '开合、键盘导航、点外关闭、定位翻转、禁用项逻辑由绑定包继承。']" />
@@ -106,6 +110,7 @@ Expose：`focus() / blur() / open() / close()`。
 - **分组缩进**：组标题保持弹层水平内边距，组内选项再缩进一级（`--k-popup-item-padding-x + --k-size-sm` = 20px）；散选项无组标题，不缩进。
 - **filterable 空输入态**：输入框在有 pattern 时按字符数收缩、为空时撑满剩余宽度，多选触发器的 placeholder 因此完整可见。
 - **虚拟列表**：`virtual` 开启后按「分组标题 + 选项」拍平成行，容器用行高前缀和撑总高、窗口内行绝对定位；行高先估算（md 32 / 分组 26）再实测修正，`size` 换档与过滤导致行集变化时缓存失效重测。键盘高亮行在窗口外时按偏移直接滚列表；`reachTop` / `reachBottom` 只在进入边界状态时各触发一次，打开弹层的初始化不触发。headless 自绘需自行窗口化（scope 提供 `virtual` 原值与 `listEl` 滚动容器）。
+- **`#option` 复杂内容**：自绘行替换默认 label + 勾选，选中态（勾/边框）由插槽自管；行高由内容撑开，默认行高仍走弹层紧凑档。
 
 ## 自定义渲染（headless）
 

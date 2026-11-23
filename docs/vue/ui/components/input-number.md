@@ -16,6 +16,8 @@
 
 <Demo path="input-number/affix" title="组合标签与前后缀" :desc="['`before / after` 与 `#before / #after / #prefix / #suffix` 插槽透传内层 KInput，规则与 [KInput](./input.md) 一致。', '`after` 标签紧邻步进列，右侧圆角自动压平。']" />
 
+<Demo path="input-number/animation" title="步进滚动动画" :desc="['`animated` 开启后，点击步进或按 ↑/↓ 时数字滚动到新值，动画结束回到原生输入框。', '默认关闭；打字与外部 v-model 赋值不播动画。']" />
+
 <Demo path="input-number/render" title="自定义渲染（headless）" :desc="['双通道：`#render` 自绘数量步进器（stepUp/stepDown/setText/onBlur/onKeydown 全逻辑继承）。', '`render` prop 自绘温度计（step 0.5 小数步进 + 限幅照常生效）。']" />
 
 ## API
@@ -39,6 +41,7 @@
 | id | 同 [KInput](./input.md) 对应项，透传 | — | — |
 | before | 前置组合标签（纯文本；`#before` 插槽优先） | `string \| number` | — |
 | after | 后置组合标签（纯文本；`#after` 插槽优先） | `string \| number` | — |
+| animated | 步进滚动动画开关（仅步进触发） | `boolean` | `false` |
 
 <CommonProps />
 
@@ -68,6 +71,7 @@ Slots：`render` = 自定义渲染作用域插槽（scope 见文末「自定义�
 ## 注意事项
 
 - 触屏（`hover: none`）：步进按钮纵向命中区不足 44px，默认收起步进列，改用数字键盘（`inputmode=decimal`）输入。
+- `animated` 开关：动画层复用 [KRollingText](./statistic.md)（fast 350ms），覆盖在内层输入文字上并暂时隐藏原生文字；只在步进（按钮 / ↑↓）且值实际变化时播放，打字与外部 v-model 赋值不播；`prefers-reduced-motion: reduce` 下自动禁用。
 
 - **组合实现**：步进列绝对定位在组合壳右侧，`.k-input-number--controls` 时给内层输入框加右内边距让位（特异性 (0,2,0) 压过 KInput 基线，不改 KInput 源码）；
   - 输入框 hover/focus 边框与聚焦圈全由 KInput 承担。
@@ -95,6 +99,7 @@ Slots：`render` = 自定义渲染作用域插槽（scope 见文末「自定义�
 | disabled | `boolean \| undefined` | 禁用 prop 原值；步进守卫（stepBy）与 showStep 合成消费它；自绘输入框需自绑原生 disabled |
 | readonly | `boolean \| undefined` | 只读 prop 原值；步进守卫与 showStep 合成消费它（只读仍可选可聚焦）；自绘输入框需自绑原生 readonly |
 | controls | `boolean` | 步进列开关 prop 原值（缺省 true）；实际显隐看 showStep 合成值；关掉后键盘 ↑↓ 仍可用 |
+| animated | `boolean` | 动画开关原值（缺省 `false`）；开启后仅步进时播滚动动画，打字/外部赋值不播；自绘需自行实现 |
 | id | `string \| undefined` | 原生 id 原值；默认渲染透传内层 KInput，自绘自绑（label for 关联） |
 | before | `string \| number \| undefined` | 前置组合标签文本 prop 原值（插槽内容不进 scope）；默认渲染透传内层 KInput 的 `before`，自绘可自行排版 |
 | after | `string \| number \| undefined` | 后置组合标签文本 prop 原值（插槽内容不进 scope）；默认渲染透传内层 KInput 的 `after`，自绘可自行排版 |

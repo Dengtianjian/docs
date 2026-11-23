@@ -50,7 +50,7 @@
 packages/vue/ui/
 ├── index.ts          # 库入口（类型/无副作用导出；组件走 KResolver 单文件路径）
 ├── themes/           # token 的 JS 侧：seed 默认值、oklab 色阶、createTheme（差量注入）
-├── css/              # theme.css（表达式图主载体）、reset.css、utilities.css、index.css 入口
+├── css/              # theme.css（表达式图主载体）、reset.css、atoms.css、index.css 入口
 └── components/
     └── <Name>/<Name>.vue [+ <name>.css 说明]  # SFC 样式（未分层）
 ```

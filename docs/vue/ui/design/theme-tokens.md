@@ -477,7 +477,7 @@ export const buttonTokens = {
 | 产物 | 路径（packages/vue/ui/） | 状态 |
 | --- | --- | --- |
 | 表达式图（Seed→Base→Map→Alias + dark 属性块 + §8.2 mobile 清单） | `css/theme.css` | ✅ 236 变量，花括号/命名检查通过 |
-| 层次入口 / 极小 reset / utility | `css/index.css` `reset.css` `utilities.css` | ✅ `@layer kui-theme < kui-base`；**组件与 utility 不分层**（偏离 v0.3 设计：未分层样式压过任何层，组件若进层会被宿主未分层 reset——tailwind preflight / vitepress base 的 `button{background-color:transparent}`——整条抹掉） |
+| 层次入口 / 极小 reset / utility | `css/index.css` `reset.css` `atoms.css` | ✅ `@layer kui-theme < kui-base`；**组件与 utility 不分层**（偏离 v0.3 设计：未分层样式压过任何层，组件若进层会被宿主未分层 reset——tailwind preflight / vitepress base 的 `button{background-color:transparent}`——整条抹掉） |
 | themes JS 侧 | `themes/seed.ts` `types.ts` `palette.ts` `create-theme.ts` | ✅ createTheme 冒烟通过（差量声明、键序稳定、SSR 可比对） |
 | 色板导出 | `themes/palette.ts` | ✅ oklab 同构实现（p1~p5/p7 比例 = §4.1 系数同源，2026-11-17 修漂 + `drift-check.mjs` 锁定）；`@ant-design/colors` 精确算法未引入，保留为 §4.6 兼容位 |
 | 首批组件 | `components/Icon` `Button` `Space` | ✅ KButton 全矩阵样板（部件变量 + 状态局部重声明 + `:is()` 语义同构） |

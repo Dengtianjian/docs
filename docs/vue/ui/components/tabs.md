@@ -104,4 +104,5 @@
 - `segment` 与 [KSegmented](./segmented.md) 共用一套视觉规格（28/36/44 高度、3px 内边距、白色激活块、三级阴影）；只切换取值、不需要面板时优先用 KSegmented。
 - `router` 模式以路由为唯一数据源：忽略 `props.active` / `v-model:active`，`change` / `update:active` 在路由真正切换后触发（含前进后退、程序跳转），首次同步不触发。
 - 页签 key 必须是路由 name；子路由（详情页）通过 `match` 或在初始化时从 `route.matched` 自动回溯到父页签。未命中任何页签的临时路由会保持上一个激活项。
+- 首次挂载时若路由还没解析完成，会在解析完成后自动命中（`/` 根路径也按 name 命中，不依赖 fullPath 变化）。
 - 导航被守卫拦下或失败时页签保持不动；`router` 请在初始化时确定，不要在运行中切换（依赖 setup 阶段注入的路由）。

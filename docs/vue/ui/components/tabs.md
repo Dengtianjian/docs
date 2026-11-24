@@ -16,7 +16,7 @@
 
 <Demo path="tabs/simple" title="简约形态 / items 模式 / 新增页签" :desc="['`type=&quot;simple&quot;` 无底线的文字页签，激活项下划线随切换滑动。', '不写 KTabPane，直接传 `items`，用 `#content` 渲染内容；非激活面板保留 DOM。', '`addable` 只提供 + 按钮并触发 `add`，列表由业务 push 后激活。']" />
 
-<Demo path="tabs/segment" title="分段控件形态" :desc="['`type=&quot;segment&quot;` 灰底分段控件，白色激活块随切换滑动。', '支持 sm / md / lg 三档；`stretch` 让分段等分铺满。']" />
+<Demo path="tabs/segment" title="分段控件形态" :desc="['`type=&quot;segment&quot;` 灰底分段控件，白色激活块随切换滑动。', '高度与 KSegmented 对齐（sm 28 / md 36 / lg 44），并排使用规格一致。', '`stretch` 让分段等分铺满。']" />
 
 <Demo path="tabs/scroll" title="溢出滚动 / 前缀后缀" :desc="['页签超出容器宽度时出现左右辅助滚动按钮（`scroll-buttons` 默认开启）。', '切换/程序设置激活项会自动滚入可视区。', '`#prefix` / `#suffix` 在页签两端放图标、计数等补充内容。']" />
 
@@ -97,3 +97,4 @@
 - 导航溢出时出现左右（left / right 位置为上下）辅助滚动按钮；激活项会自动滚入可视区。
 - `align` 只在 top / bottom 且未溢出时生效；溢出后从起始端开始，由滚动按钮/滚动条浏览。
 - `type="card"` 的四向位置均可用，每个卡片之间留 4px 间距，激活项与内容区同底以避免接缝。
+- `segment` 与 [KSegmented](./segmented.md) 共用一套视觉规格（28/36/44 高度、3px 内边距、白色激活块、三级阴影）；只切换取值、不需要面板时优先用 KSegmented。

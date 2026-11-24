@@ -59,3 +59,4 @@
 - 使用 `radiogroup / radio` 语义；左右方向键切换，Home / End 跳到首尾项。
 - 禁用项会被键盘导航跳过。
 - 滑轨按每个选项的真实 `offset + width` 测量定位，不等宽选项也会对齐；窗口尺寸、文案或选项变化后自动重算。
+- 只切换取值用 KSegmented；需要内容面板、可关闭或可滚动的页签时用 [KTabs](./tabs.md) 的 `type="segment"`，两者视觉规格一致。

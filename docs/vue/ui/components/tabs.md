@@ -18,7 +18,7 @@
 
 <Demo path="tabs/segment" title="分段控件形态" :desc="['`type=&quot;segment&quot;` 灰底分段控件，白色激活块随切换滑动。', '高度与 KSegmented 对齐（sm 28 / md 36 / lg 44），并排使用规格一致。', '`stretch` 让分段等分铺满。']" />
 
-<Demo path="tabs/scroll" title="溢出滚动 / 前缀后缀" :desc="['页签超出容器宽度时出现左右辅助滚动按钮（`scroll-buttons` 默认开启）。', '切换/程序设置激活项会自动滚入可视区。', '`#prefix` / `#suffix` 在页签两端放图标、计数等补充内容。']" />
+<Demo path="tabs/scroll" title="溢出滚动 / 两侧固定区" :desc="['页签超出容器宽度时出现左右辅助滚动按钮（`scroll-buttons` 默认开启）。', '`leftExtra` / `rightExtra` 在滚动区外，固定在导航左右两侧，不随页签滚动。', '`prefix` / `suffix` 在滚动区内，跟页签一起滚；切换激活项会自动滚入可视区。']" />
 
 <Demo path="tabs/align" title="导航左中右位置" :desc="['`align` 控制页签在导航内的位置：left / center / right；`centered` 等价于 center。', '仅在 top / bottom 且没有溢出时生效，溢出后从起始端开始滚动。']" />
 
@@ -46,7 +46,7 @@
 | scrollButtons | 溢出时显示辅助滚动按钮 | `boolean` | `true` |
 | router | 激活项跟随路由、点击跳转；页签 key 即路由 name | `boolean` | `false` |
 | routerMode | router 模式的跳转方式 | `'push' \| 'replace'` | `'push'` |
-| classNames | 部件类名（`root / nav / scroller / list / tab / tabActive / close / content / extra / prefix / suffix / ink / add / scrollButton`） | `Partial<Record<Part, string>>` | — |
+| classNames | 部件类名（`root / nav / scroller / list / tab / tabActive / close / content / extra / prefix / suffix / leftExtra / rightExtra / ink / add / scrollButton`） | `Partial<Record<Part, string>>` | — |
 | styles | 部件内联样式（同上） | `Partial<Record<Part, CSSProperties>>` | — |
 
 `KTabsItem`：`{ name?, key?, label?, icon?, disabled?, closable?, match?, to? }`；key 取 `name` → `key` → 序号。`match` 为 router 模式下额外归属该页签的路由名（数组或函数），`to` 覆盖点击目标。
@@ -81,13 +81,15 @@
 | default | `KTabPane` 列表（与 `items` 二选一） |
 | content | items 模式内容，scope `{ item, index, active }` |
 | label | KTabs：自定义标题，scope `{ item, index, active }` |
-| prefix | 页签起始位置补充内容 |
-| suffix | 页签末尾补充内容 |
+| prefix | 滚动区内、页签起始位置补充内容（随页签滚动） |
+| suffix | 滚动区内、页签末尾补充内容（随页签滚动） |
+| leftExtra | 滚动区外，导航左侧固定内容 |
+| rightExtra | 滚动区外，导航右侧固定内容 |
 | extra | KTabs：导航尾部扩展内容 |
 
 ### 部件
 
-`root` / `nav` / `scroller` / `list` / `tab` / `close` / `content` / `extra` / `prefix` / `suffix` / `ink` / `add` / `scrollButton`；面板为 `KTabPane` 根节点（`role="tabpanel"`）。
+`root` / `nav` / `scroller` / `list` / `tab` / `close` / `content` / `extra` / `prefix` / `suffix` / `leftExtra` / `rightExtra` / `ink` / `add` / `scrollButton`；面板为 `KTabPane` 根节点（`role="tabpanel"`）。
 
 ## 注意事项
 
@@ -99,6 +101,7 @@
 - `close` 不会自动删除页签；`add` 也不会自动新增，列表与激活项都由业务维护。
 - `line` / `simple` / `segment` 的激活态都由一条滑动元素驱动：line / simple 是下划线，segment 是白色激活块，切换时 0.2s 过渡；`card` 无指示条。
 - 导航溢出时出现左右（left / right 位置为上下）辅助滚动按钮；激活项会自动滚入可视区。
+- `leftExtra` / `rightExtra` 在滚动区外固定在导航两侧；`prefix` / `suffix` 位于滚动区内，会跟页签一起滚动。left / right 位置时两侧固定区改为上下排列。
 - `align` 只在 top / bottom 且未溢出时生效；溢出后从起始端开始，由滚动按钮/滚动条浏览。
 - `type="card"` 的四向位置均可用，每个卡片之间留 4px 间距，激活项与内容区同底以避免接缝。
 - `segment` 与 [KSegmented](./segmented.md) 共用一套视觉规格（28/36/44 高度、3px 内边距、白色激活块、三级阴影）；只切换取值、不需要面板时优先用 KSegmented。

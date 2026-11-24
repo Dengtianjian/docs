@@ -6,11 +6,17 @@
       <KButton size="sm" @click="active = tabs[tabs.length - 1]!.name">最后一个</KButton>
     </div>
     <KTabs v-model:active="active" :items="tabs">
+      <template #leftExtra>
+        <span class="side">工作区</span>
+      </template>
       <template #prefix>
-        <span class="prefix">工作区</span>
+        <KTag size="sm" variant="borderless">内部</KTag>
       </template>
       <template #suffix>
         <KTag size="sm" color="primary">{{ tabs.length }} 个</KTag>
+      </template>
+      <template #rightExtra>
+        <KButton size="sm">管理</KButton>
       </template>
       <template #content="{ item }">
         <div class="pane">{{ item.content }}</div>
@@ -43,7 +49,7 @@ const active = ref<string | number>(tabs[0]!.name)
   gap: 8px;
   margin-bottom: 8px;
 }
-.prefix {
+.side {
   color: var(--k-color-text-tertiary);
   font-size: var(--k-font-size-sm);
   white-space: nowrap;

@@ -7,6 +7,9 @@
         { label: 'left', value: 'left' },
         { label: 'center', value: 'center' },
         { label: 'right', value: 'right' },
+        { label: 'between', value: 'space-between' },
+        { label: 'around', value: 'space-around' },
+        { label: 'evenly', value: 'space-evenly' },
       ]"
     />
     <div class="frame">
@@ -34,6 +37,7 @@ const active = ref<string | number>('overview')
 
 <style scoped>
 .frame {
+  box-sizing: border-box;
   width: 100%;
   padding: 0 12px;
   border: 1px dashed var(--k-color-border);

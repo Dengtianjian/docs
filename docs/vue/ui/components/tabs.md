@@ -22,7 +22,7 @@
 
 <Demo path="tabs/scroll" title="溢出滚动 / 两侧固定区" :desc="['页签超出容器宽度时出现左右辅助滚动按钮（`scroll-buttons` 默认开启）。', '`leftExtra` / `rightExtra` 在滚动区外，固定在导航左右两侧，不随页签滚动。', '`prefix` / `suffix` 在滚动区内，跟页签一起滚；切换激活项会自动滚入可视区。']" />
 
-<Demo path="tabs/align" title="导航左中右位置" :desc="['`align` 控制页签在导航内的位置：left / center / right；`centered` 等价于 center。', '仅在 top / bottom 且没有溢出时生效，溢出后从起始端开始滚动。']" />
+<Demo path="tabs/align" title="导航左中右 / 均分位置" :desc="['`align` 控制页签在导航内的位置：left / center / right，以及 space-between / space-around / space-evenly。', '仅在 top / bottom 且没有溢出时生效，溢出后从起始端开始滚动。']" />
 
 <Demo path="tabs/router" title="路由联动" :desc="['`router` 开启后页签 key 就是路由 name，激活项跟随路由（含前进后退），点击默认 `router.push({ name })`。', '子路由通过 `match` 归到父页签；进入没有页签的临时页时，高亮保持在上一个页签。', '示例用内存路由模拟；实际项目内容通常放在外层 `<router-view>`。']" />
 
@@ -40,7 +40,7 @@
 | type | 外观 | `'line' \| 'card' \| 'simple' \| 'segment'` | `'line'` |
 | placement | 导航位置 | `'top' \| 'bottom' \| 'left' \| 'right'` | `'top'` |
 | size | 尺寸 | `'sm' \| 'md' \| 'lg'` | `'md'` |
-| align | 页签在导航内的位置（top / bottom 且未溢出时生效） | `'left' \| 'center' \| 'right'` | `'left'` |
+| align | 页签在导航内的位置（top / bottom 且未溢出时生效） | `'left' \| 'center' \| 'right' \| 'space-between' \| 'space-around' \| 'space-evenly'` | `'left'` |
 | centered | 导航居中（等价 `align="center"`） | `boolean` | `false` |
 | stretch | 页签等分铺满 | `boolean` | `false` |
 | items | 不写 KTabPane 时直接传页签数据 | `KTabsItem[]` | — |
@@ -105,7 +105,8 @@
 - `line` / `simple` / `segment` 的激活态都由一条滑动元素驱动：line / simple 是下划线，segment 是白色激活块，切换时 0.2s 过渡；`card` 无指示条。
 - 导航溢出时出现左右（left / right 位置为上下）辅助滚动按钮；激活项会自动滚入可视区。
 - `leftExtra` / `rightExtra` 在滚动区外固定在导航两侧；`prefix` / `suffix` 位于滚动区内，会跟页签一起滚动。left / right 位置时两侧固定区改为上下排列。
-- `align` 只在 top / bottom 且未溢出时生效；溢出后从起始端开始，由滚动按钮/滚动条浏览。
+- `align` 只在 top / bottom 且未溢出时生效；溢出后从起始端开始，由滚动按钮/滚动条浏览。`space-*` 会把页签列表撑满导航再按 flex 均分。
+- 各形态（line / card / simple / segment）页签之间统一留 4px 间距。
 - `type="card"` 的四向位置均可用，每个卡片之间留 4px 间距，激活项与内容区同底以避免接缝。
 - `segment` 与 [KSegmented](./segmented.md) 共用一套视觉规格（28/36/44 高度、3px 内边距、白色激活块、三级阴影）；只切换取值、不需要面板时优先用 KSegmented。
 - `animated` 默认关闭；动画只作用于内容区，页签指示条动画始终存在；减少动态偏好时内容动画自动禁用。

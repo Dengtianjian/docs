@@ -22,6 +22,8 @@
 
 <Demo path="tabs/align" title="导航左中右位置" :desc="['`align` 控制页签在导航内的位置：left / center / right；`centered` 等价于 center。', '仅在 top / bottom 且没有溢出时生效，溢出后从起始端开始滚动。']" />
 
+<Demo path="tabs/router" title="路由联动" :desc="['`router` 开启后页签 key 就是路由 name，激活项跟随路由（含前进后退），点击默认 `router.push({ name })`。', '子路由通过 `match` 归到父页签；进入没有页签的临时页时，高亮保持在上一个页签。', '示例用内存路由模拟；实际项目内容通常放在外层 `<router-view>`。']" />
+
 <Demo path="tabs/placement" title="四向位置" :desc="['`placement` 支持 top / bottom / left / right；left / right 时导航纵向排列。', '可与 line / card / segment 组合。']" />
 
 <Demo path="tabs/custom" title="自定义标题 / 导航扩展" :desc="['`#label` 作用域插槽覆盖每个页签标题，scope 提供 `item`、`index`、`active`。', '`#extra` 在导航尾部放操作区。']" />
@@ -42,10 +44,12 @@
 | items | 不写 KTabPane 时直接传页签数据 | `KTabsItem[]` | — |
 | addable | 显示“新增页签”按钮，点击触发 `add` | `boolean` | `false` |
 | scrollButtons | 溢出时显示辅助滚动按钮 | `boolean` | `true` |
+| router | 激活项跟随路由、点击跳转；页签 key 即路由 name | `boolean` | `false` |
+| routerMode | router 模式的跳转方式 | `'push' \| 'replace'` | `'push'` |
 | classNames | 部件类名（`root / nav / scroller / list / tab / tabActive / close / content / extra / prefix / suffix / ink / add / scrollButton`） | `Partial<Record<Part, string>>` | — |
 | styles | 部件内联样式（同上） | `Partial<Record<Part, CSSProperties>>` | — |
 
-`KTabsItem`：`{ name?, key?, label?, icon?, disabled?, closable? }`；key 取 `name` → `key` → 序号。
+`KTabsItem`：`{ name?, key?, label?, icon?, disabled?, closable?, match?, to? }`；key 取 `name` → `key` → 序号。`match` 为 router 模式下额外归属该页签的路由名（数组或函数），`to` 覆盖点击目标。
 
 <CommonProps />
 
@@ -98,3 +102,6 @@
 - `align` 只在 top / bottom 且未溢出时生效；溢出后从起始端开始，由滚动按钮/滚动条浏览。
 - `type="card"` 的四向位置均可用，每个卡片之间留 4px 间距，激活项与内容区同底以避免接缝。
 - `segment` 与 [KSegmented](./segmented.md) 共用一套视觉规格（28/36/44 高度、3px 内边距、白色激活块、三级阴影）；只切换取值、不需要面板时优先用 KSegmented。
+- `router` 模式以路由为唯一数据源：忽略 `props.active` / `v-model:active`，`change` / `update:active` 在路由真正切换后触发（含前进后退、程序跳转），首次同步不触发。
+- 页签 key 必须是路由 name；子路由（详情页）通过 `match` 或在初始化时从 `route.matched` 自动回溯到父页签。未命中任何页签的临时路由会保持上一个激活项。
+- 导航被守卫拦下或失败时页签保持不动；`router` 请在初始化时确定，不要在运行中切换（依赖 setup 阶段注入的路由）。

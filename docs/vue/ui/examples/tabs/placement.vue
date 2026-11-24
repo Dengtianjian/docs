@@ -17,6 +17,7 @@
         :options="[
           { label: 'line', value: 'line' },
           { label: 'card', value: 'card' },
+          { label: 'segment', value: 'segment' },
         ]"
       />
     </KFlex>

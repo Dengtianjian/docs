@@ -16,11 +16,13 @@
 
 <Demo path="tabs/simple" title="简约形态 / items 模式 / 新增页签" :desc="['`type=&quot;simple&quot;` 无底线的文字页签，激活项下划线随切换滑动。', '不写 KTabPane，直接传 `items`，用 `#content` 渲染内容；非激活面板保留 DOM。', '`addable` 只提供 + 按钮并触发 `add`，列表由业务 push 后激活。']" />
 
+<Demo path="tabs/segment" title="分段控件形态" :desc="['`type=&quot;segment&quot;` 灰底分段控件，白色激活块随切换滑动。', '支持 sm / md / lg 三档；`stretch` 让分段等分铺满。']" />
+
 <Demo path="tabs/scroll" title="溢出滚动 / 前缀后缀" :desc="['页签超出容器宽度时出现左右辅助滚动按钮（`scroll-buttons` 默认开启）。', '切换/程序设置激活项会自动滚入可视区。', '`#prefix` / `#suffix` 在页签两端放图标、计数等补充内容。']" />
 
 <Demo path="tabs/align" title="导航左中右位置" :desc="['`align` 控制页签在导航内的位置：left / center / right；`centered` 等价于 center。', '仅在 top / bottom 且没有溢出时生效，溢出后从起始端开始滚动。']" />
 
-<Demo path="tabs/placement" title="四向位置" :desc="['`placement` 支持 top / bottom / left / right；left / right 时导航纵向排列。', '可与 line / card 组合。']" />
+<Demo path="tabs/placement" title="四向位置" :desc="['`placement` 支持 top / bottom / left / right；left / right 时导航纵向排列。', '可与 line / card / segment 组合。']" />
 
 <Demo path="tabs/custom" title="自定义标题 / 导航扩展" :desc="['`#label` 作用域插槽覆盖每个页签标题，scope 提供 `item`、`index`、`active`。', '`#extra` 在导航尾部放操作区。']" />
 
@@ -31,7 +33,7 @@
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | v-model:active | 当前页签 key | `string \| number` | 第一个可用页签 |
-| type | 外观 | `'line' \| 'card' \| 'simple'` | `'line'` |
+| type | 外观 | `'line' \| 'card' \| 'simple' \| 'segment'` | `'line'` |
 | placement | 导航位置 | `'top' \| 'bottom' \| 'left' \| 'right'` | `'top'` |
 | size | 尺寸 | `'sm' \| 'md' \| 'lg'` | `'md'` |
 | align | 页签在导航内的位置（top / bottom 且未溢出时生效） | `'left' \| 'center' \| 'right'` | `'left'` |
@@ -91,7 +93,7 @@
 - 键盘：左右方向键（left / right 位置时为上下）循环切换并跳过禁用项；Home / End 跳到首尾；Enter / Space 选中。
 - 激活页签 `tabindex=0`，其余为 -1，符合 ARIA tabs 漫游焦点约定；面板带 `aria-labelledby`。
 - `close` 不会自动删除页签；`add` 也不会自动新增，列表与激活项都由业务维护。
-- `line` / `simple` 的激活指示条是一条滑动元素，切换时 0.2s 过渡；`card` 无指示条。
+- `line` / `simple` / `segment` 的激活态都由一条滑动元素驱动：line / simple 是下划线，segment 是白色激活块，切换时 0.2s 过渡；`card` 无指示条。
 - 导航溢出时出现左右（left / right 位置为上下）辅助滚动按钮；激活项会自动滚入可视区。
 - `align` 只在 top / bottom 且未溢出时生效；溢出后从起始端开始，由滚动按钮/滚动条浏览。
 - `type="card"` 的四向位置均可用，每个卡片之间留 4px 间距，激活项与内容区同底以避免接缝。

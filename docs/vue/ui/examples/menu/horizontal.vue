@@ -49,6 +49,10 @@ const items: KMenuItem[] = [
 </script>
 
 <style scoped>
+/* 文档站的 .vp-doc li + li 间距会穿透进菜单，示例内收掉 */
+:deep(.k-menu li + li) {
+  margin-top: 0;
+}
 .menu-tip {
   color: var(--k-color-text-secondary);
   font-size: var(--k-font-size-sm);

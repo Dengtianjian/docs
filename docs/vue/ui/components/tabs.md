@@ -12,6 +12,8 @@
 
 <Demo path="tabs/basic" title="基础 / 可关闭 / 禁用" :desc="['`v-model:active` 受控切换，值为 KTabPane 的 `name`（缺省取 vnode key）。', '`closable` 只触发 `close(key, index)`，移除由业务控制。', '`disabled` 页签不可选中，键盘导航自动跳过。']" />
 
+<Demo path="tabs/animated" title="内容切换动画" :desc="['`animated` 开启后内容淡入，并根据页签顺序轻微左右位移。', '默认关闭；`prefers-reduced-motion: reduce` 时自动禁用。']" />
+
 <Demo path="tabs/card" title="卡片形态 / 尺寸 / 等分" :desc="['`type=&quot;card&quot;` 卡片形态，每个页签之间留 4px 间距，激活项与内容区同底。', '`size` 三档：sm / md / lg。', '`stretch` 页签等分铺满；`centered` 居中。']" />
 
 <Demo path="tabs/simple" title="简约形态 / items 模式 / 新增页签" :desc="['`type=&quot;simple&quot;` 无底线的文字页签，激活项下划线随切换滑动。', '不写 KTabPane，直接传 `items`，用 `#content` 渲染内容；非激活面板保留 DOM。', '`addable` 只提供 + 按钮并触发 `add`，列表由业务 push 后激活。']" />
@@ -46,6 +48,7 @@
 | scrollButtons | 溢出时显示辅助滚动按钮 | `boolean` | `true` |
 | router | 激活项跟随路由、点击跳转；页签 key 即路由 name | `boolean` | `false` |
 | routerMode | router 模式的跳转方式 | `'push' \| 'replace'` | `'push'` |
+| animated | 内容切换动画（淡入 + 方向位移） | `boolean` | `false` |
 | classNames | 部件类名（`root / nav / scroller / list / tab / tabActive / close / content / extra / prefix / suffix / leftExtra / rightExtra / ink / add / scrollButton`） | `Partial<Record<Part, string>>` | — |
 | styles | 部件内联样式（同上） | `Partial<Record<Part, CSSProperties>>` | — |
 
@@ -105,6 +108,7 @@
 - `align` 只在 top / bottom 且未溢出时生效；溢出后从起始端开始，由滚动按钮/滚动条浏览。
 - `type="card"` 的四向位置均可用，每个卡片之间留 4px 间距，激活项与内容区同底以避免接缝。
 - `segment` 与 [KSegmented](./segmented.md) 共用一套视觉规格（28/36/44 高度、3px 内边距、白色激活块、三级阴影）；只切换取值、不需要面板时优先用 KSegmented。
+- `animated` 默认关闭；动画只作用于内容区，页签指示条动画始终存在；减少动态偏好时内容动画自动禁用。
 - `router` 模式以路由为唯一数据源：忽略 `props.active` / `v-model:active`，`change` / `update:active` 在路由真正切换后触发（含前进后退、程序跳转），首次同步不触发。
 - 页签 key 必须是路由 name；子路由（详情页）通过 `match` 或在初始化时从 `route.matched` 自动回溯到父页签。未命中任何页签的临时路由会保持上一个激活项。
 - 首次挂载时若路由还没解析完成，会在解析完成后自动命中（`/` 根路径也按 name 命中，不依赖 fullPath 变化）。

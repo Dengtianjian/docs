@@ -44,6 +44,8 @@
 | collapsed | 受控折叠态；不传则组件自管 | `boolean` | — |
 | defaultCollapsed | 非受控初始折叠态 | `boolean` | `false` |
 | collapsedWidth | 折叠宽度 | `number \| string` | `64` |
+
+折叠动画对齐 naive-ui：Sider 宽度 0.3s `cubic-bezier(.4,0,.2,1)` 过渡，内部菜单文字/箭头淡出、图标 16→20px 同步过渡。
 | trigger | 是否显示触发器（`collapsible` 时生效） | `boolean` | `true` |
 
 <CommonProps />

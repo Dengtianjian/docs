@@ -1,5 +1,5 @@
 <template>
-  <KFlex vertical gap="md" style="max-width: 280px">
+  <KFlex vertical gap="md" style="width: 280px">
     <KMenu
       v-model:selected-keys="selected"
       v-model:open-keys="open"
@@ -89,7 +89,10 @@ const items: KMenuItem[] = [
   margin-top: 0;
 }
 .menu-tip {
+  overflow: hidden;
   color: var(--k-color-text-secondary);
   font-size: var(--k-font-size-sm);
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 </style>

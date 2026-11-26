@@ -72,7 +72,7 @@
 - 弹层内的更深层级以内嵌方式展开，避免多级 Teleport 的焦点与点外关闭互扰。
 - 折叠态下只显示顶层图标，文字通过原生 `title` 兜底；子菜单改为右侧弹层。图标默认 16px，折叠态放大到 20px。
 - 展开的父级不铺底色；子级选中时父级只保留主色文字，hover 时加浅底、文字仍保持主色。
-- inline 子菜单展开/收起为高度过渡（约 0.2s），动画期间不接收点击；减少动态偏好时直接切换。
+- inline 子菜单展开/收起是对齐 naive-ui 的折叠过渡：max-height + 透明度 + 间距 0.3s 同步动画，动画期间不接收点击；减少动态偏好时直接切换。
 - 菜单默认文字/图标使用 `text-secondary`，hover 提升到 `text`；弹层子菜单最小宽度 200px，条目与父级行高一致。
 - `to` 渲染 `RouterLink`，需要应用已安装 vue-router；文档环境请用 `href`。
 - Sider 折叠由 `KLayoutSider` 提供：`collapsible` + `v-model:collapsed`，内部 Menu 通过 context 自动同步。

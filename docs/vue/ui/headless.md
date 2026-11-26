@@ -158,7 +158,7 @@ h('button', { ...ctx.controlAttrs, ...onProps(ctx.controlOn) }, '…')
 | 逻辑/服务 | KApp、KConfigProvider | 逻辑提供者，无视觉整件替换需求 |
 | P2.5 | KImageCropper | 默认渲染 + 部件覆盖 |
 | P3 | KTable、KPagination、KVirtualList、KEmpty、KSkeleton、KCardAction | 表格族按部级契约 |
-| P4 导航族 | KBreadcrumb、KBreadcrumbItem、KSteps、KStep、KTabs、KTabPane、KDropdown、KAffix、KBackTop、KAnchor、KDrawer、KNavBar、KTabBar | 仅 KMenu 支持 |
+| P4 导航族 | KBreadcrumb、KBreadcrumbItem、KSteps、KStep、KTabs、KTabPane、KDropdown、KAffix、KAnchor、KDrawer、KNavBar、KTabBar | 仅 KMenu 支持 |
 | P6 | KAvatar、KAvatarGroup、KCollapse、KCollapseItem、KDescriptions、KDescriptionsItem、KSegmented、KFieldGroup、KList、KListItem、KCellGroup、KCell、KTree、KInputTags | 新增基础件 |
 | P7 | KCalendar、KTimeline、KTimelineItem、KStatistic、KImage、KCarousel、KPinInput、KChart、KCommandPalette、KNavigationMenu | 数据与导航 |
 | P8 | KContextMenu、KScrollArea、KKbd、KUser、KMarquee、KSplitter、KQRCode、KWatermark、KMasonry、KTour、KFloatButton、KBorderBeam、KListbox | 增强件 |

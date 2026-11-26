@@ -1,7 +1,7 @@
 # 组件规格 · 共同约定与交付顺序
 
 > 上游：[../design/theme-tokens.md](../design/theme-tokens.md)（部件变量机制 §1.1/§9）、[config-provider.md](./config-provider.md)（轴默认值合并链）、[../design/language.md](../design/language.md)（视觉规则）。
-> 本文件是 K UI 组件总览与共同约定。P1–P9 共 120 个组件已落地，各批次清单见文末；组件与参考库的权威对照表见 `kit/.ai/COMPONENTS.md`。
+> 本文件是 K UI 组件总览与共同约定。P1–P9 共 119 个组件已落地，各批次清单见文末；组件与参考库的权威对照表见 `kit/.ai/COMPONENTS.md`。
 
 ## 全组件共同约定（一次性写死，各组件不再重复）
 
@@ -115,11 +115,12 @@
 | [dropdown.md](./dropdown.md) | KDropdown | 已落地（P4b） |
 | [menu.md](./menu.md) | KMenu | 已落地（P4c，含 Sider 折叠联动） |
 | [anchor.md](./anchor.md) | KAnchor | 已落地（P4d） |
-| [back-top.md](./back-top.md) | KBackTop | 已落地（P4d） |
 | [affix.md](./affix.md) | KAffix | 已落地（P4d） |
 | [drawer.md](./drawer.md) | KDrawer + `useKApp().drawer` | 已落地（P4e） |
 | [navbar.md](./navbar.md) | KNavBar | 已落地（P4f） |
 | [tabbar.md](./tabbar.md) | KTabBar | 已落地（P4f） |
+
+> KBackTop 已合并为 [KFloatButton](./float-button.md) 的 `back-top` 模式。
 
 > 2026-11-19：**P4 导航批开工**（用户拍板：核心 + 锚点辅助 + Drawer + 移动导航；小件先行；Menu 完整首版）。
 > P4a 落地 Breadcrumb / Steps / Tabs；P4b 落地 Dropdown（单层菜单，多级子菜单随 Menu 批补齐）；P4c 落地 Menu（items 递归树、三种模式、Sider 折叠联动、路由）；P4d 落地 Anchor / BackTop / Affix；P4e 落地 Drawer（组件 + 实例 API）；P4f 落地 NavBar / TabBar，P4 导航批全部组件完成。

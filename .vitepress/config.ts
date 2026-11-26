@@ -301,7 +301,6 @@ export default defineConfig({
                     { text: "KDropdown 下拉菜单", link: "/vue/ui/components/dropdown" },
                     { text: "KMenu 导航菜单", link: "/vue/ui/components/menu" },
                     { text: "KAnchor 锚点", link: "/vue/ui/components/anchor" },
-                    { text: "KBackTop 回到顶部", link: "/vue/ui/components/back-top" },
                     { text: "KAffix 吸顶", link: "/vue/ui/components/affix" },
                     { text: "KDrawer 抽屉", link: "/vue/ui/components/drawer" },
                     { text: `${mobileOnlyIcon}KNavBar 顶部导航`, docFooterText: "KNavBar 顶部导航", link: "/vue/ui/components/navbar" },

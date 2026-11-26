@@ -11,8 +11,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KIndexBar from 'kit/vue/ui/components/IndexBar/IndexBar.vue'
-import KIndexAnchor from 'kit/vue/ui/components/IndexBar/IndexAnchor.vue'
+import KIndexBar from 'kit/vue/ui/components/navigation/IndexBar/IndexBar.vue'
+import KIndexAnchor from 'kit/vue/ui/components/navigation/IndexBar/IndexAnchor.vue'
 
 const active = ref('A')
 const groups = [

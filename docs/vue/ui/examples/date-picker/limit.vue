@@ -13,8 +13,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { Dayjs } from 'dayjs'
-import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KDatePicker from 'kit/vue/ui/components/data-entry/DatePicker/DatePicker.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const a = ref<number | null>(null)
 const b = ref<number | null>(null)

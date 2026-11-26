@@ -18,8 +18,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KMentions from 'kit/vue/ui/components/Mentions/Mentions.vue'
-import type { KMentionsOption } from 'kit/vue/ui/components/Mentions/Mentions.vue'
+import KMentions from 'kit/vue/ui/components/data-entry/Mentions/Mentions.vue'
+import type { KMentionsOption } from 'kit/vue/ui/components/data-entry/Mentions/Mentions.vue'
 
 const text = ref('请 @')
 const lastSelected = ref('')

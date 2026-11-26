@@ -12,9 +12,9 @@
 
 <script setup lang="ts">
 import { useBreakpoint } from 'kit/vue/ui'
-import KLayout from 'kit/vue/ui/components/Layout/Layout.vue'
-import KLayoutSider from 'kit/vue/ui/components/Layout/Sider.vue'
-import KLayoutContent from 'kit/vue/ui/components/Layout/Content.vue'
+import KLayout from 'kit/vue/ui/components/layouts/Layout/Layout.vue'
+import KLayoutSider from 'kit/vue/ui/components/layouts/Layout/Sider.vue'
+import KLayoutContent from 'kit/vue/ui/components/layouts/Layout/Content.vue'
 
 const { current } = useBreakpoint()
 </script>

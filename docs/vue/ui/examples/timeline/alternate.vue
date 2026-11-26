@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import KTimeline from 'kit/vue/ui/components/Timeline/Timeline.vue'
+import KTimeline from 'kit/vue/ui/components/data-display/Timeline/Timeline.vue'
 
 const items = [
   { label: '立项', content: '确定本周目标与验收口径', color: 'primary' as const },

@@ -42,7 +42,7 @@
 | Vue 基线 | Vue 3.5+：defineModel / defineOptions / props 解构响应式 / useId / useTemplateRef / defineSlots / 泛型组件优先 | — |
 | 主题设计器 | 一个主色 hex → oklab 表达式图自动铺全库；JS antd 色板算法降级为导出辅助/`--static` 兜底/图表 API | theme-tokens §4.6 |
 | 组件范围 | antd/naive-ui/vant/antd-mobile 除复杂件外全收录，分 P1（基础 10 组）→ P2（表单/反馈）→ P3（数据展示）→ P4（导航/复杂） | components/共同约定 |
-| 模板（Templates） | `templates/` 放页面与区块级组合，单文件 SFC 可直接复制；不新增包导出或抽象层 | [模板总览](./templates/index.md) |
+| 模板（Templates） | `templates/` 放页面、区块与二次封装组件；页面/区块为可复制 SFC，二次封装组件随 kit 导出（`KRouterTabs` / `KRouterMenu`） | [模板总览](./templates/index.md) |
 
 ## 代码目录对应关系
 
@@ -52,7 +52,7 @@ packages/vue/ui/
 ├── themes/           # token 的 JS 侧：seed 默认值、oklab 色阶、createTheme（差量注入）
 ├── css/              # theme.css（表达式图主载体）、reset.css、atoms.css、index.css 入口
 └── components/
-    └── <Name>/<Name>.vue [+ <name>.css 说明]  # SFC 样式（未分层）
+    └── <category>/<Name>/<Name>.vue [+ <name>.css 说明]  # SFC 样式（未分层）
 ```
 
 ## 文档准入

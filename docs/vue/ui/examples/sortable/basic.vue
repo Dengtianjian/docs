@@ -19,8 +19,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KSortable from 'kit/vue/ui/components/Sortable/Sortable.vue'
-import type { KSortableMoveInfo } from 'kit/vue/ui/components/Sortable/types'
+import KSortable from 'kit/vue/ui/components/data-entry/Sortable/Sortable.vue'
+import type { KSortableMoveInfo } from 'kit/vue/ui/components/data-entry/Sortable/types'
 
 interface Task {
   id: number

@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KInfiniteScroll from 'kit/vue/ui/components/InfiniteScroll/InfiniteScroll.vue'
+import KInfiniteScroll from 'kit/vue/ui/components/overlay/InfiniteScroll/InfiniteScroll.vue'
 
 const loading = ref(false)
 const finished = ref(false)

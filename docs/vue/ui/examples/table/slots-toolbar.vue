@@ -27,9 +27,9 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import KTable from 'kit/vue/ui/components/Table/Table.vue'
-import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KTable from 'kit/vue/ui/components/data-display/Table/Table.vue'
+import KRadioGroup from 'kit/vue/ui/components/data-entry/Radio/RadioGroup.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 import type { KTableColumn } from 'kit/vue/ui'
 
 interface Row {

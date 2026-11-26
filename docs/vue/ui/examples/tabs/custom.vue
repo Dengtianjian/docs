@@ -25,10 +25,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KTabs from 'kit/vue/ui/components/Tabs/Tabs.vue'
-import KTabPane from 'kit/vue/ui/components/Tabs/TabPane.vue'
-import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KTabs from 'kit/vue/ui/components/navigation/Tabs/Tabs.vue'
+import KTabPane from 'kit/vue/ui/components/navigation/Tabs/TabPane.vue'
+import KTag from 'kit/vue/ui/components/data-display/Tag/Tag.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 
 const active = ref<string | number>('overview')
 const tabs = ref([

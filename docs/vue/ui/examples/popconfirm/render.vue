@@ -37,9 +37,9 @@
 
 <script setup lang="ts">
 import { h, Teleport, ref } from 'vue'
-import KPopconfirm from 'kit/vue/ui/components/Popconfirm/Popconfirm.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import type { KPopconfirmRenderScope } from 'kit/vue/ui/components/Popconfirm/Popconfirm.vue'
+import KPopconfirm from 'kit/vue/ui/components/feedback/Popconfirm/Popconfirm.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import type { KPopconfirmRenderScope } from 'kit/vue/ui/components/feedback/Popconfirm/Popconfirm.vue'
 import { onProps } from 'kit/vue/ui/composables/useCustomRender'
 
 const removing = ref(false)

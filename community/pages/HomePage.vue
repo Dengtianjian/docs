@@ -241,18 +241,18 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
-import KButton from "kit/vue/ui/components/Button/Button.vue";
-import KControlGroup from "kit/vue/ui/components/ControlGroup/ControlGroup.vue";
-import KSelect from "kit/vue/ui/components/Select/Select.vue";
-import KCard from "kit/vue/ui/components/Card/Card.vue";
-import KGrid from "kit/vue/ui/components/Grid/Grid.vue";
-import KGridItem from "kit/vue/ui/components/Grid/GridItem.vue";
-import KFlex from "kit/vue/ui/components/Flex/Flex.vue";
-import KTag from "kit/vue/ui/components/Tag/Tag.vue";
-import KDivider from "kit/vue/ui/components/Divider/Divider.vue";
-import KEmpty from "kit/vue/ui/components/Empty/Empty.vue";
-import KAlert from "kit/vue/ui/components/Alert/Alert.vue";
-import KPagination from "kit/vue/ui/components/Pagination/Pagination.vue";
+import KButton from "kit/vue/ui/components/general/Button/Button.vue";
+import KControlGroup from "kit/vue/ui/components/data-entry/ControlGroup/ControlGroup.vue";
+import KSelect from "kit/vue/ui/components/data-entry/Select/Select.vue";
+import KCard from "kit/vue/ui/components/layouts/Card/Card.vue";
+import KGrid from "kit/vue/ui/components/layouts/Grid/Grid.vue";
+import KGridItem from "kit/vue/ui/components/layouts/Grid/GridItem.vue";
+import KFlex from "kit/vue/ui/components/layouts/Flex/Flex.vue";
+import KTag from "kit/vue/ui/components/data-display/Tag/Tag.vue";
+import KDivider from "kit/vue/ui/components/general/Divider/Divider.vue";
+import KEmpty from "kit/vue/ui/components/data-display/Empty/Empty.vue";
+import KAlert from "kit/vue/ui/components/feedback/Alert/Alert.vue";
+import KPagination from "kit/vue/ui/components/navigation/Pagination/Pagination.vue";
 import { getSharedBreakpoint, useResponsiveValue } from "kit/vue/ui";
 import {
   formatNum,

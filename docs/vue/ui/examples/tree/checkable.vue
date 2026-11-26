@@ -17,9 +17,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
-import KTree from 'kit/vue/ui/components/Tree/Tree.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+import KSwitch from 'kit/vue/ui/components/data-entry/Switch/Switch.vue'
+import KTree from 'kit/vue/ui/components/data-display/Tree/Tree.vue'
 
 const strict = ref(false)
 const checked = ref<(string | number)[]>(['avatar'])

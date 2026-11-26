@@ -12,9 +12,9 @@
 </template>
 
 <script setup lang="ts">
-import KAlert from 'kit/vue/ui/components/Alert/Alert.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-import type { KAlertVariant } from 'kit/vue/ui/components/Alert/Alert.vue'
+import KAlert from 'kit/vue/ui/components/feedback/Alert/Alert.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+import type { KAlertVariant } from 'kit/vue/ui/components/feedback/Alert/Alert.vue'
 
 const rows: { variant: KAlertVariant; type: 'info' | 'success' | 'warning' | 'error'; message: string; description: string }[] = [
   { variant: 'outlined', type: 'info', message: 'outlined（缺省）', description: '浅底 + 描边，图标用语义色。' },

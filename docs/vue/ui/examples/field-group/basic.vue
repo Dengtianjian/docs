@@ -8,8 +8,8 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import KFieldGroup from 'kit/vue/ui/components/FieldGroup/FieldGroup.vue'
-import KInput from 'kit/vue/ui/components/Input/Input.vue'
+import KFieldGroup from 'kit/vue/ui/components/data-entry/FieldGroup/FieldGroup.vue'
+import KInput from 'kit/vue/ui/components/data-entry/Input/Input.vue'
 
 const form = reactive({
   name: '',

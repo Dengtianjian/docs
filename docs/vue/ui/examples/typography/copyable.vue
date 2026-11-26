@@ -18,8 +18,8 @@
 </template>
 
 <script setup lang="ts">
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-import KText from 'kit/vue/ui/components/Typography/Text.vue'
-import KParagraph from 'kit/vue/ui/components/Typography/Paragraph.vue'
-import KTitle from 'kit/vue/ui/components/Typography/Title.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+import KText from 'kit/vue/ui/components/general/Typography/Text.vue'
+import KParagraph from 'kit/vue/ui/components/general/Typography/Paragraph.vue'
+import KTitle from 'kit/vue/ui/components/general/Typography/Title.vue'
 </script>

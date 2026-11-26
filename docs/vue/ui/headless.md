@@ -180,7 +180,7 @@ headless 的两种典型用法：消费者把绑定包封装成**自有设计系
 
 ```vue
 <script setup lang="ts">
-import KSelect from 'kit/vue/ui/components/Select/Select.vue'
+import KSelect from 'kit/vue/ui/components/data-entry/Select/Select.vue'
 
 const props = withDefaults(defineProps<{
   modelValue?: string | number | null

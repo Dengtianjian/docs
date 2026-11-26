@@ -26,9 +26,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KTour from 'kit/vue/ui/components/Tour/Tour.vue'
-import type { KTourStep } from 'kit/vue/ui/components/Tour/Tour.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KTour from 'kit/vue/ui/components/feedback/Tour/Tour.vue'
+import type { KTourStep } from 'kit/vue/ui/components/feedback/Tour/Tour.vue'
 
 const open = ref(false)
 const steps: KTourStep[] = [

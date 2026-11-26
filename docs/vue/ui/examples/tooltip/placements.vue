@@ -8,8 +8,8 @@
 </template>
 
 <script setup lang="ts">
-import KTooltip from 'kit/vue/ui/components/Tooltip/Tooltip.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KTooltip from 'kit/vue/ui/components/overlay/Tooltip/Tooltip.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 
 const placements = [
   'topLeft', 'top', 'topRight',

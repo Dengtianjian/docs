@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import KBorderBeam from 'kit/vue/ui/components/BorderBeam/BorderBeam.vue'
+import KBorderBeam from 'kit/vue/ui/components/other/BorderBeam/BorderBeam.vue'
 </script>
 
 <style scoped>

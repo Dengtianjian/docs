@@ -22,8 +22,8 @@
 </template>
 
 <script setup lang="ts">
-import KBadge from 'kit/vue/ui/components/Badge/Badge.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KBadge from 'kit/vue/ui/components/data-display/Badge/Badge.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 import type { KBadgePlacement } from 'kit/vue/ui'
 
 const placements: { placement: KBadgePlacement; label: string }[] = [

@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KSortable from 'kit/vue/ui/components/Sortable/Sortable.vue'
+import KSortable from 'kit/vue/ui/components/data-entry/Sortable/Sortable.vue'
 
 interface Card {
   id: string

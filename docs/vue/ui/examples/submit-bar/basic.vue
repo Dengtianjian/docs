@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KSubmitBar from 'kit/vue/ui/components/SubmitBar/SubmitBar.vue'
+import KSubmitBar from 'kit/vue/ui/components/other/SubmitBar/SubmitBar.vue'
 
 const last = ref('')
 </script>

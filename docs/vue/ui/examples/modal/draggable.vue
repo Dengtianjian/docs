@@ -24,10 +24,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KModal from 'kit/vue/ui/components/Modal/Modal.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KModal from 'kit/vue/ui/components/feedback/Modal/Modal.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KSwitch from 'kit/vue/ui/components/data-entry/Switch/Switch.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const draggable = ref(true)
 const mask = ref(true)

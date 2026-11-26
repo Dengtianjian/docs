@@ -19,8 +19,8 @@
 
 <script setup lang="ts">
 import { h } from 'vue'
-import KDivider from 'kit/vue/ui/components/Divider/Divider.vue'
-import type { KDividerRenderScope } from 'kit/vue/ui/components/Divider/Divider.vue'
+import KDivider from 'kit/vue/ui/components/general/Divider/Divider.vue'
+import type { KDividerRenderScope } from 'kit/vue/ui/components/general/Divider/Divider.vue'
 
 // render prop 通道：闭包收 scope，返回 h() 产物；rootAttrs 散播继承 separator 语义
 const renderDots = ({ dashed, rootAttrs }: KDividerRenderScope) =>

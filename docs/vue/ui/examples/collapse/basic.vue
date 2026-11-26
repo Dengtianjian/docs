@@ -14,8 +14,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KCollapse from 'kit/vue/ui/components/Collapse/Collapse.vue'
-import KCollapseItem from 'kit/vue/ui/components/Collapse/CollapseItem.vue'
+import KCollapse from 'kit/vue/ui/components/other/Collapse/Collapse.vue'
+import KCollapseItem from 'kit/vue/ui/components/other/Collapse/CollapseItem.vue'
 
 const active = ref<(string | number)[]>(['account'])
 </script>

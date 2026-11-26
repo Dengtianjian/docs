@@ -29,10 +29,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KTooltip from 'kit/vue/ui/components/Tooltip/Tooltip.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KTooltip from 'kit/vue/ui/components/overlay/Tooltip/Tooltip.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KSwitch from 'kit/vue/ui/components/data-entry/Switch/Switch.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const enabled = ref(true)
 </script>

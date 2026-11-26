@@ -23,8 +23,8 @@
 </template>
 
 <script setup lang="ts">
-import KCard from 'kit/vue/ui/components/Card/Card.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KCard from 'kit/vue/ui/components/layouts/Card/Card.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 import type { KCardVariant } from 'kit/vue/ui'
 
 const variants: { value: KCardVariant; label: string; desc: string }[] = [

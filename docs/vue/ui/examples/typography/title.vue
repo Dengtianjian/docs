@@ -13,6 +13,6 @@
 </template>
 
 <script setup lang="ts">
-import KTitle from 'kit/vue/ui/components/Typography/Title.vue'
-import KParagraph from 'kit/vue/ui/components/Typography/Paragraph.vue'
+import KTitle from 'kit/vue/ui/components/general/Typography/Title.vue'
+import KParagraph from 'kit/vue/ui/components/general/Typography/Paragraph.vue'
 </script>

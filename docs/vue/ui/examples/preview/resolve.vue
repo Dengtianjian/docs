@@ -10,9 +10,9 @@
 
 <script setup lang="ts">
 import { h, ref } from 'vue'
-import KPreview from 'kit/vue/ui/components/Preview/Preview.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import type { KPreviewItem, KPreviewRenderer } from 'kit/vue/ui/components/Preview/Preview.vue'
+import KPreview from 'kit/vue/ui/components/data-display/Preview/Preview.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import type { KPreviewItem, KPreviewRenderer } from 'kit/vue/ui/components/data-display/Preview/Preview.vue'
 
 const svg = (label: string, color: string) =>
   'data:image/svg+xml;utf8,' +

@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import KCard from 'kit/vue/ui/components/Card/Card.vue'
+import KCard from 'kit/vue/ui/components/layouts/Card/Card.vue'
 </script>
 
 <style scoped>

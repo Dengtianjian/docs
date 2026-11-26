@@ -8,10 +8,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KControlGroup from 'kit/vue/ui/components/ControlGroup/ControlGroup.vue'
-import KInput from 'kit/vue/ui/components/Input/Input.vue'
-import KSelect from 'kit/vue/ui/components/Select/Select.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KControlGroup from 'kit/vue/ui/components/data-entry/ControlGroup/ControlGroup.vue'
+import KInput from 'kit/vue/ui/components/data-entry/Input/Input.vue'
+import KSelect from 'kit/vue/ui/components/data-entry/Select/Select.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 
 const name = ref('')
 const role = ref('dev')

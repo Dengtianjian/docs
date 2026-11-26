@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KMasonry from 'kit/vue/ui/components/Masonry/Masonry.vue'
+import KMasonry from 'kit/vue/ui/components/data-display/Masonry/Masonry.vue'
 
 const active = ref('')
 const cards = [

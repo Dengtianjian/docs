@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { defineComponent, h } from 'vue'
-import KMenu from 'kit/vue/ui/components/Menu/Menu.vue'
+import KMenu from 'kit/vue/ui/components/navigation/Menu/Menu.vue'
 import type { KMenuItem } from 'kit/vue/ui'
 
 function svg(children: ReturnType<typeof h>[]) {

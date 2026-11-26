@@ -27,10 +27,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFloatButton from 'kit/vue/ui/components/FloatButton/FloatButton.vue'
-import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
-import type { KFloatButtonCoordinate } from 'kit/vue/ui/components/FloatButton/FloatButton.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFloatButton from 'kit/vue/ui/components/other/FloatButton/FloatButton.vue'
+import KSwitch from 'kit/vue/ui/components/data-entry/Switch/Switch.vue'
+import type { KFloatButtonCoordinate } from 'kit/vue/ui/components/other/FloatButton/FloatButton.vue'
 
 const coordinate = ref<KFloatButtonCoordinate | null>(null)
 const magnetic = ref(true)

@@ -24,9 +24,9 @@
 
 <script setup lang="ts">
 import { h } from 'vue'
-import KSpin from 'kit/vue/ui/components/Spin/Spin.vue'
-import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KSpin from 'kit/vue/ui/components/feedback/Spin/Spin.vue'
+import KTag from 'kit/vue/ui/components/data-display/Tag/Tag.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const richTip = h('span', { style: 'display: inline-flex; align-items: center; gap: 6px' }, [
     h(KTag, { size: 'sm', color: 'primary', variant: 'filled' }, () => '同步中'),

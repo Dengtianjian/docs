@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import KCarousel from 'kit/vue/ui/components/Carousel/Carousel.vue'
+import KCarousel from 'kit/vue/ui/components/data-display/Carousel/Carousel.vue'
 
 const items = [
   { content: '文档与组件', description: '一套 token 驱动 85+ 组件', background: 'linear-gradient(135deg,#4f8cff,#22d3ee)' },

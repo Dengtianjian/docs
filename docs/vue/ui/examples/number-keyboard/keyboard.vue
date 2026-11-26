@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KNumberKeyboard from 'kit/vue/ui/components/NumberKeyboard/NumberKeyboard.vue'
+import KNumberKeyboard from 'kit/vue/ui/components/data-entry/NumberKeyboard/NumberKeyboard.vue'
 
 const value = ref('')
 </script>

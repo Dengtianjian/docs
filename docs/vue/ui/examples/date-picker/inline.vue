@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
+import KDatePicker from 'kit/vue/ui/components/data-entry/DatePicker/DatePicker.vue'
 
 const date = ref<number | null>(Date.now())
 const month = ref<number | null>(null)

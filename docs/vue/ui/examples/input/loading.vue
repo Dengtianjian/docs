@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KInput from 'kit/vue/ui/components/Input/Input.vue'
+import KInput from 'kit/vue/ui/components/data-entry/Input/Input.vue'
 
 const value = ref('正在同步…')
 </script>

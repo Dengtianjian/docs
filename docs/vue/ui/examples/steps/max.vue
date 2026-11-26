@@ -13,9 +13,9 @@
 </template>
 
 <script setup lang="ts">
-import KSteps from 'kit/vue/ui/components/Steps/Steps.vue'
-import KStep from 'kit/vue/ui/components/Steps/Step.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KSteps from 'kit/vue/ui/components/navigation/Steps/Steps.vue'
+import KStep from 'kit/vue/ui/components/navigation/Steps/Step.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const steps = ['提交申请', '资料审核', '资质核验', '签署合同', '开通账号', '配置权限', '部署实例', '完成']
 </script>

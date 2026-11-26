@@ -12,6 +12,6 @@
 <script setup lang="ts">
 // 图标集 = @vicons/tabler（推荐方案，见 icon.md）
 import { Plus } from '@vicons/tabler'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 </script>

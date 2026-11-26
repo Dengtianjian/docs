@@ -16,10 +16,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KAvatar from 'kit/vue/ui/components/Avatar/Avatar.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KList from 'kit/vue/ui/components/List/List.vue'
-import KListItem from 'kit/vue/ui/components/List/ListItem.vue'
+import KAvatar from 'kit/vue/ui/components/data-display/Avatar/Avatar.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KList from 'kit/vue/ui/components/data-display/List/List.vue'
+import KListItem from 'kit/vue/ui/components/data-display/List/ListItem.vue'
 
 const items = [
   { id: 1, name: '如意', role: '前端工程师' },

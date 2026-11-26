@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
+import KConfigProvider from 'kit/vue/ui/components/general/ConfigProvider/ConfigProvider.vue'
 import BpProbe from './breakpoints-probe.vue'
 
 const custom = {

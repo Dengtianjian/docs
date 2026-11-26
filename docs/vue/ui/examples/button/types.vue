@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const types = ['default', 'primary', 'info', 'success', 'warning', 'danger', 'link'] as const
 </script>

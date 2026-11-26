@@ -17,9 +17,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KAutoComplete from 'kit/vue/ui/components/AutoComplete/AutoComplete.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-import type { KAutoCompleteOption } from 'kit/vue/ui/components/AutoComplete/AutoComplete.vue'
+import KAutoComplete from 'kit/vue/ui/components/data-entry/AutoComplete/AutoComplete.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+import type { KAutoCompleteOption } from 'kit/vue/ui/components/data-entry/AutoComplete/AutoComplete.vue'
 
 const value = ref('')
 const lastQuery = ref('')

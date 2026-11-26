@@ -9,8 +9,8 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import KTimePicker from 'kit/vue/ui/components/TimePicker/TimePicker.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KTimePicker from 'kit/vue/ui/components/data-entry/TimePicker/TimePicker.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const variants = ['outlined', 'filled', 'borderless', 'underlined'] as const
 const picked = reactive<Record<(typeof variants)[number], string | null>>({

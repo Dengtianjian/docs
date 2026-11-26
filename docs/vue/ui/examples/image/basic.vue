@@ -16,8 +16,8 @@
 </template>
 
 <script setup lang="ts">
-import KImage from 'kit/vue/ui/components/Image/Image.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KImage from 'kit/vue/ui/components/data-display/Image/Image.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const cover = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`
 <svg xmlns="http://www.w3.org/2000/svg" width="560" height="336">

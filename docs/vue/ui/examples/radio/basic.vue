@@ -18,9 +18,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
-import KRadio from 'kit/vue/ui/components/Radio/Radio.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KRadioGroup from 'kit/vue/ui/components/data-entry/Radio/RadioGroup.vue'
+import KRadio from 'kit/vue/ui/components/data-entry/Radio/Radio.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const plan = ref<string | number>('a')
 const bySlot = ref<string | number>('1')

@@ -45,9 +45,9 @@
 
 <script setup lang="ts">
 import { h, Teleport, Transition, ref } from 'vue'
-import KModal from 'kit/vue/ui/components/Modal/Modal.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import type { KModalRenderScope } from 'kit/vue/ui/components/Modal/Modal.vue'
+import KModal from 'kit/vue/ui/components/feedback/Modal/Modal.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import type { KModalRenderScope } from 'kit/vue/ui/components/feedback/Modal/Modal.vue'
 import { onProps } from 'kit/vue/ui/composables/useCustomRender'
 
 const log = ref('')

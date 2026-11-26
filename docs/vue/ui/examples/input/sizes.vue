@@ -11,6 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import KInput from 'kit/vue/ui/components/Input/Input.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KInput from 'kit/vue/ui/components/data-entry/Input/Input.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 </script>

@@ -15,8 +15,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSignature from 'kit/vue/ui/components/Signature/Signature.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KSignature from 'kit/vue/ui/components/data-entry/Signature/Signature.vue'
 
 const signature = ref<{ clear: () => void; save: () => string } | null>(null)
 const latest = ref('')

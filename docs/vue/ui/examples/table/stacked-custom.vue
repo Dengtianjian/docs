@@ -31,8 +31,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import KTable from 'kit/vue/ui/components/Table/Table.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KTable from 'kit/vue/ui/components/data-display/Table/Table.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 import type { KTableColumn, KTableRowKey } from 'kit/vue/ui'
 
 interface Order extends Record<string, unknown> {

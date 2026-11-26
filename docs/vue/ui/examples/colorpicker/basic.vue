@@ -11,8 +11,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KColorPicker from 'kit/vue/ui/components/ColorPicker/ColorPicker.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KColorPicker from 'kit/vue/ui/components/data-entry/ColorPicker/ColorPicker.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const color = ref('#1677ff')
 const rgb = ref('rgba(82, 196, 26, 0.75)')

@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KDateRangePicker from 'kit/vue/ui/components/DateRangePicker/DateRangePicker.vue'
+import KDateRangePicker from 'kit/vue/ui/components/data-entry/DateRangePicker/DateRangePicker.vue'
 
 const range = ref<[number, number] | null>(null)
 const presets = [

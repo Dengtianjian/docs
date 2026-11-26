@@ -9,8 +9,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KImageCropper from 'kit/vue/ui/components/ImageCropper/ImageCropper.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KImageCropper from 'kit/vue/ui/components/data-display/ImageCropper/ImageCropper.vue'
 
 const input = ref<HTMLInputElement | null>(null)
 const file = ref<File | null>(null)

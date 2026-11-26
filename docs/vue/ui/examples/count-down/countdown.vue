@@ -12,9 +12,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KCountDown from 'kit/vue/ui/components/CountDown/CountDown.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KCountDown from 'kit/vue/ui/components/data-display/CountDown/CountDown.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const countdown = ref<{ start: () => void; pause: () => void; reset: () => void } | null>(null)
 const finished = ref(false)

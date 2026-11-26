@@ -15,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import KCarousel from 'kit/vue/ui/components/Carousel/Carousel.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KCarousel from 'kit/vue/ui/components/data-display/Carousel/Carousel.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const items = [
   { title: '淡入淡出', copy: '适合图文占比高的品牌位', background: 'linear-gradient(135deg,#0f172a,#334155)' },

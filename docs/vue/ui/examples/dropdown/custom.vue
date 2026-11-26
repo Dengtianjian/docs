@@ -21,9 +21,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KDropdown from 'kit/vue/ui/components/Dropdown/Dropdown.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KDropdown from 'kit/vue/ui/components/navigation/Dropdown/Dropdown.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 import type { KDropdownItem } from 'kit/vue/ui'
 
 const open = ref(false)

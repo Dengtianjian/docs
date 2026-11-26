@@ -30,10 +30,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFloatingPanel from 'kit/vue/ui/components/FloatingPanel/FloatingPanel.vue'
-import KList from 'kit/vue/ui/components/List/List.vue'
-import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFloatingPanel from 'kit/vue/ui/components/overlay/FloatingPanel/FloatingPanel.vue'
+import KList from 'kit/vue/ui/components/data-display/List/List.vue'
+import KSwitch from 'kit/vue/ui/components/data-entry/Switch/Switch.vue'
 
 const open = ref(false)
 const handleOnly = ref(false)

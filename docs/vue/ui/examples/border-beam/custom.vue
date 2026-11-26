@@ -22,8 +22,8 @@
 </template>
 
 <script setup lang="ts">
-import KBorderBeam from 'kit/vue/ui/components/BorderBeam/BorderBeam.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KBorderBeam from 'kit/vue/ui/components/other/BorderBeam/BorderBeam.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 </script>
 
 <style scoped>

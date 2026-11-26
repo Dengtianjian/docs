@@ -27,9 +27,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KTabs from 'kit/vue/ui/components/Tabs/Tabs.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
+import KTabs from 'kit/vue/ui/components/navigation/Tabs/Tabs.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KTag from 'kit/vue/ui/components/data-display/Tag/Tag.vue'
 
 const names = ['总览', '订单', '库存', '会员', '营销', '报表', '结算', '物流', '售后', '设置']
 const tabs = Array.from({ length: 10 }, (_, index) => ({

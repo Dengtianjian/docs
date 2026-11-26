@@ -18,8 +18,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KDatePicker from 'kit/vue/ui/components/data-entry/DatePicker/DatePicker.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const slash = ref<number | null>(null)
 const chinese = ref<number | null>(null)

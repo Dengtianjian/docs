@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
+import KRadioGroup from 'kit/vue/ui/components/data-entry/Radio/RadioGroup.vue'
 
 const size = ref<string | number>('middle')
 </script>

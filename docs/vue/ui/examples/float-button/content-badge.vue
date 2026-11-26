@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import KFloatButton from 'kit/vue/ui/components/FloatButton/FloatButton.vue'
+import KFloatButton from 'kit/vue/ui/components/other/FloatButton/FloatButton.vue'
 </script>
 
 <style scoped>

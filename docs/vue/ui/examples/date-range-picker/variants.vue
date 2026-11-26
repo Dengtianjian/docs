@@ -9,8 +9,8 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import KDateRangePicker from 'kit/vue/ui/components/DateRangePicker/DateRangePicker.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KDateRangePicker from 'kit/vue/ui/components/data-entry/DateRangePicker/DateRangePicker.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const variants = ['outlined', 'filled', 'borderless', 'underlined'] as const
 const picked = reactive<Record<(typeof variants)[number], [number, number] | null>>({

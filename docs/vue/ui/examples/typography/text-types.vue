@@ -8,6 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import KText from 'kit/vue/ui/components/Typography/Text.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KText from 'kit/vue/ui/components/general/Typography/Text.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 </script>

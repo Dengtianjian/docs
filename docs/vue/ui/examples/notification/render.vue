@@ -30,8 +30,8 @@
 
 <script setup lang="ts">
 import { h, ref } from 'vue'
-import KNotification from 'kit/vue/ui/components/Notification/Notification.vue'
-import type { KNotificationRenderScope } from 'kit/vue/ui/components/Notification/Notification.vue'
+import KNotification from 'kit/vue/ui/components/feedback/Notification/Notification.vue'
+import type { KNotificationRenderScope } from 'kit/vue/ui/components/feedback/Notification/Notification.vue'
 import { onProps } from 'kit/vue/ui/composables/useCustomRender'
 
 const clicked = ref('')

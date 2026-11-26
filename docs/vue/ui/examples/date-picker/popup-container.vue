@@ -15,8 +15,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
-import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
+import KDatePicker from 'kit/vue/ui/components/data-entry/DatePicker/DatePicker.vue'
+import KConfigProvider from 'kit/vue/ui/components/general/ConfigProvider/ConfigProvider.vue'
 
 const box = ref<HTMLElement | null>(null)
 const v = ref<number | null>(null)

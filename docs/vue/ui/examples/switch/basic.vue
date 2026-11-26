@@ -11,8 +11,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KSwitch from 'kit/vue/ui/components/data-entry/Switch/Switch.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const on = ref(true)
 const off = ref(false)

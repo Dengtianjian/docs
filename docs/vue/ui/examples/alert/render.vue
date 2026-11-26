@@ -21,9 +21,9 @@
 
 <script setup lang="ts">
 import { h, ref } from 'vue'
-import KAlert from 'kit/vue/ui/components/Alert/Alert.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import type { KAlertRenderScope } from 'kit/vue/ui/components/Alert/Alert.vue'
+import KAlert from 'kit/vue/ui/components/feedback/Alert/Alert.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import type { KAlertRenderScope } from 'kit/vue/ui/components/feedback/Alert/Alert.vue'
 
 const showBar = ref(true)
 

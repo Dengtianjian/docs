@@ -25,9 +25,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KVirtualList from 'kit/vue/ui/components/VirtualList/VirtualList.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KVirtualList from 'kit/vue/ui/components/data-display/VirtualList/VirtualList.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const list = ref<InstanceType<typeof KVirtualList> | null>(null)
 const items = Array.from({ length: 10000 }, (_, index) => ({

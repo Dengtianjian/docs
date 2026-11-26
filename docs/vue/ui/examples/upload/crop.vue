@@ -17,9 +17,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KUpload from 'kit/vue/ui/components/Upload/Upload.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import type { KUploadFile } from 'kit/vue/ui/components/Upload/Upload.vue'
+import KUpload from 'kit/vue/ui/components/data-entry/Upload/Upload.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import type { KUploadFile } from 'kit/vue/ui/components/data-entry/Upload/Upload.vue'
 import { createMockRequest } from './_mock'
 
 const uploader = ref<InstanceType<typeof KUpload> | null>(null)

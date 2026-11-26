@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { useBreakpoint } from 'kit/vue/ui'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 
 defineProps<{ label: string }>()
 

@@ -25,9 +25,9 @@
 
 <script setup lang="ts">
 import { h } from 'vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-import type { KFlexRenderScope } from 'kit/vue/ui/components/Flex/Flex.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+import type { KFlexRenderScope } from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 
 // render prop 通道：间距变量随 rootAttrs 带走，display/方向自绘；children 已拍平
 const renderRow = (ctx: KFlexRenderScope) =>

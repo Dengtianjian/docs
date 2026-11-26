@@ -9,10 +9,10 @@
 </template>
 
 <script setup lang="ts">
-import KLayout from 'kit/vue/ui/components/Layout/Layout.vue'
-import KLayoutSider from 'kit/vue/ui/components/Layout/Sider.vue'
-import KLayoutHeader from 'kit/vue/ui/components/Layout/Header.vue'
-import KLayoutContent from 'kit/vue/ui/components/Layout/Content.vue'
+import KLayout from 'kit/vue/ui/components/layouts/Layout/Layout.vue'
+import KLayoutSider from 'kit/vue/ui/components/layouts/Layout/Sider.vue'
+import KLayoutHeader from 'kit/vue/ui/components/layouts/Layout/Header.vue'
+import KLayoutContent from 'kit/vue/ui/components/layouts/Layout/Content.vue'
 </script>
 
 <style scoped>

@@ -15,9 +15,9 @@
 </template>
 
 <script setup lang="ts">
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KDropdown from 'kit/vue/ui/components/Dropdown/Dropdown.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KDropdown from 'kit/vue/ui/components/navigation/Dropdown/Dropdown.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 import type { KDropdownItem, KDropdownSize } from 'kit/vue/ui'
 
 const sizes: KDropdownSize[] = ['sm', 'md', 'lg']

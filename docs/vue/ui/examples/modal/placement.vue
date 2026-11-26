@@ -32,8 +32,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KModal from 'kit/vue/ui/components/Modal/Modal.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KModal from 'kit/vue/ui/components/feedback/Modal/Modal.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 import type { KModalPlacement } from 'kit/vue/ui'
 
 const ROWS: KModalPlacement[][] = [

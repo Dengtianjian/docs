@@ -2,7 +2,7 @@
 import { h } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
-import KApp from 'kit/vue/ui/components/App/App.vue'
+import KApp from 'kit/vue/ui/components/general/App/App.vue'
 import Demo from './Demo.vue'
 import CommonProps from './CommonProps.vue'
 import MatrixPlayground from './MatrixPlayground.vue'

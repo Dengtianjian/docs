@@ -14,9 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-import KUser from 'kit/vue/ui/components/User/User.vue'
-import type { KUserStatus } from 'kit/vue/ui/components/User/User.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+import KUser from 'kit/vue/ui/components/data-display/User/User.vue'
+import type { KUserStatus } from 'kit/vue/ui/components/data-display/User/User.vue'
 
 const members: Array<{ name: string; role: string; status: KUserStatus }> = [
   { name: '林小满', role: '产品设计', status: 'online' },

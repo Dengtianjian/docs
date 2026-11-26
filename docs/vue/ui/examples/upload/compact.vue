@@ -45,8 +45,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KUpload from 'kit/vue/ui/components/Upload/Upload.vue'
-import type { KUploadChangeReason, KUploadFile, KUploadFileItem } from 'kit/vue/ui/components/Upload/Upload.vue'
+import KUpload from 'kit/vue/ui/components/data-entry/Upload/Upload.vue'
+import type { KUploadChangeReason, KUploadFile, KUploadFileItem } from 'kit/vue/ui/components/data-entry/Upload/Upload.vue'
 import { createMockRequest, svgImage } from './_mock'
 
 const upload = createMockRequest()

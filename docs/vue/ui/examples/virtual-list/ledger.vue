@@ -24,8 +24,8 @@
 </template>
 
 <script setup lang="ts">
-import KVirtualList from 'kit/vue/ui/components/VirtualList/VirtualList.vue'
-import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
+import KVirtualList from 'kit/vue/ui/components/data-display/VirtualList/VirtualList.vue'
+import KTag from 'kit/vue/ui/components/data-display/Tag/Tag.vue'
 
 const titles = ['订单结算', '运费补贴', '广告投放', '会员续费', '退款', '平台佣金', '优惠券核销', '提现']
 const channels = [

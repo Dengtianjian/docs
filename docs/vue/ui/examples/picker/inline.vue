@@ -7,8 +7,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KPickerView from 'kit/vue/ui/components/Picker/PickerView.vue'
-import type { KPickerColumn, KPickerValue } from 'kit/vue/ui/components/Picker/PickerView.vue'
+import KPickerView from 'kit/vue/ui/components/data-entry/Picker/PickerView.vue'
+import type { KPickerColumn, KPickerValue } from 'kit/vue/ui/components/data-entry/Picker/PickerView.vue'
 
 const values = ref<KPickerValue[]>([2, '月'])
 const columns: KPickerColumn[] = [

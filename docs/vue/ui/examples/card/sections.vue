@@ -22,9 +22,9 @@
 </template>
 
 <script setup lang="ts">
-import KCard from 'kit/vue/ui/components/Card/Card.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
+import KCard from 'kit/vue/ui/components/layouts/Card/Card.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+import KTag from 'kit/vue/ui/components/data-display/Tag/Tag.vue'
 </script>
 
 <style scoped>

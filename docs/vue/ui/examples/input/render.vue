@@ -24,8 +24,8 @@
 
 <script setup lang="ts">
 import { h, ref } from 'vue'
-import KInput from 'kit/vue/ui/components/Input/Input.vue'
-import type { KInputRenderScope } from 'kit/vue/ui/components/Input/Input.vue'
+import KInput from 'kit/vue/ui/components/data-entry/Input/Input.vue'
+import type { KInputRenderScope } from 'kit/vue/ui/components/data-entry/Input/Input.vue'
 
 const name = ref('')
 const kw = ref('kit')

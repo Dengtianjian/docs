@@ -12,8 +12,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KSlider from 'kit/vue/ui/components/Slider/Slider.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KSlider from 'kit/vue/ui/components/data-entry/Slider/Slider.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const single = ref(40)
 const range = ref<[number, number]>([20, 70])

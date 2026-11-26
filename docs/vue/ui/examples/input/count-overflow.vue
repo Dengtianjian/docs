@@ -7,9 +7,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KInput from 'kit/vue/ui/components/Input/Input.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KInput from 'kit/vue/ui/components/data-entry/Input/Input.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const text = ref('ruyi-kit')
 

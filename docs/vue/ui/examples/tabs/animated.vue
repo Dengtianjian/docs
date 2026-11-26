@@ -17,8 +17,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KTabs from 'kit/vue/ui/components/Tabs/Tabs.vue'
-import KTabPane from 'kit/vue/ui/components/Tabs/TabPane.vue'
+import KTabs from 'kit/vue/ui/components/navigation/Tabs/Tabs.vue'
+import KTabPane from 'kit/vue/ui/components/navigation/Tabs/TabPane.vue'
 
 const active = ref<string | number>('one')
 </script>

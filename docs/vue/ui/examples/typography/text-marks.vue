@@ -7,5 +7,5 @@
 </template>
 
 <script setup lang="ts">
-import KText from 'kit/vue/ui/components/Typography/Text.vue'
+import KText from 'kit/vue/ui/components/general/Typography/Text.vue'
 </script>

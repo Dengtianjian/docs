@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KList from 'kit/vue/ui/components/List/List.vue'
+import KList from 'kit/vue/ui/components/data-display/List/List.vue'
 
 const items = [
   { key: 1, title: '完善 KAvatar', description: '补齐图片回退与分组', extra: '进行中' },

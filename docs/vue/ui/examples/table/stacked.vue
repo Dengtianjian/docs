@@ -31,8 +31,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import KTable from 'kit/vue/ui/components/Table/Table.vue'
-import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
+import KTable from 'kit/vue/ui/components/data-display/Table/Table.vue'
+import KSwitch from 'kit/vue/ui/components/data-entry/Switch/Switch.vue'
 import type { KTableCellEditEvent, KTableColumn, KTableRowKey } from 'kit/vue/ui'
 
 interface Order extends Record<string, unknown> {

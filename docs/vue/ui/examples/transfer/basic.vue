@@ -15,8 +15,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KTransfer from 'kit/vue/ui/components/Transfer/Transfer.vue'
-import type { KTransferItem } from 'kit/vue/ui/components/Transfer/Transfer.vue'
+import KTransfer from 'kit/vue/ui/components/data-entry/Transfer/Transfer.vue'
+import type { KTransferItem } from 'kit/vue/ui/components/data-entry/Transfer/Transfer.vue'
 
 const targetKeys = ref<(string | number)[]>(['u2'])
 const lastMove = ref('')

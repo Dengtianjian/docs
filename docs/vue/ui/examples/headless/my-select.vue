@@ -28,7 +28,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import MySelect from './_MySelect.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 
 const regions = [
   { label: '杭州 · 华东 1', value: 'hz' },

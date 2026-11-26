@@ -12,9 +12,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KActionSheet from 'kit/vue/ui/components/ActionSheet/ActionSheet.vue'
-import type { KActionSheetAction } from 'kit/vue/ui/components/ActionSheet/ActionSheet.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KActionSheet from 'kit/vue/ui/components/overlay/ActionSheet/ActionSheet.vue'
+import type { KActionSheetAction } from 'kit/vue/ui/components/overlay/ActionSheet/ActionSheet.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 
 const open = ref(false)
 const last = ref('')

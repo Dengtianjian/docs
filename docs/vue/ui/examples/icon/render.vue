@@ -13,8 +13,8 @@
 
 <script setup lang="ts">
 import { h } from 'vue'
-import KIcon from 'kit/vue/ui/components/Icon/Icon.vue'
-import type { KIconRenderScope } from 'kit/vue/ui/components/Icon/Icon.vue'
+import KIcon from 'kit/vue/ui/components/general/Icon/Icon.vue'
+import type { KIconRenderScope } from 'kit/vue/ui/components/general/Icon/Icon.vue'
 
 const Gear = () =>
   h('svg', { viewBox: '0 0 24 24', width: '1em', height: '1em', fill: 'currentColor' }, [

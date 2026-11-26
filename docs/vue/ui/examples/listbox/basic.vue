@@ -12,8 +12,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KListbox from 'kit/vue/ui/components/Listbox/Listbox.vue'
-import type { KListboxOption } from 'kit/vue/ui/components/Listbox/Listbox.vue'
+import KListbox from 'kit/vue/ui/components/data-display/Listbox/Listbox.vue'
+import type { KListboxOption } from 'kit/vue/ui/components/data-display/Listbox/Listbox.vue'
 
 const value = ref('staging')
 const last = ref('')

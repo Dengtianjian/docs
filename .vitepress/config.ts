@@ -425,6 +425,14 @@ export default defineConfig({
                     { text: "定价方案", link: "/vue/ui/templates/blocks/pricing" },
                     { text: "通知设置", link: "/vue/ui/templates/blocks/settings" }
                   ]
+                },
+                {
+                  text: "二次封装（Composed）",
+                  collapsed: false,
+                  items: [
+                    { text: "路由页签", link: "/vue/ui/templates/composed/router-tabs" },
+                    { text: "路由菜单", link: "/vue/ui/templates/composed/router-menu" }
+                  ]
                 }
               ]
             }

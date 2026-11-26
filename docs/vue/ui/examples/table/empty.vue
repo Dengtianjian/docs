@@ -17,11 +17,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KTable from 'kit/vue/ui/components/Table/Table.vue'
-import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-import KEmpty from 'kit/vue/ui/components/Empty/Empty.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KTable from 'kit/vue/ui/components/data-display/Table/Table.vue'
+import KSwitch from 'kit/vue/ui/components/data-entry/Switch/Switch.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+import KEmpty from 'kit/vue/ui/components/data-display/Empty/Empty.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 import type { KTableColumn } from 'kit/vue/ui'
 
 interface Row {

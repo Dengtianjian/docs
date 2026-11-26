@@ -64,9 +64,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KParagraph from 'kit/vue/ui/components/Typography/Paragraph.vue'
-import KText from 'kit/vue/ui/components/Typography/Text.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KParagraph from 'kit/vue/ui/components/general/Typography/Paragraph.vue'
+import KText from 'kit/vue/ui/components/general/Typography/Text.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 
 const expanded = ref(false)
 </script>

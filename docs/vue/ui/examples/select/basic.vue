@@ -11,8 +11,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KSelect from 'kit/vue/ui/components/Select/Select.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KSelect from 'kit/vue/ui/components/data-entry/Select/Select.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const fruit = ref<string | number | null>(null)
 const opts = [

@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import KProgress from 'kit/vue/ui/components/Progress/Progress.vue'
+import KProgress from 'kit/vue/ui/components/feedback/Progress/Progress.vue'
 </script>
 
 <style scoped>

@@ -27,8 +27,8 @@
 
 <script setup lang="ts">
 import { h } from 'vue'
-import KLink from 'kit/vue/ui/components/Link/Link.vue'
-import type { KLinkRenderScope } from 'kit/vue/ui/components/Link/Link.vue'
+import KLink from 'kit/vue/ui/components/general/Link/Link.vue'
+import type { KLinkRenderScope } from 'kit/vue/ui/components/general/Link/Link.vue'
 
 // render prop 通道：external 的 href/target/rel 语义随 rootAttrs；自定义色三态变量随 colorVars
 const renderPill = (ctx: KLinkRenderScope) =>

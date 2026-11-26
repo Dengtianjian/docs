@@ -12,9 +12,9 @@
 <script setup lang="ts">
 import { defineComponent, h, ref } from 'vue'
 import type { PropType } from 'vue'
-import KTable from 'kit/vue/ui/components/Table/Table.vue'
-import KInput from 'kit/vue/ui/components/Input/Input.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KTable from 'kit/vue/ui/components/data-display/Table/Table.vue'
+import KInput from 'kit/vue/ui/components/data-entry/Input/Input.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 import type { KTableCellEditEvent, KTableColumn } from 'kit/vue/ui'
 
 interface Row {

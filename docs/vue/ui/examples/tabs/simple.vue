@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KTabs from 'kit/vue/ui/components/Tabs/Tabs.vue'
+import KTabs from 'kit/vue/ui/components/navigation/Tabs/Tabs.vue'
 
 const active = ref<string | number>('inbox')
 const tabs = ref([

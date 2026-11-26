@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KSelect from 'kit/vue/ui/components/Select/Select.vue'
+import KSelect from 'kit/vue/ui/components/data-entry/Select/Select.vue'
 
 const opts = [
   { label: 'Vue', value: 'vue' },

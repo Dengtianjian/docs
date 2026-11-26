@@ -14,9 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KConfigProvider from 'kit/vue/ui/components/general/ConfigProvider/ConfigProvider.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 // components 层 = 组件级部件变量差量（键 = 变量去掉 `--k-button-` 前缀，数字自动加 px）
 const pill = {

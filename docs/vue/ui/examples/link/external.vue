@@ -6,6 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import KLink from 'kit/vue/ui/components/Link/Link.vue'
-import KText from 'kit/vue/ui/components/Typography/Text.vue'
+import KLink from 'kit/vue/ui/components/general/Link/Link.vue'
+import KText from 'kit/vue/ui/components/general/Typography/Text.vue'
 </script>

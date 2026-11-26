@@ -17,8 +17,8 @@
 
 <script setup lang="ts">
 import { h, ref } from 'vue'
-import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
-import type { KSwitchRenderScope } from 'kit/vue/ui/components/Switch/Switch.vue'
+import KSwitch from 'kit/vue/ui/components/data-entry/Switch/Switch.vue'
+import type { KSwitchRenderScope } from 'kit/vue/ui/components/data-entry/Switch/Switch.vue'
 
 const a = ref(true)
 const b = ref(false)

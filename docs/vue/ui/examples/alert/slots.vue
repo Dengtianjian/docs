@@ -39,8 +39,8 @@
 </template>
 
 <script setup lang="ts">
-import KAlert from 'kit/vue/ui/components/Alert/Alert.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KAlert from 'kit/vue/ui/components/feedback/Alert/Alert.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KTag from 'kit/vue/ui/components/data-display/Tag/Tag.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 </script>

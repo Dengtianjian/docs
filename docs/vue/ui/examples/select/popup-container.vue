@@ -15,8 +15,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KSelect from 'kit/vue/ui/components/Select/Select.vue'
-import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
+import KSelect from 'kit/vue/ui/components/data-entry/Select/Select.vue'
+import KConfigProvider from 'kit/vue/ui/components/general/ConfigProvider/ConfigProvider.vue'
 
 const box = ref<HTMLElement | null>(null)
 const v = ref<string | number | null>(null)

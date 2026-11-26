@@ -24,8 +24,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KPreview from 'kit/vue/ui/components/Preview/Preview.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KPreview from 'kit/vue/ui/components/data-display/Preview/Preview.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 
 // 演示扩展点：#item 插槽接管当前内容渲染（后续 pdf/video 等类型走这里）
 const items = [

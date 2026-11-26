@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KAffix from 'kit/vue/ui/components/Affix/Affix.vue'
+import KAffix from 'kit/vue/ui/components/layouts/Affix/Affix.vue'
 
 const affixed = ref(false)
 </script>

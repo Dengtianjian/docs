@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
+import KDatePicker from 'kit/vue/ui/components/data-entry/DatePicker/DatePicker.vue'
 
 const value = ref<number | null>(null)
 </script>

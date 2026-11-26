@@ -7,9 +7,9 @@
 
 <script setup lang="ts">
 import { useKApp } from 'kit/vue/ui/composables/useKApp'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-import type { KNotificationType } from 'kit/vue/ui/components/Notification/service'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+import type { KNotificationType } from 'kit/vue/ui/components/feedback/Notification/service'
 
 const { notification } = useKApp()!
 

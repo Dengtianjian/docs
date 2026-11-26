@@ -11,9 +11,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KTimePicker from 'kit/vue/ui/components/TimePicker/TimePicker.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-import type { KTimePickerValue } from 'kit/vue/ui/components/TimePicker/TimePicker.vue'
+import KTimePicker from 'kit/vue/ui/components/data-entry/TimePicker/TimePicker.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+import type { KTimePickerValue } from 'kit/vue/ui/components/data-entry/TimePicker/TimePicker.vue'
 
 const time = ref<KTimePickerValue>('09:30:00')
 const range = ref<KTimePickerValue>(['09:00', '18:00'])

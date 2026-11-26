@@ -11,9 +11,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KCheckboxGroup from 'kit/vue/ui/components/Checkbox/CheckboxGroup.vue'
-import KCheckbox from 'kit/vue/ui/components/Checkbox/Checkbox.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KCheckboxGroup from 'kit/vue/ui/components/data-entry/Checkbox/CheckboxGroup.vue'
+import KCheckbox from 'kit/vue/ui/components/data-entry/Checkbox/Checkbox.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const byOptions = ref<(string | number)[]>(['a'])
 const bySlot = ref<(string | number)[]>(['x'])

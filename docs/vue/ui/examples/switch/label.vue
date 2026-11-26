@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
+import KSwitch from 'kit/vue/ui/components/data-entry/Switch/Switch.vue'
 
 const sort = ref(true)
 </script>

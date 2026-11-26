@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import KBreadcrumb from 'kit/vue/ui/components/Breadcrumb/Breadcrumb.vue'
+import KBreadcrumb from 'kit/vue/ui/components/navigation/Breadcrumb/Breadcrumb.vue'
 import type { KBreadcrumbItemOption } from 'kit/vue/ui'
 
 const items: KBreadcrumbItemOption[] = [

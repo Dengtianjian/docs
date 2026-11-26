@@ -24,9 +24,9 @@
 
 <script setup lang="ts">
 import { h, Teleport, ref } from 'vue'
-import KPopover from 'kit/vue/ui/components/Popover/Popover.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import type { KPopoverRenderScope } from 'kit/vue/ui/components/Popover/Popover.vue'
+import KPopover from 'kit/vue/ui/components/overlay/Popover/Popover.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import type { KPopoverRenderScope } from 'kit/vue/ui/components/overlay/Popover/Popover.vue'
 import { onProps } from 'kit/vue/ui/composables/useCustomRender'
 
 const picked = ref('')

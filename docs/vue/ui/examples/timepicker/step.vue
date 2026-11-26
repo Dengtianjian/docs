@@ -8,9 +8,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KTimePicker from 'kit/vue/ui/components/TimePicker/TimePicker.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-import type { KTimePickerValue } from 'kit/vue/ui/components/TimePicker/TimePicker.vue'
+import KTimePicker from 'kit/vue/ui/components/data-entry/TimePicker/TimePicker.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+import type { KTimePickerValue } from 'kit/vue/ui/components/data-entry/TimePicker/TimePicker.vue'
 
 const step = ref<KTimePickerValue>('12:15:30')
 const noSeconds = ref<KTimePickerValue>('08:00')

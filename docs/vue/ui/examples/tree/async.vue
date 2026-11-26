@@ -7,8 +7,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-import KTree from 'kit/vue/ui/components/Tree/Tree.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+import KTree from 'kit/vue/ui/components/data-display/Tree/Tree.vue'
 
 const data = [
   { label: '华东区', value: 'east', isLeaf: false },

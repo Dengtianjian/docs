@@ -11,8 +11,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KSegmented from 'kit/vue/ui/components/Segmented/Segmented.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KSegmented from 'kit/vue/ui/components/data-entry/Segmented/Segmented.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const options = [
   { label: '日', value: 'day' },

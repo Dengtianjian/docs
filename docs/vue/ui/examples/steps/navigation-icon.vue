@@ -14,9 +14,9 @@
 
 <script setup lang="ts">
 import { defineComponent, h, ref } from 'vue'
-import KSteps from 'kit/vue/ui/components/Steps/Steps.vue'
-import KStep from 'kit/vue/ui/components/Steps/Step.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KSteps from 'kit/vue/ui/components/navigation/Steps/Steps.vue'
+import KStep from 'kit/vue/ui/components/navigation/Steps/Step.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const current = ref(1)
 

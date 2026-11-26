@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import KAvatar from 'kit/vue/ui/components/Avatar/Avatar.vue'
-import KAvatarGroup from 'kit/vue/ui/components/Avatar/AvatarGroup.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KAvatar from 'kit/vue/ui/components/data-display/Avatar/Avatar.vue'
+import KAvatarGroup from 'kit/vue/ui/components/data-display/Avatar/AvatarGroup.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 </script>

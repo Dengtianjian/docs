@@ -23,11 +23,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
-import KSelect from 'kit/vue/ui/components/Select/Select.vue'
-import KTooltip from 'kit/vue/ui/components/Tooltip/Tooltip.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KConfigProvider from 'kit/vue/ui/components/general/ConfigProvider/ConfigProvider.vue'
+import KSelect from 'kit/vue/ui/components/data-entry/Select/Select.vue'
+import KTooltip from 'kit/vue/ui/components/overlay/Tooltip/Tooltip.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const hostEl = ref<HTMLElement>()
 const getHost = () => hostEl.value as HTMLElement

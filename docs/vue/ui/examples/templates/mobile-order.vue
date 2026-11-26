@@ -93,12 +93,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KActionSheet from 'kit/vue/ui/components/ActionSheet/ActionSheet.vue'
-import type { KActionSheetAction } from 'kit/vue/ui/components/ActionSheet/ActionSheet.vue'
-import KNavBar from 'kit/vue/ui/components/NavBar/NavBar.vue'
-import KNoticeBar from 'kit/vue/ui/components/NoticeBar/NoticeBar.vue'
-import KSubmitBar from 'kit/vue/ui/components/SubmitBar/SubmitBar.vue'
-import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
+import KActionSheet from 'kit/vue/ui/components/overlay/ActionSheet/ActionSheet.vue'
+import type { KActionSheetAction } from 'kit/vue/ui/components/overlay/ActionSheet/ActionSheet.vue'
+import KNavBar from 'kit/vue/ui/components/navigation/NavBar/NavBar.vue'
+import KNoticeBar from 'kit/vue/ui/components/feedback/NoticeBar/NoticeBar.vue'
+import KSubmitBar from 'kit/vue/ui/components/other/SubmitBar/SubmitBar.vue'
+import KTag from 'kit/vue/ui/components/data-display/Tag/Tag.vue'
 
 const sheetOpen = ref(false)
 const delivery = ref('顺丰包邮')

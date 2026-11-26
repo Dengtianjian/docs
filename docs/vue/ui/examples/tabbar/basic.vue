@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { defineComponent, h } from 'vue'
-import KTabBar from 'kit/vue/ui/components/TabBar/TabBar.vue'
+import KTabBar from 'kit/vue/ui/components/navigation/TabBar/TabBar.vue'
 import type { KTabBarItem } from 'kit/vue/ui'
 
 function svg(children: ReturnType<typeof h>[]) {

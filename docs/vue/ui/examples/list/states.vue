@@ -8,9 +8,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KList from 'kit/vue/ui/components/List/List.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KList from 'kit/vue/ui/components/data-display/List/List.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const loading = ref(false)
 const items = [

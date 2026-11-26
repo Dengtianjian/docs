@@ -12,8 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import KButtonGroup from 'kit/vue/ui/components/Button/ButtonGroup.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KButtonGroup from 'kit/vue/ui/components/general/Button/ButtonGroup.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 </script>
 
 <style scoped>

@@ -10,9 +10,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-import KStatistic from 'kit/vue/ui/components/Statistic/Statistic.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+import KStatistic from 'kit/vue/ui/components/other/Statistic/Statistic.vue'
 
 const value = ref(12800)
 </script>

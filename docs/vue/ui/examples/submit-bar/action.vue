@@ -12,8 +12,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KActionBar from 'kit/vue/ui/components/ActionBar/ActionBar.vue'
-import type { KActionBarItem } from 'kit/vue/ui/components/ActionBar/ActionBar.vue'
+import KActionBar from 'kit/vue/ui/components/navigation/ActionBar/ActionBar.vue'
+import type { KActionBarItem } from 'kit/vue/ui/components/navigation/ActionBar/ActionBar.vue'
 
 const last = ref('')
 const items: KActionBarItem[] = [

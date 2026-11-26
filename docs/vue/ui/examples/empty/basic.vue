@@ -20,9 +20,9 @@
 </template>
 
 <script setup lang="ts">
-import KEmpty from 'kit/vue/ui/components/Empty/Empty.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KEmpty from 'kit/vue/ui/components/data-display/Empty/Empty.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 import { Search } from '@vicons/tabler'
 
 function reset() {

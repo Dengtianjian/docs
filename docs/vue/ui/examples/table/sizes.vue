@@ -16,8 +16,8 @@
 </template>
 
 <script setup lang="ts">
-import KTable from 'kit/vue/ui/components/Table/Table.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KTable from 'kit/vue/ui/components/data-display/Table/Table.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 import type { KTableColumn } from 'kit/vue/ui'
 
 interface Row {

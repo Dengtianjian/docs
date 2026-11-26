@@ -19,10 +19,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KCommandPalette from 'kit/vue/ui/components/CommandPalette/CommandPalette.vue'
-import type { KCommandPaletteItem } from 'kit/vue/ui/components/CommandPalette/CommandPalette.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KCommandPalette from 'kit/vue/ui/components/overlay/CommandPalette/CommandPalette.vue'
+import type { KCommandPaletteItem } from 'kit/vue/ui/components/overlay/CommandPalette/CommandPalette.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const open = ref(false)
 const items: KCommandPaletteItem[] = [

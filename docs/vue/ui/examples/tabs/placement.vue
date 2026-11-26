@@ -31,10 +31,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KTabs from 'kit/vue/ui/components/Tabs/Tabs.vue'
-import KTabPane from 'kit/vue/ui/components/Tabs/TabPane.vue'
-import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KTabs from 'kit/vue/ui/components/navigation/Tabs/Tabs.vue'
+import KTabPane from 'kit/vue/ui/components/navigation/Tabs/TabPane.vue'
+import KRadioGroup from 'kit/vue/ui/components/data-entry/Radio/RadioGroup.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 import type { KTabsPlacement, KTabsType } from 'kit/vue/ui'
 
 const placement = ref<KTabsPlacement>('top')

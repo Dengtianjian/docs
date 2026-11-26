@@ -40,9 +40,9 @@
 
 <script setup lang="ts">
 import { h, ref } from 'vue'
-import KCheckbox from 'kit/vue/ui/components/Checkbox/Checkbox.vue'
-import KCheckboxGroup from 'kit/vue/ui/components/Checkbox/CheckboxGroup.vue'
-import type { KCheckboxRenderScope } from 'kit/vue/ui/components/Checkbox/Checkbox.vue'
+import KCheckbox from 'kit/vue/ui/components/data-entry/Checkbox/Checkbox.vue'
+import KCheckboxGroup from 'kit/vue/ui/components/data-entry/Checkbox/CheckboxGroup.vue'
+import type { KCheckboxRenderScope } from 'kit/vue/ui/components/data-entry/Checkbox/Checkbox.vue'
 
 const solo = ref(true)
 const picked = ref<(string | number)[]>(['vue'])

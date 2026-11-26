@@ -16,8 +16,8 @@
 
 <script setup lang="ts">
 import { defineComponent, h } from 'vue'
-import KSteps from 'kit/vue/ui/components/Steps/Steps.vue'
-import KStep from 'kit/vue/ui/components/Steps/Step.vue'
+import KSteps from 'kit/vue/ui/components/navigation/Steps/Steps.vue'
+import KStep from 'kit/vue/ui/components/navigation/Steps/Step.vue'
 
 function svg(children: ReturnType<typeof h>[]) {
   return defineComponent({

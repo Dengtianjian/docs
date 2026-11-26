@@ -12,8 +12,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KMenu from 'kit/vue/ui/components/Menu/Menu.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KMenu from 'kit/vue/ui/components/navigation/Menu/Menu.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 import type { KMenuItem } from 'kit/vue/ui'
 
 const selected = ref<string[]>(['overview'])

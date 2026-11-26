@@ -21,8 +21,8 @@
 </template>
 
 <script setup lang="ts">
-import KChart from 'kit/vue/ui/components/Chart/Chart.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KChart from 'kit/vue/ui/components/data-display/Chart/Chart.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const categories = ['文档', '组件', '表格', '其他']
 const data = [38, 32, 20, 10]

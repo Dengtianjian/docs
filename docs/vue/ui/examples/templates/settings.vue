@@ -53,12 +53,12 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KCard from 'kit/vue/ui/components/Card/Card.vue'
-import KDivider from 'kit/vue/ui/components/Divider/Divider.vue'
-import KSelect from 'kit/vue/ui/components/Select/Select.vue'
-import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
-import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KCard from 'kit/vue/ui/components/layouts/Card/Card.vue'
+import KDivider from 'kit/vue/ui/components/general/Divider/Divider.vue'
+import KSelect from 'kit/vue/ui/components/data-entry/Select/Select.vue'
+import KSwitch from 'kit/vue/ui/components/data-entry/Switch/Switch.vue'
+import KTag from 'kit/vue/ui/components/data-display/Tag/Tag.vue'
 
 const preferences = ref([
   { key: 'mention', title: '@ 提及', description: '有人 @ 你或回复你的评论时通知', enabled: true },

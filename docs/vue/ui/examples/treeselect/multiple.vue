@@ -20,9 +20,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KTreeSelect from 'kit/vue/ui/components/TreeSelect/TreeSelect.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-import type { KTreeSelectValue } from 'kit/vue/ui/components/TreeSelect/TreeSelect.vue'
+import KTreeSelect from 'kit/vue/ui/components/data-entry/TreeSelect/TreeSelect.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+import type { KTreeSelectValue } from 'kit/vue/ui/components/data-entry/TreeSelect/TreeSelect.vue'
 import type { KTreeOption } from 'kit/vue/ui/utils/tree'
 
 const values = ref<KTreeSelectValue>(['design', 'visual'])

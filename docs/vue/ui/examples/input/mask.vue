@@ -15,8 +15,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KInput from 'kit/vue/ui/components/Input/Input.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KInput from 'kit/vue/ui/components/data-entry/Input/Input.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const card = ref('4242 4242 4242 4242')
 const expiry = ref('')

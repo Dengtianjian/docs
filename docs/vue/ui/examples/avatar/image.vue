@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import KAvatar from 'kit/vue/ui/components/Avatar/Avatar.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KAvatar from 'kit/vue/ui/components/data-display/Avatar/Avatar.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const image = `data:image/svg+xml,${encodeURIComponent(`
   <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96">

@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import KMasonry from 'kit/vue/ui/components/Masonry/Masonry.vue'
+import KMasonry from 'kit/vue/ui/components/data-display/Masonry/Masonry.vue'
 
 const notes = [
   { text: '默认插槽按列瀑布流排列，子项自动避免跨列断行。', height: 90 },

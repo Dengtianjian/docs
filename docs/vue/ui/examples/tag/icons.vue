@@ -29,8 +29,8 @@
 
 <script setup lang="ts">
 import { defineComponent, h } from 'vue'
-import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KTag from 'kit/vue/ui/components/data-display/Tag/Tag.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 import type { Component, VNode } from 'vue'
 import type { KTagColor, KTagIconPosition } from 'kit/vue/ui'
 

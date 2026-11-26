@@ -1,4 +1,4 @@
-import type { KUploadUpload } from 'kit/vue/ui/components/Upload/Upload.vue'
+import type { KUploadUpload } from 'kit/vue/ui/components/data-entry/Upload/Upload.vue'
 
 /**
  * 演示用 mock 上传：阶梯进度 + 可配置首次失败 + 成功回传本地对象 URL。

@@ -27,8 +27,8 @@
 
 <script setup lang="ts">
 import { h, ref } from 'vue'
-import KInputNumber from 'kit/vue/ui/components/InputNumber/InputNumber.vue'
-import type { KInputNumberRenderScope } from 'kit/vue/ui/components/InputNumber/InputNumber.vue'
+import KInputNumber from 'kit/vue/ui/components/data-entry/InputNumber/InputNumber.vue'
+import type { KInputNumberRenderScope } from 'kit/vue/ui/components/data-entry/InputNumber/InputNumber.vue'
 
 const qty = ref<number | null>(3)
 const temp = ref<number | null>(20)

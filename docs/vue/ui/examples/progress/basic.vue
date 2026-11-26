@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import KProgress from 'kit/vue/ui/components/Progress/Progress.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KProgress from 'kit/vue/ui/components/feedback/Progress/Progress.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 function formatScore(percent: number) {
   return `${percent} 分`

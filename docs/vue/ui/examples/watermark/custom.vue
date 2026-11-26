@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import KWatermark from 'kit/vue/ui/components/Watermark/Watermark.vue'
+import KWatermark from 'kit/vue/ui/components/layouts/Watermark/Watermark.vue'
 </script>
 
 <style scoped>

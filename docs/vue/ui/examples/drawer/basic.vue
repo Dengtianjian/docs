@@ -45,10 +45,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KDrawer from 'kit/vue/ui/components/Drawer/Drawer.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KDrawer from 'kit/vue/ui/components/feedback/Drawer/Drawer.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KRadioGroup from 'kit/vue/ui/components/data-entry/Radio/RadioGroup.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 import type { KDrawerPlacement, KDrawerSize } from 'kit/vue/ui'
 
 const open = ref(false)

@@ -46,10 +46,10 @@
 </template>
 
 <script setup lang="ts">
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KCard from 'kit/vue/ui/components/Card/Card.vue'
-import KDivider from 'kit/vue/ui/components/Divider/Divider.vue'
-import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KCard from 'kit/vue/ui/components/layouts/Card/Card.vue'
+import KDivider from 'kit/vue/ui/components/general/Divider/Divider.vue'
+import KTag from 'kit/vue/ui/components/data-display/Tag/Tag.vue'
 
 const plans = [
   {

@@ -13,8 +13,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KNavigationMenu from 'kit/vue/ui/components/NavigationMenu/NavigationMenu.vue'
-import type { KNavigationMenuItem } from 'kit/vue/ui/components/NavigationMenu/NavigationMenu.vue'
+import KNavigationMenu from 'kit/vue/ui/components/navigation/NavigationMenu/NavigationMenu.vue'
+import type { KNavigationMenuItem } from 'kit/vue/ui/components/navigation/NavigationMenu/NavigationMenu.vue'
 
 const active = ref<string | number | null>('overview')
 const last = ref('')

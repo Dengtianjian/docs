@@ -14,9 +14,9 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import KPinInput from 'kit/vue/ui/components/PinInput/PinInput.vue'
-import KPasswordInput from 'kit/vue/ui/components/PasswordInput/PasswordInput.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KPinInput from 'kit/vue/ui/components/data-entry/PinInput/PinInput.vue'
+import KPasswordInput from 'kit/vue/ui/components/data-entry/PasswordInput/PasswordInput.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const variants = ['outlined', 'filled', 'borderless', 'underlined'] as const
 const code = reactive<Record<(typeof variants)[number], string>>({

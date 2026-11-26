@@ -15,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import KImage from 'kit/vue/ui/components/Image/Image.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KImage from 'kit/vue/ui/components/data-display/Image/Image.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 function makeImage(label: string, from: string, to: string) {
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`

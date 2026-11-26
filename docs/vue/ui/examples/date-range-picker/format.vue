@@ -16,8 +16,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KDateRangePicker from 'kit/vue/ui/components/DateRangePicker/DateRangePicker.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KDateRangePicker from 'kit/vue/ui/components/data-entry/DateRangePicker/DateRangePicker.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const slash = ref<[number, number] | null>(null)
 const chinese = ref<[number, number] | null>(null)

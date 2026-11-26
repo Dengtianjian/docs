@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { Loader } from '@vicons/tabler'
-import KIcon from 'kit/vue/ui/components/Icon/Icon.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KIcon from 'kit/vue/ui/components/general/Icon/Icon.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 </script>

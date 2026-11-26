@@ -16,9 +16,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KTooltip from 'kit/vue/ui/components/Tooltip/Tooltip.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
+import KTooltip from 'kit/vue/ui/components/overlay/Tooltip/Tooltip.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KConfigProvider from 'kit/vue/ui/components/general/ConfigProvider/ConfigProvider.vue'
 
 const box = ref<HTMLElement | null>(null)
 </script>

@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import KMarquee from 'kit/vue/ui/components/Marquee/Marquee.vue'
+import KMarquee from 'kit/vue/ui/components/other/Marquee/Marquee.vue'
 
 const notices = [
   '组件文档已补齐 P8',

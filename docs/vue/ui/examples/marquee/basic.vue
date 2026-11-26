@@ -15,6 +15,6 @@
 </template>
 
 <script setup lang="ts">
-import KMarquee from 'kit/vue/ui/components/Marquee/Marquee.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KMarquee from 'kit/vue/ui/components/other/Marquee/Marquee.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 </script>

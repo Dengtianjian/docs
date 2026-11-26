@@ -12,8 +12,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KDatePicker from 'kit/vue/ui/components/data-entry/DatePicker/DatePicker.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 import type { KPickerMode } from 'kit/vue/ui/utils/date'
 
 const modes: KPickerMode[] = ['date', 'week', 'month', 'quarter', 'year']

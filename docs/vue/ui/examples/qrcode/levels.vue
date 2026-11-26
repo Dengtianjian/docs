@@ -12,9 +12,9 @@
 </template>
 
 <script setup lang="ts">
-import KQRCode from 'kit/vue/ui/components/QRCode/QRCode.vue'
-import type { KQRCodeLevel } from 'kit/vue/ui/components/QRCode/QRCode.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KQRCode from 'kit/vue/ui/components/data-display/QRCode/QRCode.vue'
+import type { KQRCodeLevel } from 'kit/vue/ui/components/data-display/QRCode/QRCode.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const payload = 'K UI QRCode / error correction levels'
 const levels: KQRCodeLevel[] = ['L', 'M', 'Q', 'H']

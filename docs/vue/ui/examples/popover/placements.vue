@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import KPopover from 'kit/vue/ui/components/Popover/Popover.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KPopover from 'kit/vue/ui/components/overlay/Popover/Popover.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 
 const placements = [
   'topLeft', 'top', 'topRight',

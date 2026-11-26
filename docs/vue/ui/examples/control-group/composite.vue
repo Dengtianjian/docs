@@ -32,16 +32,16 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KControlGroup from 'kit/vue/ui/components/ControlGroup/ControlGroup.vue'
-import KControlGroupItem from 'kit/vue/ui/components/ControlGroup/ControlGroupItem.vue'
-import KInputNumber from 'kit/vue/ui/components/InputNumber/InputNumber.vue'
-import KSelect from 'kit/vue/ui/components/Select/Select.vue'
-import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
-import KRadio from 'kit/vue/ui/components/Radio/Radio.vue'
-import KCheckbox from 'kit/vue/ui/components/Checkbox/Checkbox.vue'
-import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KControlGroup from 'kit/vue/ui/components/data-entry/ControlGroup/ControlGroup.vue'
+import KControlGroupItem from 'kit/vue/ui/components/data-entry/ControlGroup/ControlGroupItem.vue'
+import KInputNumber from 'kit/vue/ui/components/data-entry/InputNumber/InputNumber.vue'
+import KSelect from 'kit/vue/ui/components/data-entry/Select/Select.vue'
+import KRadioGroup from 'kit/vue/ui/components/data-entry/Radio/RadioGroup.vue'
+import KRadio from 'kit/vue/ui/components/data-entry/Radio/Radio.vue'
+import KCheckbox from 'kit/vue/ui/components/data-entry/Checkbox/Checkbox.vue'
+import KSwitch from 'kit/vue/ui/components/data-entry/Switch/Switch.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const qty = ref(1)
 const unit = ref('piece')

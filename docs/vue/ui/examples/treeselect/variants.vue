@@ -9,8 +9,8 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import KTreeSelect from 'kit/vue/ui/components/TreeSelect/TreeSelect.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KTreeSelect from 'kit/vue/ui/components/data-entry/TreeSelect/TreeSelect.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const variants = ['outlined', 'filled', 'borderless', 'underlined'] as const
 const options = [

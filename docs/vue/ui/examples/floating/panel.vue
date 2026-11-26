@@ -24,9 +24,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFloatingPanel from 'kit/vue/ui/components/FloatingPanel/FloatingPanel.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFloatingPanel from 'kit/vue/ui/components/overlay/FloatingPanel/FloatingPanel.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const open = ref(false)
 const selected = ref<string[]>(['近 7 天'])

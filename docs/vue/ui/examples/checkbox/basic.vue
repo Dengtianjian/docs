@@ -15,8 +15,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KCheckbox from 'kit/vue/ui/components/Checkbox/Checkbox.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KCheckbox from 'kit/vue/ui/components/data-entry/Checkbox/Checkbox.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const a = ref(true)
 const b = ref(false)

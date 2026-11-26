@@ -21,8 +21,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-import KUser from 'kit/vue/ui/components/User/User.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+import KUser from 'kit/vue/ui/components/data-display/User/User.vue'
 
 const active = ref('')
 </script>

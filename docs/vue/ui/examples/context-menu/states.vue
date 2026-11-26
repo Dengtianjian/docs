@@ -8,8 +8,8 @@
 </template>
 
 <script setup lang="ts">
-import KContextMenu from 'kit/vue/ui/components/ContextMenu/ContextMenu.vue'
-import type { KContextMenuItem } from 'kit/vue/ui/components/ContextMenu/ContextMenu.vue'
+import KContextMenu from 'kit/vue/ui/components/overlay/ContextMenu/ContextMenu.vue'
+import type { KContextMenuItem } from 'kit/vue/ui/components/overlay/ContextMenu/ContextMenu.vue'
 
 const items: KContextMenuItem[] = [
   { key: 'download', label: '下载' },

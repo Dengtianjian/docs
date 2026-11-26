@@ -17,9 +17,9 @@
 </template>
 
 <script setup lang="ts">
-import KCard from 'kit/vue/ui/components/Card/Card.vue'
-import KCardAction from 'kit/vue/ui/components/Card/CardAction.vue'
-import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
+import KCard from 'kit/vue/ui/components/layouts/Card/Card.vue'
+import KCardAction from 'kit/vue/ui/components/layouts/Card/CardAction.vue'
+import KTag from 'kit/vue/ui/components/data-display/Tag/Tag.vue'
 </script>
 
 <style scoped>

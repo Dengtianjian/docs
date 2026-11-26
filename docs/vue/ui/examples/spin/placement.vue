@@ -11,8 +11,8 @@
 </template>
 
 <script setup lang="ts">
-import KSpin from 'kit/vue/ui/components/Spin/Spin.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KSpin from 'kit/vue/ui/components/feedback/Spin/Spin.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const placements = ['top', 'bottom', 'left', 'right'] as const
 const label = { top: '上方', bottom: '下方', left: '左侧', right: '右侧' }

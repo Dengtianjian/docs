@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import KScrollArea from 'kit/vue/ui/components/ScrollArea/ScrollArea.vue'
+import KScrollArea from 'kit/vue/ui/components/layouts/ScrollArea/ScrollArea.vue'
 
 const logs = Array.from({ length: 18 }, (_, index) => ({
   time: `18:${String(index + 1).padStart(2, '0')}`,

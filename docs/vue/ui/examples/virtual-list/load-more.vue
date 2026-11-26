@@ -28,8 +28,8 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref } from 'vue'
-import KVirtualList from 'kit/vue/ui/components/VirtualList/VirtualList.vue'
-import KSpin from 'kit/vue/ui/components/Spin/Spin.vue'
+import KVirtualList from 'kit/vue/ui/components/data-display/VirtualList/VirtualList.vue'
+import KSpin from 'kit/vue/ui/components/feedback/Spin/Spin.vue'
 
 const TOTAL = 20000
 const PAGE_SIZE = 200

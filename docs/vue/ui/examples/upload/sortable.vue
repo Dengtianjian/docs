@@ -17,8 +17,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KUpload from 'kit/vue/ui/components/Upload/Upload.vue'
-import type { KUploadFile, KUploadFileItem } from 'kit/vue/ui/components/Upload/Upload.vue'
+import KUpload from 'kit/vue/ui/components/data-entry/Upload/Upload.vue'
+import type { KUploadFile, KUploadFileItem } from 'kit/vue/ui/components/data-entry/Upload/Upload.vue'
 import { createMockRequest } from './_mock'
 
 const files = ref<KUploadFile[]>([])

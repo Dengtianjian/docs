@@ -26,11 +26,11 @@
 <script setup lang="ts">
 import { h, ref } from "vue";
 import { useKApp } from "kit/vue/ui/composables/useKApp";
-import KButton from "kit/vue/ui/components/Button/Button.vue";
-import KRadioGroup from "kit/vue/ui/components/Radio/RadioGroup.vue";
-import KRadio from "kit/vue/ui/components/Radio/Radio.vue";
-import KFlex from "kit/vue/ui/components/Flex/Flex.vue";
-import type { KNotificationPlacement } from "kit/vue/ui/components/Notification/service";
+import KButton from "kit/vue/ui/components/general/Button/Button.vue";
+import KRadioGroup from "kit/vue/ui/components/data-entry/Radio/RadioGroup.vue";
+import KRadio from "kit/vue/ui/components/data-entry/Radio/Radio.vue";
+import KFlex from "kit/vue/ui/components/layouts/Flex/Flex.vue";
+import type { KNotificationPlacement } from "kit/vue/ui/components/feedback/Notification/service";
 
 const { notification } = useKApp()!;
 const placement = ref<KNotificationPlacement>("topRight");

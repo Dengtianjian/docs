@@ -18,10 +18,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KPopconfirm from 'kit/vue/ui/components/Popconfirm/Popconfirm.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KPopconfirm from 'kit/vue/ui/components/feedback/Popconfirm/Popconfirm.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KSwitch from 'kit/vue/ui/components/data-entry/Switch/Switch.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const arrow = ref(true)
 </script>

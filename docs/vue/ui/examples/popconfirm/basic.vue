@@ -24,9 +24,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KPopconfirm from 'kit/vue/ui/components/Popconfirm/Popconfirm.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KPopconfirm from 'kit/vue/ui/components/feedback/Popconfirm/Popconfirm.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const log = ref('还没操作')
 const loading = ref(false)

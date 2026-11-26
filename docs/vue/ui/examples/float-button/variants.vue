@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KFloatButton from 'kit/vue/ui/components/FloatButton/FloatButton.vue'
+import KFloatButton from 'kit/vue/ui/components/other/FloatButton/FloatButton.vue'
 
 const clicked = ref<number | null>(null)
 </script>

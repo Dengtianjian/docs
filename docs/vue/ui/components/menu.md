@@ -24,6 +24,8 @@
 
 <Demo path="menu/custom" title="自定义渲染 / 尺寸" :desc="['`#icon` / `#label` / `#extra` / `#arrow` 插槽覆盖默认渲染，scope 带 `item / level / active`。', '`size` 三档同时作用于菜单与弹层行高、字号；`indent` 控制每级缩进。']" />
 
+<Demo path="menu/item-slot" title="整项渲染插槽" :desc="['`#item` 替换每一项的内容（图标、标题、附加区），scope 带 `item / level / active / open / isSubmenu / isGroup / collapsed`。', '外层选中、禁用、点击、键盘与子菜单箭头仍由 KMenu 负责；分组标题也能自定义。']" />
+
 <Demo path="menu/overflow" title="溢出收起" :desc="['`overflow` 开启后，水平模式超出宽度、纵向模式超出高度时，剩余项收进末尾「更多」弹层。', '随容器尺寸变化自动重算；被收起项仍然可选中，选中后「更多」呈现高亮。']" />
 
 <Demo path="menu/horizontal" title="水平菜单 / 弹层子菜单" :desc="['`mode=&quot;horizontal&quot;` 顶部排列；子菜单悬停/点击弹出。', '弹层内多级子菜单继续内嵌展开。', '`placement` 语义复用通用弹层基座，横向默认 `bottomLeft`，纵向默认 `rightTop`。']" />
@@ -88,6 +90,7 @@
 
 | 插槽名 | 说明 | 参数 |
 | --- | --- | --- |
+| item | 整项内容渲染，替换图标 / 标题 / 附加区；子菜单箭头保留 | `{ item, level, active, open, isSubmenu, isGroup, collapsed }` |
 | icon | 覆盖每项图标 | `{ item, level, active }` |
 | label | 覆盖每项标题 | `{ item, level, active }` |
 | extra | 行尾附加内容 | `{ item, level }` |
@@ -100,6 +103,8 @@
 ## 注意事项
 
 - 有 `children` 的项只负责展开，不触发 `select`；叶子项选中后弹层自动关闭。
+- `#item` 与 `#icon` / `#label` / `#extra` 同时存在时，`#item` 优先；它只替换内容，外层 `li` / 链接 / 按钮与状态类仍由 KMenu 管理。子菜单箭头仍由组件追加在内容之后，可继续用 `#arrow` 自定义。
+- 分组标题也会走 `#item`（`isGroup: true`）；折叠态可用 scope 的 `collapsed` 自行隐藏文字，需要图标栏时保留一个图标节点。
 - 键盘：vertical/inline 用 ↑/↓，horizontal 用 ←/→；Home/End 跳首尾；Enter/Space 展开或选中；inline 子菜单可用 → 展开、← 收起；弹层内 ↑/↓ 漫游，Esc/← 返回父项。
 - 弹层内的更深层级以内嵌方式展开，避免多级 Teleport 的焦点与点外关闭互扰。
 - PC 弹层触发默认 hover，可整菜单设为 click；单项 `submenuTrigger` 覆盖时避免混用，否则会出现有的悬浮弹出、有的必须点击。
@@ -113,6 +118,7 @@
 - inline 子菜单展开/收起是对齐 naive-ui 的折叠过渡：max-height + 透明度 + 间距 0.3s 同步动画，动画期间不接收点击；减少动态偏好时直接切换。
 - 菜单默认文字/图标使用 `text-secondary`，hover 提升到 `text`；弹层子菜单最小宽度 200px，条目与父级行高一致。
 - `to` 渲染 `RouterLink`，需要应用已安装 vue-router；文档环境请用 `href`。
+- 需要从路由表自动生成菜单、按当前路由高亮并自动展开父级时，用 [路由菜单](../templates/composed/router-menu.md)（`KRouterMenu`）。
 - Sider 折叠由 `KLayoutSider` 提供：`collapsible` + `v-model:collapsed`，内部 Menu 通过 context 自动同步。
 <style>
 /* 文档站 :where(.vp-doc) li + li 的间距会穿透进菜单演示，统一在页面收掉 */

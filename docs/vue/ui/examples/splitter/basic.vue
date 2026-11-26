@@ -14,8 +14,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KSplitter from 'kit/vue/ui/components/Splitter/Splitter.vue'
-import type { KSplitterPanel } from 'kit/vue/ui/components/Splitter/Splitter.vue'
+import KSplitter from 'kit/vue/ui/components/layouts/Splitter/Splitter.vue'
+import type { KSplitterPanel } from 'kit/vue/ui/components/layouts/Splitter/Splitter.vue'
 
 const sizes = ref([38, 62])
 const panels: KSplitterPanel[] = [

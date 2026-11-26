@@ -32,8 +32,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import KVirtualList from 'kit/vue/ui/components/VirtualList/VirtualList.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KVirtualList from 'kit/vue/ui/components/data-display/VirtualList/VirtualList.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 
 const authors = ['林晚', '周野', '苏念', '顾清明', '许知远', '沈星河', '陆小凤', '唐棠']
 const sentences = [

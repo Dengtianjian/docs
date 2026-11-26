@@ -24,10 +24,10 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KLink from 'kit/vue/ui/components/Link/Link.vue'
-import KDivider from 'kit/vue/ui/components/Divider/Divider.vue'
+import KConfigProvider from 'kit/vue/ui/components/general/ConfigProvider/ConfigProvider.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KLink from 'kit/vue/ui/components/general/Link/Link.vue'
+import KDivider from 'kit/vue/ui/components/general/Divider/Divider.vue'
 
 const primary = ref('#722ed1')
 const radius = ref(6)

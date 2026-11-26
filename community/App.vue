@@ -92,9 +92,9 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KInput from 'kit/vue/ui/components/Input/Input.vue'
-import KDrawer from 'kit/vue/ui/components/Drawer/Drawer.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KInput from 'kit/vue/ui/components/data-entry/Input/Input.vue'
+import KDrawer from 'kit/vue/ui/components/feedback/Drawer/Drawer.vue'
 import { getSharedBreakpoint, useResponsiveValue } from 'kit/vue/ui'
 import HomePage from './pages/HomePage.vue'
 import PostPage from './pages/PostPage.vue'

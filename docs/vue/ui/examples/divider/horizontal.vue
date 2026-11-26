@@ -11,6 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import KDivider from 'kit/vue/ui/components/Divider/Divider.vue'
-import KText from 'kit/vue/ui/components/Typography/Text.vue'
+import KDivider from 'kit/vue/ui/components/general/Divider/Divider.vue'
+import KText from 'kit/vue/ui/components/general/Typography/Text.vue'
 </script>

@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import KResult from 'kit/vue/ui/components/Result/Result.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KResult from 'kit/vue/ui/components/feedback/Result/Result.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 
 const requestId = 'req_8f2c1a'
 function back() {

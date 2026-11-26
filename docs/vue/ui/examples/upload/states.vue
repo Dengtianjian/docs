@@ -17,8 +17,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KUpload from 'kit/vue/ui/components/Upload/Upload.vue'
-import type { KUploadFile, KUploadFileItem, KUploadUpload } from 'kit/vue/ui/components/Upload/Upload.vue'
+import KUpload from 'kit/vue/ui/components/data-entry/Upload/Upload.vue'
+import type { KUploadFile, KUploadFileItem, KUploadUpload } from 'kit/vue/ui/components/data-entry/Upload/Upload.vue'
 import { createMockRequest } from './_mock'
 
 // 同名文件第一次失败、重试成功（failOnce 命中即删）

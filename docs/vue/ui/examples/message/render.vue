@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import { h } from 'vue'
 import { useKApp } from 'kit/vue/ui/composables/useKApp'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 
 const { message } = useKApp()!
 

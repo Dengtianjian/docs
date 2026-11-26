@@ -22,8 +22,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KDatePicker from 'kit/vue/ui/components/data-entry/DatePicker/DatePicker.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const date = ref<string | null>('2026-11-01')
 const dateTime = ref<string | null>('2026-11-01 09:30')

@@ -15,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import KGrid from 'kit/vue/ui/components/Grid/Grid.vue'
-import KGridItem from 'kit/vue/ui/components/Grid/GridItem.vue'
+import KGrid from 'kit/vue/ui/components/layouts/Grid/Grid.vue'
+import KGridItem from 'kit/vue/ui/components/layouts/Grid/GridItem.vue'
 </script>
 
 <style scoped>

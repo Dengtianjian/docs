@@ -52,16 +52,16 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
-import KDropdown from 'kit/vue/ui/components/Dropdown/Dropdown.vue'
-import KModal from 'kit/vue/ui/components/Modal/Modal.vue'
-import KPopconfirm from 'kit/vue/ui/components/Popconfirm/Popconfirm.vue'
-import KSelect from 'kit/vue/ui/components/Select/Select.vue'
-import KTimePicker from 'kit/vue/ui/components/TimePicker/TimePicker.vue'
-import KTooltip from 'kit/vue/ui/components/Tooltip/Tooltip.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KDatePicker from 'kit/vue/ui/components/data-entry/DatePicker/DatePicker.vue'
+import KDropdown from 'kit/vue/ui/components/navigation/Dropdown/Dropdown.vue'
+import KModal from 'kit/vue/ui/components/feedback/Modal/Modal.vue'
+import KPopconfirm from 'kit/vue/ui/components/feedback/Popconfirm/Popconfirm.vue'
+import KSelect from 'kit/vue/ui/components/data-entry/Select/Select.vue'
+import KTimePicker from 'kit/vue/ui/components/data-entry/TimePicker/TimePicker.vue'
+import KTooltip from 'kit/vue/ui/components/overlay/Tooltip/Tooltip.vue'
 import type { KDropdownItem } from 'kit/vue/ui'
-import type { KTimePickerValue } from 'kit/vue/ui/components/TimePicker/TimePicker.vue'
+import type { KTimePickerValue } from 'kit/vue/ui/components/data-entry/TimePicker/TimePicker.vue'
 
 const open = ref(false)
 const team = ref<string | number | null>(null)

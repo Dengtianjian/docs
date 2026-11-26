@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import KPagination from 'kit/vue/ui/components/Pagination/Pagination.vue'
+import KPagination from 'kit/vue/ui/components/navigation/Pagination/Pagination.vue'
 
 const list = ['left', 'center', 'right'] as const
 </script>

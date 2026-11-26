@@ -12,8 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import KAlert from 'kit/vue/ui/components/Alert/Alert.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KAlert from 'kit/vue/ui/components/feedback/Alert/Alert.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 import type { KAlertSize } from 'kit/vue/ui'
 
 const sizes: KAlertSize[] = ['sm', 'md', 'lg']

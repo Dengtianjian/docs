@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KWatermark from 'kit/vue/ui/components/Watermark/Watermark.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KWatermark from 'kit/vue/ui/components/layouts/Watermark/Watermark.vue'
 </script>
 
 <style scoped>

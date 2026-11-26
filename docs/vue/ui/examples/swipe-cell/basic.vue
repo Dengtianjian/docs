@@ -22,8 +22,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KSwipeCell from 'kit/vue/ui/components/SwipeCell/SwipeCell.vue'
-import type { KSwipeCellAction } from 'kit/vue/ui/components/SwipeCell/SwipeCell.vue'
+import KSwipeCell from 'kit/vue/ui/components/overlay/SwipeCell/SwipeCell.vue'
+import type { KSwipeCellAction } from 'kit/vue/ui/components/overlay/SwipeCell/SwipeCell.vue'
 
 const last = ref('')
 const rightActions: KSwipeCellAction[] = [

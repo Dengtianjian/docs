@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import dayjs from 'dayjs'
-import KDateRangePicker from 'kit/vue/ui/components/DateRangePicker/DateRangePicker.vue'
+import KDateRangePicker from 'kit/vue/ui/components/data-entry/DateRangePicker/DateRangePicker.vue'
 
 const start = dayjs().startOf('day').valueOf()
 const end = dayjs().endOf('day').valueOf()

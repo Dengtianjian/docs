@@ -11,8 +11,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KPagination from 'kit/vue/ui/components/Pagination/Pagination.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KPagination from 'kit/vue/ui/components/navigation/Pagination/Pagination.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const page = ref(3)
 const size = ref(10)

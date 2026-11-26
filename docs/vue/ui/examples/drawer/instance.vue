@@ -10,8 +10,8 @@
 
 <script setup lang="ts">
 import { h, ref } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 import { useKApp } from 'kit/vue/ui'
 import type { KDrawerHandle } from 'kit/vue/ui'
 

@@ -9,5 +9,5 @@
 </template>
 
 <script setup lang="ts">
-import KDivider from 'kit/vue/ui/components/Divider/Divider.vue'
+import KDivider from 'kit/vue/ui/components/general/Divider/Divider.vue'
 </script>

@@ -8,8 +8,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KInputNumber from 'kit/vue/ui/components/InputNumber/InputNumber.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KInputNumber from 'kit/vue/ui/components/data-entry/InputNumber/InputNumber.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const limited = ref<number | null>(3)
 const decimal = ref<number | null>(1.5)

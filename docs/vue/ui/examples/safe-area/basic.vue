@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import KSafeArea from 'kit/vue/ui/components/SafeArea/SafeArea.vue'
+import KSafeArea from 'kit/vue/ui/components/layouts/SafeArea/SafeArea.vue'
 </script>
 
 <style scoped>

@@ -20,13 +20,13 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import KForm from 'kit/vue/ui/components/Form/Form.vue'
-import KFormItem from 'kit/vue/ui/components/Form/FormItem.vue'
-import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
-import KCheckboxGroup from 'kit/vue/ui/components/Checkbox/CheckboxGroup.vue'
-import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KForm from 'kit/vue/ui/components/data-entry/Form/Form.vue'
+import KFormItem from 'kit/vue/ui/components/data-entry/Form/FormItem.vue'
+import KRadioGroup from 'kit/vue/ui/components/data-entry/Radio/RadioGroup.vue'
+import KCheckboxGroup from 'kit/vue/ui/components/data-entry/Checkbox/CheckboxGroup.vue'
+import KSwitch from 'kit/vue/ui/components/data-entry/Switch/Switch.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const form = ref()
 const model = reactive<{ plan: string; channels: string[]; enabled: boolean }>({

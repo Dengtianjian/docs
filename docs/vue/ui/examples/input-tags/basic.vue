@@ -7,8 +7,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KInputTags from 'kit/vue/ui/components/InputTags/InputTags.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KInputTags from 'kit/vue/ui/components/data-entry/InputTags/InputTags.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const tags = ref(['Vue', 'TypeScript'])
 </script>

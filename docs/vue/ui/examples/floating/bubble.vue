@@ -15,9 +15,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFloatingBubble from 'kit/vue/ui/components/FloatingBubble/FloatingBubble.vue'
-import type { KFloatingBubblePosition } from 'kit/vue/ui/components/FloatingBubble/FloatingBubble.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFloatingBubble from 'kit/vue/ui/components/other/FloatingBubble/FloatingBubble.vue'
+import type { KFloatingBubblePosition } from 'kit/vue/ui/components/other/FloatingBubble/FloatingBubble.vue'
 
 const show = ref(true)
 const count = ref(0)

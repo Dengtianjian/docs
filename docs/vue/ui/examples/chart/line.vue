@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KChart from 'kit/vue/ui/components/Chart/Chart.vue'
+import KChart from 'kit/vue/ui/components/data-display/Chart/Chart.vue'
 
 const last = ref<{ seriesName?: string; category: string; value: number } | null>(null)
 const categories = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']

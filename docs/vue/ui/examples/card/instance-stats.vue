@@ -8,8 +8,8 @@
 </template>
 
 <script setup lang="ts">
-import KCard from 'kit/vue/ui/components/Card/Card.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KCard from 'kit/vue/ui/components/layouts/Card/Card.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const stats = [
   { label: '访问量', value: '12,480', trend: '较上周 +8.2%', up: true },

@@ -9,8 +9,8 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import KAutoComplete from 'kit/vue/ui/components/AutoComplete/AutoComplete.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KAutoComplete from 'kit/vue/ui/components/data-entry/AutoComplete/AutoComplete.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const variants = ['outlined', 'filled', 'borderless', 'underlined'] as const
 const options = ['Vue', 'Vite', 'Vitest', 'VitePress'].map(value => ({ label: value, value }))

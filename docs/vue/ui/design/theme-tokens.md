@@ -362,7 +362,7 @@ xs <576 | sm ≥576 | md ≥768 | lg ≥992 | xl ≥1200 | xxl ≥1600
 每个组件目录附机器可读的 `tokens.ts`（供文档站与设计器消费），结构 = 四轴矩阵：
 
 ```ts
-// components/Button/tokens.ts（示意）
+// components/general/Button/tokens.ts（示意）
 export const buttonTokens = {
   vars: {
     '--k-button-height':     { fallback: 'var(--k-control-height)', bySize: { xs: '…', sm: '…', md: null, lg: '…' } },
@@ -493,11 +493,11 @@ export const buttonTokens = {
 | 产物 | 路径（packages/vue/ui/） | 状态 |
 | --- | --- | --- |
 | 低风险批 | `components/Flex` `Divider` | ✅ Flex 与 CSS 一对一映射；Divider 文本模式用 `::before/::after` 线（无幽灵 DOM），`role="separator"` |
-| 文字批 | `components/Typography/{Title,Paragraph,Text}` `Link` | ✅ 字重走新增 `--k-font-weight-base/strong/heading` 别名（theme.css §5）；KText mark 用 `--k-color-warning-bg`，无裸色值 |
-| 栅格批 | `components/Grid/{Grid,GridItem}` | ✅ 真 CSS Grid：列模板 / gap / span 写内联；响应式列数与跨度走共享断点 |
-| 布局批 | `components/Layout/{Layout,Header,Sider,Content,Footer}` | ✅ 尺寸缺省在 CSS（`var(--k-layout-header-height, 64px)` 式回退），prop 显式才落内联，createTheme components 令牌可覆盖 |
-| Provider | `components/ConfigProvider/ConfigProvider.vue` + `composables/useKConfig.ts` | ✅ 主题差量经 `<Teleport to="head">` 的 `<style>` 注入（hash 作用域类，绝不内联变量）；合并链 `prop > defaults > token`；`useProps(name, prop, pick)` |
-| 入口 | `index.ts`（17 组件 barrel）+ `resolver.ts`（GROUP_FILE 多文件目录映射） | ✅ 语法核对通过；编译验证仍受②阻塞 |
+| 文字批 | `components/general/Typography/{Title,Paragraph,Text}` `Link` | ✅ 字重走新增 `--k-font-weight-base/strong/heading` 别名（theme.css §5）；KText mark 用 `--k-color-warning-bg`，无裸色值 |
+| 栅格批 | `components/layouts/Grid/{Grid,GridItem}` | ✅ 真 CSS Grid：列模板 / gap / span 写内联；响应式列数与跨度走共享断点 |
+| 布局批 | `components/layouts/Layout/{Layout,Header,Sider,Content,Footer}` | ✅ 尺寸缺省在 CSS（`var(--k-layout-header-height, 64px)` 式回退），prop 显式才落内联，createTheme components 令牌可覆盖 |
+| Provider | `components/general/ConfigProvider/ConfigProvider.vue` + `composables/useKConfig.ts` | ✅ 主题差量经 `<Teleport to="head">` 的 `<style>` 注入（hash 作用域类，绝不内联变量）；合并链 `prop > defaults > token`；`useProps(name, prop, pick)` |
+| 入口 | `index.ts`（17 组件 barrel）+ `resolver.ts`（COMPONENT_FILE 分类单文件映射） | ✅ 语法核对通过；编译验证仍受②阻塞 |
 
 本批新增 token：`--k-font-weight-base(400)/strong(500)/heading(600)`（§5 字重阶梯，供 Typography/Divider 引用）。
 
@@ -507,7 +507,7 @@ export const buttonTokens = {
 | --- | --- | --- |
 | 按压加深校准 | `css/theme.css` 六组 `color<N>-active` 85%→75%；`Button.vue` 各 variant active 同步；default×filled active 原等于基线色（零反馈）→ 20% 破格灰 | ✅（§4.1 校准结论已回写） |
 | 点击波纹（antd v5 Wave 对齐→同日调参放慢+跟色） | `Button.vue`：波纹色跟主题（2026-11-17 用户「filled/tonal 波纹与按钮不一致」改判）= 实底/灰底/浅底档 `color-mix(--k-button-bg 60%)` var 间接即时解析换底自动跟随、透明底档 `--k-button-c 24%`；`k-button--waving` box-shadow 0→4px（35% 保持帧）→6.4px 扩散（同日两调：放慢后用户「宽度有点大」再缩 80%）；`theme.css` 新增 `--k-motion-duration-wave(0.6s，用户「太快」由 antd 同值 0.4s 放慢)/--k-motion-ease-wave` | ✅ `prefers-reduced-motion` 关闭；disabled/loading 不触发 |
-| KApp 应用根容器 | `components/App/App.vue` + `composables/useKApp.ts`（root 注入，P3 全局反馈宿主打底） | ✅ barrel 已导出；resolver 机械规则覆盖 |
+| KApp 应用根容器 | `components/general/App/App.vue` + `composables/useKApp.ts`（root 注入，P3 全局反馈宿主打底） | ✅ barrel 已导出；resolver 机械规则覆盖 |
 | 导出色板一致性 | `themes/palette.ts` p7 黑比 0.15→0.25（与 active 75% 同构） | ✅ |
 | 分割线色切换（用户拍板） | `css/theme.css` `--k-color-split` α0.06→0.15→**0.08 定稿**（独立 token 破格档，不并入 fill ladder） | ✅ |
 | 图标集选型（Q1 定稿） | 推荐集 = `@vicons/tabler`（vicons/Tabler，MIT，1518 图标），示例页已换真图标；KIcon 注入模式不变 | ✅ |
@@ -524,7 +524,7 @@ export const buttonTokens = {
 | Button variant 扩 ghost/plain/soft | `Button.vue`：ghost = 透明底档（default×ghost 跟 naive 中性边+正文字）；plain/soft 白底描边族同静置（`bgContainer`），plain 交互变边框+文字、soft 交互底 tint（c 10%/16%）+字变色、边框不动；三家对照拍板（antd ghost 布尔/白边反色、vant plain 按压 tint 均未照抄），进 variant 轴避免组合爆炸 | ✅ 矩阵见 §9；当日再拍板 soft 去边框（见下行） |
 | Button border 档 + soft 去边框 | `Button.vue`：新 variant `border` = 透明边框占位、hover/active 现边框色（c 90%/75%，底/字恒静置）；soft 静置边框改 transparent（与有框 plain 分工）；演示矩阵扩九值 | ✅ |
 | Button text/quiet 拆分 + dashed 去底 | `Button.vue`：`text` 改纯文字交互（hover/active 只变文字色永不落底，naive 路数，**兼容破坏**：旧灰底观感改名 `quiet` 继承）；default×dashed 静置灰底作废改透明底；演示矩阵扩十值 | ✅ |
-| KButtonGroup | `Button/ButtonGroup.vue` + `groupContext.ts`：接壤 -1px 叠边、首尾外侧半径、hover/focus z-index 抬升；size provide/inject 下发（子级自传优先，size 缺省解析链 `props → 组 → md`）、vertical；resolver GROUP_FILE 与 index.ts 出口已登记 | ✅ naive 路线（antd 弃用方案未采） |
+| KButtonGroup | `general/Button/ButtonGroup.vue` + `groupContext.ts`：接壤 -1px 叠边、首尾外侧半径、hover/focus z-index 抬升；size provide/inject 下发（子级自传优先，size 缺省解析链 `props → 组 → md`）、vertical；resolver COMPONENT_FILE 与 index.ts 出口已登记 | ✅ naive 路线（antd 弃用方案未采） |
 | Button props 增量 | `Button.vue`：`iconPlacement start/end`（order 后移，loading 占图标位）、`target`（href 场景透传）；不搬清单理由见 button.md 规格附录 | ✅ |
 | Button 波纹开关（antd wave 同款） | `useKConfig.ts` + `ConfigProvider.vue` + `Button.vue`：Provider `:wave="{ disabled: true }"` 全局关（antd ConfigProvider.wave 同款形态，嵌套级联子覆盖父）+ 实例 `wave` prop 强制开/关；合并链 `wave prop > defaults.KButton.wave > !wave.disabled > 开`；波纹形态第三批已落地，同日调参放慢（见上行） | ✅ 事件派发实测 |
 | border 文字跟交互 + 波纹跟主题色 | `Button.vue`：border hover/active 补 `--k-button-text-color` 公式（c 90%up/75%down，与 plain 同式）；`--k-button-wave-color` 实底/灰底/浅底档（filled/tonal/soft/quiet）改走 `color-mix(--k-button-bg 60%)` var 间接引用随状态自动跟随，透明底档仍 c 24% | ✅ CSSOM 规则 + computed 链实测 |

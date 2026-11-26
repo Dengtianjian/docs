@@ -47,8 +47,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KSelect from 'kit/vue/ui/components/Select/Select.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KSelect from 'kit/vue/ui/components/data-entry/Select/Select.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const people = [
   { label: '林夏', value: 'lin', desc: '产品设计 · 交互', dept: '设计部', color: '#845ef7' },

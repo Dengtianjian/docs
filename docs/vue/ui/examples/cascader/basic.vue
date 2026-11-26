@@ -16,9 +16,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KCascader from 'kit/vue/ui/components/Cascader/Cascader.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-import type { KCascaderValue } from 'kit/vue/ui/components/Cascader/Cascader.vue'
+import KCascader from 'kit/vue/ui/components/data-entry/Cascader/Cascader.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+import type { KCascaderValue } from 'kit/vue/ui/components/data-entry/Cascader/Cascader.vue'
 import type { KTreeOption } from 'kit/vue/ui/utils/tree'
 
 const region = ref<KCascaderValue>(['east', 'shanghai'])

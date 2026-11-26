@@ -46,10 +46,10 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import KForm from 'kit/vue/ui/components/Form/Form.vue'
-import KFormItem from 'kit/vue/ui/components/Form/FormItem.vue'
-import KInput from 'kit/vue/ui/components/Input/Input.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KForm from 'kit/vue/ui/components/data-entry/Form/Form.vue'
+import KFormItem from 'kit/vue/ui/components/data-entry/Form/FormItem.vue'
+import KInput from 'kit/vue/ui/components/data-entry/Input/Input.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 
 const model = reactive({ title: '', email: '' })
 const rules = {

@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref, watch } from 'vue'
 import { useBreakpoint } from 'kit/vue/ui'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const { current } = useBreakpoint()
 const stringWrap = ref<HTMLElement>()

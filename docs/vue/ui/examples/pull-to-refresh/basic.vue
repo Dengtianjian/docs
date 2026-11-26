@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KPullToRefresh from 'kit/vue/ui/components/PullToRefresh/PullToRefresh.vue'
+import KPullToRefresh from 'kit/vue/ui/components/overlay/PullToRefresh/PullToRefresh.vue'
 
 const loading = ref(false)
 const round = ref(1)

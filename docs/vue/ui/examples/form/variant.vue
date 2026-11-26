@@ -25,12 +25,12 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import KForm from 'kit/vue/ui/components/Form/Form.vue'
-import KFormItem from 'kit/vue/ui/components/Form/FormItem.vue'
-import KInput from 'kit/vue/ui/components/Input/Input.vue'
-import KSelect from 'kit/vue/ui/components/Select/Select.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KForm from 'kit/vue/ui/components/data-entry/Form/Form.vue'
+import KFormItem from 'kit/vue/ui/components/data-entry/Form/FormItem.vue'
+import KInput from 'kit/vue/ui/components/data-entry/Input/Input.vue'
+import KSelect from 'kit/vue/ui/components/data-entry/Select/Select.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const model = reactive({ name: '', city: null as string | null, note: '' })
 const inline = reactive({ keyword: '' })

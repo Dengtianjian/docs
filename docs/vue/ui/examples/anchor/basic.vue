@@ -17,7 +17,7 @@
         </section>
         <section id="anchor-demo-install">
           <h3>安装</h3>
-          <p>从 kit/vue/ui/components/Anchor/Anchor.vue 按需引入。</p>
+          <p>从 kit/vue/ui/components/navigation/Anchor/Anchor.vue 按需引入。</p>
           <p>items 使用 key + href 描述目标，children 可嵌套。</p>
           <p v-for="n in 3" :key="n">补充说明 {{ n }}：安装章节的补充内容。</p>
         </section>
@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KAnchor from 'kit/vue/ui/components/Anchor/Anchor.vue'
+import KAnchor from 'kit/vue/ui/components/navigation/Anchor/Anchor.vue'
 import type { KAnchorItem } from 'kit/vue/ui'
 
 const scrollEl = ref<HTMLElement | null>(null)

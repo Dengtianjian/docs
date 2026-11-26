@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import KDescriptions from 'kit/vue/ui/components/Descriptions/Descriptions.vue'
-import KDescriptionsItem from 'kit/vue/ui/components/Descriptions/DescriptionsItem.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KDescriptions from 'kit/vue/ui/components/data-display/Descriptions/Descriptions.vue'
+import KDescriptionsItem from 'kit/vue/ui/components/data-display/Descriptions/DescriptionsItem.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 </script>

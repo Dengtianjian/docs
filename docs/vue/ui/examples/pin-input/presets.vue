@@ -14,9 +14,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KPasscodeInput from 'kit/vue/ui/components/PasscodeInput/PasscodeInput.vue'
-import KPasswordInput from 'kit/vue/ui/components/PasswordInput/PasswordInput.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KPasscodeInput from 'kit/vue/ui/components/data-entry/PasscodeInput/PasscodeInput.vue'
+import KPasswordInput from 'kit/vue/ui/components/data-entry/PasswordInput/PasswordInput.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const password = ref('')
 const passcode = ref('')

@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import KTimeline from 'kit/vue/ui/components/Timeline/Timeline.vue'
+import KTimeline from 'kit/vue/ui/components/data-display/Timeline/Timeline.vue'
 
 const items = [
   { label: '创建项目', time: '2026-11-18 09:20', content: '如意工作台初始化完成', color: 'primary' as const },

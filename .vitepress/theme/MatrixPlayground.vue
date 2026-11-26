@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
 import { Search } from '@vicons/tabler';
-import KButton from 'kit/vue/ui/components/Button/Button.vue';
-import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue';
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue';
+import KConfigProvider from 'kit/vue/ui/components/general/ConfigProvider/ConfigProvider.vue';
 import { antdRef, ANTD_NONE_NOTE } from './antdButtonRef';
 
 /** embed = iframe 内嵌模式（matrix-embed 页传入）：去控制条/视口切换，紧凑排版，mobile token 由 375 视口真触发 */

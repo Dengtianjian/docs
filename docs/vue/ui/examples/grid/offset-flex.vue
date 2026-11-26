@@ -14,9 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import KGrid from 'kit/vue/ui/components/Grid/Grid.vue'
-import KGridItem from 'kit/vue/ui/components/Grid/GridItem.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KGrid from 'kit/vue/ui/components/layouts/Grid/Grid.vue'
+import KGridItem from 'kit/vue/ui/components/layouts/Grid/GridItem.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 </script>
 
 <style scoped>

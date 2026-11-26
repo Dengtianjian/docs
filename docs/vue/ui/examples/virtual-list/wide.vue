@@ -49,9 +49,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KVirtualList from 'kit/vue/ui/components/VirtualList/VirtualList.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
+import KVirtualList from 'kit/vue/ui/components/data-display/VirtualList/VirtualList.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KTag from 'kit/vue/ui/components/data-display/Tag/Tag.vue'
 
 const columns = [
   { key: 'id', label: '工单号', width: 96 },

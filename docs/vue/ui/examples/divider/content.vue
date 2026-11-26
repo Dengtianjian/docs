@@ -41,13 +41,13 @@
 
 <script setup lang="ts">
 import { ArrowUpRight, Copy, Pencil, Settings, Trash } from '@vicons/tabler'
-import KDivider from 'kit/vue/ui/components/Divider/Divider.vue'
-import KIcon from 'kit/vue/ui/components/Icon/Icon.vue'
-import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
-import KText from 'kit/vue/ui/components/Typography/Text.vue'
-import KBadge from 'kit/vue/ui/components/Badge/Badge.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KDivider from 'kit/vue/ui/components/general/Divider/Divider.vue'
+import KIcon from 'kit/vue/ui/components/general/Icon/Icon.vue'
+import KTag from 'kit/vue/ui/components/data-display/Tag/Tag.vue'
+import KText from 'kit/vue/ui/components/general/Typography/Text.vue'
+import KBadge from 'kit/vue/ui/components/data-display/Badge/Badge.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 </script>
 
 <style scoped>

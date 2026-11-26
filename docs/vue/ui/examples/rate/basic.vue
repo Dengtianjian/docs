@@ -9,8 +9,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import KRate from 'kit/vue/ui/components/Rate/Rate.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KRate from 'kit/vue/ui/components/data-entry/Rate/Rate.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const score = ref(3)
 const half = ref(2.5)

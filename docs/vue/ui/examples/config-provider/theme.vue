@@ -14,9 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import KConfigProvider from 'kit/vue/ui/components/ConfigProvider/ConfigProvider.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KConfigProvider from 'kit/vue/ui/components/general/ConfigProvider/ConfigProvider.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 // 只写 seed，Map/Alias 全由 CSS 表达式图派生 —— 这就是「一变百变」
 const teal = { seed: { colorPrimary: '#13c2c2', borderRadius: 10 } }

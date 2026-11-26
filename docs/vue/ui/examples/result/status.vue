@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import KResult from 'kit/vue/ui/components/Result/Result.vue'
+import KResult from 'kit/vue/ui/components/feedback/Result/Result.vue'
 </script>
 
 <style scoped>

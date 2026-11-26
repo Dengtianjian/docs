@@ -15,9 +15,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KCard from 'kit/vue/ui/components/Card/Card.vue'
-import KCardAction from 'kit/vue/ui/components/Card/CardAction.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KCard from 'kit/vue/ui/components/layouts/Card/Card.vue'
+import KCardAction from 'kit/vue/ui/components/layouts/Card/CardAction.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 
 const clicks = ref(0)
 const locked = ref(true)

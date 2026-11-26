@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import KChart from 'kit/vue/ui/components/Chart/Chart.vue'
+import KChart from 'kit/vue/ui/components/data-display/Chart/Chart.vue'
 
 const categories = ['华东', '华南', '华北', '西南', '海外']
 const series = [

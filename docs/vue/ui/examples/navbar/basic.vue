@@ -17,8 +17,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KNavBar from 'kit/vue/ui/components/NavBar/NavBar.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KNavBar from 'kit/vue/ui/components/navigation/NavBar/NavBar.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 
 const backed = ref(false)
 </script>

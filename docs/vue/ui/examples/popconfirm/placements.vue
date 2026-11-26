@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import KPopconfirm from 'kit/vue/ui/components/Popconfirm/Popconfirm.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
+import KPopconfirm from 'kit/vue/ui/components/feedback/Popconfirm/Popconfirm.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 
 const placements = [
   'topLeft', 'top', 'topRight',

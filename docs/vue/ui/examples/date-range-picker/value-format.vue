@@ -19,8 +19,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KDateRangePicker from 'kit/vue/ui/components/DateRangePicker/DateRangePicker.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KDateRangePicker from 'kit/vue/ui/components/data-entry/DateRangePicker/DateRangePicker.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const range = ref<[string, string] | null>(['2026-11-01', '2026-11-05'])
 const rangeTime = ref<[string, string] | null>(['2026-11-01 09:00', '2026-11-05 18:00'])

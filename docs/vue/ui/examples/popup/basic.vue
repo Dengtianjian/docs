@@ -18,10 +18,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KCenterPopup from 'kit/vue/ui/components/CenterPopup/CenterPopup.vue'
-import KPopup from 'kit/vue/ui/components/Popup/Popup.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KCenterPopup from 'kit/vue/ui/components/overlay/CenterPopup/CenterPopup.vue'
+import KPopup from 'kit/vue/ui/components/overlay/Popup/Popup.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const bottom = ref(false)
 const center = ref(false)

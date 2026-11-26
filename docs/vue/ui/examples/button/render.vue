@@ -17,8 +17,8 @@
 
 <script setup lang="ts">
 import { h, ref } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import type { KButtonRenderScope } from 'kit/vue/ui/components/Button/Button.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import type { KButtonRenderScope } from 'kit/vue/ui/components/general/Button/Button.vue'
 
 const count = ref(0)
 const hits = ref(0)

@@ -16,8 +16,8 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KRadioGroup from 'kit/vue/ui/components/data-entry/Radio/RadioGroup.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const variants = ['outlined', 'filled', 'tonal', 'text'] as const
 const options = [

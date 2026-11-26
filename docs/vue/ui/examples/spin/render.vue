@@ -25,9 +25,9 @@
 
 <script setup lang="ts">
 import { h, ref } from 'vue'
-import KSpin from 'kit/vue/ui/components/Spin/Spin.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import type { KSpinRenderScope } from 'kit/vue/ui/components/Spin/Spin.vue'
+import KSpin from 'kit/vue/ui/components/feedback/Spin/Spin.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import type { KSpinRenderScope } from 'kit/vue/ui/components/feedback/Spin/Spin.vue'
 
 const loading = ref(true)
 

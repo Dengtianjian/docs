@@ -14,8 +14,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KSlider from 'kit/vue/ui/components/Slider/Slider.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KSlider from 'kit/vue/ui/components/data-entry/Slider/Slider.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const percent = ref(45)
 const price = ref<[number, number]>([200, 800])

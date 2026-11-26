@@ -32,9 +32,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KTable from 'kit/vue/ui/components/Table/Table.vue'
-import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
-import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
+import KTable from 'kit/vue/ui/components/data-display/Table/Table.vue'
+import KRadioGroup from 'kit/vue/ui/components/data-entry/Radio/RadioGroup.vue'
+import KSwitch from 'kit/vue/ui/components/data-entry/Switch/Switch.vue'
 import type { KTableColumn } from 'kit/vue/ui'
 
 interface Row extends Record<string, unknown> {

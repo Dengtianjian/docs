@@ -35,11 +35,11 @@
 
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue'
-import KVirtualList from 'kit/vue/ui/components/VirtualList/VirtualList.vue'
-import KInput from 'kit/vue/ui/components/Input/Input.vue'
-import KAvatar from 'kit/vue/ui/components/Avatar/Avatar.vue'
-import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
-import KEmpty from 'kit/vue/ui/components/Empty/Empty.vue'
+import KVirtualList from 'kit/vue/ui/components/data-display/VirtualList/VirtualList.vue'
+import KInput from 'kit/vue/ui/components/data-entry/Input/Input.vue'
+import KAvatar from 'kit/vue/ui/components/data-display/Avatar/Avatar.vue'
+import KTag from 'kit/vue/ui/components/data-display/Tag/Tag.vue'
+import KEmpty from 'kit/vue/ui/components/data-display/Empty/Empty.vue'
 
 const surnames = ['陈', '林', '周', '苏', '顾', '许', '沈', '陆', '唐', '江']
 const givens = ['一舟', '晚', '野', '念', '清明', '知远', '星河', '小凤', '棠', '照']

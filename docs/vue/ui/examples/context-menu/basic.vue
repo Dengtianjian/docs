@@ -10,8 +10,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KContextMenu from 'kit/vue/ui/components/ContextMenu/ContextMenu.vue'
-import type { KContextMenuItem } from 'kit/vue/ui/components/ContextMenu/ContextMenu.vue'
+import KContextMenu from 'kit/vue/ui/components/overlay/ContextMenu/ContextMenu.vue'
+import type { KContextMenuItem } from 'kit/vue/ui/components/overlay/ContextMenu/ContextMenu.vue'
 
 const last = ref('')
 const items: KContextMenuItem[] = [

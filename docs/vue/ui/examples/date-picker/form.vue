@@ -18,11 +18,11 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import KForm from 'kit/vue/ui/components/Form/Form.vue'
-import KFormItem from 'kit/vue/ui/components/Form/FormItem.vue'
-import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KForm from 'kit/vue/ui/components/data-entry/Form/Form.vue'
+import KFormItem from 'kit/vue/ui/components/data-entry/Form/FormItem.vue'
+import KDatePicker from 'kit/vue/ui/components/data-entry/DatePicker/DatePicker.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const form = ref<InstanceType<typeof KForm> | null>(null)
 const model = reactive<Record<string, unknown>>({

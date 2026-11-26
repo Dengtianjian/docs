@@ -36,8 +36,8 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref, watch } from 'vue'
 import { useBreakpoint } from 'kit/vue/ui'
-import KGrid from 'kit/vue/ui/components/Grid/Grid.vue'
-import KGridItem from 'kit/vue/ui/components/Grid/GridItem.vue'
+import KGrid from 'kit/vue/ui/components/layouts/Grid/Grid.vue'
+import KGridItem from 'kit/vue/ui/components/layouts/Grid/GridItem.vue'
 
 const { current } = useBreakpoint()
 const stringWrap = ref<HTMLElement>()

@@ -14,8 +14,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KCalendar from 'kit/vue/ui/components/Calendar/Calendar.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KCalendar from 'kit/vue/ui/components/data-entry/Calendar/Calendar.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const value = ref('2026-11-21')
 const last = ref('')

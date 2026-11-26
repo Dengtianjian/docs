@@ -4,8 +4,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KDatePicker from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
-import type { KDatePickerPreset } from 'kit/vue/ui/components/DatePicker/DatePicker.vue'
+import KDatePicker from 'kit/vue/ui/components/data-entry/DatePicker/DatePicker.vue'
+import type { KDatePickerPreset } from 'kit/vue/ui/components/data-entry/DatePicker/DatePicker.vue'
 
 const DAY = 24 * 60 * 60 * 1000
 const presets: KDatePickerPreset[] = [

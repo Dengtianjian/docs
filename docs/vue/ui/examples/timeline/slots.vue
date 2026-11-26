@@ -16,6 +16,6 @@
 </template>
 
 <script setup lang="ts">
-import KTimeline from 'kit/vue/ui/components/Timeline/Timeline.vue'
-import KTimelineItem from 'kit/vue/ui/components/Timeline/TimelineItem.vue'
+import KTimeline from 'kit/vue/ui/components/data-display/Timeline/Timeline.vue'
+import KTimelineItem from 'kit/vue/ui/components/data-display/Timeline/TimelineItem.vue'
 </script>

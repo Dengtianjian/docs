@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import KSearchBar from 'kit/vue/ui/components/SearchBar/SearchBar.vue'
+import KSearchBar from 'kit/vue/ui/components/data-entry/SearchBar/SearchBar.vue'
 
 const keyword = ref('')
 const searched = ref('')

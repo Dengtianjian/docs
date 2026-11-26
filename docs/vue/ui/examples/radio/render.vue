@@ -31,9 +31,9 @@
 
 <script setup lang="ts">
 import { h, ref } from 'vue'
-import KRadio from 'kit/vue/ui/components/Radio/Radio.vue'
-import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
-import type { KRadioRenderScope } from 'kit/vue/ui/components/Radio/Radio.vue'
+import KRadio from 'kit/vue/ui/components/data-entry/Radio/Radio.vue'
+import KRadioGroup from 'kit/vue/ui/components/data-entry/Radio/RadioGroup.vue'
+import type { KRadioRenderScope } from 'kit/vue/ui/components/data-entry/Radio/Radio.vue'
 
 const plan = ref('pro')
 const solo = ref<string | number | undefined>('b')

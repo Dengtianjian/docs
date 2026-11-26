@@ -8,6 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
-import KStatistic from 'kit/vue/ui/components/Statistic/Statistic.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+import KStatistic from 'kit/vue/ui/components/other/Statistic/Statistic.vue'
 </script>

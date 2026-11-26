@@ -17,9 +17,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KSteps from 'kit/vue/ui/components/Steps/Steps.vue'
-import KStep from 'kit/vue/ui/components/Steps/Step.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KSteps from 'kit/vue/ui/components/navigation/Steps/Steps.vue'
+import KStep from 'kit/vue/ui/components/navigation/Steps/Step.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 import type { KStepsSize } from 'kit/vue/ui'
 
 const current = ref(1)

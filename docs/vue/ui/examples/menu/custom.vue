@@ -36,10 +36,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KMenu from 'kit/vue/ui/components/Menu/Menu.vue'
-import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
-import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KMenu from 'kit/vue/ui/components/navigation/Menu/Menu.vue'
+import KRadioGroup from 'kit/vue/ui/components/data-entry/Radio/RadioGroup.vue'
+import KTag from 'kit/vue/ui/components/data-display/Tag/Tag.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 import type { KMenuItem } from 'kit/vue/ui'
 
 const size = ref<'sm' | 'md' | 'lg'>('md')

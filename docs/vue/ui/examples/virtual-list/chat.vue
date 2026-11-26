@@ -19,8 +19,8 @@
 </template>
 
 <script setup lang="ts">
-import KVirtualList from 'kit/vue/ui/components/VirtualList/VirtualList.vue'
-import KAvatar from 'kit/vue/ui/components/Avatar/Avatar.vue'
+import KVirtualList from 'kit/vue/ui/components/data-display/VirtualList/VirtualList.vue'
+import KAvatar from 'kit/vue/ui/components/data-display/Avatar/Avatar.vue'
 
 const names = ['陈一舟', '林晚', '周野', '苏念', '顾清明', '许知远', '沈星河', '陆小凤', '唐棠', '江照']
 const colors = [

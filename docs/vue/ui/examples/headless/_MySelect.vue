@@ -62,8 +62,8 @@
 </template>
 
 <script setup lang="ts">
-import KSelect from 'kit/vue/ui/components/Select/Select.vue'
-import type { KSelectOption } from 'kit/vue/ui/components/Select/Select.vue'
+import KSelect from 'kit/vue/ui/components/data-entry/Select/Select.vue'
+import type { KSelectOption } from 'kit/vue/ui/components/data-entry/Select/Select.vue'
 
 withDefaults(
   defineProps<{

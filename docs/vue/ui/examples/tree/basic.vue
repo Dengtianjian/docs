@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KTree from 'kit/vue/ui/components/Tree/Tree.vue'
+import KTree from 'kit/vue/ui/components/data-display/Tree/Tree.vue'
 
 const data = [
   {

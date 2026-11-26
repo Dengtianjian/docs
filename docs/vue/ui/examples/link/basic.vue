@@ -10,6 +10,6 @@
 </template>
 
 <script setup lang="ts">
-import KLink from 'kit/vue/ui/components/Link/Link.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KLink from 'kit/vue/ui/components/general/Link/Link.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 </script>

@@ -29,10 +29,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KPopover from 'kit/vue/ui/components/Popover/Popover.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KSwitch from 'kit/vue/ui/components/Switch/Switch.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KPopover from 'kit/vue/ui/components/overlay/Popover/Popover.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KSwitch from 'kit/vue/ui/components/data-entry/Switch/Switch.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 
 const enabled = ref(true)
 </script>

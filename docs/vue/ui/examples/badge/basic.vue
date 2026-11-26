@@ -34,9 +34,9 @@
 </template>
 
 <script setup lang="ts">
-import KBadge from 'kit/vue/ui/components/Badge/Badge.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KBadge from 'kit/vue/ui/components/data-display/Badge/Badge.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 </script>
 
 <style scoped>

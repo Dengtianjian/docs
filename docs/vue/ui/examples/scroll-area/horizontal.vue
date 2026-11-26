@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import KScrollArea from 'kit/vue/ui/components/ScrollArea/ScrollArea.vue'
+import KScrollArea from 'kit/vue/ui/components/layouts/ScrollArea/ScrollArea.vue'
 
 const tags = [
   '设计系统', '组件库', 'Vue 3', 'TypeScript', '可访问性',

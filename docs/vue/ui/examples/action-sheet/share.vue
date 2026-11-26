@@ -10,9 +10,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KShareSheet from 'kit/vue/ui/components/ShareSheet/ShareSheet.vue'
-import type { KActionSheetAction } from 'kit/vue/ui/components/ActionSheet/ActionSheet.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KShareSheet from 'kit/vue/ui/components/overlay/ShareSheet/ShareSheet.vue'
+import type { KActionSheetAction } from 'kit/vue/ui/components/overlay/ActionSheet/ActionSheet.vue'
 
 const open = ref(false)
 const last = ref('')

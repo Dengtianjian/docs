@@ -91,16 +91,16 @@
 
 <script setup lang="ts">
 import { h } from 'vue'
-import KAvatar from 'kit/vue/ui/components/Avatar/Avatar.vue'
-import KAvatarGroup from 'kit/vue/ui/components/Avatar/AvatarGroup.vue'
-import KButton from 'kit/vue/ui/components/Button/Button.vue'
-import KCard from 'kit/vue/ui/components/Card/Card.vue'
-import KChart from 'kit/vue/ui/components/Chart/Chart.vue'
-import KList from 'kit/vue/ui/components/List/List.vue'
-import KProgress from 'kit/vue/ui/components/Progress/Progress.vue'
-import KStatistic from 'kit/vue/ui/components/Statistic/Statistic.vue'
-import KTable from 'kit/vue/ui/components/Table/Table.vue'
-import KTag from 'kit/vue/ui/components/Tag/Tag.vue'
+import KAvatar from 'kit/vue/ui/components/data-display/Avatar/Avatar.vue'
+import KAvatarGroup from 'kit/vue/ui/components/data-display/Avatar/AvatarGroup.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KCard from 'kit/vue/ui/components/layouts/Card/Card.vue'
+import KChart from 'kit/vue/ui/components/data-display/Chart/Chart.vue'
+import KList from 'kit/vue/ui/components/data-display/List/List.vue'
+import KProgress from 'kit/vue/ui/components/feedback/Progress/Progress.vue'
+import KStatistic from 'kit/vue/ui/components/other/Statistic/Statistic.vue'
+import KTable from 'kit/vue/ui/components/data-display/Table/Table.vue'
+import KTag from 'kit/vue/ui/components/data-display/Tag/Tag.vue'
 import type { KTableColumn } from 'kit/vue/ui'
 
 interface Order {

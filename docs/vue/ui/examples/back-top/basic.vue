@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KBackTop from 'kit/vue/ui/components/BackTop/BackTop.vue'
+import KBackTop from 'kit/vue/ui/components/layouts/BackTop/BackTop.vue'
 
 const scrollEl = ref<HTMLElement | null>(null)
 const clicks = ref(0)

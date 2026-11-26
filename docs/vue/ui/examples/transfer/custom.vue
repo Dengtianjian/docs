@@ -19,8 +19,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import KTransfer from 'kit/vue/ui/components/Transfer/Transfer.vue'
-import type { KTransferItem } from 'kit/vue/ui/components/Transfer/Transfer.vue'
+import KTransfer from 'kit/vue/ui/components/data-entry/Transfer/Transfer.vue'
+import type { KTransferItem } from 'kit/vue/ui/components/data-entry/Transfer/Transfer.vue'
 
 const keys = ref<(string | number)[]>([])
 const data: KTransferItem[] = [

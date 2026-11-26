@@ -8,8 +8,8 @@
 
 <script setup lang="ts">
 import { Bell, Components, Compass, FileText, Forms, Home } from '@vicons/tabler'
-import KBreadcrumb from 'kit/vue/ui/components/Breadcrumb/Breadcrumb.vue'
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KBreadcrumb from 'kit/vue/ui/components/navigation/Breadcrumb/Breadcrumb.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 import type { KBreadcrumbItemOption } from 'kit/vue/ui'
 
 const items: KBreadcrumbItemOption[] = [

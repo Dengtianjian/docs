@@ -9,5 +9,5 @@
 </template>
 
 <script setup lang="ts">
-import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 </script>

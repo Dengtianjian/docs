@@ -11,8 +11,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import KSideBar from 'kit/vue/ui/components/SideBar/SideBar.vue'
-import type { KSideBarItem } from 'kit/vue/ui/components/SideBar/SideBar.vue'
+import KSideBar from 'kit/vue/ui/components/navigation/SideBar/SideBar.vue'
+import type { KSideBarItem } from 'kit/vue/ui/components/navigation/SideBar/SideBar.vue'
 
 const active = ref('recommend')
 const items: KSideBarItem[] = [

@@ -1,9 +1,9 @@
 <template>
   <KFlex gap="lg" align="start" wrap>
     <div class="block">
-      <div class="block-title">图标栏（mode="collapsed"）</div>
+      <div class="block-title">图标栏（collapsed）</div>
       <div class="rail">
-        <KMenu v-model:selected-keys="railSelected" :items="railItems" mode="collapsed" menu-label="图标栏导航" />
+        <KMenu v-model:selected-keys="railSelected" :items="railItems" collapsed menu-label="图标栏导航" />
       </div>
     </div>
 

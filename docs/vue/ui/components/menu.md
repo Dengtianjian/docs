@@ -16,7 +16,7 @@
 
 <Demo path="menu/submenu-modes" title="单项选择展开 / 弹层" :desc="['每个父级可用 `submenuMode: &quot;popup&quot;` 单独改为弹层显示，其余项保持 inline 展开。', '弹层触发可整菜单统一：`submenu-trigger=&quot;hover | click&quot;`，单项也可用 `submenuTrigger` 覆盖。', '示例：「报表中心」顶层弹层，「日志」二级弹层；弹层内默认继续内嵌展开。']" />
 
-<Demo path="menu/modes" title="手风琴 / 图标栏" :desc="['`mode=&quot;collapsed&quot;` 直接进入图标栏：只显示图标，子菜单走弹层。', '`accordion` 开启后 inline 同级只展开一个，打开深层项会保留祖先链。', '两者可组合进 Sider：折叠时用图标栏，展开时用手风琴。']" />
+<Demo path="menu/modes" title="手风琴 / 图标栏" :desc="['`collapsed` 直接进入图标栏：只显示图标，子菜单走弹层。', '`accordion` 开启后 inline 同级只展开一个，打开深层项会保留祖先链。', '两者可组合进 Sider：折叠时用图标栏，展开时用手风琴。']" />
 
 <Demo path="menu/horizontal" title="水平菜单 / 弹层子菜单" :desc="['`mode=&quot;horizontal&quot;` 顶部排列；子菜单悬停/点击弹出。', '弹层内多级子菜单继续内嵌展开。', '`placement` 语义复用通用弹层基座，横向默认 `bottomLeft`，纵向默认 `rightTop`。']" />
 
@@ -31,7 +31,7 @@
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | items | 菜单树；有 `children` 即子菜单 | `KMenuItem[]` | `[]` |
-| mode | 排列模式；`collapsed` 直接进入图标栏 | `'vertical' \| 'horizontal' \| 'inline' \| 'collapsed'` | `'inline'` |
+| mode | 排列模式 | `'vertical' \| 'horizontal' \| 'inline'` | `'inline'` |
 | multiple | 多选：点击切换选中项 | `boolean` | `false` |
 | accordion | inline 手风琴：同级只展开一个子菜单，保留祖先链 | `boolean` | `false` |
 | collapsed | 折叠态；不传则自动读父级 `KLayoutSider` | `boolean` | — |
@@ -79,7 +79,7 @@
 - 弹层内的更深层级以内嵌方式展开，避免多级 Teleport 的焦点与点外关闭互扰。
 - PC 弹层触发默认 hover，可整菜单设为 click；单项 `submenuTrigger` 覆盖时避免混用，否则会出现有的悬浮弹出、有的必须点击。
 - 弹层子菜单带淡入 + 0.96 缩放的进出场动画（0.1s）；减少动态偏好时直接显隐。
-- `mode="collapsed"` 等价于强制折叠的纵向图标栏，建议宽度 64px 左右；`accordion` 只影响 inline 展开，不改变弹层行为。
+- 图标栏使用 `collapsed`（显式传值优先于 Sider 折叠态），建议宽度 64px 左右；`accordion` 只影响 inline 展开，不改变弹层行为。
 - 折叠态下只显示顶层图标，文字通过原生 `title` 兜底；子菜单改为右侧弹层。图标默认 16px，折叠态放大到 20px。
 - 展开的父级不铺底色；子级选中时父级只保留主色文字，hover 时加浅底、文字仍保持主色。
 - inline 子菜单展开/收起是对齐 naive-ui 的折叠过渡：max-height + 透明度 + 间距 0.3s 同步动画，动画期间不接收点击；减少动态偏好时直接切换。

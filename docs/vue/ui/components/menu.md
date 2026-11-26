@@ -18,6 +18,8 @@
 
 <Demo path="menu/modes" title="手风琴 / 图标栏" :desc="['`collapsed` 直接进入图标栏：只显示图标，子菜单走弹层。', '`accordion` 开启后 inline 同级只展开一个，打开深层项会保留祖先链。', '两者可组合进 Sider：折叠时用图标栏，展开时用手风琴。']" />
 
+<Demo path="menu/vertical" title="垂直菜单 / 右侧弹层" :desc="['`mode=&quot;vertical&quot;`：一级项纵向排列，子菜单从右侧弹层展开，对应 antd 的垂直菜单形态。', '与 inline 的区别是不在行内展开；图标与文字常显。', '弹层触发同样支持 hover / click。']" />
+
 <Demo path="menu/horizontal" title="水平菜单 / 弹层子菜单" :desc="['`mode=&quot;horizontal&quot;` 顶部排列；子菜单悬停/点击弹出。', '弹层内多级子菜单继续内嵌展开。', '`placement` 语义复用通用弹层基座，横向默认 `bottomLeft`，纵向默认 `rightTop`。']" />
 
 <Demo path="menu/horizontal-icons" title="水平菜单（带图标）" :desc="['顶层项配置 `icon` 后水平菜单带图标展示。', '图标默认 16px；折叠态放大到 20px，文字隐藏。']" />

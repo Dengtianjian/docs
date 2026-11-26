@@ -14,6 +14,8 @@
 
 <Demo path="menu/horizontal" title="水平菜单 / 弹层子菜单" :desc="['`mode=&quot;horizontal&quot;` 顶部排列；子菜单悬停/点击弹出。', '弹层内多级子菜单继续内嵌展开。', '`placement` 语义复用通用弹层基座，横向默认 `bottomLeft`，纵向默认 `rightTop`。']" />
 
+<Demo path="menu/horizontal-icons" title="水平菜单（带图标）" :desc="['顶层项配置 `icon` 后水平菜单带图标展示。', '图标默认 16px；折叠态放大到 20px，文字隐藏。']" />
+
 <Demo path="menu/sider" title="Sider 折叠联动" :desc="['`KLayoutSider collapsible` 提供触发器与折叠上下文。', '内部 `KMenu mode=&quot;inline&quot;` 自动读取折叠态：收起时只显示图标，子菜单改为弹层。', '`v-model:collapsed` 可受控；`#trigger` 可替换默认折叠按钮。']" />
 
 ## API
@@ -66,6 +68,7 @@
 - 有 `children` 的项只负责展开，不触发 `select`；叶子项选中后弹层自动关闭。
 - 键盘：vertical/inline 用 ↑/↓，horizontal 用 ←/→；Home/End 跳首尾；Enter/Space 展开或选中；inline 子菜单可用 → 展开、← 收起；弹层内 ↑/↓ 漫游，Esc/← 返回父项。
 - 弹层内的更深层级以内嵌方式展开，避免多级 Teleport 的焦点与点外关闭互扰。
-- 折叠态下只显示顶层图标，文字通过原生 `title` 兜底；子菜单改为右侧弹层。
+- 折叠态下只显示顶层图标，文字通过原生 `title` 兜底；子菜单改为右侧弹层。图标默认 16px，折叠态放大到 20px。
+- 菜单默认文字/图标使用 `text-secondary`，hover 提升到 `text`；弹层子菜单最小宽度 200px，条目与父级行高一致。
 - `to` 渲染 `RouterLink`，需要应用已安装 vue-router；文档环境请用 `href`。
 - Sider 折叠由 `KLayoutSider` 提供：`collapsible` + `v-model:collapsed`，内部 Menu 通过 context 自动同步。

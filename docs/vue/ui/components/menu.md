@@ -24,6 +24,8 @@
 
 <Demo path="menu/custom" title="自定义渲染 / 尺寸" :desc="['`#icon` / `#label` / `#extra` / `#arrow` 插槽覆盖默认渲染，scope 带 `item / level / active`。', '`size` 三档同时作用于菜单与弹层行高、字号；`indent` 控制每级缩进。']" />
 
+<Demo path="menu/overflow" title="溢出收起" :desc="['`overflow` 开启后，水平模式超出宽度、纵向模式超出高度时，剩余项收进末尾「更多」弹层。', '随容器尺寸变化自动重算；被收起项仍然可选中，选中后「更多」呈现高亮。']" />
+
 <Demo path="menu/horizontal" title="水平菜单 / 弹层子菜单" :desc="['`mode=&quot;horizontal&quot;` 顶部排列；子菜单悬停/点击弹出。', '弹层内多级子菜单继续内嵌展开。', '`placement` 语义复用通用弹层基座，横向默认 `bottomLeft`，纵向默认 `rightTop`。']" />
 
 <Demo path="menu/horizontal-icons" title="水平菜单（带图标）" :desc="['顶层项配置 `icon` 后水平菜单带图标展示。', '图标默认 16px；折叠态放大到 20px，文字隐藏。']" />
@@ -43,12 +45,13 @@
 | disabled | 整菜单禁用 | `boolean` | `false` |
 | multiple | 多选：点击切换选中项 | `boolean` | `false` |
 | accordion | inline 手风琴：同级只展开一个子菜单，保留祖先链 | `boolean` | `false` |
+| overflow | 溢出收起：水平宽度 / 纵向高度不够时收进末尾「更多」弹层 | `boolean` | `false` |
 | collapsed | 折叠态；不传则自动读父级 `KLayoutSider` | `boolean` | — |
 | submenuTrigger | 弹层子菜单触发方式 | `'hover' \| 'click'` | `'hover'` |
 | menuLabel | 菜单的 `aria-label` | `string` | — |
 | v-model:selected-keys | 选中项 key 列表 | `string[]` | `[]` |
 | v-model:open-keys | inline 展开项 key 列表 | `string[]` | `[]` |
-| classNames | 部件类名（`root / item / itemActive / itemDanger / icon / label / submenu / submenuActive / arrow / subList / popup / divider / group / groupTitle / groupList / extra`） | `Partial<Record<Part, string>>` | — |
+| classNames | 部件类名（`root / item / itemActive / itemDanger / icon / label / submenu / submenuActive / arrow / subList / popup / divider / group / groupTitle / groupList / extra / overflow`） | `Partial<Record<Part, string>>` | — |
 | styles | 部件内联样式（同上） | `Partial<Record<Part, CSSProperties>>` | — |
 
 <CommonProps />
@@ -92,7 +95,7 @@
 
 ### 部件
 
-`root` / `item` / `icon` / `label` / `submenu` / `arrow` / `subList` / `popup` / `divider` / `group` / `groupTitle` / `groupList` / `extra`。
+`root` / `item` / `icon` / `label` / `submenu` / `arrow` / `subList` / `popup` / `divider` / `group` / `groupTitle` / `groupList` / `extra` / `overflow`。
 
 ## 注意事项
 
@@ -103,6 +106,7 @@
 - 弹层子菜单进出场对齐 antd 的 slide-up：起点 `scaleY(0.8)`、原点左上、0.3s `cubic-bezier(.08,.82,.17,1)` 并淡入；减少动态偏好时直接显隐。
 - 图标栏使用 `collapsed`（显式传值优先于 Sider 折叠态），建议宽度 64px 左右；`accordion` 只影响 inline 展开，不改变弹层行为。
 - 分组（`type: "group"`）适合纵向与弹层菜单；水平菜单不建议使用分组，会把横向排列撑成多行。
+- `overflow` 依赖容器实际尺寸（ResizeObserver），纵向需给菜单或父级明确高度才会触发；收起项在「更多」弹层里按原层级渲染。
 - 折叠态下只显示顶层图标，文字通过原生 `title` 兜底；子菜单改为右侧弹层。图标默认 16px，折叠态放大到 20px。
 - 展开的父级不铺底色；子级选中时父级只保留主色文字，hover 时加浅底、文字仍保持主色。
 - inline 子菜单展开/收起是对齐 naive-ui 的折叠过渡：max-height + 透明度 + 间距 0.3s 同步动画，动画期间不接收点击；减少动态偏好时直接切换。

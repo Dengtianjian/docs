@@ -14,7 +14,7 @@
 
 <Demo path="menu/multi-level" title="多级菜单 / 四级展开" :desc="['`items` 递归嵌套到任意层级，示例展开到第四级（系统管理 → 用户与权限 → 角色 → 管理员）。', '`open-keys` 一次控制整条展开链；每级缩进 16px，行高与 4px 间距保持一致。', 'horizontal / 折叠态下子菜单转为弹层，弹层内继续内嵌展开。']" />
 
-<Demo path="menu/submenu-modes" title="单项选择展开 / 弹层" :desc="['每个父级可用 `submenuMode: &quot;popup&quot;` 单独改为弹层显示，其余项保持 inline 展开。', '示例：「报表中心」顶层弹层，「日志」二级弹层；弹层内默认继续内嵌展开。']" />
+<Demo path="menu/submenu-modes" title="单项选择展开 / 弹层" :desc="['每个父级可用 `submenuMode: &quot;popup&quot;` 单独改为弹层显示，其余项保持 inline 展开。', '弹层触发可整菜单统一：`submenu-trigger=&quot;hover | click&quot;`，单项也可用 `submenuTrigger` 覆盖。', '示例：「报表中心」顶层弹层，「日志」二级弹层；弹层内默认继续内嵌展开。']" />
 
 <Demo path="menu/horizontal" title="水平菜单 / 弹层子菜单" :desc="['`mode=&quot;horizontal&quot;` 顶部排列；子菜单悬停/点击弹出。', '弹层内多级子菜单继续内嵌展开。', '`placement` 语义复用通用弹层基座，横向默认 `bottomLeft`，纵向默认 `rightTop`。']" />
 
@@ -53,6 +53,7 @@
 | divided | 在本项前插入分隔线（首项忽略） | `boolean` |
 | to / href / external | 路由 / 普通链接 / 外链 | `RouteLocationRaw \| string` / `string` / `boolean` |
 | submenuMode | 本项子菜单的展开方式；`popup` 改为弹层显示（默认跟随菜单） | `'inline' \| 'popup'` |
+| submenuTrigger | 本项弹层触发方式；默认跟随菜单，建议整菜单统一 | `'hover' \| 'click'` |
 | children | 子菜单项 | `KMenuItem[]` |
 
 ### Events
@@ -73,6 +74,7 @@
 - 有 `children` 的项只负责展开，不触发 `select`；叶子项选中后弹层自动关闭。
 - 键盘：vertical/inline 用 ↑/↓，horizontal 用 ←/→；Home/End 跳首尾；Enter/Space 展开或选中；inline 子菜单可用 → 展开、← 收起；弹层内 ↑/↓ 漫游，Esc/← 返回父项。
 - 弹层内的更深层级以内嵌方式展开，避免多级 Teleport 的焦点与点外关闭互扰。
+- PC 弹层触发默认 hover，可整菜单设为 click；单项 `submenuTrigger` 覆盖时避免混用，否则会出现有的悬浮弹出、有的必须点击。
 - 折叠态下只显示顶层图标，文字通过原生 `title` 兜底；子菜单改为右侧弹层。图标默认 16px，折叠态放大到 20px。
 - 展开的父级不铺底色；子级选中时父级只保留主色文字，hover 时加浅底、文字仍保持主色。
 - inline 子菜单展开/收起是对齐 naive-ui 的折叠过渡：max-height + 透明度 + 间距 0.3s 同步动画，动画期间不接收点击；减少动态偏好时直接切换。

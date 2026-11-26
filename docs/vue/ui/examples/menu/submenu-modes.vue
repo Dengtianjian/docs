@@ -1,13 +1,23 @@
 <template>
   <KFlex vertical gap="md" style="width: 300px">
+    <KRadioGroup
+      v-model="trigger"
+      shape="button"
+      style="align-self: flex-start"
+      :options="[
+        { label: 'hover 弹出', value: 'hover' },
+        { label: 'click 弹出', value: 'click' },
+      ]"
+    />
     <KMenu
       v-model:selected-keys="selected"
       v-model:open-keys="open"
       :items="items"
+      :submenu-trigger="trigger"
       menu-label="混合展开方式"
       style="border: 1px solid var(--k-color-border-secondary); border-radius: var(--k-border-radius)"
     />
-    <div class="menu-tip">「报表中心」「日志」为弹层显示，其余为展开显示。</div>
+    <div class="menu-tip">「报表中心」「日志」弹层；整菜单统一 hover / click 触发。</div>
   </KFlex>
 </template>
 
@@ -15,6 +25,7 @@
 import { ref } from 'vue'
 import { defineComponent, h } from 'vue'
 import KMenu from 'kit/vue/ui/components/Menu/Menu.vue'
+import KRadioGroup from 'kit/vue/ui/components/Radio/RadioGroup.vue'
 import KFlex from 'kit/vue/ui/components/Flex/Flex.vue'
 import type { KMenuItem } from 'kit/vue/ui'
 
@@ -68,6 +79,7 @@ const HelpIcon = svg([
 ])
 
 const selected = ref<string[]>(['profile'])
+const trigger = ref<'hover' | 'click'>('hover')
 const open = ref<string[]>(['account', 'system'])
 const items: KMenuItem[] = [
   { key: 'dashboard', label: '仪表盘', icon: DashboardIcon },

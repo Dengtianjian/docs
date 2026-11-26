@@ -92,3 +92,9 @@
 - 菜单默认文字/图标使用 `text-secondary`，hover 提升到 `text`；弹层子菜单最小宽度 200px，条目与父级行高一致。
 - `to` 渲染 `RouterLink`，需要应用已安装 vue-router；文档环境请用 `href`。
 - Sider 折叠由 `KLayoutSider` 提供：`collapsible` + `v-model:collapsed`，内部 Menu 通过 context 自动同步。
+<style>
+/* 文档站 :where(.vp-doc) li + li 的间距会穿透进菜单演示，统一在页面收掉 */
+.vp-doc._vue_ui_components_menu .k-menu li + li {
+  margin-top: 0;
+}
+</style>

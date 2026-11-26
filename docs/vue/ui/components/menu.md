@@ -12,6 +12,8 @@
 
 <Demo path="menu/inline" title="内嵌菜单 / 多级 / 受控" :desc="['`items` 递归树；有 `children` 即子菜单。', '`v-model:selected-keys` 与 `v-model:open-keys` 受控选中和展开。', '`divided` 分隔线；`disabled` 禁用项会被键盘跳过。']" />
 
+<Demo path="menu/multi-level" title="多级菜单 / 四级展开" :desc="['`items` 递归嵌套到任意层级，示例展开到第四级（系统管理 → 用户与权限 → 角色 → 管理员）。', '`open-keys` 一次控制整条展开链；每级缩进 16px，行高与 4px 间距保持一致。', 'horizontal / 折叠态下子菜单转为弹层，弹层内继续内嵌展开。']" />
+
 <Demo path="menu/horizontal" title="水平菜单 / 弹层子菜单" :desc="['`mode=&quot;horizontal&quot;` 顶部排列；子菜单悬停/点击弹出。', '弹层内多级子菜单继续内嵌展开。', '`placement` 语义复用通用弹层基座，横向默认 `bottomLeft`，纵向默认 `rightTop`。']" />
 
 <Demo path="menu/horizontal-icons" title="水平菜单（带图标）" :desc="['顶层项配置 `icon` 后水平菜单带图标展示。', '图标默认 16px；折叠态放大到 20px，文字隐藏。']" />

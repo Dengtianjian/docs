@@ -14,6 +14,8 @@
 
 <Demo path="menu/multi-level" title="多级菜单 / 四级展开" :desc="['`items` 递归嵌套到任意层级，示例展开到第四级（系统管理 → 用户与权限 → 角色 → 管理员）。', '`open-keys` 一次控制整条展开链；每级缩进 16px，行高与 4px 间距保持一致。', 'horizontal / 折叠态下子菜单转为弹层，弹层内继续内嵌展开。']" />
 
+<Demo path="menu/submenu-modes" title="单项选择展开 / 弹层" :desc="['每个父级可用 `submenuMode: &quot;popup&quot;` 单独改为弹层显示，其余项保持 inline 展开。', '示例：「报表中心」顶层弹层，「日志」二级弹层；弹层内默认继续内嵌展开。']" />
+
 <Demo path="menu/horizontal" title="水平菜单 / 弹层子菜单" :desc="['`mode=&quot;horizontal&quot;` 顶部排列；子菜单悬停/点击弹出。', '弹层内多级子菜单继续内嵌展开。', '`placement` 语义复用通用弹层基座，横向默认 `bottomLeft`，纵向默认 `rightTop`。']" />
 
 <Demo path="menu/horizontal-icons" title="水平菜单（带图标）" :desc="['顶层项配置 `icon` 后水平菜单带图标展示。', '图标默认 16px；折叠态放大到 20px，文字隐藏。']" />
@@ -50,6 +52,7 @@
 | danger | 危险样式 | `boolean` |
 | divided | 在本项前插入分隔线（首项忽略） | `boolean` |
 | to / href / external | 路由 / 普通链接 / 外链 | `RouteLocationRaw \| string` / `string` / `boolean` |
+| submenuMode | 本项子菜单的展开方式；`popup` 改为弹层显示（默认跟随菜单） | `'inline' \| 'popup'` |
 | children | 子菜单项 | `KMenuItem[]` |
 
 ### Events

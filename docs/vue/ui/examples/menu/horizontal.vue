@@ -5,7 +5,6 @@
       :items="items"
       mode="horizontal"
       menu-label="水平导航"
-      style="border-bottom: 1px solid var(--k-color-border-secondary)"
     />
     <div class="menu-tip">选中：{{ selected.join(', ') || '—' }}</div>
   </KFlex>

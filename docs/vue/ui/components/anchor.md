@@ -11,6 +11,8 @@
 
 <Demo path="anchor/basic" title="滚动高亮 / 多级 / 平滑跳转" :desc="['`items` 用 `key + href` 描述目标，`children` 形成缩进层级。', '`target` 传滚动容器，缺省监听 window；`targetOffset` 同时影响高亮阈值与跳转落点。', '点击后同步 hash，并触发 `change`。']" />
 
+<Demo path="anchor/horizontal" title="横向排列" :desc="['`direction=&quot;horizontal&quot;` 时高亮段在底部，跟随当前项移动。', '点击、滚动高亮与 `targetOffset` 逻辑与纵向一致；多级锚点建议保持纵向。']" />
+
 ## API
 
 ### Props
@@ -57,8 +59,16 @@
 
 ## 注意事项
 
+- 灰色轨道与高亮段同为 2px；高亮段用主色跟随当前锚点移动并覆盖当前项，不随距离累计。横向模式高亮段在底部，按当前项左右移动。
 - `href` 仅支持 `#id`；组件用 `getElementById` 查找目标，非 `#` 开头会被忽略。
 - 标题顺序应与 DOM 顺序一致；容器滚到底时自动高亮最后一项。
 - 点击使用 `history.replaceState` 同步 hash，避免浏览器默认跳转与平滑滚动冲突。
 - 嵌套项以缩进平铺渲染；父级在子项激活时一并高亮，`aria-current` 只落在当前叶子。
 - 开启 `affix` 后使用 sticky，需要外层滚动容器无 `overflow: hidden` 截断。
+
+<style>
+/* 文档站 :where(.vp-doc) li + li 的间距会穿透进锚点演示，统一在页面收掉 */
+.vp-doc._vue_ui_components_anchor .k-anchor li + li {
+  margin-top: 0;
+}
+</style>

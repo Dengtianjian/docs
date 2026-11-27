@@ -82,7 +82,7 @@ app?.drawer?.destroyAll();
 
 ## 注意事项
 
-- 打开时锁定 body 滚动并补偿滚动条宽度，关闭后恢复原样，页面不会因滚动条消失而抖动。
+- 打开时锁定 body 滚动并保留滚动条槽位（`scrollbar-gutter`），固定导航、侧栏与正文都不会位移；关闭后恢复原样。
 - 锁定期间接管焦点：焦点进入正文首个可聚焦元素，Tab 在面板内循环，关闭后还原到打开前元素。
 - 与 `KModal` 共享叠层栈：同时打开时只有最上层响应 Esc 与 Tab 循环。
 - 抽屉内展开 Select / Dropdown / DatePicker 等控件时，弹层 Teleport 到 body 并按层级抬高，不会被抽屉裁切。

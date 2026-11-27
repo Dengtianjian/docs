@@ -41,7 +41,7 @@ const ChevronRight = defineComponent({
           height: '1em',
           fill: 'none',
           stroke: 'currentColor',
-          'stroke-width': 1.6,
+          'stroke-width': 1,
           'stroke-linecap': 'round',
           'stroke-linejoin': 'round',
           'aria-hidden': 'true',

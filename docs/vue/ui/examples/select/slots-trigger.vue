@@ -2,14 +2,14 @@
   <KFlex gap="md" vertical style="width: 280px">
     <KSelect v-model="city" filterable :options="cities" placeholder="选择城市">
       <template #prefix>
-        <svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M8 14s4.5-4.2 4.5-7.5a4.5 4.5 0 0 0-9 0C3.5 9.8 8 14 8 14Z" /><circle cx="8" cy="6.5" r="1.6" /></svg>
+        <IconMapPin size="1em" />
       </template>
       <template #suffix>
         <span style="padding: 0 6px; border-radius: 999px; background: var(--k-color-primary-bg); color: var(--k-color-primary); font-size: 11px; line-height: 18px">必填</span>
       </template>
       <template #label="{ option }">
         <span style="display: inline-flex; align-items: center; gap: 6px">
-          <svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M8 14s4.5-4.2 4.5-7.5a4.5 4.5 0 0 0-9 0C3.5 9.8 8 14 8 14Z" /><circle cx="8" cy="6.5" r="1.6" /></svg>
+          <IconMapPin size="1em" />
           {{ option?.label }}
         </span>
       </template>
@@ -32,6 +32,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { IconMapPin } from '@tabler/icons-vue'
 import KSelect from 'kit/vue/ui/components/data-entry/Select/Select.vue'
 import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 

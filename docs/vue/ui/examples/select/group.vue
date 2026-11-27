@@ -2,7 +2,7 @@
   <KFlex gap="md" vertical style="width: 260px">
     <KSelect v-model="picked" mode="multiple" :options="opts" hide-selected placeholder="分组 + 隐藏已选（选完组空整组消失）">
       <template #prefix>
-        <svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="4.5" /><path d="M10.5 10.5L14 14" /></svg>
+        <IconSearch size="1em" />
       </template>
     </KSelect>
     <KSelect v-model="single" :options="opts" placeholder="前后缀插槽（箭头保留）">
@@ -15,6 +15,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { IconSearch } from '@tabler/icons-vue'
 import KSelect from 'kit/vue/ui/components/data-entry/Select/Select.vue'
 import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 

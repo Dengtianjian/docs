@@ -34,7 +34,7 @@
             ? { background: 'var(--k-color-primary)', color: '#fff' }
             : { boxShadow: 'inset 0 0 0 1px var(--k-color-border)' }"
         >
-          <svg v-if="selected" viewBox="0 0 10 8" width="8" height="6.4" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 4.2l2.6 2.6L9 1.4" /></svg>
+          <IconCheck v-if="selected" :size="12" />
         </span>
       </template>
     </KSelect>
@@ -47,6 +47,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { IconCheck } from '@tabler/icons-vue'
 import KSelect from 'kit/vue/ui/components/data-entry/Select/Select.vue'
 import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
 

@@ -2,9 +2,7 @@
   <KFlex vertical gap="md" style="width: 100%">
     <KAlert type="success">
       <template #icon>
-        <svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M8 1.8l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.6l-3.8 2 .7-4.3-3.1-3 4.3-.6z" />
-        </svg>
+        <IconStar size="1em" />
       </template>
       <template #title>
         构建完成
@@ -39,6 +37,7 @@
 </template>
 
 <script setup lang="ts">
+import { IconStar } from '@tabler/icons-vue'
 import KAlert from 'kit/vue/ui/components/feedback/Alert/Alert.vue'
 import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
 import KTag from 'kit/vue/ui/components/data-display/Tag/Tag.vue'

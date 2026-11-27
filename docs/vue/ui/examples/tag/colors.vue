@@ -29,7 +29,7 @@ const RefreshIcon = defineComponent({
   name: 'RefreshIcon',
   setup() {
     return () =>
-      h('svg', { viewBox: '0 0 16 16', width: '1em', height: '1em', fill: 'none', stroke: 'currentColor', 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, [
+      h('svg', { viewBox: '0 0 16 16', width: '1em', height: '1em', fill: 'none', stroke: 'currentColor', 'stroke-width': 1, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, [
         h('path', { d: 'M13 8a5 5 0 1 1-1.5-3.6' }),
         h('path', { d: 'M13 3v3h-3' }),
       ])

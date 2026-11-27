@@ -1,4 +1,4 @@
-# 路由页签
+# 路由页签（KRouterTabs）
 
 > 组件类型：二次封装（Composed） · `KRouterTabs = KTabs + vue-router`。页签 key 直接使用路由 name，激活项跟随路由（含前进后退），点击页签执行导航。
 

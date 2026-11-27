@@ -12,42 +12,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { defineComponent, h } from 'vue'
+import { IconHelpCircle, IconSettings } from '@tabler/icons-vue'
 import KMenu from 'kit/vue/ui/components/navigation/Menu/Menu.vue'
 import type { KMenuItem } from 'kit/vue/ui'
-
-function svg(children: ReturnType<typeof h>[]) {
-  return defineComponent({
-    setup() {
-      return () =>
-        h(
-          'svg',
-          {
-            viewBox: '0 0 16 16',
-            width: '1em',
-            height: '1em',
-            fill: 'none',
-            stroke: 'currentColor',
-            'stroke-width': 1.5,
-            'stroke-linecap': 'round',
-            'stroke-linejoin': 'round',
-            'aria-hidden': 'true',
-          },
-          children,
-        )
-    },
-  })
-}
-
-const SettingsIcon = svg([
-  h('circle', { cx: 8, cy: 8, r: 2.1 }),
-  h('path', { d: 'M8 2.6v1.2M8 12.2v1.2M2.6 8h1.2M12.2 8h1.2M4.2 4.2l.9.9M10.9 10.9l.9.9M11.8 4.2l-.9.9M5.1 10.9l-.9.9' }),
-])
-const HelpIcon = svg([
-  h('circle', { cx: 8, cy: 8, r: 5.2 }),
-  h('path', { d: 'M6.4 6.2a1.7 1.7 0 1 1 2.4 1.6c-.5.2-.8.6-.8 1.2v.4' }),
-  h('path', { d: 'M8 11.6h.01' }),
-])
 
 const selected = ref<string[]>(['article'])
 const items: KMenuItem[] = [
@@ -73,13 +40,13 @@ const items: KMenuItem[] = [
   {
     key: 'settings',
     label: '设置',
-    icon: SettingsIcon,
+    icon: IconSettings,
     children: [
       { key: 'profile', label: '个人资料' },
       { key: 'security', label: '安全设置' },
     ],
   },
-  { key: 'help', label: '帮助', icon: HelpIcon, divided: true },
+  { key: 'help', label: '帮助', icon: IconHelpCircle, divided: true },
 ]
 </script>
 

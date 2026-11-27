@@ -1,4 +1,4 @@
-# 路由菜单
+# 路由菜单（KRouterMenu）
 
 > 组件类型：二次封装（Composed） · `KRouterMenu = KMenu + vue-router`。把路由表或手写菜单转成 KMenu 选项，激活项由当前路由决定，子路由命中时父级自动展开。
 

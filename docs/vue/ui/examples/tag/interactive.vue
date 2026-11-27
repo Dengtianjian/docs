@@ -31,7 +31,7 @@ const presets: KTagPresetColor[] = ['default', 'processing', 'success', 'warning
 const TagIcon = defineComponent({
   setup() {
     return () =>
-      h('svg', { viewBox: '0 0 16 16', width: '1em', height: '1em', fill: 'none', stroke: 'currentColor', 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, [
+      h('svg', { viewBox: '0 0 16 16', width: '1em', height: '1em', fill: 'none', stroke: 'currentColor', 'stroke-width': 1, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, [
         h('path', { d: 'M2.5 4.5h11v4l-4 4h-7z' }),
         h('circle', { cx: 5.6, cy: 7.6, r: 0.9 }),
       ])

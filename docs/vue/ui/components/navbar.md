@@ -19,6 +19,12 @@
 
 <Demo path="navbar/long-title" title="标题超长" :desc="['标题与副标题单行省略，不换行。', '两侧各预留 72px（`--k-navbar-side-min`），标题不会压住左右操作。']" />
 
+<Demo path="navbar/align" title="标题位置：靠左 / 靠右" :desc="['`classNames.center` 撑开中间区域，再改 `text-align`。', '默认居中；左右位置按需覆盖。']" />
+
+<Demo path="navbar/tabs" title="标题使用 Tabs" :desc="['`#title` 插槽内放 `KTabs`，导航即页签栏。', '`back`、右侧插槽与部件样式照常可用。']" />
+
+<Demo path="navbar/complex" title="复杂导航" :desc="['返回键 + 左侧头像 + 标题/副标题 + 右侧下拉菜单。', '`classNames.root` 改高度 56px，其余部件保持默认。']" />
+
 ## API
 
 ### Props

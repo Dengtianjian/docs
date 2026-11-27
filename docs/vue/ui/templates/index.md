@@ -7,7 +7,7 @@
 | 类型 | 说明 | 当前条目 |
 | --- | --- | --- |
 | 页面（Pages） | 带完整信息层级与页面容器的模板，可直接作为路由页起点 | [数据看板](./pages/dashboard.md)、[成员管理](./pages/members.md)、[移动端确认订单](./pages/mobile-order.md) |
-| 区块（Blocks） | 可嵌入任意页面的功能区块，按业务场景组合 | [登录](./blocks/login.md)、[定价方案](./blocks/pricing.md)、[通知设置](./blocks/settings.md) |
+| 区块（Blocks） | 可嵌入任意页面的功能区块，按业务场景组合 | [登录](./blocks/login.md)、[定价方案](./blocks/pricing.md)、[通知设置](./blocks/settings.md)、[苹果活动环](./blocks/activity-rings.md) |
 | 二次封装（Composed） | 对 K UI 组件再封装一层形成的可复用组件，处理路由等额外能力 | [路由页签](./composed/router-tabs.md)、[路由菜单](./composed/router-menu.md) |
 
 ## 怎么用

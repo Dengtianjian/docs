@@ -33,6 +33,7 @@
 | trigger | 触发方式，可组合 | `'hover' \| 'focus' \| 'click'` 或数组 | `['hover','focus']` |
 | mouseEnterDelay | 移入延迟（秒） | `number` | `0.1` |
 | mouseLeaveDelay | 移出延迟（秒；leave 容差留出移入弹层的时间） | `number` | `0.1` |
+| distance | 气泡与触发元素的间距（px） | `number` | `4` |
 | open / v-model:open | 受控开合 | `boolean` | — |
 | disabled | 禁用弹出 | `boolean` | `false` |
 | arrow | 显示箭头 | `boolean` | `true` |

@@ -422,7 +422,8 @@ export default defineConfig({
                   items: [
                     { text: "登录", link: "/vue/ui/templates/blocks/login" },
                     { text: "定价方案", link: "/vue/ui/templates/blocks/pricing" },
-                    { text: "通知设置", link: "/vue/ui/templates/blocks/settings" }
+                    { text: "通知设置", link: "/vue/ui/templates/blocks/settings" },
+                    { text: "苹果活动环", link: "/vue/ui/templates/blocks/activity-rings" }
                   ]
                 },
                 {

@@ -3,7 +3,7 @@
     <div class="phone-frame">
       <KNavBar title="订单详情" subtitle="2026-11-20" @back="backed = true">
         <template #right>
-          <KButton size="sm" variant="text">分享</KButton>
+          <KButton variant="text">分享</KButton>
         </template>
       </KNavBar>
       <div class="phone-body">

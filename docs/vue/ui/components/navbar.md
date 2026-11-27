@@ -11,6 +11,14 @@
 
 <Demo path="navbar/basic" title="标题 / 副标题 / 返回 / 右侧操作" :desc="['`title` 与 `subtitle`；`back` 控制返回按钮。', '`#left` / `#title` / `#subtitle` / `#right` 插槽可替换各区域。', '`fixed` 固定在视口顶部；`safeArea` 处理刘海屏安全区。']" />
 
+<Demo path="navbar/slots" title="自定义插槽" :desc="['`back=false` 隐藏返回按钮；`#left` 放头像与昵称。', '`#title` / `#subtitle` / `#right` 替换中间与右侧内容。']" />
+
+<Demo path="navbar/parts" title="部件样式覆盖" :desc="['`classNames.root` 换背景与分隔线，其余部件保持默认。', '`styles.title` 只改标题颜色。']" />
+
+<Demo path="navbar/height" title="自定义高度与边框" :desc="['`classNames.root` 覆盖 `--k-navbar-height` 抬高度。', '同一处改 `border-bottom`，换成加粗的主色分隔线。']" />
+
+<Demo path="navbar/long-title" title="标题超长" :desc="['标题与副标题单行省略，不换行。', '两侧各预留 72px（`--k-navbar-side-min`），标题不会压住左右操作。']" />
+
 ## API
 
 ### Props
@@ -46,4 +54,4 @@
 
 - 返回只派发事件，是否 `router.back()` 由业务决定。
 - `fixed` 时导航脱离文档流，页面内容需自行补顶部占位；`safeArea` 只加内边距不改变高度。
-- 左右区域等宽（`flex: 1`），中间标题自然居中并省略溢出。
+- 左右区域等宽（`flex: 1`）且各预留 `--k-navbar-side-min`（默认 `72px`），中间标题在剩余宽度内居中并省略，不会压住两侧操作。

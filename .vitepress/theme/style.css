@@ -136,7 +136,32 @@
 }
 
 .VPDoc.has-aside .content-container {
-  max-width: 1068px !important;
+  max-width: 1360px !important;
+}
+
+@media (min-width: 960px) {
+  /* 正文左右内边距收窄，给宽表更多横向空间 */
+  .VPDoc .content {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}
+
+@media (min-width: 1840px) {
+  /* 超大屏：侧栏固定窄栏，右侧留白收窄，让正文尽量宽 */
+  .VPSidebar {
+    width: 280px !important;
+    padding-left: 32px !important;
+  }
+  .VPContent.has-sidebar {
+    padding-left: 280px !important;
+    padding-right: 24px !important;
+  }
+}
+
+/* Token 对照页：7 列表格需要更多横向空间，仅本页放宽正文宽度 */
+.Layout.token-reference .VPDoc.has-aside .content-container {
+  max-width: 1440px !important;
 }
 
 /* VitePress 默认 :where(.vp-doc) li + li 会给导航菜单项加 8px 顶距，破坏垂直居中。

@@ -7,6 +7,7 @@ import Demo from './Demo.vue'
 import CommonProps from './CommonProps.vue'
 import MatrixPlayground from './MatrixPlayground.vue'
 import ThemeControls from './ThemeControls.vue'
+import SidebarActiveScroll from './SidebarActiveScroll.vue'
 import 'kit/vue/ui/css/index.css'
 import './style.css'
 
@@ -20,6 +21,7 @@ export default {
         h(DefaultTheme.Layout, null, {
           // https://vitepress.dev/guide/extending-default-theme#layout-slots
           'nav-bar-content-after': () => h(ThemeControls),
+          'sidebar-nav-after': () => h(SidebarActiveScroll),
         }),
     })
   },

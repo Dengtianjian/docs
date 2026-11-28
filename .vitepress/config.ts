@@ -185,7 +185,8 @@ export default defineConfig({
                 { text: "设计语言", link: "/vue/ui/design/language" },
                 { text: "主题 Token 规格", link: "/vue/ui/design/theme-tokens" },
                 { text: "响应式取值", link: "/vue/ui/design/responsive-values" },
-                { text: "原子样式（atoms）", link: "/vue/ui/design/atoms" }
+                { text: "原子样式（atoms）", link: "/vue/ui/design/atoms" },
+                { text: "Token / 原子类对照", link: "/vue/ui/design/token-reference" }
               ]
             },
             {

@@ -58,7 +58,10 @@ const FontCSSFilePath = ref<string>(`https://fonts.googleapis.com/css2?family=Ma
 const FileContentShow = ref<boolean>(false);
 const FontFileContent = ref<string>("");
 const FontFileURL = ref<string>("");
-const DownloadFileLinkElement = document.createElement("a");
+let DownloadFileLinkElement: HTMLAnchorElement | null = null;
+function getDownloadLink() {
+  return (DownloadFileLinkElement ??= document.createElement("a"));
+}
 
 function downloadIconFontFile() {
   replaceFontFilePath();
@@ -72,15 +75,17 @@ function replaceFontFilePath() {
 }
 
 function downloadCSSFile() {
-  DownloadFileLinkElement.href = URL.createObjectURL(new Blob([FontFileContent.value]));
-  DownloadFileLinkElement.download = "iconfont.css";
-  DownloadFileLinkElement.click();
+  const link = getDownloadLink();
+  link.href = URL.createObjectURL(new Blob([FontFileContent.value]));
+  link.download = "iconfont.css";
+  link.click();
 }
 function downloadFontFile() {
   fetch(FontFileURL.value).then(res => res.blob()).then(res => {
-    DownloadFileLinkElement.href = URL.createObjectURL(res);
-    DownloadFileLinkElement.download = "iconfont.woff2";
-    DownloadFileLinkElement.click();
+    const link = getDownloadLink();
+    link.href = URL.createObjectURL(res);
+    link.download = "iconfont.woff2";
+    link.click();
   });
 }
 

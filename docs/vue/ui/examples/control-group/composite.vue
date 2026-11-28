@@ -1,0 +1,58 @@
+<template>
+  <KFlex vertical gap="lg">
+    <KControlGroup>
+      <KInputNumber v-model="qty" :min="1" :max="99" style="width: 110px" />
+      <KSelect v-model="unit" :options="units" style="width: 120px" />
+      <KButton type="primary">应用</KButton>
+    </KControlGroup>
+    <KControlGroup>
+      <KRadioGroup v-model="cycle" shape="button">
+        <KRadio value="day">按日</KRadio>
+        <KRadio value="week">按周</KRadio>
+        <KRadio value="month">按月</KRadio>
+      </KRadioGroup>
+      <KControlGroupItem>切换周期</KControlGroupItem>
+      <KButton>确定</KButton>
+    </KControlGroup>
+    <KControlGroup>
+      <KControlGroupItem>
+        <KCheckbox v-model="enabled">启用</KCheckbox>
+      </KControlGroupItem>
+      <KControlGroupItem>
+        <KRadio v-model="mode" value="auto">自动</KRadio>
+      </KControlGroupItem>
+      <KControlGroupItem>
+        <KSwitch v-model="autoSave" size="sm" />
+      </KControlGroupItem>
+      <KControlGroupItem>单位：件</KControlGroupItem>
+      <KButton>保存</KButton>
+    </KControlGroup>
+  </KFlex>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import KControlGroup from 'kit/vue/ui/components/data-entry/ControlGroup/ControlGroup.vue'
+import KControlGroupItem from 'kit/vue/ui/components/data-entry/ControlGroup/ControlGroupItem.vue'
+import KInputNumber from 'kit/vue/ui/components/data-entry/InputNumber/InputNumber.vue'
+import KSelect from 'kit/vue/ui/components/data-entry/Select/Select.vue'
+import KRadioGroup from 'kit/vue/ui/components/data-entry/Radio/RadioGroup.vue'
+import KRadio from 'kit/vue/ui/components/data-entry/Radio/Radio.vue'
+import KCheckbox from 'kit/vue/ui/components/data-entry/Checkbox/Checkbox.vue'
+import KSwitch from 'kit/vue/ui/components/data-entry/Switch/Switch.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+
+const qty = ref(1)
+const unit = ref('piece')
+const cycle = ref('day')
+const enabled = ref(true)
+const mode = ref('auto')
+const autoSave = ref(true)
+
+const units = [
+  { label: '件', value: 'piece' },
+  { label: '箱', value: 'box' },
+  { label: '托', value: 'pallet' },
+]
+</script>

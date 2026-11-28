@@ -6,18 +6,29 @@
   "scripts": {
     "docs:dev": "vitepress dev --open --host",
     "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
+    "docs:preview": "vitepress preview",
+    "community:dev": "vite --config community/vite.config.ts",
+    "community:build": "vite build --config community/vite.config.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "vitepress": "^1.6.0"
+    "@shikijs/transformers": "^4.6.0",
+    "@tabler/icons-vue": "^3.52.0",
+    "@vitejs/plugin-vue": "5.2.4",
+    "shiki": "^4.6.0",
+    "vite": "5.4.21",
+    "vitepress": "^1.6.4"
   },
   "dependencies": {
+    "@vicons/tabler": "^0.13.0",
     "clipboard": "^2.0.11",
-    "naive-ui": "^2.45.1",
-    "vue": "^3.5.41"
+    "dayjs": "^1.11.23",
+    "kit": "link:../kit",
+    "naive-ui": "^2.45.3",
+    "vue": "^3.5.45",
+    "vue-router": "^5.5.1"
   }
 }

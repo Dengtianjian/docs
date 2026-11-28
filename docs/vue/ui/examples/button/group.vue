@@ -1,0 +1,24 @@
+<template>
+  <KFlex vertical gap="lg">
+    <KButtonGroup>
+      <KButton>左</KButton>
+      <KButton type="primary">中</KButton>
+      <KButton>右</KButton>
+    </KButtonGroup>
+    <KButtonGroup vertical size="sm">
+      <KButton type="primary">上</KButton>
+      <KButton>中</KButton>
+      <KButton>下（size 统一下发 sm）</KButton>
+    </KButtonGroup>
+    <KButtonGroup size="sm">
+      <KButton>组下发 sm</KButton>
+      <KButton size="lg">自传 lg 优先</KButton>
+    </KButtonGroup>
+  </KFlex>
+</template>
+
+<script setup lang="ts">
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KButtonGroup from 'kit/vue/ui/components/general/Button/ButtonGroup.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+</script>

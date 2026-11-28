@@ -1,0 +1,188 @@
+# KNotification 通知
+
+> 共同约定见 [共同约定](./index.md)。P2b 反馈批第五件（原与 message 同页，现拆出独立文档）。带标题+描述+操作的结构化系统通知：声明式卡片组件 `KNotification` + `useKApp().notification` 实例 API 双形态，功能面对齐 antd v6。
+
+## 何时使用
+
+- 后台系统主动推送的结构化通知（成功/失败/待办），比 [KMessage](./message.md) 信息量大、可放操作区。
+- 渲染在页面流里持续可见的警告条用 [KAlert](./alert.md)。
+
+## 代码演示
+
+<Demo path="notification/basic" title="弹出位置 + 操作区" :desc="['placement 六方位（top/bottom 水平居中）。', '同一方位的通知共用一个列表，不同方位各自一个列表。', 'actions 操作区（VNode 按钮）。', 'duration=0 常驻走关闭钮。']" />
+
+<Demo path="notification/types" title="四种类型" :desc="['`type` 取 `info` / `success` / `warning` / `error`：图标与强调色随类型走，标题/描述布局一致。', '逐个点击对比，或「四类齐发」观察同方位队列依次入场。']" />
+
+<Demo path="notification/sizes" title="三档尺寸" :desc="['`size` 支持 `sm` / `md` / `lg`，字号、内边距、标题/描述与关闭钮同步缩放。', '实例 API 与声明式组件共用同一尺寸轴。']" />
+
+<Demo path="notification/progress" title="倒计时进度条 + 悬停暂停" :desc="['showProgress 底部进度条与自动关闭同源计时。', '两个按钮分别对比 pauseOnHover 开启/关闭时，悬停对计时与进度条的影响。']" />
+
+<Demo path="notification/update" title="同 key 原地更新" :desc="['info → warning → success/error 三段式。', '同 key 不叠条：原位换内容、计时从头、进场动画不重放。']" />
+
+<Demo path="notification/stack" title="堆叠收起" :desc="['同一方位的通知共用一个列表，默认每列最多堆叠 3 张，较旧卡片藏在后面。', '鼠标进入列表展开全部，离开后收回。', '`stackLimit: 0` 关闭堆叠。', '演示还提供 5s 带进度条的悬停暂停/不暂停与全局暂停开关用于对比。']" />
+
+<Demo path="notification/scroll" title="滚动容器 + maxCount" :desc="['演示关闭堆叠（stackLimit: 0）后的平铺/列内滚动。', 'maxCount 超限挤掉最旧一条。', '默认 stackLimit=3 时同方位列表会堆叠收起。']" />
+
+<Demo path="notification/render" title="自定义渲染（headless，声明式卡片）" :desc="['双通道：`#render` 自绘 toast 卡（type 驱动强调色，rootOn/onClose 继承 click/close 事件）。', '`render` prop 自绘 snackbar。', '仅声明式卡片支持。', '实例队列的计时/动画由 Holder 驱动，不在 headless 契约内。']" />
+
+## API
+
+### KNotification 组件（声明式卡片）
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| title | 标题（14px/600） | `string \| VNode` | — |
+| description | 描述（12px 次要色） | `string \| VNode` | — |
+| actions | 底部操作区（antd v6 的 `actions`，旧名 `btn`） | `string \| VNode` | — |
+| type | 类型图标着色 | `'info' \| 'success' \| 'error' \| 'warning'` | — |
+| icon | 覆盖类型图标 | `string \| VNode \| null` | — |
+| closable | 关闭钮显隐 | `boolean` | `true` |
+| closeIcon | 关闭钮图标（`null` 不渲染） | `string \| VNode \| null` | 内建 X |
+| showProgress | 倒计时条 | `boolean` | `false` |
+| progressDuration | 倒计时时长（秒，实例队列由 duration 注入） | `number` | — |
+| pauseOnHover | 悬停冻结进度条动画 | `boolean` | `true` |
+| role | 无障碍角色 | `'alert' \| 'status'` | `'alert'` |
+| size | 尺寸：字号、内边距、标题/描述与关闭钮同步缩放 | `'sm' \| 'md' \| 'lg'` | `'md'` |
+
+<CommonProps />
+
+#### Slots
+
+| 插槽名 | 说明 |
+| --- | --- |
+| icon | 图标（回退 = `icon` prop 或类型 SVG） |
+| title | 标题（回退 = `title` prop） |
+| description | 描述（回退 = `description` prop） |
+| actions | 操作区（回退 = `actions` prop） |
+| close | 关闭钮图标（回退 = `closeIcon` prop 或内建 X） |
+| render | 自定义渲染作用域插槽，scope 见文末「自定义渲染」节；提供时整件替换 |
+
+无默认插槽（同名插槽均覆盖对应 prop）。
+
+#### Events
+
+| 事件名 | 说明 | 回调参数 |
+| --- | --- | --- |
+| close | 点关闭钮（`.stop` 不冒泡到卡片 click） | `(e: MouseEvent)` |
+| click | 点卡片根节点 | `(e: MouseEvent)` |
+
+### 实例 API（`useKApp().notification`）
+
+先在 `<KApp>` 子树里取实例（上方示例即此结构），再调方法：
+
+```ts
+import { useKApp } from 'kit/vue/ui'
+
+const { notification } = useKApp()!   // 未挂 <KApp> 时 useKApp() 为 undefined
+notification.success({ title: '保存成功' })
+```
+
+```
+notification.open(config) → { destroy() }
+notification.info|success|error|warning(config) → { destroy() }
+notification.destroy(key) / destroyAll()
+notification.config(options)   // 实例级全局默认，合入其后每次 open
+notification.getConfig()       // 读取当前全局默认（UI 回显开关状态）
+```
+
+| config 字段 | 说明 | 默认 |
+| --- | --- | --- |
+| title | 标题 | — |
+| description | 描述 | — |
+| actions | 底部操作区 VNode（`btn` 为弃用别名，自动转发） | — |
+| type | 类型图标着色（同组件 `type`） | — |
+| size | 尺寸（同组件 `size`） | `'md'` |
+| icon | 覆盖类型图标（同组件 `icon`，`null` 不渲染） | — |
+| duration | 自动关闭秒数；`0` / `false` = 常驻 | `4.5` |
+| placement | 六方位；同一方位的通知进入同一个列表，不同方位各自一个列表 | `'topRight'` |
+| closable | `false` 隐藏关闭钮；对象 `{ closeIcon, onClose }` 自定义 | `true` |
+| closeIcon | 关闭钮图标；`null` 不渲染 | 内建 X |
+| showProgress | 倒计时条（计时与条同步） | `false` |
+| pauseOnHover | 悬停暂停（计时与条同步） | `true` |
+| role | 无障碍角色，随 `rootAttrs` 下发 | `'alert'` |
+| key | 同 key 原地更新：不叠条、计时从头 | — |
+| onClick | 点卡片整面回调 | — |
+| onClose | 该条销毁时回调 | — |
+
+| config() 字段 | 说明 |
+| --- | --- |
+| top | 上缘距离（px，缺省 `--k-size`），滚动高度上限随之换算 |
+| bottom | 下缘距离（px，缺省 `--k-size`），滚动高度上限随之换算 |
+| placement | 六方位默认值 |
+| duration | 自动关闭秒数默认值 |
+| size | 尺寸默认值 |
+| closeIcon | 关闭钮图标默认值（`null` 不渲染） |
+| showProgress | 倒计时条开关默认值 |
+| pauseOnHover | 悬停暂停默认值 |
+| maxCount | 同一方位列表数量上限，超限挤掉最旧一条（直接移除，无退场动画） |
+| stackLimit | 同一方位列表堆叠显示上限（默认 3；0 = 关闭堆叠，平铺/滚动） |
+
+### 语义 DOM
+
+`root / icon / section / title / description / actions / close / progress` 八部件：根 `data-part="root"`，其余同名 `data-part` + `k-notification__*` 类；`classNames`/`styles` 逐部件覆盖。列表容器另在 Holder：`data-part="list"`。
+
+### 部件变量
+
+| 变量 | 初值 |
+| --- | --- |
+| `--k-notification-bg / -radius / -padding` | `--k-color-bg-elevated` / `--k-border-radius-lg` / `--k-size`（16px） |
+| `--k-notification-accent` | 按 type 取语义色（`--k-color-info/success/error/warning`），图标与进度条共用；无 type 走 `--k-color-primary` |
+| 列表宽 / 条间隔 / 缘距 | `16×size`（256px）/ `size`（margin 实现，塌陷动画可归零）/ `size` 或 config top/bottom |
+| 滚动 | 列表 `max-height: 100vh − 上下缘距 + 留白带`，超出 `overflow-y: auto`；卡片 `flex-shrink: 0` 钉自然高度（flex 列子项默认可压缩，超高会压扁卡片而非溢出）；溢出列表加 `is-scrollable`：显细轨滚动条（fill 阶梯色，Modal body 同款）+ 恢复 `pointer-events: auto`；未溢出时滚动条隐藏、列表 `pointer-events: none` 不挡背后页面。卡片阴影 = `--k-box-shadow`（antd notification 同款三层匀开淡影），留白带按其外溢逐边取（横 36 / 上 28 / 下 46），负 margin 回补卡片视觉缘距 |
+| z 层级 | `--k-z-index-notification` |
+
+## 注意事项
+
+- **按方位分列**：同一方位的通知共用一个列表（即使跨演示打开也只有一个），不同方位各自渲染一个列表；堆叠、滚动、悬停暂停都作用在各自方位的列表上。
+- **动画**（对齐 antd v6）：进场从所在边缘滑入（`k-notification-in`，方向随列）。
+  - 退场高度塌陷——JS 先锁定当前 `height`，`is-closing` 类把 height/margin/padding/opacity 一并过渡归零，后续条目平滑补位，`transitionend(height)` 后真正移除（320ms 兜底，动画关闭的降级主题也能收口）。
+- 悬停通知列（包含卡片间隙）会暂停该列所有可暂停通知的倒计时，列内进度条同步冻结（不只鼠标下那张），移出后从剩余时长继续。
+  - 单条 `pauseOnHover: false` 始终不暂停（不跟全局走）。
+  - 单条 `true`（默认）随全局开关实时联动——全局关闭立即恢复计时，全局开启时正在悬停的列也会立即暂停。
+  - 堆叠列悬停同时展开。
+- **堆叠 vs 滚动**：默认每列 stackLimit=3，超出后较旧卡片叠在后方，悬停整列展开并暂停该列计时；`stackLimit: 0` 回退为平铺 + 列内滚动（原 2026-11-17 方案仍可用）。
+- **同 key 更新**：原位替换、换新内部 id 重挂载——计时从头、进场动画抑制（`is-static`），列表位置不动、不叠条。
+- **pauseOnHover**：悬停同时冻结 JS 关闭计时器与 CSS 进度条动画（离开续跑剩余量），二者严格同步。
+- **进度条随卡片圆角**：贴底 2px 直边条由卡片 `overflow: hidden` + 自身圆角统一裁切。
+  - 别给 track 单独做 bottom radius——2px 高的盒子做 8~12px 半径会被 CSS 半径缩放规则压到 ~1px，裁不出卡片轮廓（底带处轮廓内收可达 5px+）。
+- 实例 API 只在 KApp 之下可用（拍板③：无全局静态）。
+  - 文档站由主题在最外层挂一个 `component=false` 的 KApp，各演示共享同一份通知队列，所以跨演示打开的同方位通知进入同一个列表。
+  - Holder 出口 Teleport 到 body 并按契约④携带 `scopeClass`/`data-k-theme`。
+- **滚动交互**（2026-11-17 修正）：未溢出列表 `pointer-events: none`、卡片 `auto`（不挡背后页面）。
+  - Holder 检测 `scrollHeight > clientHeight`（items/config/位置变化与窗口 resize 时同步），溢出时加 `is-scrollable` 恢复交互——滚轮在条间隔/留白带上、滚动条拖拽均生效，细轨滚动条仅此时可见。
+
+## 自定义渲染（headless）
+
+双通道 `#render` 插槽（优先）/ `render` prop，通用契约见 [headless 自定义渲染](../headless.md)。**仅声明式卡片 `KNotification` 支持**；`useKApp().notification` 实例 API 服务驱动，无 headless 契约。scope = `KNotificationRenderScope`（入口导出），字段逐组如下（无内部开合态的纯卡片件：只有状态 + 绑定包 + 单个关闭动作，无 ref/出口组）。
+
+#### 状态（只读快照）
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| title | `string \| VNode \| undefined` | 标题 prop 通道（`title` 插槽优先，经 `slots.title` 取） |
+| description | `string \| VNode \| undefined` | 描述 prop 通道（`description` 插槽优先，经 `slots.description` 取） |
+| actions | `string \| VNode \| undefined` | 底部操作区 prop 通道（antd v6 语义，旧名 `btn` 由 service 兼容转发；`actions` 插槽优先，经 `slots.actions` 取） |
+| type | `KNotificationType \| undefined` | 类型（别名 = `'info' \| 'success' \| 'error' \| 'warning'`）；默认渲染据此切 `--k-notification-accent` 强调色（图标与进度条共用，无 type 走 primary），自绘可映射自己的语义色并决定类型图标 |
+| size | `KNotificationSize` | 尺寸档（`sm / md / lg`）；默认渲染据此缩放字号、内边距、标题/描述与关闭钮 |
+| icon | `string \| VNode \| null \| undefined` | 覆盖类型图标；**`null` = 强制无图标**（`icon` 插槽仍可经 `slots.icon` 取） |
+| closable | `boolean` | 是否应渲染关闭钮（默认 true）；自绘关闭钮据此显隐并绑 `onClose` |
+| closeIcon | `string \| VNode \| null \| undefined` | 关闭钮自定义图标；**`null` = 不渲染关闭钮**（与 closable 是与关系）；缺省走内建 X 或 `slots.close` |
+| showProgress | `boolean` | 是否应渲染倒计时进度条（默认 false）；默认渲染还须 `progressDuration` 有值才画；声明式卡片**无自动关闭计时**（计时由实例队列 Holder 驱动），自绘进度条动画与关闭时机全自理 |
+| progressDuration | `number \| undefined` | 进度条时长（秒；实例队列由 duration 注入）；默认渲染写进 bar 的 `animationDuration: ${n}s`，自绘可据此配自己的倒计时动画 |
+| pauseOnHover | `boolean` | 悬停冻结进度条动画（默认 true）；默认渲染靠 `is-hover-pause` 类 + `:hover` 暂停 CSS 动画（实例队列的 JS 计时由 Holder 同步暂停），自绘自行实现悬停暂停 |
+| role | `'alert' \| 'status'` | 无障碍角色（默认 `'alert'`）；已随 rootAttrs 输出，单列出来供自绘判断/覆写 |
+
+#### 绑定包（spread 到自绘节点才继承）
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| rootAttrs | `Record<string, unknown>` | 卡片根节点：`data-part="root"` + `role`（alert/status 随 prop）。**不含 `k-notification` token 宿主类**——`--k-notification-*` 变量（bg/radius/padding/accent 语义色链）声明在 `.k-notification` 上，由默认模板追加（连同 `k-notification--<type>`、`is-hover-pause`）；自绘背景/圆角/阴影全自理，想复用 token 可自行补类 |
+| rootOn | `Record<string, (e: Event) => void>` | 卡片根节点：仅 `click` → 发 `click(e)` 事件（点卡片整面回调）；无其它事件 |
+
+#### 动作
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| onClose | `(e: MouseEvent) => void` | 关闭动作：**只发 `close(e)` 事件，不自隐**——声明式卡片无内部开合态，显隐由调用方（或实例队列 Holder 监听 close 后做高度塌陷退场）决定；自绘关闭钮记得 `.stop` 阻止冒泡，否则会连带触发 rootOn 的卡片 click |
+
+另有 `slots`（`ReturnType<typeof useSlots>`）：默认渲染的插槽集合（icon/title/description/actions/close，**无默认插槽**），自绘时可按需取用，如 `ctx.slots.actions?.()`。

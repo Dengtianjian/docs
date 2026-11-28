@@ -1,0 +1,54 @@
+<template>
+  <KFlex vertical gap="lg">
+    <KFlex gap="lg" align="center">
+      <KBadge :count="5">
+        <KButton>消息</KButton>
+      </KBadge>
+      <KBadge :count="120">
+        <KButton>99+</KButton>
+      </KBadge>
+      <KBadge dot>
+        <KButton>圆点</KButton>
+      </KBadge>
+      <KBadge :count="0" show-zero>
+        <KButton>显示 0</KButton>
+      </KBadge>
+    </KFlex>
+    <KFlex gap="lg" align="center">
+      <KBadge color="success" text="已完成" />
+      <KBadge color="processing" text="进行中" />
+      <KBadge color="warning" text="待确认" />
+      <KBadge color="error" text="失败" />
+      <KBadge color="default" text="默认" />
+    </KFlex>
+    <KFlex gap="lg" align="center">
+      <KBadge count="NEW" color="#722ed1" />
+      <KBadge :count="8" color="success" />
+      <KBadge color="#722ed1" text="自定义色" />
+      <KBadge color="success" />
+      <KBadge :count="9" :offset="[6, -2]">
+        <span class="avatar">头像</span>
+      </KBadge>
+    </KFlex>
+  </KFlex>
+</template>
+
+<script setup lang="ts">
+import KBadge from 'kit/vue/ui/components/data-display/Badge/Badge.vue'
+import KButton from 'kit/vue/ui/components/general/Button/Button.vue'
+import KFlex from 'kit/vue/ui/components/layouts/Flex/Flex.vue'
+</script>
+
+<style scoped>
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--k-color-fill-secondary);
+  color: var(--k-color-text-secondary);
+  font-size: 12px;
+}
+</style>

@@ -136,7 +136,38 @@
 }
 
 .VPDoc.has-aside .content-container {
-  max-width: 1068px !important;
+  max-width: 1360px !important;
+}
+
+@media (min-width: 960px) {
+  /* 正文左右内边距收窄，给宽表更多横向空间 */
+  .VPDoc .content {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}
+
+@media (min-width: 1840px) {
+  /* 超大屏：侧栏固定窄栏，右侧留白收窄，让正文尽量宽 */
+  .VPSidebar {
+    width: 280px !important;
+    padding-left: 32px !important;
+  }
+  .VPContent.has-sidebar {
+    padding-left: 280px !important;
+    padding-right: 24px !important;
+  }
+}
+
+/* Token 对照页：7 列表格需要更多横向空间，仅本页放宽正文宽度 */
+.Layout.token-reference .VPDoc.has-aside .content-container {
+  max-width: 1440px !important;
+}
+
+/* VitePress 默认 :where(.vp-doc) li + li 会给导航菜单项加 8px 顶距，破坏垂直居中。
+   这是文档宿主样式，只在 docs 侧覆盖，不进入组件库。 */
+.vp-doc .k-navigation-menu__list > .k-navigation-menu__item + .k-navigation-menu__item {
+  margin-top: 0;
 }
 
 .vp-doc table {
@@ -150,4 +181,56 @@
 .vp-doc th, .vp-doc td {
   padding:12px 16px;
   border:0px;
+}
+/* 超宽矩阵页（theme-tokens §9 variant 矩阵）：表格横向滚动，不影响其它页表格。
+   选择器 = VitePress 页级哈希类（.vp-doc._<页面路径>，dev/build 同规则）+ :has 限定 ≥9 列的宽表，
+   页内普通窄表保持 display:table 全宽样式 */
+/* theme-tokens 规格页表格多为长文本/宽矩阵：整页表格横向滚动（display:block 下匿名表格仍撑满 100%，窄表观感不变） */
+.vp-doc._vue_ui_design_theme-tokens table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* 移动端：表格自身横向滚动，避免撑宽整页（桌面保持原样） */
+@media (max-width: 768px) {
+  .vp-doc table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* iOS：禁止双击页面缩放（仍允许单指滚动与双指缩放内容） */
+html {
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* 侧边栏：端侧覆盖标记（PC / 移动 / 双端） */
+.k-sidebar-pc-icon,
+.k-sidebar-mobile-icon,
+.k-sidebar-both-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 6px;
+  color: inherit;
+  vertical-align: -2px;
+  transition: color 0.2s;
+}
+.VPSidebarItem a:hover .k-sidebar-pc-icon,
+.VPSidebarItem a:hover .k-sidebar-mobile-icon,
+.VPSidebarItem a:hover .k-sidebar-both-icon,
+.VPSidebarItem a.router-link-active .k-sidebar-pc-icon,
+.VPSidebarItem a.router-link-active .k-sidebar-mobile-icon,
+.VPSidebarItem a.router-link-active .k-sidebar-both-icon {
+  color: var(--vp-c-brand-1);
+}
+.k-sidebar-pc-icon svg,
+.k-sidebar-mobile-icon svg,
+.k-sidebar-both-icon svg {
+  width: 13px;
+  height: 13px;
 }

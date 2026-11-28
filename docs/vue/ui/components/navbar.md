@@ -1,0 +1,63 @@
+# KNavBar 顶部导航
+
+> 共同约定见 [共同约定](./index.md)。P4 导航批。移动端顶部导航：返回、标题/副标题与两侧插槽。
+
+## 何时使用
+
+- 移动端页面标题栏；
+- 需要返回按钮与右侧操作（分享、更多）。
+
+## 代码演示
+
+<Demo path="navbar/basic" title="标题 / 副标题 / 返回 / 右侧操作" :desc="['`title` 与 `subtitle`；`back` 控制返回按钮。', '`#left` / `#title` / `#subtitle` / `#right` 插槽可替换各区域。', '`fixed` 固定在视口顶部；`safeArea` 处理刘海屏安全区。']" />
+
+<Demo path="navbar/slots" title="自定义插槽" :desc="['`back=false` 隐藏返回按钮；`#left` 放头像与昵称。', '`#title` / `#subtitle` / `#right` 替换中间与右侧内容。']" />
+
+<Demo path="navbar/parts" title="部件样式覆盖" :desc="['`classNames.root` 换背景与分隔线，其余部件保持默认。', '`styles.title` 只改标题颜色。']" />
+
+<Demo path="navbar/height" title="自定义高度与边框" :desc="['`classNames.root` 覆盖 `--k-navbar-height` 抬高度。', '同一处改 `border-bottom`，换成加粗的主色分隔线。']" />
+
+<Demo path="navbar/long-title" title="标题超长" :desc="['标题与副标题单行省略，不换行。', '两侧各预留 72px（`--k-navbar-side-min`），标题不会压住左右操作。']" />
+
+<Demo path="navbar/align" title="标题位置：靠左 / 靠右" :desc="['`classNames.center` 撑开中间区域，再改 `text-align`。', '默认居中；左右位置按需覆盖。']" />
+
+<Demo path="navbar/tabs" title="标题使用 Tabs" :desc="['`#title` 插槽内放 `KTabs`，导航即页签栏。', '`back`、右侧插槽与部件样式照常可用。']" />
+
+<Demo path="navbar/complex" title="复杂导航" :desc="['返回键 + 左侧头像 + 标题/副标题 + 右侧下拉菜单。', '`classNames.root` 改高度 56px，其余部件保持默认。']" />
+
+## API
+
+### Props
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| title | 标题 | `string` | — |
+| subtitle | 副标题 | `string` | — |
+| back | 显示返回按钮 | `boolean` | `true` |
+| fixed | 固定在视口顶部 | `boolean` | `false` |
+| safeArea | 顶部安全区（`env(safe-area-inset-top)`） | `boolean` | `true` |
+| classNames | 部件类名（`root / left / center / title / subtitle / right / back`） | `Partial<Record<Part, string>>` | — |
+| styles | 部件内联样式（同上） | `Partial<Record<Part, CSSProperties>>` | — |
+
+<CommonProps />
+
+### Events
+
+| 事件 | 说明 | 参数 |
+| --- | --- | --- |
+| back | 点击返回按钮（不自动执行 history.back） | `MouseEvent` |
+
+### Slots
+
+| 插槽名 | 说明 |
+| --- | --- |
+| left | 左侧返回按钮之后的内容 |
+| title | 标题内容 |
+| subtitle | 副标题内容 |
+| right | 右侧操作区 |
+
+## 注意事项
+
+- 返回只派发事件，是否 `router.back()` 由业务决定。
+- `fixed` 时导航脱离文档流，页面内容需自行补顶部占位；`safeArea` 只加内边距不改变高度。
+- 左右区域等宽（`flex: 1`）且各预留 `--k-navbar-side-min`（默认 `72px`），中间标题在剩余宽度内居中并省略，不会压住两侧操作。

@@ -13,6 +13,8 @@
 
 <Demo path="result/extra" title="错误码与操作区" :desc="['403 / 404 / 500 渲染大号错误码。', '`#extra` 放返回、重试等操作。', '默认插槽展示补充内容。']" />
 
+<Demo path="result/slots" title="插槽覆盖" :desc="['icon / title / subTitle / extra 四个具名插槽分别覆盖内建图标与对应 prop。', '同名插槽优先：左侧卡片同时传了 title / subTitle prop，渲染时被插槽替换。', 'default 作为补充内容追加在操作区下方，可放列表、步骤等任意结构。']" />
+
 ## API
 
 ### KResult Props
@@ -32,10 +34,10 @@
 
 | 插槽名 | 说明 |
 | --- | --- |
-| icon | 自定义图标 |
-| title / subTitle / extra | 覆盖对应 prop |
-| default | 结果页补充内容 |
-| render | headless 整件替换 |
+| icon | 自定义图标（覆盖内建 SVG / 错误码） |
+| title / subTitle / extra | 覆盖对应 prop（同名插槽优先） |
+| default | 结果页补充内容，追加在操作区下方 |
+| render | headless 整件替换（插槽优先于 `render` prop） |
 
 ### 事件
 

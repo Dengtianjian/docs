@@ -131,6 +131,9 @@ export default defineConfig({
         plugins: [isolateVpDoc()],
       },
     },
+    server: {
+      allowedHosts: ["kit.local.imtianjian.cn"]
+    }
   },
   head: [
     [
@@ -193,8 +196,8 @@ export default defineConfig({
               text: "playground（矩阵页）",
               collapsed: false,
               items: [
-                  { text: "组件矩阵页", link: "/vue/ui/playground/matrix" }
-                ]
+                { text: "组件矩阵页", link: "/vue/ui/playground/matrix" }
+              ]
             },
             {
               text: "组件（components）",
@@ -261,28 +264,30 @@ export default defineConfig({
                   text: "数据展示（P3）",
                   collapsed: false,
                   items: [
-                    { text: "KTable 表格", link: "/vue/ui/components/table", collapsed: false, items: [
-                      { text: "概览", link: "/vue/ui/components/table" },
-                      { text: "快速上手", link: "/vue/ui/components/table/quick-start" },
-                      { text: "功能地图", link: "/vue/ui/components/table/map" },
-                      { text: "Prop / Slot 速查", link: "/vue/ui/components/table/props" },
-                      { text: "基础与外观", link: "/vue/ui/components/table/basic" },
-                      { text: "表头与列头", link: "/vue/ui/components/table/headers" },
-                      { text: "排序与筛选", link: "/vue/ui/components/table/sort-filter" },
-                      { text: "分页", link: "/vue/ui/components/table/pagination" },
-                      { text: "插槽", link: "/vue/ui/components/table/slots" },
-                      { text: "展开与树形", link: "/vue/ui/components/table/rows" },
-                      { text: "单元格合并", link: "/vue/ui/components/table/merge" },
-                      { text: "固定列", link: "/vue/ui/components/table/fixed-columns" },
-                      { text: "固定行", link: "/vue/ui/components/table/fixed-rows" },
-                      { text: "表头位置与滚动", link: "/vue/ui/components/table/sticky-scroll" },
-                      { text: "虚拟滚动", link: "/vue/ui/components/table/virtual" },
-                      { text: "列设置与拖拽", link: "/vue/ui/components/table/columns" },
-                      { text: "行选择", link: "/vue/ui/components/table/selection" },
-                      { text: "操作与编辑", link: "/vue/ui/components/table/editing" },
-                      { text: "响应式卡片", link: "/vue/ui/components/table/stacked" },
-                      { text: "边界与组合", link: "/vue/ui/components/table/edge-cases" }
-                    ] },
+                    {
+                      text: "KTable 表格", link: "/vue/ui/components/table", collapsed: false, items: [
+                        { text: "概览", link: "/vue/ui/components/table" },
+                        { text: "快速上手", link: "/vue/ui/components/table/quick-start" },
+                        { text: "功能地图", link: "/vue/ui/components/table/map" },
+                        { text: "Prop / Slot 速查", link: "/vue/ui/components/table/props" },
+                        { text: "基础与外观", link: "/vue/ui/components/table/basic" },
+                        { text: "表头与列头", link: "/vue/ui/components/table/headers" },
+                        { text: "排序与筛选", link: "/vue/ui/components/table/sort-filter" },
+                        { text: "分页", link: "/vue/ui/components/table/pagination" },
+                        { text: "插槽", link: "/vue/ui/components/table/slots" },
+                        { text: "展开与树形", link: "/vue/ui/components/table/rows" },
+                        { text: "单元格合并", link: "/vue/ui/components/table/merge" },
+                        { text: "固定列", link: "/vue/ui/components/table/fixed-columns" },
+                        { text: "固定行", link: "/vue/ui/components/table/fixed-rows" },
+                        { text: "表头位置与滚动", link: "/vue/ui/components/table/sticky-scroll" },
+                        { text: "虚拟滚动", link: "/vue/ui/components/table/virtual" },
+                        { text: "列设置与拖拽", link: "/vue/ui/components/table/columns" },
+                        { text: "行选择", link: "/vue/ui/components/table/selection" },
+                        { text: "操作与编辑", link: "/vue/ui/components/table/editing" },
+                        { text: "响应式卡片", link: "/vue/ui/components/table/stacked" },
+                        { text: "边界与组合", link: "/vue/ui/components/table/edge-cases" }
+                      ]
+                    },
                     { text: "KPagination 分页", link: "/vue/ui/components/pagination" },
                     { text: "KVirtualList 虚拟列表", link: "/vue/ui/components/virtual-list" },
                     { text: "KTag 标签", link: "/vue/ui/components/tag" },

@@ -14,7 +14,7 @@ Service::make();           // 每类工厂（每次 new）
 Service::hasSingleton();
 Service::clearSingleton();
 
-$service->app();           // 所属 App（构造注入优先，否则默认应用）
+$service->app();           // 所属 App（构造注入优先，否则当前应用）
 ```
 
 - 单例只认类型不认参数，禁止 clone / 反序列化；

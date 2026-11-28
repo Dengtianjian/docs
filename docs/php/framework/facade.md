@@ -39,7 +39,7 @@ class Search extends Facade
 {
   protected static function resolve()
   {
-    return Applications::default()->make(\myapp\Services\SearchService::class);
+    return Applications::current()->make(\myapp\Services\SearchService::class);
   }
 }
 ```
@@ -62,4 +62,4 @@ Facade::of(SomeService::class, $dep)->run();   // 构造参数仅首次实例化
 ## 注意
 
 - 门面依赖**应用已装配**（否则取不到实例）；
-- 静态调用永远等于「当前默认应用」，跨应用要用 `App::of($id)->xxx()`，而不是门面。
+- 静态调用永远等于「当前应用」，跨应用要用 `App::of($id)->xxx()`，而不是门面。

@@ -1,13 +1,13 @@
-# DiscuzXView
+# DiscuzView
 
-`kernel\DiscuzX\Foundation\DiscuzXView`  ·  class
+`kernel\Discuz\Foundation\DiscuzView`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Foundation/DiscuzXView.php`
+源码：`gstudio_kernel/Discuz/Foundation/DiscuzView.php`
 
 ## 声明
 
 ```php
-class DiscuzXView extends ResponseView
+class DiscuzView extends ResponseView
 ```
 
 父类：[ResponseView](/php/api/foundation/http/response/response-view)
@@ -120,12 +120,12 @@ public static function hook($viewFiles, $viewData, $returnName = "return")
 
 ## 同目录
 
-- [DiscuzXApp](/php/api/discuzx/foundation/discuz-x-app)
-- [DiscuzXController](/php/api/discuzx/foundation/discuz-x-controller)
-- [DiscuzXDeployment](/php/api/discuzx/foundation/discuz-x-deployment)
-- [DiscuzXGBKJsonResponse](/php/api/discuzx/foundation/discuz-xgbk-json-response)
-- [DiscuzXHookApp](/php/api/discuzx/foundation/discuz-x-hook-app)
-- [DiscuzXLang](/php/api/discuzx/foundation/discuz-x-lang)
-- [DiscuzXPath](/php/api/discuzx/foundation/discuz-x-path)
-- [DiscuzXResponse](/php/api/discuzx/foundation/discuz-x-response)
+- [DiscuzApp](/php/api/discuzx/foundation/discuz-x-app)
+- [DiscuzController](/php/api/discuzx/foundation/discuz-x-controller)
+- [DiscuzDeployment](/php/api/discuzx/foundation/discuz-x-deployment)
+- [DiscuzGBKJsonResponse](/php/api/discuzx/foundation/discuz-xgbk-json-response)
+- [DiscuzHookApp](/php/api/discuzx/foundation/discuz-x-hook-app)
+- [DiscuzLang](/php/api/discuzx/foundation/discuz-x-lang)
+- [DiscuzPath](/php/api/discuzx/foundation/discuz-x-path)
+- [DiscuzResponse](/php/api/discuzx/foundation/discuz-x-response)
 

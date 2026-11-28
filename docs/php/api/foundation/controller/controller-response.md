@@ -21,7 +21,7 @@ class ControllerResponse extends Response
 控制器可通过 `success()`/`fail()` 复用该实例，也可在 `data()` 中调用以下工厂方法
 生成「独立响应对象」（如文件下载、分页、视图），由其作为最终结果输出。
 
-除 `proxy()` 外，其余工厂方法均自动注入当前请求（`Applications::default()->request()`）作为响应上下文，
+除 `proxy()` 外，其余工厂方法均自动注入当前请求（`Applications::current()->request()`）作为响应上下文，
 因此无需手动传入 Request 即可直接使用。
 
 ## 方法一览

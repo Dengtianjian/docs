@@ -1,13 +1,13 @@
-# DiscuzXThread
+# DiscuzThread
 
-`kernel\DiscuzX\DiscuzXThread`  ·  class
+`kernel\Discuz\DiscuzThread`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/DiscuzXThread.php`
+源码：`gstudio_kernel/Discuz/DiscuzThread.php`
 
 ## 声明
 
 ```php
-class DiscuzXThread extends BaseObject
+class DiscuzThread extends BaseObject
 ```
 
 父类：[BaseObject](/php/api/foundation/object/base-object)
@@ -45,7 +45,7 @@ public function getThreadAttachments($threadId, $onlyImage = false)
 
 ## 同目录
 
-- [DiscuzXForum](/php/api/discuzx/discuz-x-forum)
-- [DiscuzXPost](/php/api/discuzx/discuz-x-post)
-- [DiscuzXURL](/php/api/discuzx/discuz-xurl)
+- [DiscuzForum](/php/api/discuzx/discuz-x-forum)
+- [DiscuzPost](/php/api/discuzx/discuz-x-post)
+- [DiscuzURL](/php/api/discuzx/discuz-xurl)
 

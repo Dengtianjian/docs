@@ -1,13 +1,13 @@
-# DiscuzXQCloudCOSStorage
+# DiscuzQCloudCOSStorage
 
-`kernel\DiscuzX\Foundation\Storage\DiscuzXQCloudCOSStorage`  ·  class
+`kernel\Discuz\Foundation\Storage\DiscuzQCloudCOSStorage`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Foundation/Storage/DiscuzXQCloudCOSStorage.php`
+源码：`gstudio_kernel/Discuz/Foundation/Storage/DiscuzQCloudCOSStorage.php`
 
 ## 声明
 
 ```php
-class DiscuzXQCloudCOSStorage extends QCloudCOSStorage
+class DiscuzQCloudCOSStorage extends QCloudCOSStorage
 ```
 
 父类：[QCloudCOSStorage](/php/api/modules/qcloud/qcloudcos/q-cloud-cos-storage)
@@ -16,7 +16,7 @@ class DiscuzXQCloudCOSStorage extends QCloudCOSStorage
 
 | 方法 | 说明 |
 |---|---|
-| [`__construct()`](#__construct) | 实例化 DiscuzX 侧的 COS 存储 |
+| [`__construct()`](#__construct) | 实例化 Discuz 侧的 COS 存储 |
 
 ### __construct()
 
@@ -24,7 +24,7 @@ class DiscuzXQCloudCOSStorage extends QCloudCOSStorage
 public function __construct(QCloudAccount $account, $region, $bucket)
 ```
 
-实例化 DiscuzX 侧的 COS 存储
+实例化 Discuz 侧的 COS 存储
 
 对象操作的客户端（[QCloudCosClient](/php/api/modules/qcloud/qcloudcos/q-cloud-cos-client)）与 STS 客户端
 都由父类 `QCloudCOSStorage::boot` 初始化（挂在父类的 `$client` / `$stsClient` 上），
@@ -38,7 +38,7 @@ public function __construct(QCloudAccount $account, $region, $bucket)
 
 ## 同目录
 
-- [DiscuzXFTPStorage](/php/api/discuzx/foundation/storage/discuz-xftp-storage)
-- [DiscuzXLocalStorage](/php/api/discuzx/foundation/storage/discuz-x-local-storage)
-- [DiscuzXStorage](/php/api/discuzx/foundation/storage/discuz-x-storage)
+- [DiscuzFTPStorage](/php/api/discuzx/foundation/storage/discuz-xftp-storage)
+- [DiscuzLocalStorage](/php/api/discuzx/foundation/storage/discuz-x-local-storage)
+- [DiscuzStorage](/php/api/discuzx/foundation/storage/discuz-x-storage)
 

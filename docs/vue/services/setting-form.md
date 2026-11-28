@@ -81,4 +81,4 @@ await service.save((data) => ({ ...data, siteURL: data.siteURL.trim() }))
 
 ---
 
-> **相关**：[DiscuzXSettingFormService](/vue/services/discuzx-setting-form)、[api](/vue/api/index)
+> **相关**：[DiscuzSettingFormService](/vue/services/discuzx-setting-form)、[api](/vue/api/index)

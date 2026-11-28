@@ -1,16 +1,16 @@
 # GetAttachmentController
 
-`kernel\DiscuzX\Controllers\Attachment\GetAttachmentController`  ·  class
+`kernel\Discuz\Controllers\Attachment\GetAttachmentController`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Controllers/Attachment/GetAttachmentController.php`
+源码：`gstudio_kernel/Discuz/Controllers/Attachment/GetAttachmentController.php`
 
 ## 声明
 
 ```php
-class GetAttachmentController extends DiscuzXController
+class GetAttachmentController extends DiscuzController
 ```
 
-父类：[DiscuzXController](/php/api/discuzx/foundation/discuz-x-controller)
+父类：[DiscuzController](/php/api/discuzx/foundation/discuz-x-controller)
 
 ## 属性
 

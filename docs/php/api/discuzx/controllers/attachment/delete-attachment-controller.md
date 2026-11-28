@@ -1,16 +1,16 @@
 # DeleteAttachmentController
 
-`kernel\DiscuzX\Controllers\Attachment\DeleteAttachmentController`  ·  class
+`kernel\Discuz\Controllers\Attachment\DeleteAttachmentController`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Controllers/Attachment/DeleteAttachmentController.php`
+源码：`gstudio_kernel/Discuz/Controllers/Attachment/DeleteAttachmentController.php`
 
 ## 声明
 
 ```php
-class DeleteAttachmentController extends DiscuzXController
+class DeleteAttachmentController extends DiscuzController
 ```
 
-父类：[DiscuzXController](/php/api/discuzx/foundation/discuz-x-controller)
+父类：[DiscuzController](/php/api/discuzx/foundation/discuz-x-controller)
 
 ## 方法一览
 

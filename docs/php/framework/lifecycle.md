@@ -15,7 +15,7 @@
 传类名时按「构造即装配」执行：
 
 ```php
-new DiscuzXApp(function ($app) {
+new DiscuzApp(function ($app) {
   $app->onBootUp(Bootup::class);
   $app->onShutdown(Shutdown::class);
 });

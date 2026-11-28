@@ -1,13 +1,13 @@
-# DiscuzXController
+# DiscuzController
 
-`kernel\DiscuzX\Foundation\DiscuzXController`  ·  class
+`kernel\Discuz\Foundation\DiscuzController`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Foundation/DiscuzXController.php`
+源码：`gstudio_kernel/Discuz/Foundation/DiscuzController.php`
 
 ## 声明
 
 ```php
-class DiscuzXController extends AuthController
+class DiscuzController extends AuthController
 ```
 
 父类：[AuthController](/php/api/foundation/controller/auth-controller)
@@ -32,12 +32,12 @@ public function verifyFormhash()
 
 ## 同目录
 
-- [DiscuzXApp](/php/api/discuzx/foundation/discuz-x-app)
-- [DiscuzXDeployment](/php/api/discuzx/foundation/discuz-x-deployment)
-- [DiscuzXGBKJsonResponse](/php/api/discuzx/foundation/discuz-xgbk-json-response)
-- [DiscuzXHookApp](/php/api/discuzx/foundation/discuz-x-hook-app)
-- [DiscuzXLang](/php/api/discuzx/foundation/discuz-x-lang)
-- [DiscuzXPath](/php/api/discuzx/foundation/discuz-x-path)
-- [DiscuzXResponse](/php/api/discuzx/foundation/discuz-x-response)
-- [DiscuzXView](/php/api/discuzx/foundation/discuz-x-view)
+- [DiscuzApp](/php/api/discuzx/foundation/discuz-x-app)
+- [DiscuzDeployment](/php/api/discuzx/foundation/discuz-x-deployment)
+- [DiscuzGBKJsonResponse](/php/api/discuzx/foundation/discuz-xgbk-json-response)
+- [DiscuzHookApp](/php/api/discuzx/foundation/discuz-x-hook-app)
+- [DiscuzLang](/php/api/discuzx/foundation/discuz-x-lang)
+- [DiscuzPath](/php/api/discuzx/foundation/discuz-x-path)
+- [DiscuzResponse](/php/api/discuzx/foundation/discuz-x-response)
+- [DiscuzView](/php/api/discuzx/foundation/discuz-x-view)
 

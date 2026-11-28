@@ -1,13 +1,13 @@
-# GlobalDiscuzXMultipleEncodeMiddleware
+# GlobalDiscuzMultipleEncodeMiddleware
 
-`kernel\DiscuzX\Middlewares\GlobalDiscuzXMultipleEncodeMiddleware`  ·  class
+`kernel\Discuz\Middlewares\GlobalDiscuzMultipleEncodeMiddleware`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Middlewares/GlobalDiscuzXMultipleEncodeMiddleware.php`
+源码：`gstudio_kernel/Discuz/Middlewares/GlobalDiscuzMultipleEncodeMiddleware.php`
 
 ## 声明
 
 ```php
-class GlobalDiscuzXMultipleEncodeMiddleware extends MiddlewareBase
+class GlobalDiscuzMultipleEncodeMiddleware extends MiddlewareBase
 ```
 
 父类：[MiddlewareBase](/php/api/foundation/middleware/middleware-base)
@@ -30,5 +30,5 @@ public function handle($next)
 
 ## 同目录
 
-- [GlobalDiscuzXAuthMiddleware](/php/api/discuzx/middlewares/global-discuz-x-auth-middleware)
+- [GlobalDiscuzAuthMiddleware](/php/api/discuzx/middlewares/global-discuz-x-auth-middleware)
 

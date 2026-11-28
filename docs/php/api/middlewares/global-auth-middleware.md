@@ -20,11 +20,11 @@ class GlobalAuthMiddleware extends MiddlewareBase
 ——只写上下文，不碰服务状态，也不把「当前用户」缓存到任何静态变量里。
 
 中间件由 [AuthProvider](/php/api/modules/auth/auth-provider) 的构造函数按运行环境挂上
-（DiscuzX 下换成 [GlobalDiscuzXAuthMiddleware](/php/api/discuzx/middlewares/global-discuz-x-auth-middleware)）。
+（Discuz 下换成 [GlobalDiscuzAuthMiddleware](/php/api/discuzx/middlewares/global-discuz-x-auth-middleware)）。
 
 注意：中间件是 `new $class($request, $controller)` 直接实例化的（见
 `\kernel\Foundation\Middleware\Middleware::executeMiddleware`），不走容器注入，
-因此这里用 `Applications::default()` 取当前应用，再取上下文 / 服务。
+因此这里用 `Applications::current()` 取当前应用，再取上下文 / 服务。
 
 ## 方法一览
 

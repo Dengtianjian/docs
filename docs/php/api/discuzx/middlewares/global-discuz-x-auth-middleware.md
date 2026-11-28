@@ -1,15 +1,15 @@
-# GlobalDiscuzXAuthMiddleware
+# GlobalDiscuzAuthMiddleware
 
-`kernel\DiscuzX\Middlewares\GlobalDiscuzXAuthMiddleware`  ·  class
+`kernel\Discuz\Middlewares\GlobalDiscuzAuthMiddleware`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Middlewares/GlobalDiscuzXAuthMiddleware.php`
+源码：`gstudio_kernel/Discuz/Middlewares/GlobalDiscuzAuthMiddleware.php`
 
-> DiscuzX 环境下的全局认证中间件
+> Discuz 环境下的全局认证中间件
 
 ## 声明
 
 ```php
-class GlobalDiscuzXAuthMiddleware extends GlobalAuthMiddleware
+class GlobalDiscuzAuthMiddleware extends GlobalAuthMiddleware
 ```
 
 父类：[GlobalAuthMiddleware](/php/api/middlewares/global-auth-middleware)
@@ -26,7 +26,7 @@ class GlobalDiscuzXAuthMiddleware extends GlobalAuthMiddleware
 
 | 属性 | 类型 | 可见性 | 说明 |
 |---|---|---|---|
-| `$controller` | `DiscuzXController` | protected | 控制器 |
+| `$controller` | `DiscuzController` | protected | 控制器 |
 
 ## 方法一览
 
@@ -79,5 +79,5 @@ public function handle(\Closure $next)
 
 ## 同目录
 
-- [GlobalDiscuzXMultipleEncodeMiddleware](/php/api/discuzx/middlewares/global-discuz-x-multiple-encode-middleware)
+- [GlobalDiscuzMultipleEncodeMiddleware](/php/api/discuzx/middlewares/global-discuz-x-multiple-encode-middleware)
 

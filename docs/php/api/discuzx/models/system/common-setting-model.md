@@ -1,8 +1,8 @@
 # CommonSettingModel
 
-`kernel\DiscuzX\Models\System\CommonSettingModel`  ·  class
+`kernel\Discuz\Models\System\CommonSettingModel`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Models/System/CommonSettingModel.php`
+源码：`gstudio_kernel/Discuz/Models/System/CommonSettingModel.php`
 
 > Discuz 站点设置表模型
 
@@ -11,10 +11,10 @@
 ## 声明
 
 ```php
-class CommonSettingModel extends DiscuzXSystemModel
+class CommonSettingModel extends DiscuzSystemModel
 ```
 
-父类：[DiscuzXSystemModel](/php/api/discuzx/models/discuz-x-system-model)
+父类：[DiscuzSystemModel](/php/api/discuzx/models/discuz-x-system-model)
 
 ## 概述
 
@@ -22,7 +22,7 @@ class CommonSettingModel extends DiscuzXSystemModel
 
 ## 相关
 
-- [DiscuzXSystemModel](/php/api/discuzx/models/discuz-x-system-model) 基类：补 Discuz 表前缀、关闭时间戳自动维护
+- [DiscuzSystemModel](/php/api/discuzx/models/discuz-x-system-model) 基类：补 Discuz 表前缀、关闭时间戳自动维护
 
 ## 属性
 

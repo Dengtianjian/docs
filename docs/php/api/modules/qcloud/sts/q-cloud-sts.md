@@ -28,7 +28,7 @@ class QCloudSTS extends AbilityBaseObject
 HTTPS 请求由它完成。
 
 被 [QCloudCOSStorage](/php/api/modules/qcloud/qcloudcos/q-cloud-cos-storage) 与其子类
-[DiscuzXQCloudCOSStorage](/php/api/discuzx/foundation/storage/discuz-xq-cloud-cos-storage) 持有 —— 都挂在父类的
+[DiscuzQCloudCOSStorage](/php/api/discuzx/foundation/storage/discuz-xq-cloud-cos-storage) 持有 —— 都挂在父类的
 `$stsClient` 属性上，用于 COS 直传（前端拿临时密钥直传对象存储）。
 
 字段：$userId / $bucket / $region 为 public，可读；$secretId / $secretKey 为 private，

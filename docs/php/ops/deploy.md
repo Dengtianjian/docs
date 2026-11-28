@@ -52,13 +52,13 @@ Deployment::compare("1.2.0", "1.1.9");        // -1 / 0 / 1
 Deployment::compare("1.2.0", ">=1.1.0");      // 支持运算符形式
 ```
 
-## DiscuzX 下的入口
+## Discuz 下的入口
 
-`DiscuzXApp::deployment()` 返回针对扩展包布局的实例，安装脚本直接用它：
+`DiscuzApp::deployment()` 返回针对扩展包布局的实例，安装脚本直接用它：
 
 ```php
 // install.php
-$app = new \kernel\DiscuzX\Foundation\DiscuzXApp(null, "gstudio_download");
+$app = new \kernel\Discuz\Foundation\DiscuzApp(null, "gstudio_download");
 $app->deployment()->install();
 ```
 

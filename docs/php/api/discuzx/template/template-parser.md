@@ -2,7 +2,7 @@
 
 `TemplateParser`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Template/TemplateParser.php`
+源码：`gstudio_kernel/Discuz/Template/TemplateParser.php`
 
 ## 声明
 

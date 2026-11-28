@@ -1,46 +1,46 @@
-# DiscuzXDeployment
+# DiscuzDeployment
 
-`kernel\DiscuzX\Foundation\DiscuzXDeployment`  ·  class
+`kernel\Discuz\Foundation\DiscuzDeployment`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Foundation/DiscuzXDeployment.php`
+源码：`gstudio_kernel/Discuz/Foundation/DiscuzDeployment.php`
 
-> DiscuzX Deployment: Install / Upgrade / Uninstall
+> Discuz Deployment: Install / Upgrade / Uninstall
 
 ## 声明
 
 ```php
-class DiscuzXDeployment extends Deployment
+class DiscuzDeployment extends Deployment
 ```
 
 父类：[Deployment](/php/api/foundation/builtin/deployment)
 
 ## 概述
 
-安装 / 升级 / 卸载编排器 —— 内核 [Deployment](/php/api/foundation/builtin/deployment) 的 DiscuzX 实现。
+安装 / 升级 / 卸载编排器 —— 内核 [Deployment](/php/api/foundation/builtin/deployment) 的 Discuz 实现。
 
 调用方式（各插件包根目录的 install.php / uninstall.php / upgrade.php，
 由插件 XML 的 installfile / uninstallfile / upgradefile 声明）：
 ```php
-// 前置：内核自动加载器已注册，且当前应用已启动（new DiscuzXApp(null, $pluginId)）
-$Iuu = new DiscuzXDeployment();          // install.php
+// 前置：内核自动加载器已注册，且当前应用已启动（new DiscuzApp(null, $pluginId)）
+$Iuu = new DiscuzDeployment();          // install.php
 $Iuu->install();
 
-$Iuu = new DiscuzXDeployment();          // uninstall.php
+$Iuu = new DiscuzDeployment();          // uninstall.php
 $Iuu->uninstall();
 
-$Iuu = new DiscuzXDeployment();          // upgrade.php：是否升级、升到哪个版本由 ?fromversion= 决定
+$Iuu = new DiscuzDeployment();          // upgrade.php：是否升级、升到哪个版本由 ?fromversion= 决定
 $Iuu->upgrade()->cleanUpgrade();
 ```
 
 与父类的分工：
 - 复用父类的版本与升级机制（`.version`、升级脚本扫描与执行、`install.key`、`install.lock`）；
-- 叠加 DiscuzX 特有的三点：
-1. **应用与路径取自「当前应用」**：构造函数不接收参数，用 `Applications::default()` 取 `id()`，
+- 叠加 Discuz 特有的三点：
+1. **应用与路径取自「当前应用」**：构造函数不接收参数，用 `Applications::current()` 取 `id()`，
 因此要求 App 已启动，`Path::root()` / `Path::data()` 才会指向本插件（详见构造函数的「前置条件」）；
 2. **升级基线可由 Discuz 的 `?fromversion=` 提供**：从 `$app->request()->query` 读取该参数，
 传入后覆盖父类从 `.version` 推导的基线（见构造函数）；
 3. **数据目录落到 Discuz 惯例位置**：`{project}/data/plugindata/{appId}`
-（见 `DiscuzXPath::pluginData`、`DiscuzXPath::storage`）。
+（见 `DiscuzPath::pluginData`、`DiscuzPath::storage`）。
 
 生命周期：
 - `install()`   ：先调父类（创建内核侧 Data / Storage 目录），再补建 Discuz 侧 plugindata 目录；
@@ -49,9 +49,9 @@ $Iuu->upgrade()->cleanUpgrade();
 - `clean()`     ：`cleanInstall()` + `cleanUpgrade()`，并删除 `{appRoot}/Provisioner` 目录本身。
 
 注意（改动前请先了解这四点）：
-1. **前置条件：App 必须已注册**。构造函数用 `Applications::default()` 取当前应用（`$app->id()`、
-`$app->request()->query`），未启动 App 时 `Applications::default()` 返回 null，`$app->id()` 会直接致命错误；
-同时 `CHARSET` 需已定义（`DiscuzXApp` 构造时会兜底定义为 utf-8）；
+1. **前置条件：App 必须已注册**。构造函数用 `Applications::current()` 取当前应用（`$app->id()`、
+`$app->request()->query`），未启动 App 时 `Applications::current()` 返回 null，`$app->id()` 会直接致命错误；
+同时 `CHARSET` 需已定义（`DiscuzApp` 构造时会兜底定义为 utf-8）；
 2. 本文件顶部有 `IN_DISCUZ` + `IN_ADMINCP` 双重守卫，只能在 Discuz 后台上下文被载入，
 否则直接 `exit('Access Denied')`；
 3. `cleanInstall()` / `cleanUpgrade()` 删除的是 `{appRoot}/Provisioner/{Install,Upgrade}`
@@ -67,21 +67,21 @@ $Iuu->upgrade()->cleanUpgrade();
 ## 示例
 
 ```php
-// 前置：内核自动加载器已注册，且当前应用已启动（new DiscuzXApp(null, $pluginId)）
-$Iuu = new DiscuzXDeployment();          // install.php
+// 前置：内核自动加载器已注册，且当前应用已启动（new DiscuzApp(null, $pluginId)）
+$Iuu = new DiscuzDeployment();          // install.php
 $Iuu->install();
 
-$Iuu = new DiscuzXDeployment();          // uninstall.php
+$Iuu = new DiscuzDeployment();          // uninstall.php
 $Iuu->uninstall();
 
-$Iuu = new DiscuzXDeployment();          // upgrade.php：是否升级、升到哪个版本由 ?fromversion= 决定
+$Iuu = new DiscuzDeployment();          // upgrade.php：是否升级、升到哪个版本由 ?fromversion= 决定
 $Iuu->upgrade()->cleanUpgrade();
 ```
 
 ## 相关
 
 - [Deployment](/php/api/foundation/builtin/deployment) 父类：版本持久化、增量升级 / 回滚、安装锁与密钥
-- `DiscuzXPath` DiscuzX 路径（data / storage 等）
+- `DiscuzPath` Discuz 路径（data / storage 等）
 
 ## 方法一览
 
@@ -108,8 +108,8 @@ public function __construct()
 —— Discuz 后台升级带上的是当前实际版本，比 `.version` 更权威
 （换机、手工改版本号后仍能正确计算增量）。
 
-前置条件（重要）：调用前必须已经注册当前应用（例如先 `new DiscuzXApp(null, $pluginId)`），
-否则 `Applications::default()` 返回 null → `$app->appId()` 致命错误；同时 `Path::root()` 会因默认应用缺失而失效。
+前置条件（重要）：调用前必须已经注册当前应用（例如先 `new DiscuzApp(null, $pluginId)`），
+否则 `Applications::current()` 返回 null → `$app->appId()` 致命错误；同时 `Path::root()` 会因当前应用缺失而失效。
 
 ### upgrade()
 
@@ -158,12 +158,12 @@ public function uninstall()
 
 ## 同目录
 
-- [DiscuzXApp](/php/api/discuzx/foundation/discuz-x-app)
-- [DiscuzXController](/php/api/discuzx/foundation/discuz-x-controller)
-- [DiscuzXGBKJsonResponse](/php/api/discuzx/foundation/discuz-xgbk-json-response)
-- [DiscuzXHookApp](/php/api/discuzx/foundation/discuz-x-hook-app)
-- [DiscuzXLang](/php/api/discuzx/foundation/discuz-x-lang)
-- [DiscuzXPath](/php/api/discuzx/foundation/discuz-x-path)
-- [DiscuzXResponse](/php/api/discuzx/foundation/discuz-x-response)
-- [DiscuzXView](/php/api/discuzx/foundation/discuz-x-view)
+- [DiscuzApp](/php/api/discuzx/foundation/discuz-x-app)
+- [DiscuzController](/php/api/discuzx/foundation/discuz-x-controller)
+- [DiscuzGBKJsonResponse](/php/api/discuzx/foundation/discuz-xgbk-json-response)
+- [DiscuzHookApp](/php/api/discuzx/foundation/discuz-x-hook-app)
+- [DiscuzLang](/php/api/discuzx/foundation/discuz-x-lang)
+- [DiscuzPath](/php/api/discuzx/foundation/discuz-x-path)
+- [DiscuzResponse](/php/api/discuzx/foundation/discuz-x-response)
+- [DiscuzView](/php/api/discuzx/foundation/discuz-x-view)
 

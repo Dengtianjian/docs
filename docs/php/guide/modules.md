@@ -41,7 +41,7 @@ public function __construct()
 // Auth 门面
 protected static function resolve()
 {
-  return Applications::default()->auth();   // 走别名，跟随应用的契约
+  return Applications::current()->auth();   // 走别名，跟随应用的契约
 }
 ```
 
@@ -55,7 +55,7 @@ protected static function resolve()
 1. 建目录 `Modules/Billing/`；
 2. 写实现 `BillingModule.php`（`namespace kernel\Modules\Billing;`）；
 3. 写装配 `BillingProvider.php`（构造里 `provider($impl, BillingModule::class)` + `provider($impl, "billing")`）；
-4. 需要静态入口再写门面 `Billing.php`（`resolve()` 返回 `Applications::default()->billing()`）；
+4. 需要静态入口再写门面 `Billing.php`（`resolve()` 返回 `Applications::current()->billing()`）；
 5. 在应用 Bootstrap 里装配：
 
 ```php

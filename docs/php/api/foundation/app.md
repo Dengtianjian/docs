@@ -73,7 +73,7 @@ Request / Router / LifecycleProvider（只登记、不构造）；
 不会顺带把对方的请求、路由表、钩子链拉起来。
 
 路由表由 Router 加载，匹配所需的当前请求经 `$app->request()` 获取。CLI 下 Request 的
-URI 由 Console::handle() 置为命中的命令名；DiscuzX 下由 `DiscuzXApp::run()` 在
+URI 由 Console::handle() 置为命中的命令名；Discuz 下由 `DiscuzApp::run()` 在
 处理请求前写入。
 
 | 参数 | 类型 | 默认值 | 说明 |
@@ -95,14 +95,14 @@ public function onBootUp($callback = null)
 
 装配期（构造参数里的闭包 / Bootstrap）即可注册：
 ```php
-new DiscuzXApp(function ($app) {
+new DiscuzApp(function ($app) {
 $app->onBootUp(Bootup::class);
 $app->onShutdown(Shutdown::class);
 });
 ```
 
 ```php
-new DiscuzXApp(function ($app) {
+new DiscuzApp(function ($app) {
 $app->onBootUp(Bootup::class);
 $app->onShutdown(Shutdown::class);
 });

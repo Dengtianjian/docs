@@ -1,16 +1,16 @@
 # UploadAttachmentController
 
-`kernel\DiscuzX\Controllers\Attachment\UploadAttachmentController`  ·  class
+`kernel\Discuz\Controllers\Attachment\UploadAttachmentController`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Controllers/Attachment/UploadAttachmentController.php`
+源码：`gstudio_kernel/Discuz/Controllers/Attachment/UploadAttachmentController.php`
 
 ## 声明
 
 ```php
-class UploadAttachmentController extends DiscuzXController
+class UploadAttachmentController extends DiscuzController
 ```
 
-父类：[DiscuzXController](/php/api/discuzx/foundation/discuz-x-controller)
+父类：[DiscuzController](/php/api/discuzx/foundation/discuz-x-controller)
 
 ## 属性
 

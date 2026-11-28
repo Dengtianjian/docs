@@ -1,13 +1,13 @@
-# DiscuzXURL
+# DiscuzURL
 
-`kernel\DiscuzX\DiscuzXURL`  ·  class
+`kernel\Discuz\DiscuzURL`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/DiscuzXURL.php`
+源码：`gstudio_kernel/Discuz/DiscuzURL.php`
 
 ## 声明
 
 ```php
-class DiscuzXURL extends URL
+class DiscuzURL extends URL
 ```
 
 父类：[URL](/php/api/foundation/http/url)
@@ -65,7 +65,7 @@ public function toString()
 
 ## 同目录
 
-- [DiscuzXForum](/php/api/discuzx/discuz-x-forum)
-- [DiscuzXPost](/php/api/discuzx/discuz-x-post)
-- [DiscuzXThread](/php/api/discuzx/discuz-x-thread)
+- [DiscuzForum](/php/api/discuzx/discuz-x-forum)
+- [DiscuzPost](/php/api/discuzx/discuz-x-post)
+- [DiscuzThread](/php/api/discuzx/discuz-x-thread)
 

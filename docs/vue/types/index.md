@@ -21,7 +21,7 @@
 | `IRuyiFileUploadAuth` | 上传鉴权字段：`'header-list'`、`'key-time'`、`'sign-algorithm'`、`'sign-time'`、`signature`、`'url-param-list'` |
 | `IRuyiFileAuthData` | 上传授权数据：`fileKey`、`remoteFileKey`、`auth`、`authString`、`previewURL`、`accessControl`、`httpMethod`（`'post' \| 'put'`） |
 
-被 [DiscuzXFilesApi](/vue/api/discuzx) 使用。
+被 [DiscuzFilesApi](/vue/api/discuzx) 使用。
 
 ## `types/components/Common`
 

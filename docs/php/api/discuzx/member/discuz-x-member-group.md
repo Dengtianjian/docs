@@ -1,13 +1,13 @@
-# DiscuzXMemberGroup
+# DiscuzMemberGroup
 
-`kernel\DiscuzX\Member\DiscuzXMemberGroup`  ·  class
+`kernel\Discuz\Member\DiscuzMemberGroup`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Member/DiscuzXMemberGroup.php`
+源码：`gstudio_kernel/Discuz/Member/DiscuzMemberGroup.php`
 
 ## 声明
 
 ```php
-class DiscuzXMemberGroup
+class DiscuzMemberGroup
 ```
 
 ## 方法一览
@@ -24,5 +24,5 @@ public static function all()
 
 ## 同目录
 
-- [DiscuzXMember](/php/api/discuzx/member/discuz-x-member)
+- [DiscuzMember](/php/api/discuzx/member/discuz-x-member)
 

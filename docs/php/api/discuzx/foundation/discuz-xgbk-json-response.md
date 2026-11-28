@@ -1,13 +1,13 @@
-# DiscuzXGBKJsonResponse
+# DiscuzGBKJsonResponse
 
-`kernel\DiscuzX\Foundation\DiscuzXGBKJsonResponse`  ·  class
+`kernel\Discuz\Foundation\DiscuzGBKJsonResponse`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Foundation/DiscuzXGBKJsonResponse.php`
+源码：`gstudio_kernel/Discuz/Foundation/DiscuzGBKJsonResponse.php`
 
 ## 声明
 
 ```php
-class DiscuzXGBKJsonResponse
+class DiscuzGBKJsonResponse
 ```
 
 ## 常量
@@ -118,12 +118,12 @@ public static function utf16beToUTF8(&$str)
 
 ## 同目录
 
-- [DiscuzXApp](/php/api/discuzx/foundation/discuz-x-app)
-- [DiscuzXController](/php/api/discuzx/foundation/discuz-x-controller)
-- [DiscuzXDeployment](/php/api/discuzx/foundation/discuz-x-deployment)
-- [DiscuzXHookApp](/php/api/discuzx/foundation/discuz-x-hook-app)
-- [DiscuzXLang](/php/api/discuzx/foundation/discuz-x-lang)
-- [DiscuzXPath](/php/api/discuzx/foundation/discuz-x-path)
-- [DiscuzXResponse](/php/api/discuzx/foundation/discuz-x-response)
-- [DiscuzXView](/php/api/discuzx/foundation/discuz-x-view)
+- [DiscuzApp](/php/api/discuzx/foundation/discuz-x-app)
+- [DiscuzController](/php/api/discuzx/foundation/discuz-x-controller)
+- [DiscuzDeployment](/php/api/discuzx/foundation/discuz-x-deployment)
+- [DiscuzHookApp](/php/api/discuzx/foundation/discuz-x-hook-app)
+- [DiscuzLang](/php/api/discuzx/foundation/discuz-x-lang)
+- [DiscuzPath](/php/api/discuzx/foundation/discuz-x-path)
+- [DiscuzResponse](/php/api/discuzx/foundation/discuz-x-response)
+- [DiscuzView](/php/api/discuzx/foundation/discuz-x-view)
 

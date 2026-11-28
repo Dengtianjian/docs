@@ -14,20 +14,15 @@ class Applications
 
 ## 概述
 
-统一登记同一进程内创建的全部 App 实例，并维护一个「默认应用」指针：
-- **第一个注册的应用自动成为默认应用**（`$makeDefault` 未显式指定时）；
-- 也可以**显式指定**默认应用：注册时传 `$makeDefault = true`，或事后调用 `setDefault`。
+统一登记同一进程内创建的全部 App 实例，并维护「当前主运行应用」指针：
+- 每个请求/命令只有一个入口应用，**第一个注册的应用成为当前应用**；
+- 其它应用通过 `get` 取用（借能力），不会覆盖当前应用；
+- 不设主从层级，所有应用在注册表里平行。
 
-默认应用是 `default` / `defaultId` / `$app->kernelId()` 的数据来源，
-因此「谁被登记为默认」直接决定框架各处取到的是哪个应用。
+当前应用是 `current` / `currentId` 的数据来源，也是框架门面在「没有对象上下文」时的解析目标。
+业务对象自身的归属一律用 `$this->app()->appId()`。
 
-典型场景与顺序：
-- 常规应用：`new App(Bootstrap::class, "app")` 构造时自动注册，因是第一个注册者，自动成为默认；
-- 多应用共存（如 DiscuzX 插件）：插件 App 构造时传 `$makeDefault = true`，显式接管默认位置；
-- 测试/常驻进程：可用 `clear` 重置注册表，或用 `setDefault` 在多个实例间切换。
-
-注意：注册表以「应用 ID」为键，重复注册同一 ID 会覆盖前者（实例替换，默认指针不变 ——
-若被覆盖的正是默认应用，仍指向该 ID，取用时会拿到新实例）。
+注意：注册表以「应用 ID」为键，重复注册同一 ID 会覆盖前者（实例替换，当前指针不变）。
 
 类型上只认 `Application`：具体的 Web 应用 / 未来的 console 应用都是它的子类，
 管理器不需要知道是哪种。
@@ -37,7 +32,7 @@ class Applications
 | 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
 | `static $applications` | `array` | `[]` | 已登记的应用实例 |
-| `static $defaultId` | `string|null` | `null` | 默认应用的应用ID |
+| `static $currentId` | `string|null` | `null` | 当前主运行应用的应用ID |
 | `static $setupStack` | `Application[]` | `[]` | 装配上下文栈 |
 
 ## 方法一览
@@ -53,28 +48,27 @@ class Applications
 | [`enterSetup()`](#entersetup) | 进入装配 / 构造上下文 |
 | [`leaveSetup()`](#leavesetup) | 退出装配上下文 |
 | [`setUpApp()`](#setupapp) | 取当前装配 / 构造上下文里的应用 |
-| [`defaultId()`](#defaultid) | 获取默认应用的应用ID |
-| [`setDefault()`](#setdefault) | 切换默认应用 |
+| [`current()`](#current) | 获取当前主运行应用实例 |
+| [`currentId()`](#currentid) | 获取当前主运行应用的应用ID |
 | [`remove()`](#remove) | 移除一个已登记的应用 |
-| [`clear()`](#clear) | 清空注册表（含默认应用） |
+| [`clear()`](#clear) | 清空注册表（含当前应用） |
 
 ### register()
 
 ```php
-public static function register(Application $app, $id, $makeDefault = false): Application
+public static function register(Application $app, $id): Application
 ```
 
 登记一个应用实例
 
-- 注册表里尚无默认应用时，本次注册的应用自动成为默认；
-- `$makeDefault = true` 时**强制**把该应用设为默认（覆盖已有的默认应用）；
-- 重复注册同一 ID 会替换实例，默认指针保持不变。
+- 注册表里还没有当前应用时，本次注册的应用成为当前应用；
+- 已有当前应用时不覆盖（其它应用通过 `get` 取用，不改变当前）；
+- 重复注册同一 ID 会替换实例，当前指针保持不变。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
 | `$app` | `Application` | — | 应用实例 |
 | `$id` | `string` | — | 应用ID（与项目目录同名）；空字符串会抛异常 |
-| `$makeDefault` | `boolean` | `false` | 是否强制指定为默认应用，默认 false（仅在还没有默认应用时自动成为默认） |
 
 返回：`Application` —— Application 返回传入的应用实例，便于链式使用
 
@@ -208,35 +202,29 @@ public static function setUpApp(): ?Application
 取当前装配 / 构造上下文里的应用
 
 既不在装配期也不在构造期时返回 null——调用方（`\kernel\Foundation\Object\BaseObject::app`）
-再回落到默认应用。
+再回落到当前应用。
 
 返回：`?Application` —— Application|null 当前上下文的应用；都没有时返回 null
 
-### defaultId()
+### current()
 
 ```php
-public static function defaultId(): ?string
+public static function current(): ?Application
 ```
 
-获取默认应用的应用ID
+获取当前主运行应用实例
 
-返回：`?string` —— string|null 尚未登记任何应用时返回 null
+返回：`?Application` —— 尚未登记任何应用时返回 null
 
-### setDefault()
+### currentId()
 
 ```php
-public static function setDefault($idOrApp): bool
+public static function currentId(): ?string
 ```
 
-切换默认应用
+获取当前主运行应用的应用ID
 
-只接受**已登记**的应用，登记表本身不会被修改。
-
-| 参数 | 类型 | 默认值 | 说明 |
-|---|---|---|---|
-| `$idOrApp` | `string|Application` | — | 应用ID，或已登记的 Application 实例 |
-
-返回：`bool` —— boolean 指定成功返回 true；实例未登记 / ID 不存在返回 false
+返回：`?string` —— 尚未登记任何应用时返回 null
 
 ### remove()
 
@@ -246,8 +234,8 @@ public static function remove($id): ?Application
 
 移除一个已登记的应用
 
-若移除的正是默认应用，则把默认指针交给**剩余应用中的第一个**（保持「总有一个默认」）；
-注册表被清空后默认指针归 null。
+若移除的正是当前应用，则把当前指针交给**剩余应用中的第一个**（保持「总有一个当前」）；
+注册表被清空后当前指针归 null。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
@@ -261,9 +249,9 @@ public static function remove($id): ?Application
 public static function clear(): void
 ```
 
-清空注册表（含默认应用）
+清空注册表（含当前应用）
 
-仅供测试或常驻进程重置使用；清空后 Applications::default() 返回 null。
+仅供测试或常驻进程重置使用；清空后 Applications::current() 返回 null。
 
 返回：`void` —— void
 

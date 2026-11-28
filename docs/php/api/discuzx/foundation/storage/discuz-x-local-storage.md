@@ -1,13 +1,13 @@
-# DiscuzXLocalStorage
+# DiscuzLocalStorage
 
-`kernel\DiscuzX\Foundation\Storage\DiscuzXLocalStorage`  ·  class
+`kernel\Discuz\Foundation\Storage\DiscuzLocalStorage`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Foundation/Storage/DiscuzXLocalStorage.php`
+源码：`gstudio_kernel/Discuz/Foundation/Storage/DiscuzLocalStorage.php`
 
 ## 声明
 
 ```php
-class DiscuzXLocalStorage extends LocalStorage
+class DiscuzLocalStorage extends LocalStorage
 ```
 
 父类：[LocalStorage](/php/api/modules/storage/drivers/local-storage)
@@ -26,7 +26,7 @@ public function __construct()
 
 ## 同目录
 
-- [DiscuzXFTPStorage](/php/api/discuzx/foundation/storage/discuz-xftp-storage)
-- [DiscuzXQCloudCOSStorage](/php/api/discuzx/foundation/storage/discuz-xq-cloud-cos-storage)
-- [DiscuzXStorage](/php/api/discuzx/foundation/storage/discuz-x-storage)
+- [DiscuzFTPStorage](/php/api/discuzx/foundation/storage/discuz-xftp-storage)
+- [DiscuzQCloudCOSStorage](/php/api/discuzx/foundation/storage/discuz-xq-cloud-cos-storage)
+- [DiscuzStorage](/php/api/discuzx/foundation/storage/discuz-x-storage)
 

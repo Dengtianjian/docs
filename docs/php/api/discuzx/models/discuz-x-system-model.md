@@ -1,15 +1,15 @@
-# DiscuzXSystemModel
+# DiscuzSystemModel
 
-`kernel\DiscuzX\Models\DiscuzXSystemModel`  ·  class
+`kernel\Discuz\Models\DiscuzSystemModel`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Models/DiscuzXSystemModel.php`
+源码：`gstudio_kernel/Discuz/Models/DiscuzSystemModel.php`
 
-> DiscuzX 系统表模型基类
+> Discuz 系统表模型基类
 
 ## 声明
 
 ```php
-class DiscuzXSystemModel extends Model
+class DiscuzSystemModel extends Model
 ```
 
 父类：[Model](/php/api/foundation/database/rdb/model)
@@ -31,7 +31,7 @@ Discuz 系统表用自身的时间字段命名（如 `dateline`），不遵循�
 
 用法：
 ```php
-class CommonMemberModel extends DiscuzXSystemModel
+class CommonMemberModel extends DiscuzSystemModel
 {
 public $tableName = "common_member";
 protected $primaryKey = "uid";
@@ -42,12 +42,12 @@ protected $primaryKey = "uid";
 与父类默认的 `id` 不同，需要子类自行声明 `$primaryKey`（见上例）。
 
 ⚠️ 本类依赖 Discuz 运行环境（`\DB::table` 要求 Discuz 的数据库对象已初始化）。
-系统表本身也只在 DiscuzX 上下文中使用，故不做环境判定。
+系统表本身也只在 Discuz 上下文中使用，故不做环境判定。
 
 ## 示例
 
 ```php
-class CommonMemberModel extends DiscuzXSystemModel
+class CommonMemberModel extends DiscuzSystemModel
 {
 public $tableName = "common_member";
 protected $primaryKey = "uid";
@@ -57,7 +57,7 @@ protected $primaryKey = "uid";
 ## 相关
 
 - [Model](/php/api/foundation/database/rdb/model) 通用关系型模型基类
-- `DiscuzXAddonModel` 插件自建表模型基类
+- `DiscuzAddonModel` 插件自建表模型基类
 
 ## 受保护 / 私有属性
 
@@ -89,5 +89,5 @@ public function __construct($tableName = null)
 
 ## 同目录
 
-- [DiscuzXAddonModel](/php/api/discuzx/models/discuz-x-addon-model)
+- [DiscuzAddonModel](/php/api/discuzx/models/discuz-x-addon-model)
 

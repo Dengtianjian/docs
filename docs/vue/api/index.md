@@ -3,7 +3,7 @@
 - **文件位置**: `packages/vue/api/common/`
 - **引入方式**: 子路径**必须带 `.ts` 扩展名**，如 `import SettingsApi from 'kit/vue/api/common/SettingsApi.ts'`
 
-通用（非 DiscuzX）的接口封装，都继承自 [Request](/vue/foundation/http)（已解包 `res.data`）。
+通用（非 Discuz）的接口封装，都继承自 [Request](/vue/foundation/http)（已解包 `res.data`）。
 
 ## AttachmentsApi
 

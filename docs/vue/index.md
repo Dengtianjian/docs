@@ -60,10 +60,10 @@ import 'kit/core/css/common.css'          // 与框架无关的基础样式
 | --- | --- |
 | [HTTP](/vue/foundation/http) | `HTTP` / `Request` / `RuyiRequest` / `discuzXRequest` 请求封装，以及 `IResponse`、`IPagination` 等类型 |
 | [foundation 其余能力](/vue/foundation/cookies) | `cookies`、[eventBus](/vue/foundation/event-bus)、[file](/vue/foundation/file)、[helper](/vue/foundation/helper)、[naiveUI](/vue/foundation/naive-ui) |
-| [services](/vue/services/setting-form) | `SettingFormService`、[commonService](/vue/services/common)、[dayjsService](/vue/services/dayjs)、[naiveUIService](/vue/services/naive-ui)、[naiveRouterMenuService](/vue/services/naive-router-menu)、[DiscuzXSettingFormService](/vue/services/discuzx-setting-form) |
+| [services](/vue/services/setting-form) | `SettingFormService`、[commonService](/vue/services/common)、[dayjsService](/vue/services/dayjs)、[naiveUIService](/vue/services/naive-ui)、[naiveRouterMenuService](/vue/services/naive-router-menu)、[DiscuzSettingFormService](/vue/services/discuzx-setting-form) |
 | [components/base](/vue/components/base/RPanel) | 与框架无关的基础组件：面板、浮动、复制、状态、菜单、布局等 |
 | [components/naive](/vue/components/naive/NaiveUIProvider) | 基于 naive-ui 的能力组件：Provider、菜单、表单、上传、分页等 |
-| [components/discuzx](/vue/components/discuzx/RDiscuzXUploadFile) | DiscuzX 场景的上传组件 |
+| [components/discuzx](/vue/components/discuzx/RDiscuzUploadFile) | Discuz 场景的上传组件 |
 | [api](/vue/api/index) | 接口封装（`AttachmentsApi`、`SettingsApi`、`discuzX/*`） |
 | [types](/vue/types/index) | 通用类型、组件类型、`vue-router` 模块扩充 |
 | [vite-plugin](/vue/vite-plugin) | 业务工程用的 vite 插件：`dedupe`、`fs.allow` 放行、kit 源码 HMR 监听 |

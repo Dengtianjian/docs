@@ -3,7 +3,7 @@
 ## 环境
 
 - PHP 7.4+（部分代码保留了 PHP 7 兼容写法）
-- DiscuzX 插件目录：`source/plugin/<app_id>/`
+- Discuz 插件目录：`source/plugin/<app_id>/`
 
 ## 一个应用的最小结构
 
@@ -65,7 +65,7 @@ class Bootstrap
 
   private function database()
   {
-    $this->app()->provider(\kernel\DiscuzX\Foundation\Database\DiscuzXDatabase::class, "database");
+    $this->app()->provider(\kernel\Discuz\Foundation\Database\DiscuzDatabase::class, "database");
   }
 }
 ```
@@ -79,13 +79,13 @@ class Bootstrap
 ## 第二步：启动应用
 
 ```php
-use kernel\DiscuzX\Foundation\DiscuzXApp;
+use kernel\Discuz\Foundation\DiscuzApp;
 use gstudio_super_app\Setup\Bootstrap;
 
-new DiscuzXApp(Bootstrap::class, "gstudio_super_app");
+new DiscuzApp(Bootstrap::class, "gstudio_super_app");
 ```
 
-`DiscuzXApp` 是 Discuz 环境下的应用基类（自动接管 `IN_DISCUZ` 判断、表前缀、路径）；纯框架场景可直接用 `kernel\Foundation\App`。
+`DiscuzApp` 是 Discuz 环境下的应用基类（自动接管 `IN_DISCUZ` 判断、表前缀、路径）；纯框架场景可直接用 `kernel\Foundation\App`。
 
 ## 第三步：定义路由与控制器
 

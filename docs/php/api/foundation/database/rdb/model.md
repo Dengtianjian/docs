@@ -225,7 +225,7 @@ PHP 赋值/DB 取值 ──→ castToDb()  ──→  存入 $data（DB 兼容�
 | [`__get()`](#__get) | 读取属性 |
 | [`__isset()`](#__isset) | 判断属性是否存在（isset() / ?? 运算符会走这里） |
 | [`__set()`](#__set) | 写入属性 |
-| [`discuzTableName()`](#discuztablename) | 拼出 DiscuzX 环境下的真实表名 |
+| [`platformTableName()`](#platformtablename) | 按平台规则限定表名 |
 | [`save()`](#save) | 持久化当前行数据 |
 | [`touchTimestampForData()`](#touchtimestampfordata) | 为外部写入数据数组注入 created_at / updated_at（查询级写操作用） |
 | [`delete()`](#delete) | 删除记录 |
@@ -508,22 +508,21 @@ public function __set($name, $value)
 | `$name` | `mixed` | — | — |
 | `$value` | `mixed` | — | — |
 
-### discuzTableName()
+### platformTableName()
 
 ```php
-public function discuzTableName($tableName)
+public function platformTableName($tableName)
 ```
 
-拼出 DiscuzX 环境下的真实表名
+按平台规则限定表名
 
-Discuz 的表名由「应用 ID + 表名」组成（如 `gstudio_super_app_files`）。应用 ID 取
-**本模型所属的应用**（`BaseObject::app`）：容器构造对象时会把所属应用压进
+具体规则交给平台实现（`TableNameProvider`）：是否拼应用前缀、是否补站点前缀都由平台决定，独立部署也可能按 appId 限定，因此本方法不绑定 Discuz。
+
+应用 ID 取**本模型所属的应用**（`BaseObject::app`）：容器构造对象时会把所属应用压进
 装配上下文，所以构造期就能算对；构造完成后则由 `bindApp()` 补上的实例决定。
 
 因此「读别的应用的表」不再靠猜：用那个应用的容器取模型即可
 （`$superApp->make(FilesModel::class)`），表名与签名都会跟着它走。
-
-传入的表名里已含 `gstudio` 前缀时原样透传，不会被二次拼接。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |---|---|---|---|

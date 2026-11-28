@@ -1,43 +1,43 @@
-# DiscuzXLang
+# DiscuzLang
 
-`kernel\DiscuzX\Foundation\DiscuzXLang`  ·  class
+`kernel\Discuz\Foundation\DiscuzLang`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Foundation/DiscuzXLang.php`
+源码：`gstudio_kernel/Discuz/Foundation/DiscuzLang.php`
 
-> DiscuzX 语言包（静态注册表）
+> Discuz 语言包（静态注册表）
 
 ## 声明
 
 ```php
-class DiscuzXLang
+class DiscuzLang
 ```
 
 ## 概述
 
-给 DiscuzX 适配层提供一套 kernel 风格的语言读取能力：语言项按「路径」组织，
-取用时以 `/` 分隔逐级下钻，例如 `DiscuzXLang::value("kernel/extension_list")`。
+给 Discuz 适配层提供一套 kernel 风格的语言读取能力：语言项按「路径」组织，
+取用时以 `/` 分隔逐级下钻，例如 `DiscuzLang::value("kernel/extension_list")`。
 全部为静态方法，进程内共享一份字典，无实例、无缓存。
 
 ## 数据来源
 
-语言包文件位于 `DiscuzX/Langs/{utf-8,gbk}.php`，按站点 `CHARSET` 二选一。
+语言包文件位于 `Discuz/Langs/{utf-8,gbk}.php`，按站点 `CHARSET` 二选一。
 文件内部构造 `$langs` 数组并在末尾自行调用 `add` 完成注册，`load`
 只负责把它引进来；文件若写成 `return 数组` 的形式，返回值同样会被注册。
 
 ## 加载时机
 
-`DiscuzXApp::__construct` 在应用启动时按站点 `CHARSET` 加载 `utf-8` / `gbk`，
+`DiscuzApp::__construct` 在应用启动时按站点 `CHARSET` 加载 `utf-8` / `gbk`，
 因此业务代码直接 `value` 即可，无需自己 `load`。
 
 ## 使用方式
 
 ```php
 // 内核自带语言包在 kernel 下；第二个参数为基路径，默认 Path::root()（应用根）
-DiscuzXLang::load("DiscuzX/Langs/utf-8", Path::kernel());
+DiscuzLang::load("Discuz/Langs/utf-8", Path::kernel());
 
-DiscuzXLang::value("kernel/extension_list");              // 单个文案
-DiscuzXLang::value("common/save", "common/cancel");       // ["保存", "取消"]
-DiscuzXLang::connect("common/symbol/colon", "welcome");   // "：欢迎"
+DiscuzLang::value("kernel/extension_list");              // 单个文案
+DiscuzLang::value("common/save", "common/cancel");       // ["保存", "取消"]
+DiscuzLang::connect("common/symbol/colon", "welcome");   // "：欢迎"
 ```
 
 ## 注意事项
@@ -51,11 +51,11 @@ DiscuzXLang::connect("common/symbol/colon", "welcome");   // "：欢迎"
 
 ```php
 // 内核自带语言包在 kernel 下；第二个参数为基路径，默认 Path::root()（应用根）
-DiscuzXLang::load("DiscuzX/Langs/utf-8", Path::kernel());
+DiscuzLang::load("Discuz/Langs/utf-8", Path::kernel());
 
-DiscuzXLang::value("kernel/extension_list");              // 单个文案
-DiscuzXLang::value("common/save", "common/cancel");       // ["保存", "取消"]
-DiscuzXLang::connect("common/symbol/colon", "welcome");   // "：欢迎"
+DiscuzLang::value("kernel/extension_list");              // 单个文案
+DiscuzLang::value("common/save", "common/cancel");       // ["保存", "取消"]
+DiscuzLang::connect("common/symbol/colon", "welcome");   // "：欢迎"
 ```
 
 ## 属性
@@ -89,7 +89,7 @@ public static function load($filePath, $basePath = null)
 2. 载入文件 —— 语言包文件末尾自行调用 `add` 完成注册；
 若文件 `return` 了数组，返回值也在此注册。
 
-由 `DiscuzXApp::__construct` 在应用启动时调用（内核自带语言包 → `$basePath = Path::kernel()`）。
+由 `DiscuzApp::__construct` 在应用启动时调用（内核自带语言包 → `$basePath = Path::kernel()`）。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
@@ -98,7 +98,7 @@ public static function load($filePath, $basePath = null)
 
 可能抛出：
 
-- [Error](/php/api/foundation/exception/error) 解析后的文件不存在时抛出（statusCode = 500、errorCode = `DiscuzXLang:500001`、
+- [Error](/php/api/foundation/exception/error) 解析后的文件不存在时抛出（statusCode = 500、errorCode = `DiscuzLang:500001`、
 
 ### add()
 
@@ -148,11 +148,11 @@ public static function connect()
 适合把「符号 + 文案」「前缀 + 正文」这类多段内容拼起来。
 
 ```php
-DiscuzXLang::connect("common/symbol/colon", "welcome"); // "：欢迎"
+DiscuzLang::connect("common/symbol/colon", "welcome"); // "：欢迎"
 ```
 
 ```php
-DiscuzXLang::connect("common/symbol/colon", "welcome"); // "：欢迎"
+DiscuzLang::connect("common/symbol/colon", "welcome"); // "：欢迎"
 ```
 
 ### value()
@@ -168,13 +168,13 @@ public static function value($keys)
 - 传多个：返回按参数顺序排列的值数组。
 
 ```php
-DiscuzXLang::value("kernel/extension_list");          // "扩展列表"
-DiscuzXLang::value("common/save", "common/cancel");   // ["保存", "取消"]
+DiscuzLang::value("kernel/extension_list");          // "扩展列表"
+DiscuzLang::value("common/save", "common/cancel");   // ["保存", "取消"]
 ```
 
 ```php
-DiscuzXLang::value("kernel/extension_list");          // "扩展列表"
-DiscuzXLang::value("common/save", "common/cancel");   // ["保存", "取消"]
+DiscuzLang::value("kernel/extension_list");          // "扩展列表"
+DiscuzLang::value("common/save", "common/cancel");   // ["保存", "取消"]
 ```
 
 | 参数 | 类型 | 默认值 | 说明 |
@@ -200,12 +200,12 @@ public static function all()
 
 ## 同目录
 
-- [DiscuzXApp](/php/api/discuzx/foundation/discuz-x-app)
-- [DiscuzXController](/php/api/discuzx/foundation/discuz-x-controller)
-- [DiscuzXDeployment](/php/api/discuzx/foundation/discuz-x-deployment)
-- [DiscuzXGBKJsonResponse](/php/api/discuzx/foundation/discuz-xgbk-json-response)
-- [DiscuzXHookApp](/php/api/discuzx/foundation/discuz-x-hook-app)
-- [DiscuzXPath](/php/api/discuzx/foundation/discuz-x-path)
-- [DiscuzXResponse](/php/api/discuzx/foundation/discuz-x-response)
-- [DiscuzXView](/php/api/discuzx/foundation/discuz-x-view)
+- [DiscuzApp](/php/api/discuzx/foundation/discuz-x-app)
+- [DiscuzController](/php/api/discuzx/foundation/discuz-x-controller)
+- [DiscuzDeployment](/php/api/discuzx/foundation/discuz-x-deployment)
+- [DiscuzGBKJsonResponse](/php/api/discuzx/foundation/discuz-xgbk-json-response)
+- [DiscuzHookApp](/php/api/discuzx/foundation/discuz-x-hook-app)
+- [DiscuzPath](/php/api/discuzx/foundation/discuz-x-path)
+- [DiscuzResponse](/php/api/discuzx/foundation/discuz-x-response)
+- [DiscuzView](/php/api/discuzx/foundation/discuz-x-view)
 

@@ -20,7 +20,7 @@ HTTP                 index.ts          # 最底层，send() 返回完整 IRespon
 | `HTTP` | `Promise<IResponse<ResponseData>>` | 元信息完整，适合需要读响应头/状态码的场景 |
 | `request`（`Request` 的默认导出） | `Promise<ResponseData>` | 已解包出 `res.data`，业务最常用 |
 | `RuyiRequest` | 同 `request` | 额外注入 `X-Ajax: 1`、`Authorization: Bearer <localStorage.Ruyi_Token>`，并把响应头里的 token 回写 `localStorage` |
-| `discuzXRequest` | 同 `request` | 把 `prefix/uri` 拼成查询串 `?uri=xxx/yyy` 后请求，适配 DiscuzX 的入口路由 |
+| `discuzXRequest` | 同 `request` | 把 `prefix/uri` 拼成查询串 `?uri=xxx/yyy` 后请求，适配 Discuz 的入口路由 |
 
 ## 构造与链式设置
 
@@ -132,7 +132,7 @@ interface IPagination<Data> {
 ## 扩展一个 api 类
 
 ```ts
-// isdtj/src/... 的真实写法：继承 Request / DiscuzXRequest，只声明自己的方法
+// isdtj/src/... 的真实写法：继承 Request / DiscuzRequest，只声明自己的方法
 import Request from 'kit/vue/foundation/HTTP/request'
 
 export class AttachmentsApi extends Request {
@@ -147,7 +147,7 @@ export class AttachmentsApi extends Request {
 - **错误走 `reject`，且 `reject` 出来的不是 `Error` 而是 `IResponse`**：`statusCode > 299` 时 `fetch()` 会 `reject(Response)`；`Request` 的 `send()` 只处理 `then(res => res.data)`，所以用 `request` 时 `catch` 拿到的是 `IResponse`（可用 `err.message`、`err.details`）。网络异常才是原生 `Error`。
 - **请求结束后实例状态会被清空**（`query`、`body`、`headers`、`options`、`transforms`、本次中间件），因此同一个实例可以在多次请求间复用；但**并发使用同一个实例会互相覆盖参数**，需要并发时请每次 `new`。
 - `RuyiRequest` 依赖 `localStorage`，token 写回逻辑只在响应头包含 `Authorization`/`authorization` 时触发。
-- `discuzXRequest` 会把 `prefix` 与 `uri` 用 `/` 拼成 `?uri=` 传给 `baseUrl`，因此 `baseUrl` 应是 DiscuzX 的入口地址。
+- `discuzXRequest` 会把 `prefix` 与 `uri` 用 `/` 拼成 `?uri=` 传给 `baseUrl`，因此 `baseUrl` 应是 Discuz 的入口地址。
 - 响应体不是 `application/json` 时，`data` 是**原始文本**（`await res.text()`），此时 `message` 保持默认 `'ok'`、`code` 等于 HTTP 状态码。
 - 构造参数里的 `headers` 是**全局请求头**（与单次请求的 `header()` 分开存放，请求结束后的清空逻辑不会重置它），适合放固定的公共头。
 - `options` 与默认值 `{ headers, method: 'get', mode: 'cors' }` 做的是**浅合并**，自己传 `headers` 会整体覆盖默认请求头。

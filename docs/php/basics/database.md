@@ -15,7 +15,7 @@ DB::getConnection();                // 当前连接
 DB::table("user");                  // 快速得到表对象
 ```
 
-连接由应用装配期登记（DiscuzX 环境由 `DiscuzXDatabase` 自动配置），`Connections::getDrivers()` 可用来判断「现在有没有可用连接」——安装阶段通常没有。
+连接由应用装配期登记（Discuz 环境由 `DiscuzDatabase` 自动配置），`Connections::getDrivers()` 可用来判断「现在有没有可用连接」——安装阶段通常没有。
 
 ## 模型
 

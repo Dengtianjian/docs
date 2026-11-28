@@ -1,13 +1,13 @@
-# DiscuzXMember
+# DiscuzMember
 
-`kernel\DiscuzX\Member\DiscuzXMember`  ·  class
+`kernel\Discuz\Member\DiscuzMember`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Member/DiscuzXMember.php`
+源码：`gstudio_kernel/Discuz/Member/DiscuzMember.php`
 
 ## 声明
 
 ```php
-class DiscuzXMember
+class DiscuzMember
 ```
 
 ## 方法一览
@@ -141,5 +141,5 @@ public static function exist($UserId)
 
 ## 同目录
 
-- [DiscuzXMemberGroup](/php/api/discuzx/member/discuz-x-member-group)
+- [DiscuzMemberGroup](/php/api/discuzx/member/discuz-x-member-group)
 

@@ -1,22 +1,22 @@
-# DiscuzXHookApp
+# DiscuzHookApp
 
-`kernel\DiscuzX\Foundation\DiscuzXHookApp`  ·  class
+`kernel\Discuz\Foundation\DiscuzHookApp`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Foundation/DiscuzXHookApp.php`
+源码：`gstudio_kernel/Discuz/Foundation/DiscuzHookApp.php`
 
 ## 声明
 
 ```php
-class DiscuzXHookApp extends DiscuzXApp
+class DiscuzHookApp extends DiscuzApp
 ```
 
-父类：`DiscuzXApp`
+父类：`DiscuzApp`
 
 ## 方法一览
 
 | 方法 | 说明 |
 |---|---|
-| [`__construct()`](#__construct) | 构造：只走 Web 应用那一层（基座 + 框架零件），跳过 DiscuzXApp 的构造追加 |
+| [`__construct()`](#__construct) | 构造：只走 Web 应用那一层（基座 + 框架零件），跳过 DiscuzApp 的构造追加 |
 
 ### __construct()
 
@@ -24,9 +24,9 @@ class DiscuzXHookApp extends DiscuzXApp
 public function __construct($setup = null, $appId = null)
 ```
 
-构造：只走 Web 应用那一层（基座 + 框架零件），跳过 DiscuzXApp 的构造追加
+构造：只走 Web 应用那一层（基座 + 框架零件），跳过 DiscuzApp 的构造追加
 
-刻意**不用** `parent::__construct()`：那会连带执行 DiscuzXApp 里的语言加载、
+刻意**不用** `parent::__construct()`：那会连带执行 DiscuzApp 里的语言加载、
 请求 URI 写入与异常处理器设置。钩子应用被宿主钩子点直接实例化，`$_GET['uri']`
 往往还不存在，此时改写共享 Request 的 URI 会把正在处理的请求带偏。
 
@@ -40,12 +40,12 @@ public function __construct($setup = null, $appId = null)
 
 ## 同目录
 
-- [DiscuzXApp](/php/api/discuzx/foundation/discuz-x-app)
-- [DiscuzXController](/php/api/discuzx/foundation/discuz-x-controller)
-- [DiscuzXDeployment](/php/api/discuzx/foundation/discuz-x-deployment)
-- [DiscuzXGBKJsonResponse](/php/api/discuzx/foundation/discuz-xgbk-json-response)
-- [DiscuzXLang](/php/api/discuzx/foundation/discuz-x-lang)
-- [DiscuzXPath](/php/api/discuzx/foundation/discuz-x-path)
-- [DiscuzXResponse](/php/api/discuzx/foundation/discuz-x-response)
-- [DiscuzXView](/php/api/discuzx/foundation/discuz-x-view)
+- [DiscuzApp](/php/api/discuzx/foundation/discuz-x-app)
+- [DiscuzController](/php/api/discuzx/foundation/discuz-x-controller)
+- [DiscuzDeployment](/php/api/discuzx/foundation/discuz-x-deployment)
+- [DiscuzGBKJsonResponse](/php/api/discuzx/foundation/discuz-xgbk-json-response)
+- [DiscuzLang](/php/api/discuzx/foundation/discuz-x-lang)
+- [DiscuzPath](/php/api/discuzx/foundation/discuz-x-path)
+- [DiscuzResponse](/php/api/discuzx/foundation/discuz-x-response)
+- [DiscuzView](/php/api/discuzx/foundation/discuz-x-view)
 

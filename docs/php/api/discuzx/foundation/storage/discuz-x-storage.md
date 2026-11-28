@@ -1,13 +1,13 @@
-# DiscuzXStorage
+# DiscuzStorage
 
-`kernel\DiscuzX\Foundation\Storage\DiscuzXStorage`  ·  class
+`kernel\Discuz\Foundation\Storage\DiscuzStorage`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Foundation/Storage/DiscuzXStorage.php`
+源码：`gstudio_kernel/Discuz/Foundation/Storage/DiscuzStorage.php`
 
 ## 声明
 
 ```php
-class DiscuzXStorage extends Storage
+class DiscuzStorage extends Storage
 ```
 
 父类：`Storage`
@@ -45,7 +45,7 @@ public function verifySignature($fileKey, $rawURLParams, $rawHeaders = [], $http
 
 ## 同目录
 
-- [DiscuzXFTPStorage](/php/api/discuzx/foundation/storage/discuz-xftp-storage)
-- [DiscuzXLocalStorage](/php/api/discuzx/foundation/storage/discuz-x-local-storage)
-- [DiscuzXQCloudCOSStorage](/php/api/discuzx/foundation/storage/discuz-xq-cloud-cos-storage)
+- [DiscuzFTPStorage](/php/api/discuzx/foundation/storage/discuz-xftp-storage)
+- [DiscuzLocalStorage](/php/api/discuzx/foundation/storage/discuz-x-local-storage)
+- [DiscuzQCloudCOSStorage](/php/api/discuzx/foundation/storage/discuz-xq-cloud-cos-storage)
 

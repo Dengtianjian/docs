@@ -1,4 +1,4 @@
-# 接口封装 — DiscuzX
+# 接口封装 — Discuz
 
 - **文件位置**: `packages/vue/api/discuzX/common/`
 - **引入方式**: 子路径**必须带 `.ts` 扩展名**，如 `import AttachmentApi from 'kit/vue/api/discuzX/common/AttachmentApi.ts'`
@@ -7,9 +7,9 @@
 | 文件 | 导出 | 状态 |
 | --- | --- | --- |
 | `AttachmentApi.ts` | 默认导出实例（`prefix = attachment`） | 可用 |
-| `DiscuzXAttachmentsApi.ts` | 具名类 | **`@deprecated`** |
-| `DiscuzXFilesApi.ts` | 默认导出实例（`prefix = files`） | **`@deprecated`** |
-| `DiscuzXSettingsApi.ts` | 默认导出实例（`prefix = settings`） | 可用（被 `DiscuzXSettingFormService` 使用） |
+| `DiscuzAttachmentsApi.ts` | 具名类 | **`@deprecated`** |
+| `DiscuzFilesApi.ts` | 默认导出实例（`prefix = files`） | **`@deprecated`** |
+| `DiscuzSettingsApi.ts` | 默认导出实例（`prefix = settings`） | 可用（被 `DiscuzSettingFormService` 使用） |
 
 ## AttachmentApi
 
@@ -40,7 +40,7 @@ import AttachmentApi from 'kit/vue/api/discuzX/common/AttachmentApi.ts'
 const attachment = await AttachmentApi.uploadAttachment(file)
 ```
 
-## DiscuzXAttachmentsApi（`@deprecated`）
+## DiscuzAttachmentsApi（`@deprecated`）
 
 具名类，需自行 `new`。除请求方法外还提供两个 **URL 生成**方法（用于 `<img>` / `<a>` 直链）：
 
@@ -54,7 +54,7 @@ const attachment = await AttachmentApi.uploadAttachment(file)
 
 > 两个 URL 方法基于 `this.requestUrl` 直接拼接 `` `${this.requestUrl}&uri=...` ``，因此 **`baseUrl` 里必须已经带 `?`**（如 `https://host/api?`），否则生成的地址不合法。
 
-## DiscuzXFilesApi（`@deprecated`）
+## DiscuzFilesApi（`@deprecated`）
 
 | 方法 | 说明 |
 | --- | --- |
@@ -65,7 +65,7 @@ const attachment = await AttachmentApi.uploadAttachment(file)
 
 `IRuyiFileInfo` / `IRuyiFileAuthData` 定义见 [types](/vue/types/index)。
 
-## DiscuzXSettingsApi
+## DiscuzSettingsApi
 
 | 方法 | HTTP | 路径 | 说明 |
 | --- | --- | --- | --- |
@@ -74,12 +74,12 @@ const attachment = await AttachmentApi.uploadAttachment(file)
 | `save(key: string, value: any)` | PATCH | `settings/<key>`，body `{ value }` | 保存单个键 |
 
 ```ts
-import DiscuzXSettingsApi from 'kit/vue/api/discuzX/common/DiscuzXSettingsApi.ts'
+import DiscuzSettingsApi from 'kit/vue/api/discuzX/common/DiscuzSettingsApi.ts'
 
-const settings = await DiscuzXSettingsApi.list<{ siteName: string }>(['siteName'])
-await DiscuzXSettingsApi.saveList({ siteName: '如意' })
+const settings = await DiscuzSettingsApi.list<{ siteName: string }>(['siteName'])
+await DiscuzSettingsApi.saveList({ siteName: '如意' })
 ```
 
 ---
 
-> **相关**：[HTTP](/vue/foundation/http)、[DiscuzXSettingFormService](/vue/services/discuzx-setting-form)、[api/common](/vue/api/index)
+> **相关**：[HTTP](/vue/foundation/http)、[DiscuzSettingFormService](/vue/services/discuzx-setting-form)、[api/common](/vue/api/index)

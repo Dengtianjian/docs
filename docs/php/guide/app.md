@@ -5,7 +5,7 @@
 一个**应用** = 一个应用 ID + 一个容器 + 一份装配记录。它同时是「业务的边界」和「数据的边界」：
 
 ```php
-$app = new \kernel\DiscuzX\Foundation\DiscuzXApp(AppBootstrap::class, "gstudio_super_app");
+$app = new \kernel\Discuz\Foundation\DiscuzApp(AppBootstrap::class, "gstudio_super_app");
 
 $app->appId();      // "gstudio_super_app"
 $app->container();  // 它自己的容器
@@ -18,7 +18,7 @@ $app->assembled();  // 是否已经跑完装配
 ## 装配：两个阶段
 
 ```php
-new DiscuzXApp(Bootstrap::class, "gstudio_super_app");
+new DiscuzApp(Bootstrap::class, "gstudio_super_app");
 ```
 
 1. **注册**：应用对象创建后立刻登记进 `Applications`，此后 `Applications::get("gstudio_super_app")` 就能拿到它；
@@ -73,7 +73,7 @@ private function registerMainApp()
 {
   $mainApp = Applications::get("gstudio_super_app");
   if ($mainApp === null || !$mainApp->assembled()) {
-    new DiscuzXApp(AppBootstrap::class, "gstudio_super_app");
+    new DiscuzApp(AppBootstrap::class, "gstudio_super_app");
   }
 }
 ```
@@ -84,7 +84,7 @@ private function registerMainApp()
 |---|---|
 | `Applications::get($id)` | 取已登记的应用（可能是骨架） |
 | `Application::of($idOrClass)` | 取应用；不存在则建**骨架** |
-| `Applications::default()` | 当前进程的默认应用（首个注册的） |
+| `Applications::current()` | 当前进程的主运行应用（首个注册的） |
 | `Applications::setUpApp()` | 装配 / 构造上下文栈顶，非装配期为 `null` |
 
 ## 归属（`$this->app()`）
@@ -94,10 +94,26 @@ private function registerMainApp()
 ```
 ① bindApp() 注入的 $this->app
 ② 装配 / 构造上下文栈顶（Applications::setUpApp()）
-③ 默认应用（Applications::default()）
+③ 当前应用（Applications::current()）
 ```
 
 - 经容器构造的对象，构造期间框架会压栈，所以构造函数里 `$this->app()` 也是对的；
 - `bindApp()` 只填空：对象已有归属时不会被「过户」，跨应用共享实例时不会被改归属。
 
 模型、Repository 这类要按归属算表名 / 路径的类，靠的正是这一套。
+
+## 跨应用调用
+
+| 目的 | 写法 | 结果归属 |
+|---|---|---|
+| 取别的应用的模型 / 多例 | `Applications::get($appId)->make(Class::class)` | 提供方应用 |
+| 装配期声明依赖 | `import(Class::class, $appId)`，之后 `make(Class::class)` | 提供方应用 |
+| 调实例服务 | `$app->make(Service::class)->method()` | 服务构造时绑定的应用 |
+| 调静态服务 | `$app->call(fn () => Service::method())` | `call` 的应用 |
+| 只判断类属于谁 | `Application::owner(Class::class)` | 不改变任何上下文 |
+
+注意：
+
+- `call()` 只压装配上下文，**不改变** `Applications::current()`；
+- 混合应用调用里，外部应用的模型要显式 `get()->make()` 或 import，不能 `new`；
+- 对象 import（`import($app->setting(), "setting")`）只适合单例服务；模型用类名 import 或每次 `make()`。

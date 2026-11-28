@@ -1,13 +1,13 @@
-# DiscuzXForum
+# DiscuzForum
 
-`kernel\DiscuzX\DiscuzXForum`  ·  class
+`kernel\Discuz\DiscuzForum`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/DiscuzXForum.php`
+源码：`gstudio_kernel/Discuz/DiscuzForum.php`
 
 ## 声明
 
 ```php
-class DiscuzXForum extends BaseObject
+class DiscuzForum extends BaseObject
 ```
 
 父类：[BaseObject](/php/api/foundation/object/base-object)
@@ -30,7 +30,7 @@ public function getForum($forumId)
 
 ## 同目录
 
-- [DiscuzXPost](/php/api/discuzx/discuz-x-post)
-- [DiscuzXThread](/php/api/discuzx/discuz-x-thread)
-- [DiscuzXURL](/php/api/discuzx/discuz-xurl)
+- [DiscuzPost](/php/api/discuzx/discuz-x-post)
+- [DiscuzThread](/php/api/discuzx/discuz-x-thread)
+- [DiscuzURL](/php/api/discuzx/discuz-xurl)
 

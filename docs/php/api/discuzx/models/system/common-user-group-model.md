@@ -1,8 +1,8 @@
 # CommonUserGroupModel
 
-`kernel\DiscuzX\Models\System\CommonUserGroupModel`  ·  class
+`kernel\Discuz\Models\System\CommonUserGroupModel`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Models/System/CommonUserGroupModel.php`
+源码：`gstudio_kernel/Discuz/Models/System/CommonUserGroupModel.php`
 
 > Discuz 用户组表模型
 
@@ -11,10 +11,10 @@
 ## 声明
 
 ```php
-class CommonUserGroupModel extends DiscuzXSystemModel
+class CommonUserGroupModel extends DiscuzSystemModel
 ```
 
-父类：[DiscuzXSystemModel](/php/api/discuzx/models/discuz-x-system-model)
+父类：[DiscuzSystemModel](/php/api/discuzx/models/discuz-x-system-model)
 
 ## 概述
 
@@ -22,7 +22,7 @@ class CommonUserGroupModel extends DiscuzXSystemModel
 
 ## 相关
 
-- [DiscuzXSystemModel](/php/api/discuzx/models/discuz-x-system-model) 基类：补 Discuz 表前缀、关闭时间戳自动维护
+- [DiscuzSystemModel](/php/api/discuzx/models/discuz-x-system-model) 基类：补 Discuz 表前缀、关闭时间戳自动维护
 
 ## 属性
 

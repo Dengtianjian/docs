@@ -19,14 +19,14 @@ class Path
 
 7 个路径 getter：
 kernel        = 本类文件所在目录（内核目录，永远正确，无需任何外部输入）
-project       = DiscuzX 平台取 DISCUZ_ROOT（去尾斜杠），否则为 kernel 的上级目录
-root          = kernel 同级目录下的 {默认应用 ID}
+project       = Discuz 平台取 DISCUZ_ROOT（去尾斜杠），否则为 kernel 的上级目录
+root          = kernel 同级目录下的 {当前应用 ID}
 data          = root/Data
 storage       = root/Storage
 kernelDir/dir = kernel/root 相对 project 的路径
 
-依赖默认应用 ID 的 getter（root/data/storage/dir）在尚未登记任何 App
-（Applications::defaultId() 为 null）时返回 null。
+依赖当前应用 ID 的 getter（root/data/storage/dir）在尚未登记任何 App
+（Applications::currentId() 为 null）时返回 null。
 
 非 final，可被继承扩展；getter 均为 public static，便于子类重写。
 
@@ -37,7 +37,7 @@ kernelDir/dir = kernel/root 相对 project 的路径
 | [`project()`](#project) | 根目录（绝对路径） |
 | [`kernel()`](#kernel) | 内核根目录（绝对路径） |
 | [`appRoot()`](#approot) | 指定应用的根目录（绝对路径），默认 {kernel 同级目录}/{appId} |
-| [`root()`](#root) | 当前应用根目录（绝对路径），默认 {kernel 同级目录}/{默认应用 ID} |
+| [`root()`](#root) | 当前应用根目录（绝对路径），默认 {kernel 同级目录}/{当前应用 ID} |
 | [`configs()`](#configs) | 指定应用的配置目录（绝对路径），即 appRoot/Configs |
 | [`data()`](#data) | 指定应用的数据目录（绝对路径），默认 appRoot/Data |
 | [`storage()`](#storage) | 应用存储目录（绝对路径），默认 appRoot/Storage |
@@ -54,7 +54,7 @@ public static function project()
 
 根目录（绝对路径）
 
-DiscuzX 平台返回 DISCUZ_ROOT（去尾斜杠）；普通项目返回内核目录的上级目录。
+Discuz 平台返回 DISCUZ_ROOT（去尾斜杠）；普通项目返回内核目录的上级目录。
 
 ### kernel()
 
@@ -75,12 +75,12 @@ public static function appRoot($appId = null)
 指定应用的根目录（绝对路径），默认 {kernel 同级目录}/{appId}
 
 与 `root` 的区别：这里能明确指定「哪个应用」。多应用共存时
-`root()` 取的是默认应用，而 `appRoot($app->appId())` 取的是调用方自己那份
+`root()` 取的是当前应用，而 `appRoot($app->appId())` 取的是调用方自己那份
 （配置目录、数据目录都靠它定位）。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
-| `$appId` | `string|null` | `null` | 应用 ID，不传取默认应用 |
+| `$appId` | `string|null` | `null` | 应用 ID，不传取当前应用 |
 
 ### root()
 
@@ -88,7 +88,7 @@ public static function appRoot($appId = null)
 public static function root()
 ```
 
-当前应用根目录（绝对路径），默认 {kernel 同级目录}/{默认应用 ID}
+当前应用根目录（绝对路径），默认 {kernel 同级目录}/{当前应用 ID}
 
 ### configs()
 
@@ -100,7 +100,7 @@ public static function configs($appId = null)
 
 | 参数 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
-| `$appId` | `string|null` | `null` | 应用 ID，不传取默认应用 |
+| `$appId` | `string|null` | `null` | 应用 ID，不传取当前应用 |
 
 ### data()
 
@@ -111,11 +111,11 @@ public static function data($appId = null)
 指定应用的数据目录（绝对路径），默认 appRoot/Data
 
 与 `configs` / `storage` 一样支持指定应用：多应用同进程时
-传 `$app->appId()` 才能拿到调用方自己那份，不传永远取默认应用。
+传 `$app->appId()` 才能拿到调用方自己那份，不传永远取当前应用。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
-| `$appId` | `string|null` | `null` | 应用 ID，不传取默认应用 |
+| `$appId` | `string|null` | `null` | 应用 ID，不传取当前应用 |
 
 ### storage()
 

@@ -59,6 +59,7 @@ class Application
 | [`make()`](#make) | 解析实例 |
 | [`import()`](#import) | 声明「本应用的某个能力来自另一个应用」 |
 | [`imports()`](#imports) | 本应用引入了哪些外部能力（排查用） |
+| [`call()`](#call) | 在「本应用」上下文里执行回调 |
 | [`providers()`](#providers) | 已构造的单例（排查用） |
 | [`__call()`](#__call) | 组件名访问：`$app->request()` / `$app->config()` / `$app->settingProvider()` … |
 | [`kernelId()`](#kernelid) | 本实例的内核 ID（KernelId），即内核目录文件夹名称 |
@@ -97,7 +98,7 @@ public function appId()
 本实例的应用 ID
 
 回答「我这个应用是谁」——多应用共存时只有它是可靠的。静态上下文中要取
-「当前默认应用是谁」请用 `Applications::defaultId`。
+「当前应用是谁」请用 `Applications::currentId`。
 
 服务 / 上下文里要记「这条数据属于哪个应用」，一律用本方法，不要用静态的。
 
@@ -132,7 +133,7 @@ public static function mode(): string
 
 获取当前运行模式（mode）
 
-读取默认应用配置的 "mode" 键（`$app->config()->get("mode", "production")`），未配置时默认 "production"。
+读取当前应用配置的 "mode" 键（`$app->config()->get("mode", "production")`），未配置时默认 "production"。
 替代原 F_APP_MODE 常量，无需提前定义，随时可安全调用。
 
 静态上下文用本方法；手上已有应用实例时用 `isDevelopment` / `isProduction`，
@@ -289,6 +290,25 @@ public function imports()
 
 本应用引入了哪些外部能力（排查用）
 
+### call()
+
+```php
+public function call(callable $callback)
+```
+
+在「本应用」上下文里执行回调
+
+执行期间把本应用压进装配上下文，结束后恢复；解决跨应用调用静态服务时，
+里头的 `new Model` 按当前主运行应用解析的问题。**不改变** `Applications::current()`。
+
+可嵌套；回调抛异常也会正确出栈。只负责上下文，不保证本应用已装配。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `$callback` | `callable` | — | 回调，第一个参数是本应用实例 |
+
+返回：`mixed` —— 回调返回值
+
 ### providers()
 
 ```php
@@ -328,9 +348,9 @@ public function kernelId()
 
 本实例的内核 ID（KernelId），即内核目录文件夹名称
 
-就是构造时传入的第二个参数（DiscuzX 下默认 `gstudio_kernel`，其余默认 `kernel`）。
-多应用共存时只有它是可靠的——静态语境要取「默认应用的内核 ID」，
-请写 `Applications::default()->kernelId()`，不要用静态的。
+就是构造时传入的第二个参数（Discuz 下默认 `gstudio_kernel`，其余默认 `kernel`）。
+多应用共存时只有它是可靠的——静态语境要取「当前应用的内核 ID」，
+请写 `Applications::current()->kernelId()`，不要用静态的。
 
 ### of()
 

@@ -14,7 +14,7 @@ use kernel\Foundation\FileSystem\Path;
 
 Path::project();        // 项目根目录
 Path::kernel();         // 内核目录
-Path::root();           // 默认应用根目录
+Path::root();           // 当前应用根目录
 Path::appRoot("gstudio_download");   // 指定应用根目录
 Path::configs();        // appRoot/Configs
 Path::data();           // appRoot/Data

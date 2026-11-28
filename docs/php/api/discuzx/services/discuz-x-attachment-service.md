@@ -1,13 +1,13 @@
-# DiscuzXAttachmentService
+# DiscuzAttachmentService
 
-`kernel\DiscuzX\Services\DiscuzXAttachmentService`  ·  class
+`kernel\Discuz\Services\DiscuzAttachmentService`  ·  class
 
-源码：`gstudio_kernel/DiscuzX/Services/DiscuzXAttachmentService.php`
+源码：`gstudio_kernel/Discuz/Services/DiscuzAttachmentService.php`
 
 ## 声明
 
 ```php
-class DiscuzXAttachmentService extends AbilityBaseObject
+class DiscuzAttachmentService extends AbilityBaseObject
 ```
 
 父类：[AbilityBaseObject](/php/api/foundation/object/ability-base-object)

@@ -20,7 +20,7 @@ $this->app()->make(\kernel\Modules\Auth\AuthProvider::class);
 `AuthProvider` 构造时做三件事：
 
 1. 把 `AuthModule` 登记成单例（类名 + 别名 `auth`）；
-2. 按运行环境挂认证中间件（DiscuzX → `GlobalDiscuzXAuthMiddleware`，否则 `GlobalAuthMiddleware`）；
+2. 按运行环境挂认证中间件（Discuz → `GlobalDiscuzAuthMiddleware`，否则 `GlobalAuthMiddleware`）；
 3. 有数据库连接时清理过期 token（安装期无连接则跳过）。
 
 ## 登录态（中间件写，业务读）
@@ -75,7 +75,7 @@ Auth::deleteExpiredTokens();                      // 清理过期（物理删除
    - `x-auth-token`
    - `x-auth-token-expires-at`
 
-`GlobalDiscuzXAuthMiddleware` 另外兼容 Discuz 的登录态：Discuz 全局 uid 存在时直接采信，不需要 token。
+`GlobalDiscuzAuthMiddleware` 另外兼容 Discuz 的登录态：Discuz 全局 uid 存在时直接采信，不需要 token。
 
 ## 跨应用
 
